@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+{% block main %}
+<form action="{% url 'core:review_list' %}" method="post">{%csrf_token%}
+    {{form.business_name}}
+    <input class="btn-sm btn-primary" type="submit" value="Find"/>
+</form>
+</br>
+
+<h4>Business to Review</h4>
+<div class="col-md-8">
+       <ul class="list-group">
+           {% for business in business_list %}
+           <li class="list-group-item">{{business}}</br><a href="{% url 'core:review_add' business_pk=business.pk %}" class="btn-sm btn-primary">Review Business</a> {{business.address}}
+           {{business.city}}</li>
+           {% endfor %}
+       </ul>
+</div>
+<div class="col-sm-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="panel-title">By Map</h5>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            If the business is not here add it <br>
+            <a href="{% url 'core:business_user_add'%}" class="btn-sm btn-primary">Add a Business</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

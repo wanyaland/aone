@@ -1,0 +1,22 @@
+<h2>Top on AfricaOne near you</h2>
+
+<div class="top-businesses-wrapper clearfix">
+
+  <!-- business categories -->
+  <ul class="business-categories-filters-wrapper list-unstyled">
+    {% for category in categories %}
+      {% include 'core/business-category/top-business-category.html' %}
+    {% endfor %}
+  </ul>
+
+  <!-- businesses -->
+  <div class="businesses-wrapper">
+    <h3>Top Businesses</h3>
+    <div class="top-businesses-list">
+      {% for business in businesses %}
+      {% include 'core/businesses/top-business.html' %}
+      {% endfor %}
+    </div>
+  </div>
+
+</div>

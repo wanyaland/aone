@@ -1,0 +1,294 @@
+{% extends 'admin/base.html' %}
+{% load admin_extras %}
+{% block main %}
+
+<div class="form-wrapper create-business-form-wrapper">
+  <div class="h1-row">
+    {% if not object %}
+    <h1 class="col-md-12">Create a Business</h1>
+    {% else %}
+    <h1 class="col-md-12">Edit {{business.name}}</h1>
+    <div class="business-edit-btns btn-group col-md-12">
+      <a class="btn btn-icon btn-default" href="javascript:;"><i class="fa fa-comment"></i> Manage Reviews</a>
+      <a class="btn btn-icon btn-default" href="{% url 'core:business_detail' business.pk %}" target="_blank"><i class="fa fa-eye"></i> View on Website</a>
+      <a class="btn btn-icon btn-default" href="{%url 'admin:manage_business_photos' business.pk %}"><i class="fa fa-camera"></i> Manage Photos</a>
+      <a class="btn btn-icon btn-danger" href="javascript:;"><i class="fa fa-trash"></i> Delete Business</a>
+    </div>
+    {% endif %}
+  </div>
+
+  <form id="create-business-form" method="post" action="{{action_url}}" class="form-vertical">
+    {%csrf_token%}
+    <input type="hidden" name="business-id" value="{{ business.pk }}">
+    <div class="x_panel">
+      <div class="main-form-row row">
+        <div class="col-md-6 main-form-col">
+          <div class="form-group item">
+            <label class="control-label" for="business-country">Country</label>
+            <select id="business-country" name="country" class="form-control required">
+              {% for key,country in countries.items %}
+                <option value="{{ key }}" {% if business.country == key %} selected="selected" {% endif %}>{{ country }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group item">
+            <label class="control-label" for="business-name">Business Name</label>
+            <input required="required" data-validate-length-range="5,20" id="business-name" name="name"
+                   class="form-control" type="text" placeholder="John's Cafe" value="{{ business.name }}"/>
+          </div>
+          <div class="form-group item multi required">
+            <label class="control-label" for="business-address-1">Address</label>
+            <input id="business-address-1" name="address" class="form-control" type="text" placeholder="Plot 23" value="{{ business.address }}"/>
+            <input id="business-address-2" name="address-2" class="form-control" type="text" placeholder="Jinja Road" value=""/>
+          </div>
+          <div class="form-group item">
+            <label class="control-label" for="business-city">City</label>
+            <input required="required" id="business-city" name="city" class="form-control" type="text"
+                   placeholder="Kampala" value="{% if business.city  %}{{ business.city }}{% endif %}"/>
+          </div>
+          <div class="form-group item">
+            <label class="control-label" for="business-phone">Phone Number</label>
+            <input id="business-phone" name="phone" class="form-control" type="text" placeholder="+256 712 345 678"
+                   data-inputmask="'mask': '0999 999 999'" value="{{ business.phone_number }}"/>
+          </div>
+          <div class="form-group item">
+            <label class="control-label" for="business-website">Website Address</label>
+            <input id="business-website" name="website" class="form-control" type="url"
+                   placeholder="http://www.dinercafe.com" value="{{ business.web_address }}"/>
+          </div>
+          <div class="form-group item">
+            <label class="control-label" for="business-category">Categories</label>
+            <small>You may select up to three (3) categories.</small>
+
+            <div class="chosen-categories-wrapper">
+
+              <div class="chosen-category hidden">
+                <span>Category Name</span>
+                <a href="#" class="remove-category">Remove</a>
+                <input type="hidden" name="categories[]"/>
+              </div>
+
+              {% if categories %}
+                {% for category in categories %}
+                <div class="chosen-category">
+                  <span>{{ category.parent_category.name }} > {{ category.name }}</span>
+                  <a href="#" class="remove-category">Remove</a>
+                  <input type="hidden" name="categories[{{ forloop.counter }}]" value="{{ category.id }}"/>
+                </div>
+                {% endfor %}
+            {% endif %}
+
+            </div>
+
+            <!--<input required="required" type="hidden" id="business-categories-1" name="categories[]"/>-->
+            <input id="business-category" class="form-control" type="text" placeholder="Add a Category" autocomplete="off"/>
+            <div id="categories-autocomplete-container"></div>
+          </div>
+          <div class="form-group item">
+            <label class="control-label" for="business-popularity">Business Popularity Level (for Admin only)</label>
+            <select id="business-popularity" name="popularity" class="form-control required">
+              <option value="">Select popularity level ...</option>
+              {% for popularity_value in 10|get_popularity %}
+                <option {% if business.popularity_rating == popularity_value %} selected="selected" {% endif %} value="{{ popularity_value }}">{{ popularity_value }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group item">
+            <label class="control-label">Hours</label>
+
+            <div class="hours-wrapper">
+
+              <div class="hours hidden">
+                <span class="weekday">Mon</span>
+                <span class="start">9:00am</span>
+                <span>-</span>
+                <span class="end">5:00pm</span>
+                <a href="#" class="remove-hours">Remove</a>
+                <input type="hidden" name="hours[]" value="">
+              </div>
+
+              {% for hours in business.business_hours.all %}
+              <div class="hours">
+                <span class="weekday">Mon</span>
+                <span class="start">9:00am</span>
+                <span>-</span>
+                <span class="end">5:00pm</span>
+                <a href="#" class="remove-hours">Remove</a>
+                <input type="hidden" name="hours[]" value="">
+              </div>
+              {% endfor %}
+
+            </div>
+
+            <ul class="hours-select clearfix list-unstyled list-inline">
+              <li>
+                <select class="weekday form-control">
+                  <option value="0">Mon</option>
+                  <option value="1">Tue</option>
+                  <option value="2">Wed</option>
+                  <option value="3">Thu</option>
+                  <option value="4">Fri</option>
+                  <option value="5">Sat</option>
+                  <option value="6">Sun</option>
+                </select>
+              </li>
+              <li>
+                <select class="hours-start form-control">
+                  <option value="0.0">12:00 am (midnight)</option>
+                  <option value="0.5">12:30 am</option>
+                  <option value="1.0">1:00 am</option>
+                  <option value="1.5">1:30 am</option>
+                  <option value="2.0">2:00 am</option>
+                  <option value="2.5">2:30 am</option>
+                  <option value="3.0">3:00 am</option>
+                  <option value="3.5">3:30 am</option>
+                  <option value="4.0">4:00 am</option>
+                  <option value="4.5">4:30 am</option>
+                  <option value="5.0">5:00 am</option>
+                  <option value="5.5">5:30 am</option>
+                  <option value="6.0">6:00 am</option>
+                  <option value="6.5">6:30 am</option>
+                  <option value="7.0">7:00 am</option>
+                  <option value="7.5">7:30 am</option>
+                  <option value="8.0" selected="selected">8:00 am</option>
+                  <option value="8.5">8:30 am</option>
+                  <option value="9.0">9:00 am</option>
+                  <option value="9.5">9:30 am</option>
+                  <option value="10.0">10:00 am</option>
+                  <option value="10.5">10:30 am</option>
+                  <option value="11.0">11:00 am</option>
+                  <option value="11.5">11:30 am</option>
+                  <option value="12.0">12:00 pm (noon)</option>
+                  <option value="12.5">12:30 pm</option>
+                  <option value="13.0">1:00 pm</option>
+                  <option value="13.5">1:30 pm</option>
+                  <option value="14.0">2:00 pm</option>
+                  <option value="14.5">2:30 pm</option>
+                  <option value="15.0">3:00 pm</option>
+                  <option value="15.5">3:30 pm</option>
+                  <option value="16.0">4:00 pm</option>
+                  <option value="16.5">4:30 pm</option>
+                  <option value="17.0">5:00 pm</option>
+                  <option value="17.5">5:30 pm</option>
+                  <option value="18.0">6:00 pm</option>
+                  <option value="18.5">6:30 pm</option>
+                  <option value="19.0">7:00 pm</option>
+                  <option value="19.5">7:30 pm</option>
+                  <option value="20.0">8:00 pm</option>
+                  <option value="20.5">8:30 pm</option>
+                  <option value="21.0">9:00 pm</option>
+                  <option value="21.5">9:30 pm</option>
+                  <option value="22.0">10:00 pm</option>
+                  <option value="22.5">10:30 pm</option>
+                  <option value="23.0">11:00 pm</option>
+                  <option value="23.5">11:30 pm</option>
+                </select>
+              </li>
+              <li>
+                <select class="hours-end form-control">
+                  <option value="0.5">12:30 am</option>
+                  <option value="1.0">1:00 am</option>
+                  <option value="1.5">1:30 am</option>
+                  <option value="2.0">2:00 am</option>
+                  <option value="2.5">2:30 am</option>
+                  <option value="3.0">3:00 am</option>
+                  <option value="3.5">3:30 am</option>
+                  <option value="4.0">4:00 am</option>
+                  <option value="4.5">4:30 am</option>
+                  <option value="5.0">5:00 am</option>
+                  <option value="5.5">5:30 am</option>
+                  <option value="6.0">6:00 am</option>
+                  <option value="6.5">6:30 am</option>
+                  <option value="7.0">7:00 am</option>
+                  <option value="7.5">7:30 am</option>
+                  <option value="8.0">8:00 am</option>
+                  <option value="8.5">8:30 am</option>
+                  <option value="9.0">9:00 am</option>
+                  <option value="9.5">9:30 am</option>
+                  <option value="10.0">10:00 am</option>
+                  <option value="10.5">10:30 am</option>
+                  <option value="11.0">11:00 am</option>
+                  <option value="11.5">11:30 am</option>
+                  <option value="12.0">12:00 pm (noon)</option>
+                  <option value="12.5">12:30 pm</option>
+                  <option value="13.0">1:00 pm</option>
+                  <option value="13.5">1:30 pm</option>
+                  <option value="14.0">2:00 pm</option>
+                  <option value="14.5">2:30 pm</option>
+                  <option value="15.0">3:00 pm</option>
+                  <option value="15.5">3:30 pm</option>
+                  <option value="16.0">4:00 pm</option>
+                  <option value="16.5">4:30 pm</option>
+                  <option value="17.0" selected="selected">5:00 pm</option>
+                  <option value="17.5">5:30 pm</option>
+                  <option value="18.0">6:00 pm</option>
+                  <option value="18.5">6:30 pm</option>
+                  <option value="19.0">7:00 pm</option>
+                  <option value="19.5">7:30 pm</option>
+                  <option value="20.0">8:00 pm</option>
+                  <option value="20.5">8:30 pm</option>
+                  <option value="21.0">9:00 pm</option>
+                  <option value="21.5">9:30 pm</option>
+                  <option value="22.0">10:00 pm</option>
+                  <option value="22.5">10:30 pm</option>
+                  <option value="23.0">11:00 pm</option>
+                  <option value="23.5">11:30 pm</option>
+                  <option value="24.0">12:00 am (midnight next day)</option>
+                  <option value="24.5">12:30 am (next day)</option>
+                  <option value="25.0">1:00 am (next day)</option>
+                  <option value="25.5">1:30 am (next day)</option>
+                  <option value="26.0">2:00 am (next day)</option>
+                  <option value="26.5">2:30 am (next day)</option>
+                  <option value="27.0">3:00 am (next day)</option>
+                  <option value="27.5">3:30 am (next day)</option>
+                  <option value="28.0">4:00 am (next day)</option>
+                  <option value="28.5">4:30 am (next day)</option>
+                  <option value="29.0">5:00 am (next day)</option>
+                  <option value="29.5">5:30 am (next day)</option>
+                  <option value="30.0">6:00 am (next day)</option>
+                </select>
+              </li>
+              <li>
+                <button type="button" class="btn btn-default"><span>Add Hours</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6 main-form-col">
+          <label class="control-label">Please pick the location of your business</label>
+
+          <fieldset class="gllpLatlonPicker" id="business-location-map">
+            <div class="input-group">
+              <input type="text" class="form-control search-map gllpSearchField">
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-primary search-btn gllpSearchButton">Search</button>
+              </span>
+            </div>
+            <div class="gllpMap"></div>
+            <div class="business-location-name bg-primary">Please pick your location on the map above by moving the marker OR double clicking on the map.</div>
+            <input type="hidden" class="gllpLatitude" name="latitude" value="{{ business.latitude }}" />
+            <input type="hidden" class="gllpLongitude" name="longitude" value="{{ business.longitude }}" />
+            <input type="hidden" class="gllpZoom" value="16" />
+            <input type="hidden" class="gllpLocationName" />
+          </fieldset>
+
+        </div>
+      </div>
+      <div class="ln_solid"></div>
+      <div class="form-group item">
+        {% if not object %}
+        <button type="submit" class="btn btn-primary">Add Business</button>
+        {% else %}
+        <button type="submit" class="btn btn-primary">Edit Business</button>
+        {% endif %}
+      </div>
+    </div>
+  </form>
+</div>
+
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script src="/static/africaone-admin/js/plugins/jquery-gmaps-latlon-picker.js"></script>
+
+
+{% endblock %}

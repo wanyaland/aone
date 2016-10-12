@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+{% load i18n %}
+
+{% block main %}
+
+  <div class="login-page-wrapper user-auth-page-wrapper showing-form-feedback">
+    <div class="blue-header-bg"></div>
+    <div class="login-container container user-auth-container">
+     {% if state %}
+      <div class="form-feedback">
+        <div class="message success">
+          <div class="icon"></div>
+          <div class="msg">{{state}}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      <h1>Log in to AfricaOne</h1>
+      <div class="login-page user-auth-page">
+        <div class="page-desc">Are you new to AfricaOne? <a href="{% url 'core:sign_up' %}" title="Sign up with AfricaOne">Sign Up</a></div>
+        <form class="user-auth-form infield-labels" action="{% url 'core:login' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% if next %}
+            <input type="hidden" name="next" value="{{next}}"/>
+          {% endif %}
+          <div class="form-inner-wrapper">
+            <div class="user-name-wrapper label-wrapper">
+              <label for="username">Username <span class="required">*</span></label>
+              <input id="username" name="username" type="text" placeholder="Username*" />
+            </div>
+            <div class="password label-wrapper">
+              <label for="password">Password <span class="required">*</span></label>
+              <input id="password" name="password" type="password" placeholder="Password*" />
+            </div>
+          </div>
+          <div class="form-desc form-desc-1"><a href="{% url 'core:forgot_password' %}">Forgot Password?</a></div>
+          <div class="submit-btn-wrapper">
+            <input type="submit" class="submit-btn" value="Log In" />
+          </div>
+          <div class="form-desc form-desc-2">By logging in, you agree to AfricaOne's <a href="javascript:;">Terms of Service</a> and <a href="javascript:;">Privacy Policy</a>.</div>
+        </form>
+        <div class="or">
+          <div class="border"></div>
+          <div class="text">Or</div>
+        </div>
+        <div class="user-auth-social-media">
+          <a href="{% url 'social:begin' 'facebook' %}" class="fb social-media-link">
+            <span class="icon"></span>
+            <span class="text">Log in with Facebook</span>
+          </a>
+          <a href="{% url 'social:begin' 'google-ouath2' %}" class="google social-media-link">
+            <span class="icon"></span>
+            <span class="text">Log in with Google</span>
+          </a>
+          <div class="desc">We will never post without your permission.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

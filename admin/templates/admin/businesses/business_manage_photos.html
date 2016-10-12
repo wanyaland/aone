@@ -1,0 +1,199 @@
+{% extends 'admin/base.html' %}
+
+{% block main %}
+
+<div class="form-wrapper manage-business-photos-wrapper">
+  <div class="h1-row">
+    <h1>Manage Photos for Business: {{ business.name }}</h1>
+    <div class="business-edit-btns btn-group">
+      <a class="btn btn-icon btn-default" href="javascript:;"><i class="fa fa-comment"></i> Manage Reviews</a>
+      <a class="btn btn-icon btn-default" href="{% url 'core:business_detail' pk %}" target="_blank"><i class="fa fa-eye"></i> View on Website</a>
+      <a class="btn btn-icon btn-default" href="{% url 'admin:update_business' pk %}"><i class="fa fa-edit"></i> Edit Info</a>
+      <a class="btn btn-icon btn-danger" href="javascript:;"><i class="fa fa-trash"></i> Delete Business</a>
+    </div>
+    <input type="hidden" id="business-id" value="{{ pk }}" />
+  </div>
+
+  <div class="business-photos-content">
+
+
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Upload Photos
+          <small>Upload new business photos. Manage the banner and the logo.</small>
+        </h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div class="row">
+          <div class="col-md-6">
+            <p>Drag and drop multiple files to the box below or click to select files.</p>
+            <div class="upload-business-photos dropzone" id="upload-business-photos">
+              <div class="dz-message">Click here to upload files. You may also drag the files here.</div>
+            </div>
+          </div>
+
+          <div class="col-md-3 banner-photo-col {% if business.banner_photo %} with-img {% endif %}">
+            <p>Business banner photo</p>
+            <div
+                class="upload-business-photos dropzone {% if business.banner_photo %} invisible {% endif %}"
+                id="upload-business-photos-banner">
+              <div class="dz-message">Click here to upload a banner image. You may also drag the files here.</div>
+            </div>
+            <div class="banner-preview business-img-preview">
+              <div class="image view view-first">
+                <img src="{% if business.banner_photo %} {{ business.banner_photo.url }} {% endif %}" />
+                <div class="mask">
+                  <p>Edit</p>
+                  <div class="tools tools-bottom">
+                    <a href="#" class="view-photo"><i class="fa fa-link"></i></a>
+                    <a href="#" class="delete-photo"><i class="fa fa-trash"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="loading"></div>
+            </div>
+          </div>
+
+          <div class="col-md-3 logo-photo-col {% if business.photo %} with-img {% endif %}">
+            <p>Business Logo</p>
+            <div
+                class="upload-business-photos dropzone {% if business.photo %} invisible {% endif %}"
+                id="upload-business-photos-logo">
+              <div class="dz-message">Click here to upload a logo image. You may also drag the files here.</div>
+            </div>
+            <div class="banner-preview business-img-preview">
+              <div class="image view view-first">
+                <img src="{% if business.photo %} {{ business.photo.url }} {% endif %}" />
+                <div class="mask">
+                  <p>Edit</p>
+                  <div class="tools tools-bottom">
+                    <a href="#" class="view-photo"><i class="fa fa-link"></i></a>
+                    <a href="#" class="delete-photo"><i class="fa fa-trash"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="loading"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="x_panel business-photos-list business-photos-managed">
+      <div class="x_title">
+        <h2>Business Photos
+          <small>Photos managed by AfricaOne and Business Owner</small>
+        </h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div class="row isotope-list">
+
+          {% for photo in photos %}
+          <div class="col-md-55 isotope-item">
+            <div class="thumbnail">
+              <div class="image view view-first" data-photo-type="BusinessPhoto" data-photo-id="{{ photo.id }}">
+                <img src="{{ photo.photo.url }}">
+                <div class="mask">
+                  <p>Edit</p>
+                  <div class="tools tools-bottom">
+                    <a href="#" class="view-image"><i class="fa fa-link"></i></a>
+                    <a href="#" class="edit-caption"><i class="fa fa-pencil"></i></a>
+                    <a href="#" class="delete-image"><i class="fa fa-trash"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="caption">
+                <p>{% if photo.caption %} {{ photo.caption }} {% endif %}</p>
+              </div>
+              <div class="loading"></div>
+            </div>
+          </div>
+          {%  endfor %}
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="x_panel business-photos-list">
+      <div class="x_title">
+        <h2>Photos from Users
+          <small>Photos added by Users</small>
+        </h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div class="row isotope-list">
+
+          {% for photo in user_photos %}
+          <div class="col-md-55 isotope-item">
+            <div class="thumbnail">
+              <div class="image view view-first" data-photo-type="UserPhoto" data-photo-id="{{ photo.id }}">
+                <img src="{{ photo.photo.url }}">
+                <div class="mask">
+                  <p>Edit</p>
+                  <div class="tools tools-bottom">
+                    <a href="#" class="view-image"><i class="fa fa-link"></i></a>
+                    <a href="#" class="edit-caption"><i class="fa fa-pencil"></i></a>
+                    <a href="#" class="delete-image"><i class="fa fa-trash"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="caption">
+                <p>{% if photo.caption %} {{ photo.caption }} {% endif %}</p>
+              </div>
+              <div class="loading"></div>
+            </div>
+          </div>
+          {%  endfor %}
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="x_panel business-photos-list">
+      <div class="x_title">
+        <h2>Photos from User Reviews
+          <small>Photos added from User Reviews</small>
+        </h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div class="row isotope-list">
+
+          {% for photo in review_photos %}
+          <div class="col-md-55 isotope-item">
+            <div class="thumbnail">
+              <div class="image view view-first" data-photo-type="ReviewPhoto" data-photo-id="{{ photo.id }}">
+                <img src="{{ photo.photo.url }}">
+                <div class="mask">
+                  <p>Edit</p>
+                  <div class="tools tools-bottom">
+                    <a href="#" class="view-image"><i class="fa fa-link"></i></a>
+                    <a href="#" class="edit-caption"><i class="fa fa-pencil"></i></a>
+                    <a href="#" class="delete-image"><i class="fa fa-trash"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="caption">
+                <p>{% if photo.caption %} {{ photo.caption }} {% endif %}</p>
+              </div>
+              <div class="loading"></div>
+            </div>
+          </div>
+          {%  endfor %}
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}

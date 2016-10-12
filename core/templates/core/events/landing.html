@@ -1,0 +1,75 @@
+{% extends 'core/base.html' %}
+{% load i18n %}
+
+{% block main %}
+
+  <div class="events-landing-page-wrapper">
+    <div class="blue-header-bg"></div>
+    <div class="page-container container">
+
+      <div class="filter-businesses-wrapper filter-content-wrapper clearfix">
+
+        {% include 'core/events/filters.html' %}
+
+        <div class="filter-content-col">
+          <div class="events-landing-page-content clearfix">
+
+            <div class="featured-popular-events-col">
+              <div class="featured-popular-events">
+
+                <div class="featured-events">
+                  <h2>Featured Events</h2>
+                  <div class="block-content">
+                    <ul class="clearfix events-list list-unstyled events-list-2-col">
+                        {% for event in events %}
+                      <li>
+                        {% include 'core/events/teaser.html' %}
+                      </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="popular-events">
+                  <h2>Popular Events</h2>
+                  <div class="block-content">
+                    <ul class="clearfix events-list list-unstyled events-list-3-col">
+                      {% for event in events %}
+                      <li>
+                        {% include 'core/events/teaser.html' %}
+                      </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="add-recent-events-col">
+
+              <div class="add-event"><a href="{% url 'core:events_create' %}" class="btn add-event-btn">Add an event</a></div>
+
+              <div class="recently-added-events">
+                <h2>Recently Added Events</h2>
+                <div class="block-content">
+                  <ul class="sidebar-events-news-list sidebar-events-list smaller-teasers list-unstyled">
+                    {% for event in events %}
+                    <li>
+                      {% include 'core/events/sidebar-view.html' %}
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+<div class="top-business-item clearfix category-id-5 category-id-3">
+  <div class="business-img"></div>
+  <div class="business-user-photos">
+    <div class="title">User Photos</div>
+    <div class="images more-photos-overlay">
+      <div class="overlay-text">
+        <div class="txt">+10</div>
+      </div>
+    </div>
+  </div>
+  <div class="business-details">
+    <div class="business-title">
+      <a href="{% url 'core:business_detail' business.id %}">{{business}}</a>
+    </div>
+    <div class="business-reviews-stars-number">
+      <div class="review-stars-wrapper">
+        <div class="review-stars" data-rating="">
+          <div class="review-stars-default default"></div>
+          <div class="review-stars-rating rating"></div>
+        </div>
+      </div>
+      <div class="text">{{business.get_no_reviews}}</div>
+    </div>
+    <div class="business-desc">{{business.description}}</div>
+  </div>
+</div>

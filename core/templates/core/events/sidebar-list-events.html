@@ -1,0 +1,11 @@
+<h2>Popular Events</h2>
+<ul class="sidebar-events-news-list sidebar-events-list list-unstyled">
+  {% for event in events %}
+  <li>
+    {% include 'core/events/sidebar-view.html' %}
+  </li>
+  {% endfor %}
+</ul>
+<div class="all-list-btn">
+  <a href="{%url 'core:events_landing' %}" class="btn">View all Events</a>
+</div>

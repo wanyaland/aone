@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+{% block main %}
+
+<div class="table-header">
+    Business List
+</div>
+
+<div class="table-responsive">
+    <table id="sample-table-2" class="table table-stripped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>City</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for business in business_list %}
+        <tr>
+            <td><a href="{% url 'core:business_detail' pk=business.pk %}">{{business.name}}</a> </td>
+            <td>{{business.address}}</td>
+            <td>{{business.email}}</td>
+            <td>{{business.city}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+       <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+{% endblock %}

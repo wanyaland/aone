@@ -1,0 +1,232 @@
+{% extends 'core/base.html' %}
+{% load i18n %}
+
+{% block main %}
+
+  <div class="category-landing-page-wrapper">
+    <div class="blue-header-bg"></div>
+    <div class="page-container container">
+
+      <h1>Best Restaurants in Kampala</h1>
+
+      {% include 'core/business-category/landing-page-banner.html' %}
+
+      <div class="filter-businesses-wrapper clearfix">
+
+        {% include 'core/business-category/filters.html' %}
+
+        <div class="filter-content-col">
+          <div class="category-landing-page-content">
+            <div class="landing-strip reviews-photos clearfix">
+              <div class="reviews-col"><div class="reviews-col-inner">
+                <h2>Recent Reviews on Restaurants</h2>
+                <div class="reviews-wrapper">
+                  <div class="top-business-item clearfix business-user-title">
+                    <div class="business-img"></div>
+                    <div class="business-user-photos">
+                      <div class="title">User Photos</div>
+                      <div class="images more-photos-overlay">
+                        <div class="overlay-text">
+                          <div class="txt">+10</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="business-details">
+                      <div class="user-title"><a href="javascript:;">Peter</a> reviewed <a href="javascript:;">Endiro Cafe</a></div>
+                      <div class="business-reviews-stars-number">
+                        <div class="review-stars-wrapper">
+                          <div class="review-stars" data-rating="">
+                            <div class="review-stars-default default"></div>
+                            <div class="review-stars-rating rating"></div>
+                          </div>
+                        </div>
+                        <div class="text">134 reviews</div>
+                      </div>
+                      <div class="business-desc">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nulla
+                        vitae elit libero, a pharetra augue.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="top-business-item clearfix business-user-title">
+                    <div class="business-img"></div>
+                    <div class="business-user-photos">
+                      <div class="title">User Photos</div>
+                      <div class="images more-photos-overlay">
+                        <div class="overlay-text">
+                          <div class="txt">+10</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="business-details">
+                      <div class="user-title"><a href="javascript:;">Peter</a> reviewed <a href="javascript:;">Endiro Cafe</a></div>
+                      <div class="business-reviews-stars-number">
+                        <div class="review-stars-wrapper">
+                          <div class="review-stars" data-rating="">
+                            <div class="review-stars-default default"></div>
+                            <div class="review-stars-rating rating"></div>
+                          </div>
+                        </div>
+                        <div class="text">134 reviews</div>
+                      </div>
+                      <div class="business-desc">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nulla
+                        vitae elit libero, a pharetra augue.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="top-business-item last-item clearfix business-user-title">
+                    <div class="business-img"></div>
+                    <div class="business-user-photos">
+                      <div class="title">User Photos</div>
+                      <div class="images more-photos-overlay">
+                        <div class="overlay-text">
+                          <div class="txt">+10</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="business-details">
+                      <div class="user-title"><a href="javascript:;">Peter</a> reviewed <a href="javascript:;">Endiro Cafe</a></div>
+                      <div class="business-reviews-stars-number">
+                        <div class="review-stars-wrapper">
+                          <div class="review-stars" data-rating="">
+                            <div class="review-stars-default default"></div>
+                            <div class="review-stars-rating rating"></div>
+                          </div>
+                        </div>
+                        <div class="text">134 reviews</div>
+                      </div>
+                      <div class="business-desc">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nulla
+                        vitae elit libero, a pharetra augue.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div></div>
+              <div class="photos-col">
+                <h2>Recent Photos</h2>
+                <ul class="list-unstyled recent-photos-list">
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                </ul>
+                <a href="javascript:;" class="btn line-35">View Gallery</a>
+              </div>
+            </div>
+            <div class="landing-strip new-businesses-strip">
+              <div class="h2-btn">
+                <div class="h2-wrapper">
+                  <h2>New restaurants in Kampala</h2>
+                </div>
+                <a href="#" class="btn line-35">View more new restaurants in Kampala</a>
+              </div>
+              <ul class="new-businesses clearfix list-unstyled">
+                <li>
+                  <a href="#" class="new-business">
+                    <span class="img">
+                      <img src="/static/africaone/content-images/patisserrie-new-bw.jpg" class="img-bw" />
+                      <img src="/static/africaone/content-images/patisserrie-new-cl.jpg" class="img-cl" />
+                    </span>
+                    <span class="info">
+                      <span class="name">La Patisserrie</span>
+                      <span class="business-reviews-stars-number business-reviews-stars-box">
+                        <span class="review-stars-wrapper">
+                          <span class="review-stars darker" data-rating="">
+                            <span class="review-stars-default default"></span>
+                            <span class="review-stars-rating rating"></span>
+                          </span>
+                        </span>
+                        <span class="text">134 reviews</span>
+                      </span>
+                    </span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="new-business">
+                    <span class="img">
+                      <img src="/static/africaone/content-images/patisserrie-new-bw.jpg" class="img-bw" />
+                      <img src="/static/africaone/content-images/patisserrie-new-cl.jpg" class="img-cl" />
+                    </span>
+                    <span class="info">
+                      <span class="name">La Patisserrie</span>
+                      <span class="business-reviews-stars-number business-reviews-stars-box">
+                        <span class="review-stars-wrapper">
+                          <span class="review-stars darker" data-rating="">
+                            <span class="review-stars-default default"></span>
+                            <span class="review-stars-rating rating"></span>
+                          </span>
+                        </span>
+                        <span class="text">134 reviews</span>
+                      </span>
+                    </span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="new-business">
+                    <span class="img">
+                      <img src="/static/africaone/content-images/patisserrie-new-bw.jpg" class="img-bw" />
+                      <img src="/static/africaone/content-images/patisserrie-new-cl.jpg" class="img-cl" />
+                    </span>
+                    <span class="info">
+                      <span class="name">La Patisserrie</span>
+                      <span class="business-reviews-stars-number business-reviews-stars-box">
+                        <span class="review-stars-wrapper">
+                          <span class="review-stars darker" data-rating="">
+                            <span class="review-stars-default default"></span>
+                            <span class="review-stars-rating rating"></span>
+                          </span>
+                        </span>
+                        <span class="text">134 reviews</span>
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="landing-strip sub-categories-strip">
+              <h2>Restaurant Categories</h2>
+              <div class="sub-categories-wrapper clearfix">
+                <ul class="list-unstyled sub-categories-list">
+                  <li><a href="#">Italian</a></li>
+                  <li><a href="#">French</a></li>
+                  <li><a href="#">Mediterrannean</a></li>
+                  <li><a href="#">Italian</a></li>
+                  <li><a href="#">Greek</a></li>
+                  <li><a href="#">Eastern</a></li>
+                </ul>
+                <ul class="list-unstyled sub-categories-list">
+                  <li><a href="#">Italian</a></li>
+                  <li><a href="#">French</a></li>
+                  <li><a href="#">Mediterrannean</a></li>
+                  <li><a href="#">Italian</a></li>
+                  <li><a href="#">Greek</a></li>
+                  <li><a href="#">Eastern</a></li>
+                </ul>
+                <ul class="list-unstyled sub-categories-list">
+                  <li><a href="#">Italian</a></li>
+                  <li><a href="#">French</a></li>
+                  <li><a href="#">Mediterrannean</a></li>
+                  <li><a href="#">Italian</a></li>
+                  <li><a href="#">Greek</a></li>
+                  <li><a href="#">Eastern</a></li>
+                </ul>
+                <ul class="list-unstyled sub-categories-list">
+                  <li><a href="#">Italian</a></li>
+                  <li><a href="#">French</a></li>
+                  <li><a href="#">Mediterrannean</a></li>
+                  <li><a href="#">Italian</a></li>
+                  <li><a href="#">Greek</a></li>
+                  <li><a href="#">Eastern</a></li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'core/base.html' %}
+{% block main %}
+<div class="row">
+    <div class="col-sm-9 col-sm-offset-1">
+        <h4 class="header green lighter bigger">
+                <i class=" blue"></i>
+                Add Business
+            </h4>
+        <h5>
+            Add information about your business below. Your business page will not appear in search results until this information has been verified and approved by our moderators.
+            Once it is approved, you'll receive an email with instructions on how to claim your business page
+        </h5>
+        {% if form.errors %}
+            {% for field,error in form.errors.items %}
+            <div class="text-warning bigger-110 orange">
+                <i class="icon-warning-sign"></i>
+                {% if field != '__all__' %}{{ field }}{% endif %}
+                {{ error|striptags }}
+            </div>
+            {% endfor %}
+        {% endif %}
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+        <form action="" method="post" enctype="multipart/form-data"> {% csrf_token %}
+            {{form.media}}
+       <div class="col-sm-8">
+        <label class="block clearfix">
+            <span class="block input-icon input-icon-right">
+                {{form.name}}
+            </span>
+        </label>
+        <label class="block clearfix">
+            <span class="block input-icon input-icon-right">
+                {{form.address}}
+            </span>
+        </label>
+         <label class="block clearfix">
+            <span class="block input-icon input-icon-right">
+                {{form.city}}
+            </span>
+        </label>
+         <label class="block clearfix">
+            <span class="block input-icon input-icon-right">
+                {{form.email}}
+            </span>
+        </label>
+         <label class="block clearfix">
+            <span class="block input-icon input-icon-right">
+                {{form.web_address}}
+            </span>
+        </label>
+         <label class="block clearfix">
+            <span class="block input-icon input-icon-right">
+                {{form.phone_number}}
+            </span>
+        </label>
+         <label class="block">
+             Categories
+             <span class="block">
+                 {{form.categories}}
+             </span>
+         </label>
+           <label for="id_photo">Select Photo</label>
+           {{form.photo}}
+           </br>
+           {{form.location}}
+        </div>
+            <!--{{form.as_p}}-->
+        <!-- <div class="space-30"></div>-->
+
+         <div class="clearfix">
+
+             <button type="submit" class="width-15 pull-left btn btn-sm btn-success">
+                            Add this Business
+                            <i class="icon-arrow-right icon-on-right"></i>
+             </button>
+         </div>
+
+    </fieldset>
+</form>
+    </div>
+
+</div>
+{% endblock %}

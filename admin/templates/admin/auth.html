@@ -1,0 +1,31 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Log in</title>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link href="/static/africaone-admin/css/stylesheets/login.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="login-page">
+   <div class="form">
+	{{ state }}
+	<form class="login_form" action="/manager/login/" method="post">
+        {%csrf_token %}
+		{% if next %}
+		<input type="hidden" name="next" value="{{ next }}" />
+		{% endif %} 
+		<input type="text" name="username" placeholder="username" />
+		<input type="password" name="password" placeholder="password"/>
+		<button>login</button>
+	</form>
+     </div>
+     </div>
+     <script>
+       $('.message a').click(function(){
+   $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+   });
+     </script>
+</body>
+</html>
+

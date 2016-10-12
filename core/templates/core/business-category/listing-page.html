@@ -1,0 +1,98 @@
+{% extends 'core/base.html' %}
+{% load i18n %}
+
+{% block main %}
+
+  <div class="category-landing-page-wrapper">
+    <div class="blue-header-bg"></div>
+    <div class="page-container container">
+
+      <div class="filter-businesses-wrapper clearfix">
+
+        {% include 'core/business-category/filters.html' %}
+
+        <div class="filter-content-col">
+          <div class="category-landing-page-content">
+
+            <div class="businesses-listing-wrapper">
+              <h1>Restaurants in Kampala</h1>
+              <div class="sort-links-wrapper clearfix">
+                <div class="col col-label">Sort by:</div>
+                <div class="col col-link">
+                  <a href="#" title="Price (low to high)">Price (low to high)</a>
+                </div>
+                <div class="col col-link">
+                  <a href="#" title="Highest rated">Highest rated</a>
+                </div>
+                <div class="col col-link">
+                  <a href="#" title="Number of reviews">Most reviewed</a>
+                </div>
+              </div>
+
+              {% include 'core/business-category/business-listing-item.html' %}
+              {% include 'core/business-category/business-listing-item.html' %}
+              {% include 'core/business-category/business-listing-item.html' %}
+              {% include 'core/business-category/business-listing-item.html' %}
+
+              <ul class="pager pager-listing-businesses">
+                <li class="first"><a href="#">&lt;&lt;</a></li>
+                <li class="prev"><a href="#">&lt;</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li class="active"><a href="#">4</a></li>
+                <li class="spacer">........</li>
+                <li><a href="#">10</a></li>
+                <li class="next"><a href="#">&gt;</a></li>
+                <li class="last"><a href="#">&gt;&gt;</a></li>
+              </ul>
+
+            </div>
+
+            <div class="landing-strip sub-categories-strip">
+              <h2>Restaurant Categories</h2>
+              <div class="sub-categories-wrapper clearfix">
+                <ul class="list-unstyled sub-categories-list">
+                  <li><a href="#">Italian</a></li>
+                  <li><a href="#">French</a></li>
+                  <li><a href="#">Mediterrannean</a></li>
+                  <li><a href="#">Italian</a></li>
+                  <li><a href="#">Greek</a></li>
+                  <li><a href="#">Eastern</a></li>
+                </ul>
+                <ul class="list-unstyled sub-categories-list">
+                  <li><a href="#">Italian</a></li>
+                  <li><a href="#">French</a></li>
+                  <li><a href="#">Mediterrannean</a></li>
+                  <li><a href="#">Italian</a></li>
+                  <li><a href="#">Greek</a></li>
+                  <li><a href="#">Eastern</a></li>
+                </ul>
+                <ul class="list-unstyled sub-categories-list">
+                  <li><a href="#">Italian</a></li>
+                  <li><a href="#">French</a></li>
+                  <li><a href="#">Mediterrannean</a></li>
+                  <li><a href="#">Italian</a></li>
+                  <li><a href="#">Greek</a></li>
+                  <li><a href="#">Eastern</a></li>
+                </ul>
+                <ul class="list-unstyled sub-categories-list">
+                  <li><a href="#">Italian</a></li>
+                  <li><a href="#">French</a></li>
+                  <li><a href="#">Mediterrannean</a></li>
+                  <li><a href="#">Italian</a></li>
+                  <li><a href="#">Greek</a></li>
+                  <li><a href="#">Eastern</a></li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+{% endblock %}

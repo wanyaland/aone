@@ -1,0 +1,100 @@
+{% extends 'core/base.html' %}
+{% load i18n %}
+
+{% block main %}
+
+  <div class="create-event-page-wrapper blue-header-h1-top">
+
+    <div class="blue-header-bg"></div>
+
+    <div class="full-page-content-wrapper">
+
+      <div class="page-container container">
+
+        <form action="{% url 'core:events_create' %}" class="create-event-form africaone-form cols-2 clearfix" method="post">
+          {%csrf_token%}
+          <div class="form-col event-details-col">
+            <h2 class="grey-bg big">Create a new event</h2>
+            <div class="form-fields-wrapper">
+              <div class="form-field"><input type="text" class="form-text" placeholder="Event Name*" name="event_name"></div>
+              <div class="form-field field-with-label clearfix">
+                <div class="label">When<span class="required">*</span></div>
+                <div class="field">
+                  <div class="clearfix datetime-field datetime-start-field">
+                    <div class="field-inner-wrapper date-field-wrapper">
+                      <input type="text" class="form-text date-field" placeholder="Start date: DD/MM/YYYY" name="event_date">
+                    </div>
+                    <div class="field-inner-wrapper time-field-wrapper">
+                      <input type="text" class="form-text time-field" placeholder="Time: 12:00 am">
+                    </div>
+                  </div>
+                  <div class="clearfix datetime-field datetime-end-field">
+                    <div class="field-inner-wrapper date-field-wrapper">
+                      <input type="text" class="form-text date-field" placeholder="End date: DD/MM/YYYY" name="end_date">
+                    </div>
+                    <div class="field-inner-wrapper time-field-wrapper">
+                      <input type="text" class="form-text time-field" placeholder="Time: 12:00 am">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-field field-with-label clearfix">
+                <div class="label">Where<span class="required">*</span></div>
+                <div class="field"><input type="text" class="form-text" name="where"></div>
+              </div>
+              <div class="form-field">
+                <textarea name="description" class="form-text form-textarea" placeholder="Description*"></textarea>
+              </div>
+              <div class="form-field"><input type="text" class="form-text url-field" placeholder="Website URL" name="website_url"></div>
+              <div class="form-field field-with-label price-field clearfix">
+                <div class="label">Price*</div>
+                <div class="field"><input type="text" placeholder="UGX" class="form-text"></div>
+                <div class="free-price">
+                  <input type="checkbox" class="checkbox fancy-checkbox" id="free-event">
+                  <label for="free-event">This is a free event</label></div>
+              </div>
+              <div class="form-field">
+                <select name="categories" id="event-categories" class="chosen-select" data-placeholder="Choose three categories for this event ..." multiple>
+                  <option value></option>
+                  <option value="1">Category One</option>
+                  <option value="2">Category Two</option>
+                  <option value="3">Category Three</option>
+                </select>
+              </div>
+              <div class="submit-btns clearfix">
+                <input type="submit" class="form-btn btn line-50" value="Create Event">
+                <a href="#" class="cancel btn cancel-btn link line-50">Cancel</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-col form-col-right event-location-col">
+            <h2 class="grey-bg big">Location on map</h2>
+            <div class="form-fields-wrapper">
+              <div class="search-map-wrapper">
+                <div class="search-map">
+                  <div class="location-finder gllpLatlonPicker">
+                    <div class="location-search-field clearfix form-field">
+                      <input type="text" placeholder="Search for event location" class="form-text location-search gllpSearchField">
+                      <input type="button" class="btn form-btn gllpSearchButton" value="Go">
+                    </div>
+                    <div class="map-div gllpMap"></div>
+                    <div class="feedback">Please pick your location on the map above by moving the marker OR double clicking on the map.</div>
+                    <input type="hidden" value="" name="latitude" class="location-latitude gllpLatitude" />
+                    <input type="hidden" value="" name="longitude" class="location-longitude gllpLongitude" />
+                    <input type="hidden" class="gllpZoom" value="16" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+{% endblock %}

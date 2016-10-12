@@ -1,0 +1,9 @@
+
+<div class="header-login-links clearfix">
+  {% if user.is_authenticated %}
+  <div class="btn-col"><a href="/logout" class="btn btn-logout">Log Out</a></div>
+  {% else %}
+  <div class="btn-col"><a href="/login" class="btn btn-login">Login</a></div>
+  <div class="btn-col"><a href="{%url 'core:sign_up'%}" class="btn btn-sign-up">Sign Up</a></div>
+  {% endif %}
+</div>

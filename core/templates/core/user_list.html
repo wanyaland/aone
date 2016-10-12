@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+{% block main %}
+
+<div class="table-header">
+    Registered Customers
+</div>
+<div class="table-responsive">
+    <table id="sample-table-2" class="table table-stripped table-bordered table-hover">
+        <thead>
+           <tr>
+               <th>Username</th>
+               <th>Email</th>
+               <th>Photo</th>
+           </tr>
+        </thead>
+        <tbody>
+        {% for customer in customer_list %}
+        <tr>
+            <td><a href="{%url 'core:user_detail' pk=customer.pk%}">{{customer.user.username}}</a> </td>
+            <td>{{customer.user.email}}</td>
+            {% if customer.photo %}
+            <td><img src="{{customer.photo.url}}" width="200" height="200"></td>
+            {% endif %}
+        </tr>
+        {% endfor%}
+        </tbody>
+
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,186 @@
+
+.business-header {
+  background: #af7d42;
+  padding: 95px 0 0;
+}
+.business-title-header {
+  background: #fff;
+  @include border-top-left-radius(4px);
+  @include border-top-right-radius(4px);
+  padding: 30px 525px 15px 25px;
+  position: relative;
+  .business-title-categories {
+    position: relative;
+    padding-right: 190px;
+  }
+  .business-reviews-stars-number {
+    position: absolute;
+    width: 190px;
+    right: 0; top: 7px;
+  }
+  .categories {
+    margin: 6px 0 0;
+    &, a {
+      color: #666;
+    }
+    a:hover {
+      color: $green;
+    }
+  }
+}
+
+.start-business-review {
+  position: absolute;
+  right: 25px; top: 29px;
+  width: 500px;
+  .btn-icon {
+    float: right;
+  }
+  .btn-take-photo {
+    width: 135px;
+    border-right: none;
+    border-left: none;
+    .icon {
+      background-position: sprite-position($global-sprite, 'add-photo-grey');
+      span {
+        background-position: sprite-position($global-sprite, 'add-photo-white');
+      }
+    }
+  }
+  .btn-share {
+    width: 108px;
+    @include border-top-left-radius(0);
+    @include border-bottom-left-radius(0);
+  }
+  .start-review-wrapper {
+    float: right;
+    width: 245px;
+    .help-txt {
+      color: #999;
+    }
+    .write-review-wrapper {
+      line-height: 32px;
+      @include border-top-right-radius(0);
+      @include border-bottom-right-radius(0);
+    }
+  }
+}
+
+.business-photos-carousel {
+  background: #fff;
+  padding: 20px;
+}
+
+.business-details-wrapper {
+  background: #fff;
+  padding: 45px 455px 30px 315px;
+  position: relative;
+  min-height: 300px;
+  .business-details-col {
+    position: absolute;
+    left: 25px; top: 45px;
+    width: 230px;
+  }
+  .business-map-col {
+    position: absolute;
+    right: 25px; top: 45px;
+    width: 390px;
+    #business-map {
+      border: solid 1px #ccc;
+      height: 188px;
+    }
+    .btn {
+      font-weight: bold;
+      @include ems_font_size(15px, $font-size-base);
+      text-transform: uppercase;
+      margin: 3px 0 0;
+    }
+  }
+  .business-categories-col {}
+}
+
+.business-details-col {
+  color: #666;
+  line-height: 1.3em;
+}
+
+.business-reviews-features-wrapper {
+  margin-top: 2px;
+  .business-reviews-col {
+    float: left;
+    width: 100%;
+    padding-right: 417px;
+  }
+  .business-features-col {
+    float: left;
+    width: 415px;
+    margin-left: -415px;
+    .block {
+      background: #fff;
+      margin-bottom: 2px;
+    }
+    h2 {
+      padding: 30px 25px;
+      border-bottom: solid 1px #f1f1f1;
+    }
+    .block-facebook h2 {
+      border-bottom: none;
+    }
+  }
+}
+
+.business-reviews-col-wrapper {
+  background: #fff;
+  .title-ratings-wrapper {
+    padding: 35px 30px 0;
+    h2 {
+      @include ems_font_size(30px, $font-size-base);
+      float: left;
+    }
+    .ratings-wrapper {
+      float: left;
+      padding: 6px 0 0 15px;
+    }
+  }
+  .sort-wrapper {
+    padding: 20px 30px 25px;
+    color: #666;
+    label {
+      display: block;
+      width: 56px;
+      line-height: 32px;
+      float: left;
+    }
+    .btn {
+      float: left;
+      line-height: 30px;
+      padding: 0 30px;
+      margin-left: 10px;
+    }
+  }
+  .trust-us-wrapper {
+    background: $blue;
+    color: #fff;
+    padding: 20px 30px;
+    p {
+      margin: 0 0 5px;
+      &.link {
+        margin: 0;
+        a {
+          color: #9bff00;
+        }
+      }
+    }
+    .trust-info {
+      float: left;
+      width: 330px;
+    }
+    .write-review-col {
+      float: right;
+      width: 265px;
+      .intro {
+        padding-bottom: 10px;
+      }
+    }
+  }
+}

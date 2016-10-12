@@ -1,0 +1,10 @@
+{% extends 'core/base.html' %}
+{% block main %}
+<div class="col-md-6">
+    <form method="post" action=".">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input class="btn-sm btn-primary" type="button" value="Create Event"/>
+    </form>
+</div>
+{% endblock %}

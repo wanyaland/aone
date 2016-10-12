@@ -1,0 +1,12 @@
+{% extends 'admin/base.html' %}
+{% block main %}
+
+<form class="dropzone" action="{% url 'admin:manage_business_photos' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="fallback">
+                <input name="file" type="file" multiple />
+            </div>
+            <script src="{% static 'fileupload/js/dropzone.js' %}"></script>
+</form>
+
+{% endblock %}
