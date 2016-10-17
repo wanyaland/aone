@@ -38,7 +38,6 @@ def login_view(request):
     state = None
     if request.GET:
         next_url = request.GET.get('next')
-    '''
     if request.POST:
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -55,7 +54,6 @@ def login_view(request):
                 state="Your account is not active"
         else:
             state="Your username and password do not match"
-    '''
     return render(request,'core/auth-user/login.html',{'next':next_url,'state':state,'request':request})
 
 def forgot_password_view(request):
@@ -244,8 +242,9 @@ def events_landing(request):
 def events_listing(request):
     return render(request, 'core/events/listing.html')
 
-def EventsFullPageView(request):
-    return render(request, 'core/events/full.html',)
+def events_detail(request,pk):
+    event=get_object_or_404(Event,pk=pk)
+    return render(request, 'core/events/full.html',{'event':event})
 
 def create_event(request):
     if request.method=='POST':
@@ -265,6 +264,14 @@ class ReviewListView(ListView):
 
 class ReviewDetail(DetailView):
     model = Review
+
+def event_comment(request,pk):
+    event = get_object_or_404(Event,pk=pk)
+    if request.method=='POST':
+        comment = request.POST.get('comment')
+        event.comment = comment
+        event.save()
+    return reverse('core:events_full_view',event.id)
 
 class BusinessDetail(DetailView):
 
@@ -327,10 +334,17 @@ def search_business(request):
         results = Business.objects.filter(qset).distinct()
     else:
         results = []
-    return render(request,'core/business_list.html',{
+    return render(request,'core/business-category/listing-page.html',{
         'results':results,
         'query':query,
     })
+
+def get_listings_parent(request):
+    if request.method=='GET':
+        jsonData = {}
+        parent_id = request.GET.get('parent_id')
+        parent_category = get_object_or_404(ParentCategory,parent_id)
+        return HttpResponse(json.dumps(jsonData),content_type="application/json")
 
 class BusinessList(ListView):
     model = Business
@@ -382,8 +396,8 @@ class ReviewDelete(DeleteView):
     model = Review
 
 class GetHomePageBusinesses(View):
-    def post(self,request,*args,**kwargs):
-        parent_id = request.POST.get('parent_id')
+    def get(self,request,*args,**kwargs):
+        parent_id = request.GET.get('parent_id')
         parent_cat = get_object_or_404(ParentCategory,id=parent_id)
         categories = parent_cat.category_set.all()
         businesses = []
@@ -396,7 +410,7 @@ class GetHomePageBusinesses(View):
              business_data['id']=business.pk
              business_data['name']=business.name
              businesses.append(business_data)
-        data={'businesses':businesses[:5]}
+        data={'businesses':businesses[:10]}
         return HttpResponse(json.dumps(data))
 
 class GetNearestBusinesses(View):

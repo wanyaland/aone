@@ -4,7 +4,8 @@ from geoposition.fields import GeopositionField
 from djangoratings.fields import RatingField
 from django.db.models import Avg
 from django.core.validators import MaxValueValidator,MinValueValidator
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 # Create your models here.
@@ -75,8 +76,10 @@ class Customer(models.Model):
     user = models.OneToOneField(User)
     photo = models.FileField(null=True,upload_to='avatars/%Y/%m/%d',blank=True)
     user_type = models.CharField(choices=CHOICES,max_length=20,default='B')
+
     def __unicode__(self):
         return "%s %s" %(self.user.first_name,self.user.last_name)
+
 
 class Review(models.Model):
     customer = models.ForeignKey(Customer,null=True)
@@ -115,9 +118,19 @@ class Event(models.Model):
     description = models.TextField(null=True)
     website_url = models.URLField(null=True)
     price = models.IntegerField(null=True)
+    owner = models.OneToOneField(Customer,null=True)
 
     def __unicode__(self):
         return self.name
+
+class EventDiscussion(models.Model):
+    customer = models.ForeignKey(Customer)
+    comment = models.TextField()
+    date = models.DateField(auto_now=True)
+    event = models.ForeignKey(Event)
+
+    def __unicode__(self):
+        return self.comment
 
 
 
