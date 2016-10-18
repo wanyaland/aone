@@ -232,7 +232,7 @@ def add_business_successful(request):
     return render(request,'core/businesses/add_business_success.html', {})
 
 def UserDetailTestPageView(request,pk):
-    customer = get_object_or_404(Customer,pk)
+    customer = get_object_or_404(Customer,pk=pk)
     return render(request, 'core/user/user_detail-temp.html', {'customer':customer,})
 
 def events_landing(request):
