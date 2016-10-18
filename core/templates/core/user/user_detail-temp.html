@@ -1,5 +1,4 @@
 {% extends 'core/base.html' %}
-{% load ratings %}
 {% load i18n %}
 
 {% block main %}
@@ -18,7 +17,7 @@
               <img src="/static/africaone/content-images/patiserrie-medium.jpg" />
             </div></div>
             <div class="user-details">
-              <h2>Martha Mukkaa</h2>
+              <h2>{{customer}}</h2>
               <div class="location-date">
                 <div class="location">Kampala</div>
                 <div class="date">Joined AfricaOne on 09 Nov 2022</div>
