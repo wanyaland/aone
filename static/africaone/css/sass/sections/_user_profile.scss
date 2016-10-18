@@ -1,0 +1,80 @@
+
+.user-profile-page-wrapper {
+  .full-page-content-wrapper {
+    background-color: #fff;
+  }
+}
+
+.user-intro-strip {
+  background-color: #f8f8f8;
+  .user-pic-name-wrapper {
+    float: left;
+    width: 100%;
+  }
+  .user-pic-name {
+    margin-right: 400px;
+    background-color: #fff;
+    overflow: hidden;
+    padding: 30px;
+  }
+  .things-love {
+    float: left;
+    margin-left: -400px;
+    width: 400px;
+    padding: 40px 35px 15px;
+    color: #666;
+    .title {
+      font-weight: bold;
+      color: #333;
+      @include ems_font_size(15px, $font-size-base);
+    }
+  }
+  .user-img-col {
+    float: left;
+    @include border-radius(100%);
+    overflow: hidden;
+    width: 185px;
+    height: 185px;
+    background-color: #d0d7db;
+    img {
+      display: block;
+      width: auto;
+      height: 185px;
+    }
+  }
+  .user-details {
+    margin-left: 285px;
+  }
+  h2 {
+    @include ems_font_size(25px, $font-size-base);
+    margin: 0;
+    line-height: 1.2em;
+  }
+  .location-date {
+    margin: 15px 0;
+    line-height: 1.4em;
+  }
+  .user-info {
+    li {
+      padding-right: 15px;
+    }
+  }
+  .follow-btn-wrapper {
+    padding-top: 18px;
+    .btn {
+      text-transform: uppercase;
+      max-width: 170px;
+      line-height: 45px;
+    }
+  }
+}
+
+.user-reviews-list-wrapper {
+  h2.user-reviews-title {
+    background-color: #f8f8f8;
+    @include ems_font_size(25px, $font-size-base);
+    margin: 0;
+    padding: 30px;
+    border-top: solid 2px #f1f1f1;
+  }
+}

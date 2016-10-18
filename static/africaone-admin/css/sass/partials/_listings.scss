@@ -1,0 +1,32 @@
+.filters-wrapper {
+  padding: 18px;
+  &.fixed-at-top {
+    width: 100%;
+    z-index: 9;
+    position: fixed;
+    top: 58px;
+    border-bottom: solid 15px #F7F7F7;
+  }
+}
+.listings-filters {
+  label {
+    line-height: 1em;
+    margin-bottom: 9px;
+    display: block;
+    font-size: 120%;
+  }
+  .submit-col {
+    padding-top: 23px;
+  }
+}
+
+.chosen-container-multi .chosen-choices {
+  min-height: 35px;
+  li.search-choice {
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+  li.search-field {
+    margin-top: 4px;
+  }
+}

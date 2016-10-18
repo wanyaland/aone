@@ -2,3 +2,5 @@ env/
 *.pyc
 .idea/
 db.sqlite3
+africa_one/settings.py
+
