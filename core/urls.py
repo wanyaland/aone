@@ -39,6 +39,7 @@ urlpatterns = patterns (
     url(r'^user-detail-test$', UserDetailTestPageView, name='user_detail_test'),
     url(r'^events$', events_landing, name='events_landing'),
     url(r'^events/listing$', events_listing, name='events_listing'),
-    url(r'^events/event-name$', EventsFullPageView, name='events_full_view'),
-    url(r'^events/create$', create_event, name='events_create'),
+    url(r'^event_detail/(?P<pk>\d+)/$', events_detail, name='events_full_view'),
+    url(r'^events/create/$', create_event, name='events_create'),
+    url(r'^event_comment/(?P<pk>\d+)/$',event_comment,name='event_comment'),
 )

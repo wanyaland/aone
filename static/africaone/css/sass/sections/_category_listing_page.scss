@@ -1,0 +1,97 @@
+.businesses-listing-wrapper {
+  .sort-links-wrapper {
+    background-color: #0083ae;
+    color: #fff;
+    .col {
+      float: left;
+      border-right: solid 1px #006e92;
+    }
+    .col-label {
+      padding: 30px 30px 30px 40px;
+    }
+    .col-link a {
+      display: block;
+      padding: 30px;
+      color: #fff;
+    }
+  }
+}
+
+.business-listing-item {
+  padding: 35px 45px 30px;
+  border-bottom: solid 2px #f1f1f1;
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .business-details-strip {
+    .img {
+      float: left;
+      width: 165px;
+      background-color: #f2f2f2;
+      @include border-radius(3px);
+      overflow: hidden;
+      min-height: 80px;
+    }
+    .business-details {
+      margin-left: 200px;
+      .col {
+        float: left;
+        width: 30%;
+        padding: 0 30px;
+      }
+      .business-name-details {
+        width: 40%;
+        padding-left: 0;
+      }
+      .price-sub-categories {
+        border-left: solid 1px #f1f1f1;
+        border-right: solid 1px #f1f1f1;
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+      .address-phone-website {
+        padding-right: 0;
+      }
+      .phone {
+        margin: 3px 0;
+      }
+      .price {
+        color: #dcdcdc;
+        span {
+          color: #424242;
+        }
+      }
+    }
+    h3 {
+      margin: 0;
+      @include ems_font_size(17px, $font-size-base);
+      text-transform: uppercase;
+      a {
+        color: #007fa8;
+      }
+    }
+    .business-reviews-stars-number {
+      margin: 5px 0;
+    }
+  }
+  .business-review {
+    border-top: solid 1px #f1f1f1;
+    padding-top: 15px;
+    margin-top: 15px;
+    .user-img {
+      float: left;
+      background-color: #d0d7db;
+      width: 45px;
+      min-height: 45px;
+    }
+    .user-review {
+      margin-left: 65px;
+      color: #999;
+      a {
+        color: #70b700;
+      }
+    }
+  }
+}

@@ -45,11 +45,11 @@
           <div class="text">Or</div>
         </div>
         <div class="user-auth-social-media">
-          <a href="{% url 'social:begin' 'facebook' %}" class="fb social-media-link">
+          <a href="{% url 'social:begin' 'facebook' %}{%if request.GET.next%}?next={{request.GET.next}}{%endif%}" class="fb social-media-link">
             <span class="icon"></span>
             <span class="text">Log in with Facebook</span>
           </a>
-          <a href="{% url 'social:begin' 'google-ouath2' %}" class="google social-media-link">
+          <a href="{% url 'social:begin' 'google-oauth2' %}{% if request.GET.next%}?next={{request.GET.next}}{%endif%}" class="google social-media-link">
             <span class="icon"></span>
             <span class="text">Log in with Google</span>
           </a>
