@@ -56,6 +56,21 @@ def login_view(request):
             state="Your username and password do not match"
     return render(request,'core/auth-user/login.html',{'next':next_url,'state':state,'request':request})
 
+def tag_review(request):
+    review_id = request.POST.get('review_id')
+    tagged = request.POST.get('tag')
+    review = get_object_or_404(Review,pk=review_id)
+    tag = ReviewTag(review=review,commit=False)
+    if request.user:
+        tag.user = request.user
+    else:
+        tag.ip_address = request.META['REMOTE_ADDR']
+    tag.tag = tagged
+    tag.save()
+    data = {'success':'true'}
+    return HttpResponse(json.dumps(data))
+
+
 def forgot_password_view(request):
     return render(request,'core/auth-user/forgot_password.html', {})
 
@@ -98,6 +113,24 @@ def sign_up_business_view(request):
         form = RegistrationForm()
         customer_form = CustomerForm()
     return render(request,'core/auth-user/sign_up_business.html',{
+        'form':form,'customer_form':customer_form
+    })
+
+def sign_up_moderator(request):
+    if request.method=='POST':
+        form = RegistrationForm(request.POST)
+        customer_form = CustomerForm(request.POST)
+        if form.is_valid() and customer_form.is_valid():
+            user = form.save()
+            customer = customer_form.save(commit=False)
+            customer.user = user
+            customer.user_type = 'M'
+            user.save()
+            customer.save()
+    else:
+        form = RegistrationForm()
+        customer_form = CustomerForm()
+    return render(request,'core/auth-user/sign_up.html',{
         'form':form,'customer_form':customer_form
     })
 

@@ -11,6 +11,7 @@ urlpatterns = patterns (
     url(r'^login/', login_view, name='login'),
     url(r'^sign_up/', sign_up, name='sign_up'),
     url(r'^business/sign-up/', sign_up_business_view, name='sign_up_business'),
+    url(r'^moderator/sign-up/',sign_up_moderator,name='sign_up_moderator'),
     url(r'^forgot-password/', forgot_password_view, name='forgot_password'),
     url(r'^business_list/$', BusinessList.as_view(), name='business_list'),
     url(r'^search_business/$', search_business, name='search_business'),

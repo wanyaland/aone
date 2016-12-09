@@ -6,6 +6,7 @@ from django.db.models import Avg
 from django.core.validators import MaxValueValidator,MinValueValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from datetime import datetime
 
 
 # Create your models here.
@@ -72,6 +73,7 @@ class Customer(models.Model):
     CHOICES = {
         ('B','Business'),
         ('C','Customer'),
+        ('M','Moderator'),
     }
     user = models.OneToOneField(User)
     photo = models.FileField(null=True,upload_to='avatars/%Y/%m/%d',blank=True)
@@ -87,6 +89,27 @@ class Review(models.Model):
     rating = RatingField(range=5,can_change_vote=True,allow_delete=True)
     review = models.TextField()
     create_date = models.DateTimeField(auto_now_add=True)
+
+class ReviewTag(models.Model):
+    CHOICES ={
+        ('C','COOL'),
+        ('H','HELPFUL'),
+        ('F','FUNNY'),
+    }
+    review = models.OneToOneField(Review)
+    user = models.ForeignKey(User,null=True,blank=True)
+    ip_address = models.IntegerField()
+    tag = models.CharField(choices=CHOICES,max_length=20)
+    date_added = models.DateField(default=datetime.now,editable=False)
+    date_changed = models.DateField(default=datetime.now,editable=False)
+    cookie = models.CharField(max_length=32,blank=True,null=True)
+
+    def __unicode__(self):
+        if self.user:
+            return "%s tagged %s" %(self.user,self.tag)
+        else:
+            return "%s tagged %s" %(self.ip_address,self.tag)
+
 
 class BusinessPhoto(models.Model):
     photo = models.ImageField(null=True,upload_to='businesses/%Y/%m/%d')
