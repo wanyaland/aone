@@ -43,4 +43,5 @@ urlpatterns = patterns (
     url(r'^event_detail/(?P<pk>\d+)/$', events_detail, name='events_full_view'),
     url(r'^events/create/$', create_event, name='events_create'),
     url(r'^event_comment/(?P<pk>\d+)/$',event_comment,name='event_comment'),
+    url(r'^tag_review/$',tag_review,name='tag_review'),
 )

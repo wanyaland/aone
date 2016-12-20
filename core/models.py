@@ -7,6 +7,7 @@ from django.core.validators import MaxValueValidator,MinValueValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from datetime import datetime
+from django.dispatch import receiver
 
 
 # Create your models here.
@@ -79,6 +80,15 @@ class Customer(models.Model):
     photo = models.FileField(null=True,upload_to='avatars/%Y/%m/%d',blank=True)
     user_type = models.CharField(choices=CHOICES,max_length=20,default='B')
 
+    @receiver(post_save,sender=User)
+    def create_user_customer(sender,instance,created,**kwargs):
+        if created:
+            Customer.objects.create(user=instance)
+
+    @receiver(post_save,sender=User)
+    def save_user_customer(sender,instance,**kwargs):
+        instance.customer.save()
+
     def __unicode__(self):
         return "%s %s" %(self.user.first_name,self.user.last_name)
 
@@ -98,7 +108,7 @@ class ReviewTag(models.Model):
     }
     review = models.OneToOneField(Review)
     user = models.ForeignKey(User,null=True,blank=True)
-    ip_address = models.IntegerField()
+    ip_address = models.CharField(max_length=20)
     tag = models.CharField(choices=CHOICES,max_length=20)
     date_added = models.DateField(default=datetime.now,editable=False)
     date_changed = models.DateField(default=datetime.now,editable=False)

@@ -8,8 +8,6 @@ import json
 # Create your tests here.
 
 class AdminTest(TestCase):
-    
-    fixtures = ['core/fixtures/initial_data.json']
     def setUp(self):
         self.cat1=Category.objects.create(name="cat1",)
         self.cat2=Category.objects.create(name="cat2",)

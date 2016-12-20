@@ -59,17 +59,22 @@ def login_view(request):
 def tag_review(request):
     review_id = request.POST.get('review_id')
     tagged = request.POST.get('tag')
-    review = get_object_or_404(Review,pk=review_id)
-    tag = ReviewTag(review=review,commit=False)
-    if request.user:
-        tag.user = request.user
+    if review_id:
+        review = get_object_or_404(Review,pk=review_id)
+        tag = ReviewTag(review=review)
+        if request.user.is_anonymous:
+            tag.ip_address = request.META['REMOTE_ADDR']
+            print 'anonymous user'
+        else:
+            tag.user = request.user
+            tag.ip_address = request.META['REMOTE_ADDR']
+            print 'logged user'
+        tag.tag = tagged
+        tag.save()
     else:
-        tag.ip_address = request.META['REMOTE_ADDR']
-    tag.tag = tagged
-    tag.save()
-    data = {'success':'true'}
+        raise ValueError('Review id not found')
+    data ={'success':'true'}
     return HttpResponse(json.dumps(data))
-
 
 def forgot_password_view(request):
     return render(request,'core/auth-user/forgot_password.html', {})
