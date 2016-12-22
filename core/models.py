@@ -100,25 +100,37 @@ class Review(models.Model):
     review = models.TextField()
     create_date = models.DateTimeField(auto_now_add=True)
 
+    def __unicode__(self):
+        return self.review
+
+class ReviewView(models.Model):
+    review = models.ForeignKey(Review,related_name='reviewviews')
+    ip = models.CharField(max_length=40)
+    session = models.CharField(max_length=40)
+    created = models.DateTimeField(default=datetime.now())
+
 class ReviewTag(models.Model):
     CHOICES ={
         ('C','COOL'),
         ('H','HELPFUL'),
         ('F','FUNNY'),
     }
-    review = models.OneToOneField(Review)
+    review = models.ForeignKey(Review)
     user = models.ForeignKey(User,null=True,blank=True)
     ip_address = models.CharField(max_length=20)
     tag = models.CharField(choices=CHOICES,max_length=20)
+    key = models.CharField(max_length=32,null=True)
     date_added = models.DateField(default=datetime.now,editable=False)
     date_changed = models.DateField(default=datetime.now,editable=False)
     cookie = models.CharField(max_length=32,blank=True,null=True)
+
 
     def __unicode__(self):
         if self.user:
             return "%s tagged %s" %(self.user,self.tag)
         else:
             return "%s tagged %s" %(self.ip_address,self.tag)
+
 
 
 class BusinessPhoto(models.Model):

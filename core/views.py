@@ -17,6 +17,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 import json
 from geopy.distance import vincenty
 from django.views.decorators.csrf import csrf_exempt
+from tag_manager import TagManager
 import datetime
 
 def index(request):
@@ -60,20 +61,14 @@ def tag_review(request):
     review_id = request.POST.get('review_id')
     tagged = request.POST.get('tag')
     if review_id:
+        tag_manager = TagManager()
         review = get_object_or_404(Review,pk=review_id)
-        tag = ReviewTag(review=review)
-        if request.user.is_anonymous:
-            tag.ip_address = request.META['REMOTE_ADDR']
-            print 'anonymous user'
+        ip_address = request.META['REMOTE_ADDR']
+        review_tag=tag_manager.add_tag(review,tagged,request.user,ip_address)
+        if review_tag:
+            data ={'success':'true'}
         else:
-            tag.user = request.user
-            tag.ip_address = request.META['REMOTE_ADDR']
-            print 'logged user'
-        tag.tag = tagged
-        tag.save()
-    else:
-        raise ValueError('Review id not found')
-    data ={'success':'true'}
+            data = {'success':'false'}
     return HttpResponse(json.dumps(data))
 
 def forgot_password_view(request):
@@ -303,6 +298,15 @@ class ReviewListView(ListView):
 
 class ReviewDetail(DetailView):
     model = Review
+
+    def get_client_ip(self):
+        ip = self.request.META.get('HTTP_X_FORWARDED_FOR',None)
+        if ip:
+            ip= ip.split(', ')[0]
+        else:
+            ip = self.request.META.get('REMOTE_ADDR','')
+        return ip
+
 
 def event_comment(request,pk):
     event = get_object_or_404(Event,pk=pk)
