@@ -8,6 +8,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from datetime import datetime
 from django.dispatch import receiver
+from django.contrib.contenttypes.models import ContentType
 
 
 # Create your models here.
@@ -105,6 +106,26 @@ class Review(models.Model):
 
 class ReviewView(models.Model):
     review = models.ForeignKey(Review,related_name='reviewviews')
+    ip = models.CharField(max_length=40)
+    session = models.CharField(max_length=40)
+    created = models.DateTimeField(default=datetime.now())
+
+class BusinessView(models.Model):
+    business = models.ForeignKey(Business)
+    ip = models.CharField(max_length=40)
+    session = models.CharField(max_length=40)
+    created= models.DateTimeField(default = datetime.now())
+
+class EventView(models.Model):
+    event = models.ForeignKey('Event')
+    ip = models.CharField(max_length=40)
+    session = models.CharField(max_length=40)
+    created = models.DateTimeField(default=datetime.now())
+
+
+class ModelView(models.Model):
+    content_type = models.ForeignKey(ContentType,related_name='views')
+    object_id = models.PositiveIntegerField()
     ip = models.CharField(max_length=40)
     session = models.CharField(max_length=40)
     created = models.DateTimeField(default=datetime.now())

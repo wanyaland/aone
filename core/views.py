@@ -298,8 +298,8 @@ class ReviewListView(ListView):
 
 
 class ReviewDetail(DetailView):
-    model = Review
 
+    model = Review
     def get_client_ip(self):
         ip = self.request.META.get('HTTP_X_FORWARDED_FOR',None)
         if ip:
