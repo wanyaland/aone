@@ -18,6 +18,7 @@ import json
 from geopy.distance import vincenty
 from django.views.decorators.csrf import csrf_exempt
 from tag_manager import TagManager
+from django.core.exceptions import ObjectDoesNotExist
 import datetime
 
 def index(request):
@@ -306,6 +307,28 @@ class ReviewDetail(DetailView):
         else:
             ip = self.request.META.get('REMOTE_ADDR','')
         return ip
+
+    def tracking_hit_post(self):
+        review = self.model.objects.get(pk=self.object.id)
+        try:
+            ReviewView.objects.get(review=review,ip=self.get_client_ip(),session=self.request.session.session_key)
+        except ObjectDoesNotExist:
+            import socket
+            dns = str(socket.getfqdn(self.get_client_ip())).split('.')[-1]
+            try:
+                if int(dns):
+                    view = ReviewView(review=review,
+                                      ip=self.get_client_ip(),
+                                      created=datetime.datetime.now(),
+                                      session=self.request.session.session_key)
+                    view.save()
+                else: pass
+            except ValueError:pass
+    def get_context_data(self,**kwargs):
+        context_data= super(ReviewDetail,self).get_context_data(**kwargs)
+        context_data['get_client_ip']= self.get_client_ip()
+        context_data['tracking_hit_post'] = self.tracking_hit_post()
+
 
 
 def event_comment(request,pk):
