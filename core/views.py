@@ -300,6 +300,7 @@ class ReviewListView(ListView):
 class ReviewDetail(DetailView):
 
     model = Review
+
     def get_client_ip(self):
         ip = self.request.META.get('HTTP_X_FORWARDED_FOR',None)
         if ip:
@@ -324,6 +325,7 @@ class ReviewDetail(DetailView):
                     view.save()
                 else: pass
             except ValueError:pass
+
     def get_context_data(self,**kwargs):
         context_data= super(ReviewDetail,self).get_context_data(**kwargs)
         context_data['get_client_ip']= self.get_client_ip()
