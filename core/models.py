@@ -13,7 +13,10 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from datetime import timedelta
 from django.utils import timezone
 from django.db.models import F
+from hitcount.models import HitCountMixin
+from django.conf import settings
 
+AUTH_USER_MODEL = getattr(settings,'AUTH_USER_MODEL','auth.User')
 
 # Create your models here.
 class ParentCategory(models.Model):
@@ -38,7 +41,7 @@ class BusinessHours(models.Model):
     opening_hours = models.FloatField()
     closing_hours = models.FloatField()
 
-class Business(models.Model):
+class Business(models.Model,HitCountMixin):
     banner_photo=models.ImageField(null=True,upload_to='businesses/banner/%Y/%m/%d')
     popularity_rating = models.IntegerField(null=True,default=0,
                                             validators=[MaxValueValidator(10),MinValueValidator(0)])
@@ -98,7 +101,7 @@ class Customer(models.Model):
         return "%s %s" %(self.user.first_name,self.user.last_name)
 
 
-class Review(models.Model):
+class Review(models.Model,HitCountMixin):
     customer = models.ForeignKey(Customer,null=True)
     business = models.ForeignKey(Business,null=True)
     rating = RatingField(range=5,can_change_vote=True,allow_delete=True)
@@ -153,7 +156,7 @@ class Features(models.Model):
 class EventCategory(models.Model):
     name = models.CharField(max_length=255)
 
-class Event(models.Model):
+class Event(models.Model,HitCountMixin):
     photo = models.ImageField(null=True,upload_to='events/%Y/%m/%d')
     name = models.CharField(max_length=20,null=True)
     categories= models.ManyToManyField(EventCategory)

@@ -20,6 +20,8 @@ from django.views.decorators.csrf import csrf_exempt
 from tag_manager import TagManager
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
+from hitcount.models import Hitcount
+from hitcount.views import HitCountMixin,HitCountDetailView
 
 def index(request):
     parent_categories = ParentCategory.objects.all()
@@ -297,40 +299,13 @@ class ReviewListView(ListView):
     template_name = 'core/review_list.html'
 
 
-class ReviewDetail(DetailView):
-
+class ReviewDetail(HitCountDetailView):
     model = Review
+    count_hit=True
 
-    def get_client_ip(self):
-        ip = self.request.META.get('HTTP_X_FORWARDED_FOR',None)
-        if ip:
-            ip= ip.split(', ')[0]
-        else:
-            ip = self.request.META.get('REMOTE_ADDR','')
-        return ip
-
-    def tracking_hit_post(self):
-        review = self.model.objects.get(pk=self.object.id)
-        try:
-            ReviewView.objects.get(review=review,ip=self.get_client_ip(),session=self.request.session.session_key)
-        except ObjectDoesNotExist:
-            import socket
-            dns = str(socket.getfqdn(self.get_client_ip())).split('.')[-1]
-            try:
-                if int(dns):
-                    view = ReviewView(review=review,
-                                      ip=self.get_client_ip(),
-                                      created=datetime.datetime.now(),
-                                      session=self.request.session.session_key)
-                    view.save()
-                else: pass
-            except ValueError:pass
-
-    def get_context_data(self,**kwargs):
-        context_data= super(ReviewDetail,self).get_context_data(**kwargs)
-        context_data['get_client_ip']= self.get_client_ip()
-        context_data['tracking_hit_post'] = self.tracking_hit_post()
-
+class EventDetail(HitCountDetailView):
+    model=Event
+    count_hit = True
 
 
 def event_comment(request,pk):
@@ -341,10 +316,10 @@ def event_comment(request,pk):
         event.save()
     return reverse('core:events_full_view',event.id)
 
-class BusinessDetail(DetailView):
-
+class BusinessDetail(HitCountDetailView):
     template_name = 'core/businesses/business_detail.html'
     model = Business
+    count_hit = True
 
     def get_context_data(self, **kwargs):
         context = super(BusinessDetail,self).get_context_data(**kwargs)
