@@ -13,8 +13,9 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from datetime import timedelta
 from django.utils import timezone
 from django.db.models import F
-from hitcount.models import HitCountMixin
+from hitcount.models import HitCountMixin,HitCount
 from django.conf import settings
+from django.contrib.contenttypes.fields import GenericRelation
 
 AUTH_USER_MODEL = getattr(settings,'AUTH_USER_MODEL','auth.User')
 
@@ -45,7 +46,10 @@ class Business(models.Model,HitCountMixin):
     banner_photo=models.ImageField(null=True,upload_to='businesses/banner/%Y/%m/%d')
     popularity_rating = models.IntegerField(null=True,default=0,
                                             validators=[MaxValueValidator(10),MinValueValidator(0)])
-
+    hit_count_generic = GenericRelation(
+        HitCount,object_id_field='object_pk',
+        related_query_name='hit_count_generic_relation'
+    )
     name = models.CharField(max_length=100)
     country = models.ForeignKey(Country,null=True)
     categories = models.ManyToManyField(Category)
@@ -103,6 +107,10 @@ class Customer(models.Model):
 
 class Review(models.Model,HitCountMixin):
     customer = models.ForeignKey(Customer,null=True)
+    hit_count_generic = GenericRelation(
+        HitCount,object_id_field='object_pk',
+        related_query_name='hit_count_generic_relation'
+    )
     business = models.ForeignKey(Business,null=True)
     rating = RatingField(range=5,can_change_vote=True,allow_delete=True)
     review = models.TextField()
@@ -158,6 +166,10 @@ class EventCategory(models.Model):
 
 class Event(models.Model,HitCountMixin):
     photo = models.ImageField(null=True,upload_to='events/%Y/%m/%d')
+    hit_count_generic = GenericRelation(
+        HitCount,object_id_field='object_pk',
+        related_query_name='hit_count_generic_relation'
+    )
     name = models.CharField(max_length=20,null=True)
     categories= models.ManyToManyField(EventCategory)
     event_date = models.DateTimeField(null=True)

@@ -24,7 +24,7 @@ class Ranking(object):
         :param review:
         :return:
         '''
-        number_of_reviews = review.hit_counts.hits_in_last(days=7)
+        number_of_reviews = review.hit_count.hits_in_last(days=7)
         num_review_tags = ReviewTag.objects.filter(review=review).count()
         rank = num_review_tags*0.25+review.business.popularity_rating*0.25+number_of_reviews*0.5
         return rank
@@ -38,8 +38,7 @@ class Ranking(object):
         :param business:
         :return:
         '''
-        number_of_views = business.hit_count.hits_in_last(days=7)
-        rank = business.get_no_reviews()*0.25+business.get_avg_rating()*0.5+number_of_views*0.25
+        rank = business.get_no_reviews()*0.25+business.get_avg_rating()*0.5+business.hit_count.hits_in_last(days=7)*0.25
         return rank
 
     def get_rank_events(self,event):
@@ -52,6 +51,18 @@ class Ranking(object):
         '''
         rank= EventDiscussion.objects.filter(event=event).count()*0.25+event.hit_count.hits_in_last(days=7)*0.75
         return rank
+
+    def rank_businesses(self,businesses):
+        businesses.sort(key=lambda x:self.get_rank_business(x),reverse=True)
+        return businesses
+
+    def rank_reviews(self,reviews):
+        reviews.sort(key=lambda x:self.get_review_rank(x),reverse=True)
+        return reviews
+
+    def rank_events(self,events):
+        events.sort(key=lambda x:self.get_rank_events(x),reverse=True)
+        return events
 
 
 

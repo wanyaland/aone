@@ -20,17 +20,27 @@ from django.views.decorators.csrf import csrf_exempt
 from tag_manager import TagManager
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
-from hitcount.models import Hitcount
+from hitcount.models import HitCount
 from hitcount.views import HitCountMixin,HitCountDetailView
+from .ranking import Ranking
+from actstream import action
+from actstream.models import Action
 
 def index(request):
+    rank = Ranking()
     parent_categories = ParentCategory.objects.all()
     businesses= Business.objects.all()[:5]
+    recent_activities = Action.objects.all()[:6]
     events = Event.objects.all()
+    popular_events = rank.rank_events(events)[:3]
+    reviews = Review.objects.all()
+    review_of_the_day = rank.rank_reviews(reviews)[:1]
     return render(request,'core/index.html',{
+        'review_of_the_day':review_of_the_day,
         'categories':parent_categories,
         'businesses':businesses,
-        'events':events,
+        'popular_events':popular_events,
+        'recent_activities':recent_activities,
     })
 
 def logout_view(request):
@@ -71,6 +81,7 @@ def tag_review(request):
         if review_tag:
             data ={'success':'true'}
         else:
+            action.send(request.user,verb='tagged',target=review,action_object=review_tag)
             data = {'success':'false'}
     return HttpResponse(json.dumps(data))
 
@@ -212,6 +223,7 @@ class BusinessUserView(View):
                 'score':score,
             }
             AddRatingView()(request,**params)
+            action.send(request.user,verb='reviewed',target=business,action_object=review)
             return redirect('core:review_list')
         else:
             return render(request,
@@ -291,6 +303,7 @@ def create_event(request):
         price = request.POST.get('price')
         event = Event(name=name,description=description,where=where,price=price)
         event.save()
+        action.send(request.user,verb='created',target=event)
         return redirect(reverse('core:events_landing'))
     return render(request, 'core/events/create.html', {})
 
@@ -314,6 +327,7 @@ def event_comment(request,pk):
         comment = request.POST.get('comment')
         event.comment = comment
         event.save()
+    action.send(request.user,verb='commented',target=event)
     return reverse('core:events_full_view',event.id)
 
 class BusinessDetail(HitCountDetailView):
@@ -324,6 +338,7 @@ class BusinessDetail(HitCountDetailView):
     def get_context_data(self, **kwargs):
         context = super(BusinessDetail,self).get_context_data(**kwargs)
         self.business =self.get_object()
+        context['avg_rating']=self.business.get_avg_rating()
         sort = self.request.GET.get('sort')
         if sort=='date':
          self.reviews = self.business.review_set.all().order_by('-create_date')
@@ -350,10 +365,14 @@ class BusinessDetail(HitCountDetailView):
                 if business!= self.business:
                     business_set.append(business)
         context['business_set']= business_set[:3]
+        '''
         for review in self.reviews:
+          photos = review.businessphoto_set.all()
+          if photos:
             for photo in review.businessphoto_set.all():
                 review_photos.append(photo)
-        context['review_photos']=review_photos[:5]
+          context['review_photos']=review_photos[:5]
+        '''
         return context
 
 class UserDetail(DetailView):
@@ -447,8 +466,9 @@ class GetHomePageBusinesses(View):
         listings=[]
         data={}
         listings = list(Business.objects.filter(categories=categories).all())
-        listings.sort(key=lambda x:x.get_avg_rating(),reverse=True)
-        for business in listings:
+        rank = Ranking()
+        ranked_listings = rank.rank_businesses(listings)
+        for business in ranked_listings:
              business_data={}
              business_data['id']=business.pk
              business_data['name']=business.name
@@ -467,7 +487,7 @@ class GetNearestBusinesses(View):
         latitude = request.POST.get('latitude')
         businesses = []
         listings = list(Business.objects.all())
-        if latitude == 0 and longitude == 0:
+        if latitude  and longitude :
             x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
             if x_forwarded_for:
                 ip = x_forwarded_for.split(',')[0]
@@ -480,13 +500,21 @@ class GetNearestBusinesses(View):
               print str(vincenty(user_location,business_location).miles) + " " + business.name
               if vincenty(user_location,business_location).miles <= 5:
                 business_data={}
+                '''
                 if business.photo:
                  business_data['logo']=business.photo.url
+                '''
                 if business.banner_photo:
-                 business_data['banner']=business.banner_photo.url
-                business_data['name']=business.name
+                 business_data['Banner Image']=business.banner_photo.url
+                business_data['Business ID']=business.pk
+                business_data['Business Name']=business.name
+                business_data['Business URL']=business.web_address
                 businesses.append(business_data)
-        data={'businesses':businesses[:6]}
+        #sort businesses by ranking
+        rank = Ranking()
+        ranked_businesses=rank.rank_businesses(businesses)
+        data={'businesses':ranked_businesses[:6]}
         return HttpResponse(json.dumps(data))
+
 
 
