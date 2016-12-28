@@ -154,6 +154,10 @@ class BannerTest(TestCase):
         self.user = User.objects.create_user(username='harold',password='wanyama')
         self.customer = Customer.objects.get(user=self.user)
 
+    def test_distance(self):
+        distances = Business.objects.distance(-149.8935557,61.21759217)
+        print distances
+
     def nearest_business(self):
         request = self.factory.post('/',{'latitude':-149.8935557,'longitude':61.21759217})
         response = GetNearestBusinesses.as_view()(request)

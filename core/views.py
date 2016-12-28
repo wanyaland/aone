@@ -25,15 +25,17 @@ from hitcount.views import HitCountMixin,HitCountDetailView
 from .ranking import Ranking
 from actstream import action
 from actstream.models import Action
+from geopy.geocoders import Nominatim
+
 
 def index(request):
     rank = Ranking()
     parent_categories = ParentCategory.objects.all()
     businesses= Business.objects.all()[:5]
     recent_activities = Action.objects.all()[:6]
-    events = Event.objects.all()
+    events =list(Event.objects.all())
     popular_events = rank.rank_events(events)[:3]
-    reviews = Review.objects.all()
+    reviews = list(Review.objects.all())
     review_of_the_day = rank.rank_reviews(reviews)[:1]
     return render(request,'core/index.html',{
         'review_of_the_day':review_of_the_day,
@@ -69,6 +71,21 @@ def login_view(request):
         else:
             state="Your username and password do not match"
     return render(request,'core/auth-user/login.html',{'next':next_url,'state':state,'request':request})
+
+def upload_business_photos(request,pk):
+    if request.method=='POST':
+        business = get_object_or_404(Business,pk=pk)
+        photos = request.FILES.getlist('photos')
+        for photo in photos:
+            BusinessPhoto.objects.create(business=business,photo=photo,photo_type='BusinessPhoto')
+    return render(request,'core/businesses/business_detail.html')
+
+def mark_photo(request,pk):
+    if request.method=='POST':
+        business_photo = get_object_or_404(BusinessPhoto,pk=pk)
+        tag = request.POST.get('tag')
+        business_photo.tag = tag
+    return render(request,'core/businesses/business_detail.html')
 
 def tag_review(request):
     review_id = request.POST.get('review_id')
@@ -334,18 +351,23 @@ class BusinessDetail(HitCountDetailView):
     template_name = 'core/businesses/business_detail.html'
     model = Business
     count_hit = True
-
+    '''
+    def get(self,request,*args,**kwargs):
+        sort = request.GET.get('sort')
+        if sort=='date':
+            self.reviews = self.get_object().review_set.all().order_by('-create_date')
+        elif sort=='rating':
+            self.reviews = self.get_object().review_set.all().order_by('rating_score')
+        else:
+            self.reviews = self.get_object().review_set.all()
+        context = self.get_context_data(reviews=self.reviews)
+        return self.render_to_response(context)
+    '''
     def get_context_data(self, **kwargs):
         context = super(BusinessDetail,self).get_context_data(**kwargs)
         self.business =self.get_object()
         context['avg_rating']=self.business.get_avg_rating()
-        sort = self.request.GET.get('sort')
-        if sort=='date':
-         self.reviews = self.business.review_set.all().order_by('-create_date')
-        elif sort=='rating':
-         self.reviews = self.business.review_set.all().order_by('rating_score')
-        else:
-         self.reviews = self.business.review_set.all()
+        self.reviews = self.business.review_set.all()
         self.categories = self.business.categories
         paginator = Paginator(self.reviews,5)
         page = self.request.GET.get('page')
@@ -365,14 +387,8 @@ class BusinessDetail(HitCountDetailView):
                 if business!= self.business:
                     business_set.append(business)
         context['business_set']= business_set[:3]
-        '''
-        for review in self.reviews:
-          photos = review.businessphoto_set.all()
-          if photos:
-            for photo in review.businessphoto_set.all():
-                review_photos.append(photo)
-          context['review_photos']=review_photos[:5]
-        '''
+        context['business_photos']=self.business.businessphoto_set.all()[:10]
+        context['reviews_number']=self.business.get_no_reviews()
         return context
 
 class UserDetail(DetailView):
@@ -385,19 +401,24 @@ class UserList(ListView):
 
 class ClaimBusinessList(ListView):
     model=Business
-
+def get_nearest_businesses(name,latitude,longitude):
+    businesses =[]
+    BusinessRepository.get_nearest_business(name,latitude,longitude)
+    return businesses
 def search_business(request):
+    '''
+    search for businesses within a 5 mile radius of location
+    :param request:
+    :return:
+    '''
     query = request.GET.get('business_name','')
     location = request.GET.get('location','')
-    if query:
-        qset = (
-            Q(name__icontains=query)
-        )
-        results = Business.objects.filter(qset).distinct()
-    else:
-        results = []
+    if location:
+        geolocator = Nominatim()
+        place = geolocator.geocode(location)
+    businesses = list(Business.objects.distance(location.latitude,location.longitude))
     return render(request,'core/business-category/listing-page.html',{
-        'results':results,
+        'results':businesses,
         'query':query,
     })
 
@@ -430,7 +451,6 @@ class ReviewCreate(CreateView):
         return context
 
     def form_valid(self,form):
-
         context = self.get_context_data()
         form.instance.business = context['business']
         #form.instance.rating.add(score=self.request.POST['rating'],user=self.request.user,ip_address=self.request.META['REMOTE_ADDR'])

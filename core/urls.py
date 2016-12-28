@@ -45,4 +45,6 @@ urlpatterns = patterns (
     url(r'^events/create/$', create_event, name='events_create'),
     url(r'^event_comment/(?P<pk>\d+)/$',event_comment,name='event_comment'),
     url(r'^tag_review/$',tag_review,name='tag_review'),
+    url(r'^upload_photo/(?P<pk>\d+)/$',upload_business_photos,name='upload_photos'),
+    url(r'^mark_photo/(?P<pk>\d+)/$',mark_photo,name='mark_photo'),
 )

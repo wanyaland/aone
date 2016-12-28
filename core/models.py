@@ -16,6 +16,7 @@ from django.db.models import F
 from hitcount.models import HitCountMixin,HitCount
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericRelation
+from .managers import BusinessManager
 
 AUTH_USER_MODEL = getattr(settings,'AUTH_USER_MODEL','auth.User')
 
@@ -72,6 +73,7 @@ class Business(models.Model,HitCountMixin):
     owner = models.ForeignKey('Customer',null=True)
     business_hours = models.ManyToManyField(BusinessHours)
 
+    objects = BusinessManager()
 
     def __unicode__(self):
         return self.name
@@ -152,6 +154,13 @@ class BusinessPhoto(models.Model):
         ('RP','ReviewPhoto'),
         ('UP','UserPhoto')
     )
+    TAG_HELPFUL='H'
+    TAG_INAPPROPRIATE='I'
+    TAG =(
+        (TAG_HELPFUL,'Helpful'),
+        (TAG_INAPPROPRIATE,'Inappropriate'),
+    )
+    tag = models.CharField(max_length=20,choices=TAG,null=True)
     business = models.ForeignKey(Business,null=True)
     photo_type = models.CharField(null=True,choices=TYPE,max_length=20)
     caption = models.CharField(null=True,max_length=100)
