@@ -85,15 +85,17 @@ class Business(models.Model,HitCountMixin):
         return Review.objects.filter(business=self,rating_score__range=(1,5)).aggregate(Avg('rating_score'))['rating_score__avg']
 
 class Customer(models.Model):
+    BUSINESS='B'
+    CUSTOMER='C'
+    MODERATOR='M'
     CHOICES = {
-        ('B','Business'),
-        ('C','Customer'),
-        ('M','Moderator'),
+        (BUSINESS,'Business'),
+        (CUSTOMER,'Customer'),
+        (MODERATOR,'Moderator'),
     }
     user = models.OneToOneField(User)
     photo = models.FileField(null=True,upload_to='avatars/%Y/%m/%d',blank=True)
-    user_type = models.CharField(choices=CHOICES,max_length=20,default='B')
-
+    user_type = models.CharField(choices=CHOICES,max_length=20,default=BUSINESS)
     @receiver(post_save,sender=User)
     def create_user_customer(sender,instance,created,**kwargs):
         if created:
@@ -104,7 +106,7 @@ class Customer(models.Model):
         instance.customer.save()
 
     def __unicode__(self):
-        return "%s %s" %(self.user.first_name,self.user.last_name)
+        return "%s  " %(self.user.username)
 
 
 class Review(models.Model,HitCountMixin):

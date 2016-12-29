@@ -4,6 +4,7 @@ from datetime import datetime
 from django.contrib.contenttypes.models import ContentType
 from actstream.managers import ActionManager,stream
 from django.db import models
+from geopy.geocoders import Nominatim
 
 class MyActionManager(ActionManager):
     @stream
@@ -13,6 +14,12 @@ class MyActionManager(ActionManager):
         return obj.actor_actions.filter(verb=verb,timestamp__lte=time)
 
 class BusinessManager(models.Manager):
+
+    def search_business(self,location):
+        geolocator = Nominatim()
+        place = geolocator.geocode(location)
+        qs = self.distance(place.latitude,place.longitude)
+        return qs
     '''
     def geosearch(self, query):
         """
@@ -63,4 +70,5 @@ class BusinessManager(models.Manager):
                         "sin(radians(%s)) * sin(radians(latitude)))"},
                 select_params=(coefficient, latitude, longitude,
                     latitude)).order_by('distance')
+
 

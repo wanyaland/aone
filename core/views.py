@@ -26,6 +26,8 @@ from .ranking import Ranking
 from actstream import action
 from actstream.models import Action
 from geopy.geocoders import Nominatim
+from django.core.mail import EmailMessage
+
 
 
 def index(request):
@@ -129,6 +131,19 @@ def CategoryListingPageView(request):
 def claim_business_find_page(request):
     return render(request,'core/claim-business/find.html')
 
+def claim_business(request,pk):
+    msg="Claim Business"
+    business = get_object_or_404(Business,pk=pk)
+    if request.user:
+        try:
+            customer = Customer.objects.get(user=request.user)
+            print "Customer %s" % customer
+            business.owner = customer
+            business.save()
+        except ObjectDoesNotExist:
+            return redirect(reverse('core:sign_up_business'))
+    return render(request,'core/claim-business/find.html',{'msg':msg})
+
 def sign_up_business_view(request):
     if request.method=='POST':
         form = RegistrationForm(request.POST)
@@ -137,7 +152,7 @@ def sign_up_business_view(request):
             user = form.save()
             customer = customer_form.save(commit=False)
             customer.user = user
-            customer.user_type = 'B'
+            customer.user_type = Customer.BUSINESS
             user.save()
             customer.save()
     else:
@@ -155,7 +170,7 @@ def sign_up_moderator(request):
             user = form.save()
             customer = customer_form.save(commit=False)
             customer.user = user
-            customer.user_type = 'M'
+            customer.user_type = Customer.MODERATOR
             user.save()
             customer.save()
     else:
@@ -173,7 +188,7 @@ def sign_up(request):
             user = form.save()
             customer = customer_form.save(commit=False)
             customer.user = user
-            customer.user_type = 'C'
+            customer.user_type = Customer.CUSTOMER
             user.save()
             customer.save()
             return redirect('core:home')
@@ -254,6 +269,7 @@ class BusinessUserView(View):
 class BusinesView(View):
 
     template_name = 'core/business_create.html'
+    login_required = True
 
     def get(self,request,*args,**kwargs):
         pk = self.kwargs.get('pk')
@@ -281,7 +297,13 @@ class BusinesView(View):
         else:
             business_form = BusinessForm(request.POST,request.FILES)
         if business_form.is_valid():
-            business_form.save()
+            biz=business_form.save()
+            if pk:
+                action.send(request.user,verb='edited',target=business)
+            else:
+                message = '%s business was created '% biz
+                EmailMessage('Business','message',to=['info@africaone.com'])
+                action.send(request.user,verb='added',target=business)
             return redirect('core:add_business_successful')
         else:
             return render(
@@ -401,26 +423,50 @@ class UserList(ListView):
 
 class ClaimBusinessList(ListView):
     model=Business
-def get_nearest_businesses(name,latitude,longitude):
-    businesses =[]
-    BusinessRepository.get_nearest_business(name,latitude,longitude)
-    return businesses
+    template_name='core/claim-business/find.html'
+
 def search_business(request):
     '''
-    search for businesses within a 5 mile radius of location
+    view that returns list of nearest businesses
     :param request:
     :return:
     '''
     query = request.GET.get('business_name','')
     location = request.GET.get('location','')
+    businesses=[]
     if location:
         geolocator = Nominatim()
         place = geolocator.geocode(location)
-    businesses = list(Business.objects.distance(location.latitude,location.longitude))
+    businesses = list(Business.objects.distance(place.latitude,place.longitude))
     return render(request,'core/business-category/listing-page.html',{
         'results':businesses,
         'query':query,
     })
+
+def find_business(request):
+    if request.is_ajax():
+        name = request.GET.get('name')
+        location = request.GET.get('location')
+        businesses=[]
+        if location:
+            qs = Business.objects.distance(location)
+        if name:
+            if qs:
+                qs = qs.filter(name=name)
+            else:
+                qs = Business.objects.filter(name=name)
+        if qs:
+            businesses=list(qs)
+        data={}
+        list=[]
+        for business in businesses:
+            biz_data={}
+            biz_data['id']=business.id
+            biz_data['name']=business.name
+            list.append(biz_data)
+        data['businesses']=list
+    return HttpResponse(json.dumps(data),content_type='application/json')
+
 
 def get_listings_parent(request):
     if request.method=='GET':

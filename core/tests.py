@@ -6,7 +6,7 @@ from django.conf import settings
 from django.db import models
 from geoposition.fields import Geoposition,GeopositionField
 from django.test import LiveServerTestCase
-from .views import tag_review,ReviewDetail,BusinessDetail,EventDetail,GetNearestBusinesses
+from .views import *
 from tag_manager import TagManager
 from ranking import Ranking
 from .models import ReviewTag
@@ -14,6 +14,7 @@ import json
 from importlib import import_module
 from django.core.files import File
 import os
+
 
 
 class HitCountTest(TestCase):
@@ -157,6 +158,12 @@ class BannerTest(TestCase):
     def test_distance(self):
         distances = Business.objects.distance(-149.8935557,61.21759217)
         print distances
+    def search_distance(self):
+        results = Business.objects.search_business('kampala')
+        self.assertEqual(len(results),1)
+        self.assertEqual(results[0],self.business1)
+        result = Business.objects.search_business('kampala')
+        self.assertEqual(result[0],self.business2)
 
     def nearest_business(self):
         request = self.factory.post('/',{'latitude':-149.8935557,'longitude':61.21759217})
@@ -169,6 +176,44 @@ class BannerTest(TestCase):
         }
         self.maxDiff=None
         self.assertEqual(str(response.content),expect)
+
+class ViewTest(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.user = User.objects.create_user(username='harold',password='wanyama')
+        self.business = Business.objects.create(name='shell',latitude='1.0',longitude='0.1')
+
+    def invalid_business(self):
+        request = self.factory.post('claim_business/')
+        request.user = self.user
+        response = claim_business(request,2)
+
+
+    def test_claim_business_already_claimed(self):
+        self.business.claimed=True
+        self.business.save()
+        request = self.factory.post('/')
+        request.user = self.user
+        response = claim_business(request,self.business.pk)
+        self.assertEqual(response.status_code,200)
+
+    def test_claim_business(self):
+        request = self.factory.post('/')
+        customer = Customer.objects.get(user=self.user)
+        customer.user_type = Customer.BUSINESS
+        customer.save()
+        request.user = self.user
+        response = claim_business(request,pk=self.business.pk)
+        business = Business.objects.get(pk=self.business.pk)
+        self.assertEqual(business.owner,Customer.objects.get(user=self.user))
+        self.assertEqual(response.status_code,200)
+
+    def test_business_view_login_required(self):
+        request = self.factory.get('/business_add/')
+        response = BusinesView.as_view()(request)
+        self.assertEqual(response.status_code,302)
+        self.assertEqual(response['Location'],'/business/sign-up/')
+
 
 
 
