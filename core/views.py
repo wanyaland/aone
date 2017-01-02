@@ -131,6 +131,14 @@ def CategoryListingPageView(request):
 def claim_business_find_page(request):
     return render(request,'core/claim-business/find.html')
 
+class CategoryLandingPageView(DetailView):
+    model= Category
+    def get_context_data(self, **kwargs):
+        context = super(CategoryLandingPageView,self).get_context_data(kwargs)
+        top_businesses = Business.objects.get_businesses_by_rank(self.object)
+        context['top_businesses']=top_businesses[:4]
+        return context
+
 def claim_business(request,pk):
     msg="Claim Business"
     business = get_object_or_404(Business,pk=pk)
@@ -429,9 +437,8 @@ def search_business(request):
     '''
     query = request.GET.get('business_name','')
     location = request.GET.get('location','')
-    businesses= Business.objects.all()
     if query:
-        businesses.filter(name__icontains=query)
+        businesses = Business.objects.filter(name__icontains=query)
     if location:
         geolocator = Nominatim()
         place = geolocator.geocode(location)
@@ -440,6 +447,8 @@ def search_business(request):
         'results':businesses,
         'query':query,
     })
+
+
 
 def find_business(request):
     if request.is_ajax():
