@@ -119,11 +119,6 @@ class RankTest(TestCase):
         self.assertEqual(businesses,[self.business1,self.business2])
         result = self.ranking.rank_businesses(businesses)
         self.assertEqual(result,[self.business2,self.business1])
-        category = Category.objects.create(name='category')
-        self.business1.categories.add(category)
-        self.business2.categories.add(category)
-        business_manager_list = Business.objects.get_businesses_by_rank(category)
-        self.assertEqual(business_manager_list,[self.business2,self.business1])
 
     def test_can_rank_events(self):
         """
