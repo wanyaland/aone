@@ -429,13 +429,13 @@ def search_business(request):
     '''
     query = request.GET.get('business_name','')
     location = request.GET.get('location','')
-    businesses= Business.objects.all()
+    businesses = Business.objects.all()
     if query:
-        businesses.filter(name__icontains=query)
+        businesses = businesses.filter(name__icontains=query)
     if location:
         geolocator = Nominatim()
         place = geolocator.geocode(location)
-        businesses = list(Business.objects.distance(place.latitude,place.longitude))
+        businesses = list(businesses.distance(place.latitude,place.longitude))
     return render(request,'core/business-category/listing-page.html',{
         'results':businesses,
         'query':query,
@@ -491,6 +491,7 @@ class ReviewCreate(CreateView):
         context = super(CreateView,self).get_context_data(**kwargs)
         context['business']=business
         context['reviews']=review_list
+        return context
         return context
 
     def form_valid(self,form):
@@ -578,6 +579,5 @@ class GetNearestBusinesses(View):
         ranked_businesses=rank.rank_businesses(businesses)
         data={'businesses':ranked_businesses[:6]}
         return HttpResponse(json.dumps(data))
-
 
 
