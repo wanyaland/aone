@@ -15,7 +15,7 @@
           <div class="category-landing-page-content">
 
             <div class="businesses-listing-wrapper">
-              <h1>Restaurants in Kampala</h1>
+              <h1>Businesses in Kampala</h1>
               <div class="sort-links-wrapper clearfix">
                 <div class="col col-label">Sort by:</div>
                 <div class="col col-link">
@@ -28,11 +28,9 @@
                   <a href="#" title="Number of reviews">Most reviewed</a>
                 </div>
               </div>
-
+              {% for business in results %}
               {% include 'core/business-category/business-listing-item.html' %}
-              {% include 'core/business-category/business-listing-item.html' %}
-              {% include 'core/business-category/business-listing-item.html' %}
-              {% include 'core/business-category/business-listing-item.html' %}
+              {% endfor %}
 
               <ul class="pager pager-listing-businesses">
                 <li class="first"><a href="#">&lt;&lt;</a></li>
@@ -46,7 +44,6 @@
                 <li class="next"><a href="#">&gt;</a></li>
                 <li class="last"><a href="#">&gt;&gt;</a></li>
               </ul>
-
             </div>
 
             <div class="landing-strip sub-categories-strip">

@@ -78,9 +78,12 @@
           <!-- recent activity -->
           <div class="block block-recent-activity">
             <h2>Recent Activity on AfricaOne</h2>
-            <div class="block-content"></div>
+              {% for activity in recent_activities %}
+              <div class="block-content">
+                {{activity}}
+              </div>
+              {% endfor %}
           </div>
-
         </div></div>
 
         <div class="small-col wrapper-col"><div class="inner-wrapper">
