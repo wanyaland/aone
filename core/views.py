@@ -135,8 +135,9 @@ class CategoryLandingPageView(DetailView):
     model= Category
     def get_context_data(self, **kwargs):
         context = super(CategoryLandingPageView,self).get_context_data(kwargs)
-        top_businesses = Business.objects.get_businesses_by_rank(self.object)
-        context['top_businesses']=top_businesses[:4]
+        businesses = Business.objects.filter(categories=self.object)
+        top_businesses = Ranking.get_rank_business(list(businesses))[:4]
+        context['top_businesses']=top_businesses
         return context
 
 def claim_business(request,pk):

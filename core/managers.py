@@ -5,7 +5,6 @@ from django.contrib.contenttypes.models import ContentType
 from actstream.managers import ActionManager,stream
 from django.db import models
 from geopy.geocoders import Nominatim
-from ranking import Ranking
 
 class MyActionManager(ActionManager):
     @stream
@@ -16,14 +15,6 @@ class MyActionManager(ActionManager):
 
 
 class BusinessManager(models.Manager):
-
-    def get_businesses_by_rank(self,category):
-        """
-        Return a list of businesses sorted by rank
-        """
-        queryset = self.get_query_set.filter(categories=category)
-        businesses = list(queryset)
-        return businesses.sort(key=lambda x:Ranking.get_rank_business(x),reverse=True)
 
     def search_business(self,location):
         geolocator = Nominatim()
