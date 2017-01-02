@@ -4,7 +4,7 @@
     <div class="img col"></div>
     <div class="business-details clearfix">
       <div class="business-name-details col">
-        <h3><a href="{% url 'core:business_detail' 1%}">Endiro Cafe</a></h3>
+        <h3><a href="{% url 'core:business_detail' 1%}">{{business}}</a></h3>
         <div class="business-reviews-stars-number">
           <div class="review-stars-wrapper">
             <div class="review-stars" data-rating="">
@@ -12,18 +12,18 @@
               <div class="review-stars-rating rating"></div>
             </div>
           </div>
-          <div class="text">134 reviews</div>
+          <div class="text">{{business.get_no_reviews}} reviews</div>
         </div>
-        <div class="desc">Chicken wings, pizza, salad, the best food in town you just can’t miss.</div>
+        <div class="desc">{{business.description}}</div>
       </div>
       <div class="price-sub-categories col">
         <div class="price"><span>$$</span>$$$</div>
         <div class="sub-categories">Pizza, Coffee, Ice cream</div>
       </div>
       <div class="address-phone-website col">
-        <div class="address">Plot 15A,<br/>Nakasero Road, Kampala.</div>
-        <div class="phone">+256 700 000 000</div>
-        <div class="website"><a href="#">www.endiro.com</a></div>
+        <div class="address">Plot 15A,<br/>{{business.address}}</div>
+        <div class="phone">{{business.phone_address}}</div>
+        <div class="website"><a href="#">{{business.web_address}}</a></div>
       </div>
     </div>
   </div>

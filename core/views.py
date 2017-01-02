@@ -137,7 +137,6 @@ def claim_business(request,pk):
     if request.user:
         try:
             customer = Customer.objects.get(user=request.user)
-            print "Customer %s" % customer
             business.owner = customer
             business.save()
         except ObjectDoesNotExist:
@@ -208,7 +207,6 @@ class BusinessListView(ListView):
 
 class BusinessUserView(View):
     template_name = 'core/business_user.html'
-
     def get(self,request,*args,**kwargs):
         customer = Customer.objects.filter(user=request.user)
         pk = self.kwargs.get('pk')
@@ -267,10 +265,8 @@ class BusinessUserView(View):
 
 
 class BusinesView(View):
-
     template_name = 'core/business_create.html'
     login_required = True
-
     def get(self,request,*args,**kwargs):
         pk = self.kwargs.get('pk')
         if pk is None:
@@ -299,12 +295,12 @@ class BusinesView(View):
         if business_form.is_valid():
             biz=business_form.save()
             if pk:
-                action.send(request.user,verb='edited',target=business)
+                action.send(request.user,verb='edited',target=biz)
             else:
-                message = '%s business was created '% biz
-                EmailMessage('Business','message',to=['info@africaone.com'])
-                action.send(request.user,verb='added',target=business)
-            return redirect('core:add_business_successful')
+                message = '%s was created '% biz
+                EmailMessage('Business',message,to=['info@africaone.com'])
+                action.send(request.user,verb='added business',target=biz)
+            return redirect('core:add_business_success')
         else:
             return render(
                 request,self.template_name,
@@ -342,7 +338,7 @@ def create_event(request):
         price = request.POST.get('price')
         event = Event(name=name,description=description,where=where,price=price)
         event.save()
-        action.send(request.user,verb='created',target=event)
+        action.send(request.user,verb='created event',target=event)
         return redirect(reverse('core:events_landing'))
     return render(request, 'core/events/create.html', {})
 
@@ -433,11 +429,13 @@ def search_business(request):
     '''
     query = request.GET.get('business_name','')
     location = request.GET.get('location','')
-    businesses=[]
+    businesses= Business.objects.all()
+    if query:
+        businesses.filter(name__icontains=query)
     if location:
         geolocator = Nominatim()
         place = geolocator.geocode(location)
-    businesses = list(Business.objects.distance(place.latitude,place.longitude))
+        businesses = list(Business.objects.distance(place.latitude,place.longitude))
     return render(request,'core/business-category/listing-page.html',{
         'results':businesses,
         'query':query,
@@ -466,7 +464,6 @@ def find_business(request):
             list.append(biz_data)
         data['businesses']=list
     return HttpResponse(json.dumps(data),content_type='application/json')
-
 
 def get_listings_parent(request):
     if request.method=='GET':
@@ -513,8 +510,8 @@ class ReviewCreate(CreateView):
         AddRatingView()(self.request,**params)
         for file in image_list:
             BusinessPhoto.objects.create(photo=file,review=self.object)
+        action.send(self.request,verb='created review',target=self.object)
         return response
-
 
 class ReviewEdit(UpdateView):
     form_class=ReviewForm
