@@ -1,6 +1,6 @@
 from __future__ import division
 
-from .models import ReviewTag,EventDiscussion
+from core.models import ReviewTag,EventDiscussion
 from tag_manager import TagManager
 from hitcount.models import HitCountMixin
 

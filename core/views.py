@@ -137,6 +137,16 @@ class CategoryLandingPageView(DetailView):
         context['top_businesses']=top_businesses
         return context
 
+class CategoryListingPageView(ListView):
+    model = Business
+    template_name = 'core/business-category/listing-page.html'
+    def get_queryset_data(self,*args,**kwargs):
+         category_id = request.GET.get('pk')
+         businesses = Business.objects.all()
+         if category_id:
+            category = get_object_or_404(Category,pk=category_id)
+            businesses = Business.objects.filter(categories=category)
+
 def claim_business(request,pk):
     msg="Claim Business"
     business = get_object_or_404(Business,pk=pk)
