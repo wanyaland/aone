@@ -33,7 +33,6 @@ from django.core.mail import EmailMessage
 def index(request):
     rank = Ranking()
     parent_categories = ParentCategory.objects.all()
-    businesses= Business.objects.all()[:5]
     recent_activities = Action.objects.all()[:6]
     events =list(Event.objects.all())
     popular_events = rank.rank_events(events)[:3]
@@ -42,7 +41,6 @@ def index(request):
     return render(request,'core/index.html',{
         'review_of_the_day':review_of_the_day,
         'categories':parent_categories,
-        'businesses':businesses,
         'popular_events':popular_events,
         'recent_activities':recent_activities,
     })
@@ -122,9 +120,6 @@ def StaticTermsConditionsView(request):
 def AddBusinessSuccessView(request):
     return render(request,'core/businesses/add_business_success.html', {})
 
-def CategoryLandingPageView(request):
-    return render(request,'core/business-category/landing-page.html', {})
-
 def CategoryListingPageView(request):
     return render(request,'core/business-category/listing-page.html', {})
 
@@ -133,10 +128,12 @@ def claim_business_find_page(request):
 
 class CategoryLandingPageView(DetailView):
     model= Category
+    template_name = 'core/business-category/landing-page.html'
     def get_context_data(self, **kwargs):
-        context = super(CategoryLandingPageView,self).get_context_data(kwargs)
+        context = super(CategoryLandingPageView,self).get_context_data(**kwargs)
         businesses = Business.objects.filter(categories=self.object)
-        top_businesses = Ranking.get_rank_business(list(businesses))[:4]
+        rank = Ranking()
+        top_businesses = rank.rank_businesses(list(businesses))[:4]
         context['top_businesses']=top_businesses
         return context
 
