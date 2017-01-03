@@ -82,7 +82,6 @@ class Business(models.Model,HitCountMixin):
         return Review.objects.filter(business=self).count()
     def get_avg_rating(self):
         # get avg rating review for objects that were rated
-
         avg_rating = Review.objects.filter(business=self,rating_score__range=(1,5)).aggregate(Avg('rating_score'))['rating_score__avg']
         if avg_rating is None:
             return 0

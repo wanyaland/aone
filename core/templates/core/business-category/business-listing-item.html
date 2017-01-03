@@ -1,4 +1,4 @@
-
+{% load admin_extras %}
 <div class="business-listing-item">
   <div class="business-details-strip clearfix">
     <div class="img col"></div>
@@ -18,7 +18,7 @@
       </div>
       <div class="price-sub-categories col">
         <div class="price"><span>$$</span>$$$</div>
-        <div class="sub-categories">Pizza, Coffee, Ice cream</div>
+        <div class="sub-categories">{{ business.categories.all|list_categories }}</div>
       </div>
       <div class="address-phone-website col">
         <div class="address">Plot 15A,<br/>{{business.address}}</div>

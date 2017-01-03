@@ -9,3 +9,7 @@ def get_popularity(value):
 @register.filter
 def get_range(value):
     return range(1,value)
+
+@register.filter
+def list_categories(value):
+    return ','.join(str(x) for x in value)
