@@ -136,6 +136,16 @@ class CategoryLandingPageView(DetailView):
         context['top_businesses']=top_businesses
         return context
 
+class CategoryListingPageView(ListView):
+    model = Business
+    template_name = 'core/business-category/listing-page.html'
+    def get_queryset_data(self,*args,**kwargs):
+         category_id = request.GET.get('pk')
+         businesses = Business.objects.all()
+         if category_id:
+            category = get_object_or_404(Category,pk=category_id)
+            businesses = Business.objects.filter(categories=category)
+
 def claim_business(request,pk):
     msg="Claim Business"
     business = get_object_or_404(Business,pk=pk)
@@ -434,12 +444,13 @@ def search_business(request):
     '''
     query = request.GET.get('business_name','')
     location = request.GET.get('location','')
+    businesses = Business.objects.all()
     if query:
         businesses = Business.objects.filter(name__icontains=query)
     if location:
         geolocator = Nominatim()
         place = geolocator.geocode(location)
-        businesses = list(Business.objects.distance(place.latitude,place.longitude))
+        businesses = list(businesses.distance(place.latitude,place.longitude))
     return render(request,'core/business-category/listing-page.html',{
         'results':businesses,
         'query':query,
@@ -497,6 +508,7 @@ class ReviewCreate(CreateView):
         context = super(CreateView,self).get_context_data(**kwargs)
         context['business']=business
         context['reviews']=review_list
+        return context
         return context
 
     def form_valid(self,form):
@@ -584,6 +596,5 @@ class GetNearestBusinesses(View):
         ranked_businesses=rank.rank_businesses(businesses)
         data={'businesses':ranked_businesses[:6]}
         return HttpResponse(json.dumps(data))
-
 
 
