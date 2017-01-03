@@ -29,7 +29,6 @@ from geopy.geocoders import Nominatim
 from django.core.mail import EmailMessage
 
 
-
 def index(request):
     rank = Ranking()
     parent_categories = ParentCategory.objects.all()
