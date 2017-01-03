@@ -82,7 +82,12 @@ class Business(models.Model,HitCountMixin):
         return Review.objects.filter(business=self).count()
     def get_avg_rating(self):
         # get avg rating review for objects that were rated
-        return Review.objects.filter(business=self,rating_score__range=(1,5)).aggregate(Avg('rating_score'))['rating_score__avg']
+
+        avg_rating = Review.objects.filter(business=self,rating_score__range=(1,5)).aggregate(Avg('rating_score'))['rating_score__avg']
+        if avg_rating is None:
+            return 0
+        else:
+            return avg_rating
 
 class Customer(models.Model):
     BUSINESS='B'
@@ -166,6 +171,7 @@ class BusinessPhoto(models.Model):
     business = models.ForeignKey(Business,null=True)
     photo_type = models.CharField(null=True,choices=TYPE,max_length=20)
     caption = models.CharField(null=True,max_length=100)
+    created = models.DateTimeField(auto_now_add=True,default=datetime.now())
 
 class Features(models.Model):
     name = models.CharField(max_length=255)
