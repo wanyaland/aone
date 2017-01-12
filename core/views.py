@@ -119,9 +119,6 @@ def StaticTermsConditionsView(request):
 def AddBusinessSuccessView(request):
     return render(request,'core/businesses/add_business_success.html', {})
 
-def CategoryListingPageView(request):
-    return render(request,'core/business-category/listing-page.html', {})
-
 def claim_business_find_page(request):
     return render(request,'core/claim-business/find.html')
 
@@ -131,21 +128,24 @@ class CategoryLandingPageView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(CategoryLandingPageView,self).get_context_data(**kwargs)
         businesses = Business.objects.filter(categories=self.object)
+        categories = Category.objects.all()
         rank = Ranking()
         top_businesses = rank.rank_businesses(list(businesses))[:4]
         context['top_businesses']=top_businesses
+        context['categories'] = categories
         return context
 
 class CategoryListingPageView(ListView):
     model = Business
     template_name = 'core/business-category/listing-page.html'
-    def get_queryset(self,*args,**kwargs):
-         category_id = self.request.GET.get('pk')
-         businesses = Business.objects.all()
-         if category_id:
-            category = get_object_or_404(Category,pk=category_id)
-            businesses = Business.objects.filter(categories=category)
-         return businesses
+    def get_queryset(self):
+        query_set = super(CategoryListingPageView,self).get_queryset()
+        return query_set
+    def get_context_data(self, **kwargs):
+        context = super(CategoryListingPageView,self).get_context_data(**kwargs)
+        categories = Category.objects.all()
+        context['categories'] = categories
+        return context
 
 def claim_business(request,pk):
     msg="Claim Business"
@@ -452,10 +452,7 @@ def search_business(request):
         geolocator = Nominatim()
         place = geolocator.geocode(location)
         businesses = list(businesses.distance(place.latitude,place.longitude))
-    return render(request,'core/business-category/listing-page.html',{
-        'results':businesses,
-        'query':query,
-    })
+    return reverse('core:category_name_listing',businesses=businesses)
 
 
 

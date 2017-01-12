@@ -16,7 +16,6 @@ from django.core.files import File
 import os
 
 
-
 class HitCountTest(TestCase):
     def setUp(self):
         self.factory = RequestFactory()

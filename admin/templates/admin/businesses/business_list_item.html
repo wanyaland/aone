@@ -8,6 +8,6 @@
       <span class="categories"> {% for category in business.categories.all %} {{category}} {%endfor%} </span>
       <span class="pull-right created">Created: {{business.create_date}}</span>
     </p>
-    <p>Owned by Nassem Kato</p>
+    <p>Owned by {{business.owner}}</p>
   </div>
 </div>

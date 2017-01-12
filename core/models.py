@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from geoposition.fields import GeopositionField
+#from geoposition.fields import GeopositionField
 from djangoratings.fields import RatingField
 from django.db.models import Avg
 from django.core.validators import MaxValueValidator,MinValueValidator

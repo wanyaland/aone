@@ -85,26 +85,12 @@
 
   <div class="filter-div sub-categories-div">
     <div class="div-title">By Sub-Category</div>
+    {% for category in categories %}
     <div class="filter checkbox-wrapper">
-      <input type="checkbox" id="sub-categories-1" name="sub-categories[]">
-      <label for="sub-categories-1">Sub-category name</label>
+      <input type="checkbox" id="sub-categories-{{forloop.counter}}" name="sub-categories[]">
+      <label for="sub-categories-{{forloop.counter}}">"{{category}}"</label>
     </div>
-    <div class="filter checkbox-wrapper">
-      <input type="checkbox" id="sub-categories-2" name="sub-categories[]">
-      <label for="sub-categories-2">Sub-category name</label>
-    </div>
-    <div class="filter checkbox-wrapper">
-      <input type="checkbox" id="sub-categories-3" name="sub-categories[]">
-      <label for="sub-categories-3">Sub-category name</label>
-    </div>
-    <div class="filter checkbox-wrapper">
-      <input type="checkbox" id="sub-categories-4" name="sub-categories[]">
-      <label for="sub-categories-4">Sub-category name</label>
-    </div>
-    <div class="filter checkbox-wrapper">
-      <input type="checkbox" id="sub-categories-5" name="sub-categories[]">
-      <label for="sub-categories-5">Sub-category name</label>
-    </div>
+    {% endfor %}
     <div class="link-wrapper">
       <a href="javascript:;" class="link">View all sub-categories</a>
     </div>
