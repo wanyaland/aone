@@ -27,7 +27,15 @@ from actstream import action
 from actstream.models import Action
 from geopy.geocoders import Nominatim
 from django.core.mail import EmailMessage
-
+from django.core.mail import send_mail
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+from django.contrib import messages
+from django.template import loader
+from africa_one.settings import DEFAULT_FROM_EMAIL
 
 def index(request):
     rank = Ranking()
@@ -100,9 +108,6 @@ def tag_review(request):
             action.send(request.user,verb='tagged',target=review,action_object=review_tag)
             data = {'success':'false'}
     return HttpResponse(json.dumps(data))
-
-def forgot_password_view(request):
-    return render(request,'core/auth-user/forgot_password.html', {})
 
 def about(request):
     return render(request,'core/static-info/about.html', {})
@@ -594,5 +599,52 @@ class GetNearestBusinesses(View):
         ranked_businesses=rank.rank_businesses(businesses)
         data={'businesses':ranked_businesses[:6]}
         return HttpResponse(json.dumps(data))
+
+class ResetPasswordRequestView(FormView):
+    template_name='core/auth-user/forgot_password.html'
+    success_url = '/login/'
+    form_class = PasswordResetRequestForm
+
+    @staticmethod
+    def validate_email_address(email):
+        try:
+            validate_email(email)
+            return True
+        except ValidationError:
+            return False
+
+    def post(self,request,*args,**kwargs):
+        '''
+        A normal post request which takes input from field 'email'
+
+        '''
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data["email"]
+        if self.validate_email_address(data) is True:
+            associated_users = User.objects.filter(email=data)
+            if associated_users.exists():
+                for user in associated_users:
+                    c={
+                            'email':user.email,
+                            'domain':request.META['HTTP_HOST'],
+                            'site_name':'africaone.com',
+                            'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+                            'user':user,
+                            'token':default_token_generator.make_token(user),
+                            'protocol':'http',
+
+                            }
+                    subject_template_name='registration/password_reset_subject.txt'
+                    email_template_name = 'core/auth-user/password_reset_email.html'
+                    subject = loader.render_to_string(subject_template_name,c)
+                    subject = ''.join(subject.splitlines())
+                    email = loader.render_to_string(email_template_name,c)
+                    EmailMessage(subject,email,to=[user.email])
+                    messages.success(request,'An email has been sent to '+data)
+                    result = self.form_valid(form)
+                    return result
+        result=self.form_invalid(form)
+        messages.error(request,'No user is associated with this email address')
 
 

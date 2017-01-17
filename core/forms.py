@@ -100,7 +100,8 @@ class PhotoForm(forms.ModelForm):
         model=BusinessPhoto
         fields=('photo',)
 
-
+class PasswordResetRequestForm(forms.Form):
+    email = forms.CharField(max_length=254)
 
 
 

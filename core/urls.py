@@ -2,7 +2,7 @@ from django.conf.urls import patterns,url
 from core.views import *
 from djangoratings.views import AddRatingFromModel
 from django.contrib.auth import login
-from django.contrib import auth
+from django.contrib.auth.views import *
 
 
 urlpatterns = patterns (
@@ -13,13 +13,13 @@ urlpatterns = patterns (
     url(r'^sign_up/', sign_up, name='sign_up'),
     url(r'^business/sign-up/', sign_up_business_view, name='sign_up_business'),
     url(r'^moderator/sign-up/',sign_up_moderator,name='sign_up_moderator'),
-    url(r'^forgot-password/', forgot_password_view, name='forgot_password'),
-    url(r'^user/password/reset/$',auth.views.password_reset,{'post_reset_redirect':'/user/password/reset/done/','template_name':'core/auth-user/forgot_password.html'},
+    url(r'^reset_password/',ResetPasswordRequestView.as_view(),name='reset_password'),
+    url(r'^user/password/reset/$',password_reset,{'post_reset_redirect':'/user/password/reset/done/','template_name':'core/auth-user/forgot_password.html'},
         name='password_reset'),
-    url(r'^user/password/reset/done/$',auth.views.password_reset_done),
-    url(r'^user/password/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',auth.views.password_reset_confirm,
-                                 {'post_reset_redirect':'/user/password/done'}),
-    url(r'^user/password/done/$',auth.views.password_reset_complete),
+    url(r'^user/password/reset/done/$',password_reset_done),
+    url(r'^user/password/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',password_reset_confirm,
+                                 {'post_reset_redirect':'/user/password/done'},name='reset_password_confirm'),
+    url(r'^user/password/done/$',password_reset_complete  ),
     url(r'^business_list/$', BusinessList.as_view(), name='business_list'),
     url(r'^search_business/$', CategoryListingPageView.as_view(), name='search_business'),
     url(r'^find_business/$',find_business,name='search'),
