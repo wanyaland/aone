@@ -103,5 +103,24 @@ class PhotoForm(forms.ModelForm):
 class PasswordResetRequestForm(forms.Form):
     email = forms.CharField(max_length=254)
 
+class SetPasswordForm(forms.Form):
+    """
+    A form that lets a user change their password without entering the old password
+    """
+    error_messsages = {
+            'password_mismatch': ("The two password fields do not match"),
+            }
+    new_password1 = forms.CharField()
+    new_password2 = forms.CharField()
 
+    def clean_password2(self):
+        password1 = self.cleaned_data.get('new_password1')
+        password2 = self.cleaned_data.get('new_password2')
+        if password1 and password2:
+            if password1!=password2:
+                raise forms.ValidationError(
+                        self.error_messages['password_mismatch'],
+                        code = 'password_mismatch',
+                        )
+            return password2
 

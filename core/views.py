@@ -640,11 +640,13 @@ class ResetPasswordRequestView(FormView):
                     subject = loader.render_to_string(subject_template_name,c)
                     subject = ''.join(subject.splitlines())
                     email = loader.render_to_string(email_template_name,c)
-                    EmailMessage(subject,email,to=[user.email])
+                    email=EmailMessage(subject,email,to=[user.email])
+                    email.send()
                     messages.success(request,'An email has been sent to '+data)
                     result = self.form_valid(form)
                     return result
         result=self.form_invalid(form)
         messages.error(request,'No user is associated with this email address')
+        return result
 
 
