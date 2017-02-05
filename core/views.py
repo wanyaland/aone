@@ -649,4 +649,5 @@ class ResetPasswordRequestView(FormView):
         messages.error(request,'No user is associated with this email address')
         return result
 
-
+class PasswordResetConfirmView(FormView):
+    template_name = ''
