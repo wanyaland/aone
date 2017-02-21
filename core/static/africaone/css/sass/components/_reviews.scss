@@ -1,3 +1,59 @@
+.reviews-list-page-wrapper {
+  margin-top: -225px;
+
+  .page-description {
+    height: 145px;
+    text-align: center;
+    padding-top: 40px;
+
+    h1 {
+      color: #fff;
+      @include ems_font_size(34px, $font-size-base);
+    }
+
+    h6 {
+      color: #9cff00;
+      @include ems_font_size(13px, $font-size-base);
+      font-weight: normal;
+      margin: 0;
+    }
+  }
+
+  .column-left {
+    padding-right: 2px; 
+  }
+  
+  .column-right {
+    padding-left: 2px; 
+  }
+
+  .column-title {
+    background-color: #f8f8f8;
+    color: #333333;
+    height: 80px;
+    line-height: 80px;
+    @include ems_font_size(26px, $font-size-base);
+    font-weight: bold;
+    padding-left: 30px;
+  }
+
+  .column-info-line {
+    background-color: #0083ae;
+    padding-left: 30px;
+    line-height: 40px;
+    @include ems_font_size(13px, $font-size-base);
+    color: #fff;
+
+    a {
+      color: #9cff00;
+    }
+  }
+
+  .column-content {
+    background-color: #fff;
+  }
+}
+
 
 .review-stars {
   background: sprite($global-sprite, 'five-star-grey');

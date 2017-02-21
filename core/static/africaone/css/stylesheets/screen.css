@@ -5,6 +5,237 @@
  * - mobile-first for singularitygs
  * - breakpoint-default-feature for breakpoint
  */
+.row {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.row:before,
+.row:after {
+  display: table;
+  content: " ";
+}
+
+.row:after {
+  clear: both;
+}
+
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+@media (min-width: 992px) {
+  .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+    float: left;
+  }
+
+  .col-md-12 {
+    width: 100%;
+  }
+
+  .col-md-11 {
+    width: 91.66666667%;
+  }
+
+  .col-md-10 {
+    width: 83.33333333%;
+  }
+
+  .col-md-9 {
+    width: 75%;
+  }
+
+  .col-md-8 {
+    width: 66.66666667%;
+  }
+
+  .col-md-7 {
+    width: 58.33333333%;
+  }
+
+  .col-md-6 {
+    width: 50%;
+  }
+
+  .col-md-5 {
+    width: 41.66666667%;
+  }
+
+  .col-md-4 {
+    width: 33.33333333%;
+  }
+
+  .col-md-3 {
+    width: 25%;
+  }
+
+  .col-md-2 {
+    width: 16.66666667%;
+  }
+
+  .col-md-1 {
+    width: 8.33333333%;
+  }
+
+  .col-md-pull-12 {
+    right: 100%;
+  }
+
+  .col-md-pull-11 {
+    right: 91.66666667%;
+  }
+
+  .col-md-pull-10 {
+    right: 83.33333333%;
+  }
+
+  .col-md-pull-9 {
+    right: 75%;
+  }
+
+  .col-md-pull-8 {
+    right: 66.66666667%;
+  }
+
+  .col-md-pull-7 {
+    right: 58.33333333%;
+  }
+
+  .col-md-pull-6 {
+    right: 50%;
+  }
+
+  .col-md-pull-5 {
+    right: 41.66666667%;
+  }
+
+  .col-md-pull-4 {
+    right: 33.33333333%;
+  }
+
+  .col-md-pull-3 {
+    right: 25%;
+  }
+
+  .col-md-pull-2 {
+    right: 16.66666667%;
+  }
+
+  .col-md-pull-1 {
+    right: 8.33333333%;
+  }
+
+  .col-md-pull-0 {
+    right: auto;
+  }
+
+  .col-md-push-12 {
+    left: 100%;
+  }
+
+  .col-md-push-11 {
+    left: 91.66666667%;
+  }
+
+  .col-md-push-10 {
+    left: 83.33333333%;
+  }
+
+  .col-md-push-9 {
+    left: 75%;
+  }
+
+  .col-md-push-8 {
+    left: 66.66666667%;
+  }
+
+  .col-md-push-7 {
+    left: 58.33333333%;
+  }
+
+  .col-md-push-6 {
+    left: 50%;
+  }
+
+  .col-md-push-5 {
+    left: 41.66666667%;
+  }
+
+  .col-md-push-4 {
+    left: 33.33333333%;
+  }
+
+  .col-md-push-3 {
+    left: 25%;
+  }
+
+  .col-md-push-2 {
+    left: 16.66666667%;
+  }
+
+  .col-md-push-1 {
+    left: 8.33333333%;
+  }
+
+  .col-md-push-0 {
+    left: auto;
+  }
+
+  .col-md-offset-12 {
+    margin-left: 100%;
+  }
+
+  .col-md-offset-11 {
+    margin-left: 91.66666667%;
+  }
+
+  .col-md-offset-10 {
+    margin-left: 83.33333333%;
+  }
+
+  .col-md-offset-9 {
+    margin-left: 75%;
+  }
+
+  .col-md-offset-8 {
+    margin-left: 66.66666667%;
+  }
+
+  .col-md-offset-7 {
+    margin-left: 58.33333333%;
+  }
+
+  .col-md-offset-6 {
+    margin-left: 50%;
+  }
+
+  .col-md-offset-5 {
+    margin-left: 41.66666667%;
+  }
+
+  .col-md-offset-4 {
+    margin-left: 33.33333333%;
+  }
+
+  .col-md-offset-3 {
+    margin-left: 25%;
+  }
+
+  .col-md-offset-2 {
+    margin-left: 16.66666667%;
+  }
+
+  .col-md-offset-1 {
+    margin-left: 8.33333333%;
+  }
+
+  .col-md-offset-0 {
+    margin-left: 0;
+  }
+}
 * {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -259,8 +490,13 @@ h2.big {
 }
 
 .blue-header-bg {
-  background: #007eb0 url('../images/banner-strip-bg.jpg?1473248896') repeat-x center top;
+  background: #007eb0 url('../images/banner-strip-bg.jpg?1487314290') repeat-x center top;
   height: 175px;
+}
+
+.blue-header-bg-lg {
+  background: #007eb0 url('../images/banner-strip-bg.jpg?1487314290') repeat-x center top;
+  height: 270px;
 }
 
 .message {
@@ -618,6 +854,53 @@ ul.footer-menu a {
 }
 ul.footer-menu a:hover {
   color: #007fa8;
+}
+
+.reviews-list-page-wrapper {
+  margin-top: -225px;
+}
+.reviews-list-page-wrapper .page-description {
+  height: 145px;
+  text-align: center;
+  padding-top: 40px;
+}
+.reviews-list-page-wrapper .page-description h1 {
+  color: #fff;
+  font-size: 2.61538em;
+}
+.reviews-list-page-wrapper .page-description h6 {
+  color: #9cff00;
+  font-size: 1em;
+  font-weight: normal;
+  margin: 0;
+}
+.reviews-list-page-wrapper .column-left {
+  padding-right: 2px;
+}
+.reviews-list-page-wrapper .column-right {
+  padding-left: 2px;
+}
+.reviews-list-page-wrapper .column-title {
+  background-color: #f8f8f8;
+  color: #333333;
+  height: 80px;
+  line-height: 80px;
+  font-size: 2em;
+  font-weight: bold;
+  padding-left: 30px;
+}
+.reviews-list-page-wrapper .column-info-line {
+  background-color: #0083ae;
+  padding-left: 30px;
+  line-height: 40px;
+  font-size: 1em;
+  color: #fff;
+}
+.reviews-list-page-wrapper .column-info-line a {
+  color: #9cff00;
+}
+.reviews-list-page-wrapper .column-content {
+  background-color: #fff;
 }
 
 .review-stars {
@@ -1263,7 +1546,7 @@ ul.events-list.events-list-3-col li {
   color: #fff;
 }
 .filters-col .filter-ratings label {
-  background: url('../images/filter-stars.png?1473335094') no-repeat 0 -60px;
+  background: url('../images/filter-stars.png?1487314290') no-repeat 0 -60px;
   height: 12px;
   width: 86px;
   display: inline-block;
@@ -1543,7 +1826,7 @@ body.js-ready .africaone-form .price-field .free-price label {
   top: 0;
   right: 0;
   height: 264px;
-  background: url('../images/home-banner-gradient.png?1458231102') repeat-x 0 0;
+  background: url('../images/home-banner-gradient.png?1487314290') repeat-x 0 0;
 }
 
 .banner-review-desc {
@@ -2131,7 +2414,7 @@ body.js-ready .africaone-form .price-field .free-price label {
   height: 28px;
   top: 11px;
   left: 10px;
-  background: url('../images/log-in-social.png?1465413412') no-repeat 0 0;
+  background: url('../images/log-in-social.png?1487314290') no-repeat 0 0;
 }
 .user-auth-social-media .social-media-link.google {
   background-color: #e04a39;

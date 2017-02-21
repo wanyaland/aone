@@ -1,32 +1,66 @@
 {% extends 'core/base.html' %}
-{% block main %}
-<form action="{% url 'core:review_list' %}" method="post">{%csrf_token%}
-    {{form.business_name}}
-    <input class="btn-sm btn-primary" type="submit" value="Find"/>
-</form>
-</br>
 
-<h4>Business to Review</h4>
-<div class="col-md-8">
-       <ul class="list-group">
-           {% for business in business_list %}
-           <li class="list-group-item">{{business}}</br><a href="{% url 'core:review_add' business_pk=business.pk %}" class="btn-sm btn-primary">Review Business</a> {{business.address}}
-           {{business.city}}</li>
-           {% endfor %}
-       </ul>
-</div>
-<div class="col-sm-4">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h5 class="panel-title">By Map</h5>
-        </div>
+{% block main %}
+
+  {# TODO #}
+  {# <form action="{% url 'core:review_list' %}" method="post">{%csrf_token%} #}
+  {#     {{form.business_name}} #}
+  {#     <input class="btn-sm btn-primary" type="submit" value="Find"/> #}
+  {# </form> #}
+
+  <div class="blue-header-bg-lg"></div>
+
+  <div class="reviews-list-page-wrapper container">
+    <div class="page-description">
+      <h1>KAMPALA AWAITS YOUR REVIEW</h1>
+      <h6>Search and review businesses near you. Start your review today.</h6>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-body">
+    <div class="row">
+      <div class="col-md-8 column-left">
+        <div class="column-title">
+          Choose the business you'd like to review
+        </div>
+        <div class="column-info-line">
+          I don't see the business. <a href="#">Add a Busines</a>
+        </div>
+        <div class="column-content">
+          123
+        </div>
+      </div>
+      <div class="col-md-4 column-right">
+        <div class="column-title">
+          Choose by map
+        </div>
+        <div class="column-content">
+          123
+        </div>
+      </div>
+    </div>
+
+    <div class="full-page-content-wrapper">
+      <h4>Business to Review</h4>
+      <div class="col-md-81">
+        <ul class="list-group">
+          {% for business in business_list %}
+            <li class="list-group-item">{{business}}</br><a href="{% url 'core:review_add' business_pk=business.pk %}" class="btn-sm btn-primary">Review Business</a> {{business.address}}
+            {{business.city}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="col-md-41">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h5 class="panel-title">By Map</h5>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
             If the business is not here add it <br>
             <a href="{% url 'core:business_user_add'%}" class="btn-sm btn-primary">Add a Business</a>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 
 {% endblock %}
