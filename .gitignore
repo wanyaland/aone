@@ -5,3 +5,5 @@ businesses/
 db.sqlite3
 africa_one/settings.py
 
+**/.sass-cache
+**/.sass-cache/*
