@@ -902,6 +902,38 @@ ul.footer-menu a:hover {
 .reviews-list-page-wrapper .column-content {
   background-color: #fff;
 }
+.reviews-list-page-wrapper .business-block-wrapper {
+  padding: 30px 30px 15px 30px;
+}
+.reviews-list-page-wrapper .business-block-wrapper .business-photo {
+  float: left;
+  padding-top: 5px;
+}
+.reviews-list-page-wrapper .business-block-wrapper .business-photo img {
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  display: block;
+}
+.reviews-list-page-wrapper .business-block-wrapper .business-details {
+  float: left;
+  padding-left: 30px;
+}
+.reviews-list-page-wrapper .business-block-wrapper .business-details .business-name {
+  color: #007fa8;
+  font-size: 1.23077em;
+  font-weight: bold;
+}
+.reviews-list-page-wrapper .business-block-wrapper .business-details .business-rating {
+  margin-left: -4px;
+}
+.reviews-list-page-wrapper .business-block-wrapper .business-details .business-rating img {
+  margin-right: -4px;
+}
+.reviews-list-page-wrapper .business-block-wrapper .business-details .business-rating span {
+  color: #999999;
+  padding-left: 10px;
+}
 
 .review-stars {
   background: url('../images/globals-s28fb260ac8.png') 0 -218px;

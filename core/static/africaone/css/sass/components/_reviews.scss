@@ -22,7 +22,7 @@
   .column-left {
     padding-right: 2px; 
   }
-  
+
   .column-right {
     padding-left: 2px; 
   }
@@ -52,6 +52,45 @@
   .column-content {
     background-color: #fff;
   }
+
+  .business-block-wrapper {
+    padding: 30px 30px 15px 30px;
+  
+    .business-photo {
+      float: left;
+      padding-top: 5px;
+
+      img {
+        @include border-radius(2px);
+        display: block;
+      }
+    }
+
+    .business-details {
+      float: left;
+      padding-left: 30px;
+
+      .business-name {
+        color: #007fa8;
+        @include ems_font_size(16px, $font-size-base);
+        font-weight: bold;
+      }
+
+      .business-rating {
+        margin-left: -4px;
+
+        img {
+          margin-right: -4px;
+        }
+
+        span {
+          color: #999999;
+          padding-left: 10px;
+        }
+      }
+    }
+  }
+
 }
 
 

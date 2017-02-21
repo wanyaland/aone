@@ -15,36 +15,59 @@
       <h1>KAMPALA AWAITS YOUR REVIEW</h1>
       <h6>Search and review businesses near you. Start your review today.</h6>
     </div>
+
     <div class="row">
+
       <div class="col-md-8 column-left">
         <div class="column-title">
           Choose the business you'd like to review
         </div>
         <div class="column-info-line">
-          I don't see the business. <a href="#">Add a Busines</a>
+          I don't see the business. <a href="{% url 'core:business_user_add'%}">Add a Busines</a>
         </div>
         <div class="column-content">
-          123
+          {% for business in business_list %}
+            <div class="business-block-wrapper clearfix">
+              <div class="business-photo">
+                <img src="/static/africaone/static-images/fake-logo.jpg">
+              </div>
+              <div class="business-details">
+                <div class="business-name">
+                  {{ business.name|upper }}
+                </div>
+                <div class="business-info">
+                  <div class="business-rating">
+                    {% for i in '1234' %}
+                      <img src="/static/africaone/static-images/icon-green-star.jpg">
+                    {% endfor %}
+                    <img src="/static/africaone/static-images/icon-grey-star.jpg">
+                    <span>123 reviews.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <a href="{% url 'core:review_add' business_pk=business.pk %}" class="btn-sm btn-primary">Review Business</a> -->
+          {% endfor %}
         </div>
       </div>
+
       <div class="col-md-4 column-right">
         <div class="column-title">
           Choose by map
         </div>
         <div class="column-content">
-          123
+          <div style="padding: 100px 0; text-align: center;">
+            UNDER CONSTRUCTION ...
+          </div>
         </div>
       </div>
+
     </div>
 
     <div class="full-page-content-wrapper">
       <h4>Business to Review</h4>
       <div class="col-md-81">
         <ul class="list-group">
-          {% for business in business_list %}
-            <li class="list-group-item">{{business}}</br><a href="{% url 'core:review_add' business_pk=business.pk %}" class="btn-sm btn-primary">Review Business</a> {{business.address}}
-            {{business.city}}</li>
-          {% endfor %}
         </ul>
       </div>
       <div class="col-md-41">

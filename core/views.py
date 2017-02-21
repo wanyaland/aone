@@ -366,6 +366,7 @@ def create_event(request):
 class ReviewListView(ListView):
     model = Business
     template_name = 'core/review_list.html'
+    paginate_by = 10
 
 
 class ReviewDetail(HitCountDetailView):
