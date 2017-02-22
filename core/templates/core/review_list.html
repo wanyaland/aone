@@ -87,10 +87,19 @@
         <div class="column-title">
           Choose by map
         </div>
-        <div class="column-content">
-          <div style="padding: 100px 0; text-align: center; background-color: #fff;">
-            UNDER CONSTRUCTION ...
+        <div class="map-block">
+          <div class="checkbox-wrapper">
+            <input type="checkbox" id="search-on-move" class="fancy-checkbox">
+            <label for="search-on-move">Search when I move the map</label>
           </div>
+          <img src="/static/africaone/static-images/fake-map.png">
+          <a href="#" class="btn line-35">VIEW ON A BIGGER MAP</a>
+        </div>
+        <div class="couldnt-find-block">
+          <h3>COULD NOT FIND A BUSINESS?</h3>
+          <h4>TELL US WHAT <b>WE ARE MISSING</b>.</h4>
+          <span>If the business you are looking for is not here, please contact us or better still, add it!</span><br>
+          <a href="{% url 'core:business_user_add'%}" class="btn line-35">ADD A BUSINESS</a>
         </div>
       </div>
     </div>
