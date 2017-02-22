@@ -53,6 +53,7 @@
     }
 
     .couldnt-find-block {
+      margin-bottom: 4px;
       background: image-url('couldnt-find-bg.png') no-repeat center top rgba(0, 127, 169, 1);
       @include background-size(cover);
       padding: 45px 45px 45px 35px;
@@ -80,6 +81,36 @@
       .btn {
         font-weight: bold;
         @include ems_font_size(15px, $font-size-base);
+      }
+    }
+
+    .facebook-block {
+      background-color: #fff;
+      padding: 20px 20px 45px 20px;
+      margin-bottom: 4px;
+
+      img {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    .advert-block {
+      background-color: #fff;
+      padding: 20px 20px 45px 20px;
+      margin-bottom: 4px;
+
+      span {
+        display: block;
+        text-align: right;
+        padding-bottom: 2px;
+        @include ems_font_size(15px, $font-size-base);
+        color: #999999;
+      }
+
+      img {
+        display: block;
+        width: 100%;
       }
     }
   }

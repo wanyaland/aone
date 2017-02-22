@@ -903,6 +903,7 @@ ul.footer-menu a:hover {
   font-size: 1.15385em;
 }
 .reviews-list-page-wrapper .column-right .couldnt-find-block {
+  margin-bottom: 4px;
   background: url('../images/couldnt-find-bg.png?1487754449') no-repeat center top #007fa9;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -930,6 +931,31 @@ ul.footer-menu a:hover {
 .reviews-list-page-wrapper .column-right .couldnt-find-block .btn {
   font-weight: bold;
   font-size: 1.15385em;
+}
+.reviews-list-page-wrapper .column-right .facebook-block {
+  background-color: #fff;
+  padding: 20px 20px 45px 20px;
+  margin-bottom: 4px;
+}
+.reviews-list-page-wrapper .column-right .facebook-block img {
+  display: block;
+  width: 100%;
+}
+.reviews-list-page-wrapper .column-right .advert-block {
+  background-color: #fff;
+  padding: 20px 20px 45px 20px;
+  margin-bottom: 4px;
+}
+.reviews-list-page-wrapper .column-right .advert-block span {
+  display: block;
+  text-align: right;
+  padding-bottom: 2px;
+  font-size: 1.15385em;
+  color: #999999;
+}
+.reviews-list-page-wrapper .column-right .advert-block img {
+  display: block;
+  width: 100%;
 }
 .reviews-list-page-wrapper .column-title {
   background-color: #f8f8f8;
