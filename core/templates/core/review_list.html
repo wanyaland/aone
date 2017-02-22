@@ -31,22 +31,54 @@
               <div class="business-photo">
                 <img src="/static/africaone/static-images/fake-logo.jpg">
               </div>
+
               <div class="business-details">
                 <div class="business-name">
                   {{ business.name|upper }}
                 </div>
-                <div class="business-info">
-                  <div class="business-rating">
-                    {% for i in '1234' %}
-                      <img src="/static/africaone/static-images/icon-green-star.jpg">
-                    {% endfor %}
-                    <img src="/static/africaone/static-images/icon-grey-star.jpg">
-                    <span>123 reviews.</span>
+
+                <div class="business-info clearfix">
+                  <div class="business-info-left">
+                    <div class="business-rating">
+                      {% for i in '1234' %}
+                        <img src="/static/africaone/static-images/icon-green-star.jpg">
+                      {% endfor %}
+                      <img src="/static/africaone/static-images/icon-grey-star.jpg">
+                      <span>123 reviews.</span>
+                    </div>
+                    <div class="business-description">
+                      {{ business.description|truncatechars:90 }}
+                    </div>
+                  </div>
+
+                  <div class="business-info-center">
+                    <div class="business-address">
+                      {{ business.address }}
+                    </div>
+                    {{ business.phone_number }}
+                  </div>
+
+                  <div class="business-info-right">
+                    <span>User photos</span>
+                    <div class="photos-icon-wrapper">
+                      <img src="/static/africaone/static-images/fake-user-photos.jpg">
+                      <span>+10</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <!-- <a href="{% url 'core:review_add' business_pk=business.pk %}" class="btn-sm btn-primary">Review Business</a> -->
+            <div class="business-bottom-block">
+              <div class="write-review-button clearfix">
+                <div class="star-block">
+                  {% for i in '12345' %}
+                    <img src="/static/africaone/static-images/icon-white-star.jpg">
+                  {% endfor %}
+                </div>
+                <a href="{% url 'core:review_add' business_pk=business.pk %}">Write a Review</a>
+              </div>
+              <span>Click stars to rate this restaurant</span>
+            </div>
           {% endfor %}
         </div>
       </div>
@@ -56,34 +88,11 @@
           Choose by map
         </div>
         <div class="column-content">
-          <div style="padding: 100px 0; text-align: center;">
+          <div style="padding: 100px 0; text-align: center; background-color: #fff;">
             UNDER CONSTRUCTION ...
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="full-page-content-wrapper">
-      <h4>Business to Review</h4>
-      <div class="col-md-81">
-        <ul class="list-group">
-        </ul>
-      </div>
-      <div class="col-md-41">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h5 class="panel-title">By Map</h5>
-          </div>
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-body">
-            If the business is not here add it <br>
-            <a href="{% url 'core:business_user_add'%}" class="btn-sm btn-primary">Add a Business</a>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 {% endblock %}

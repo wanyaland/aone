@@ -49,18 +49,17 @@
     }
   }
 
-  .column-content {
-    background-color: #fff;
-  }
-
   .business-block-wrapper {
     padding: 30px 30px 15px 30px;
+    background-color: #fff;
   
     .business-photo {
       float: left;
       padding-top: 5px;
+      width: 25%;
 
       img {
+        width: 100%;
         @include border-radius(2px);
         display: block;
       }
@@ -69,28 +68,133 @@
     .business-details {
       float: left;
       padding-left: 30px;
+      width: 75%;
 
       .business-name {
         color: #007fa8;
         @include ems_font_size(16px, $font-size-base);
         font-weight: bold;
+        padding-bottom: 10px;
       }
 
-      .business-rating {
-        margin-left: -4px;
+      .business-info {
+        display: table;
+        color: #666666;
+        @include ems_font_size(12px, $font-size-base);
+        width: 100%;
+        line-height: 1.6;
 
-        img {
-          margin-right: -4px;
+        .business-info-left {
+          display: table-cell;
+          min-width: 45%;
+          padding-right: 25px;
+
+          .business-rating {
+            width: 100%;
+            margin-left: -2px;
+
+            img {
+              margin-right: -4px;
+            }
+
+            span {
+              color: #999999;
+              padding-left: 10px;
+            }
+          }
         }
 
-        span {
-          color: #999999;
-          padding-left: 10px;
+        .business-info-center {
+          display: table-cell;
+          vertical-align: middle;
+          width: 30%;
+          padding: 0 25px;
+          border: 1px solid #f1f1f1;
+          border-width: 0 1px;
+
+          .business-address {
+            padding-bottom: 10px;
+          }
+        }
+
+        .business-info-right {
+          text-align: center;
+          @include ems_font_size(11px, $font-size-base);
+          display: table-cell;
+          vertical-align: middle;
+          width: 25%;
+          padding: 0 25px;
+
+          .photos-icon-wrapper {
+            height: 50px;
+            position: relative;
+            cursor: pointer;
+
+            img {
+              height: 100%;
+            }
+
+            span {
+              position: absolute;
+              left: 50%;
+              top: 0;
+              display: block;
+              height: 50px;
+              line-height: 50px;
+              width: 50px;
+              color: #fff;
+              margin-left: -25px;
+              @include ems_font_size(20px, $font-size-base);
+            }
+          }
         }
       }
+
     }
   }
 
+  .business-bottom-block {
+    height: 65px;
+    background-color: #fff;
+    margin: 2px 0 5px 0;
+    padding-left: 30px;
+    padding-top: 16px;
+
+    .write-review-button {
+      display: inline-block;
+      vertical-align: bottom;
+      height: 33px;
+      line-height: 33px;
+      background-color: #77c200;
+      @include border-radius(2px);
+
+      .star-block {
+        float: left;
+        height: 23px;
+        padding: 5px 0 0 15px;
+
+        img {
+          cursor: pointer;
+        }
+      }
+
+      a {
+        display: inline-block;
+        color: #fff;
+        padding: 0 20px 0 10px;
+        @include ems_font_size(12px, $font-size-base);
+      }
+    }
+
+    span {
+      display: inline-block;
+      line-height: 33px;
+      color: #999999;
+      height: 33px;
+      padding-left: 10px;
+      @include ems_font_size(12px, $font-size-base);
+    }
+  }
 }
 
 
