@@ -1104,6 +1104,43 @@ ul.footer-menu a:hover {
   padding-left: 10px;
   font-size: 0.92308em;
 }
+.reviews-list-page-wrapper .pagination-block {
+  height: 52px;
+  background-color: #fff;
+  padding: 11px;
+  text-align: center;
+}
+.reviews-list-page-wrapper .pagination-block .pagination-wrapper {
+  color: #666666;
+  display: inline-block;
+  height: 30px;
+  font-size: 1.07692em;
+  line-height: 30px;
+}
+.reviews-list-page-wrapper .pagination-block .pagination-wrapper a {
+  display: inline-block;
+  min-width: 35px;
+  height: 100%;
+  color: #666666;
+  text-align: center;
+}
+.reviews-list-page-wrapper .pagination-block .pagination-wrapper a.selected {
+  color: #fff;
+  background-color: #007fa8;
+}
+.reviews-list-page-wrapper .pagination-block .pagination-wrapper a.selected:hover {
+  background-color: #007fa8;
+}
+.reviews-list-page-wrapper .pagination-block .pagination-wrapper a:hover {
+  background-color: #f1f1f1;
+}
+.reviews-list-page-wrapper .pagination-block .pagination-wrapper span {
+  display: inline-block;
+  min-width: 35px;
+  height: 100%;
+  color: #999999;
+  text-align: center;
+}
 
 .review-stars {
   background: url('../images/globals-s28fb260ac8.png') 0 -218px;
