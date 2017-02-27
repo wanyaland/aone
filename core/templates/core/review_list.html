@@ -29,7 +29,11 @@
           {% for business in business_list %}
             <div class="business-block-wrapper clearfix">
               <div class="business-photo">
-                <img src="/static/africaone/static-images/fake-logo.jpg">
+                {% if bisiness.banner_photo %}
+                  <img src="{{ bisiness.banner_photo.url }}">
+                {% else %}
+                  <img src="/static/africaone/static-images/no-logo.jpg">
+                {% endif %}
               </div>
 
               <div class="business-details">
@@ -82,31 +86,7 @@
         </div>
 
         <div class="pagination-block">
-          <div class="pagination-wrapper">
-            <a href="?page=1"><<</a>
-            {% if page_obj.has_previous %}
-              <a href="?page={{ page_obj.previous_page_number }}"><</a>
-            {% else %}
-              <span><</span>
-            {% endif %}
-
-            {% for i in paginator.page_range %}
-              {% if i < 11 %}
-                {% if page_obj.number == i %}
-                  <a href="?page={{ i }}" class="selected">{{i}}</a>
-                {% else %}
-                  <a href="?page={{ i }}">{{i}}</a>
-                {% endif %}
-              {% endif %}
-            {% endfor %}
-
-            {% if page_obj.has_next %}
-              <a href="?page={{ page_obj.next_page_number }}">></a>
-            {% else %}
-              <span>></span>
-            {% endif %}
-            <a href="?page={{ paginator.num_pages }}">>></a>
-          </div>
+          {% if is_paginated %}{% load paginator %}{% paginator 2 %}{% endif %}
         </div>
       </div>
 

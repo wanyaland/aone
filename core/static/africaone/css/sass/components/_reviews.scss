@@ -285,41 +285,9 @@
     padding: 11px;
     text-align: center;
 
-    .pagination-wrapper {
-      color: #666666;
-      display: inline-block;
-      height: 30px;
-      @include ems_font_size(14px, $font-size-base);
-      line-height: 30px;
-
-      a {
-        display: inline-block;
-        min-width: 35px;
-        height: 100%;
-        color: #666666;
-        text-align: center;
-
-        &.selected {
-          color: #fff;
-          background-color: #007fa8;
-
-          &:hover {
-            background-color: #007fa8;
-          }
-        }
-
-        &:hover {
-          background-color: #f1f1f1;
-        }
-      }
-
-      span {
-        display: inline-block;
-        min-width: 35px;
-        height: 100%;
-        color: #999999;
-        text-align: center;
-      }
+    .pager {
+      padding: 0;
+      border-bottom: 0;
     }
   }
 }

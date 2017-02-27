@@ -1106,36 +1106,9 @@ ul.footer-menu a:hover {
   padding: 11px;
   text-align: center;
 }
-.reviews-list-page-wrapper .pagination-block .pagination-wrapper {
-  color: #666666;
-  display: inline-block;
-  height: 30px;
-  font-size: 1.07692em;
-  line-height: 30px;
-}
-.reviews-list-page-wrapper .pagination-block .pagination-wrapper a {
-  display: inline-block;
-  min-width: 35px;
-  height: 100%;
-  color: #666666;
-  text-align: center;
-}
-.reviews-list-page-wrapper .pagination-block .pagination-wrapper a.selected {
-  color: #fff;
-  background-color: #007fa8;
-}
-.reviews-list-page-wrapper .pagination-block .pagination-wrapper a.selected:hover {
-  background-color: #007fa8;
-}
-.reviews-list-page-wrapper .pagination-block .pagination-wrapper a:hover {
-  background-color: #f1f1f1;
-}
-.reviews-list-page-wrapper .pagination-block .pagination-wrapper span {
-  display: inline-block;
-  min-width: 35px;
-  height: 100%;
-  color: #999999;
-  text-align: center;
+.reviews-list-page-wrapper .pagination-block .pager {
+  padding: 0;
+  border-bottom: 0;
 }
 
 .review-stars {
