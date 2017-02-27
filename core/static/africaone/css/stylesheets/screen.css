@@ -893,10 +893,9 @@ ul.footer-menu a:hover {
   padding-left: 10px;
   color: #666666;
 }
-.reviews-list-page-wrapper .column-right .map-block img {
-  display: block;
+.reviews-list-page-wrapper .column-right .map-block #business-map {
   width: 100%;
-  margin-bottom: 2px;
+  height: 180px;
 }
 .reviews-list-page-wrapper .column-right .map-block .btn {
   font-weight: bold;
@@ -1339,26 +1338,26 @@ ul.footer-menu a:hover {
 }
 
 div.bigstars div.rateit-range {
-  background: url('../images/star-17x14-grey.png?1488182354');
+  background: url('../images/star-17x14-grey.png?1488188657');
   height: 14px;
 }
 
 div.bigstars div.rateit-hover {
-  background: url('../images/star-17x14-green.png?1488182269');
+  background: url('../images/star-17x14-green.png?1488188657');
 }
 
 div.bigstars div.rateit-selected {
-  background: url('../images/star-17x14-green.png?1488182269');
+  background: url('../images/star-17x14-green.png?1488188657');
 }
 
 div.bigstars div.rateit-reset {
-  background: url('../images/star-17x14-grey.png?1488182354');
+  background: url('../images/star-17x14-grey.png?1488188657');
   width: 15px;
   height: 14px;
 }
 
 div.bigstars div.rateit-reset:hover {
-  background: url('../images/star-17x14-grey.png?1488182354');
+  background: url('../images/star-17x14-grey.png?1488188657');
 }
 
 .businesss-review-item {

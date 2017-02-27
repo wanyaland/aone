@@ -42,9 +42,10 @@ function initializeMap() {
 }
 
 function loadMapScript() {
+  var MAP_API_KEY='AIzaSyC0R7ZCp3WupbjWoK1xnFcYArwvZ0gD7Ks';
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&callback=initializeMap';
+  script.src = 'https://maps.googleapis.com/maps/api/js?key=' + MAP_API_KEY + '&callback=initializeMap';
   document.body.appendChild(script);
 }
 
