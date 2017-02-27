@@ -501,3 +501,31 @@ div.bigstars div.rateit-reset:hover
 {
   background: image-url('star-17x14-grey.png');
 }
+
+
+.review-form-wrapper {
+  margin-top: -80px;
+
+  .column-title {
+    background-color: #f8f8f8;
+    color: #333333;
+    height: 80px;
+    line-height: 80px;
+    @include ems_font_size(26px, $font-size-base);
+    font-weight: bold;
+    padding-left: 30px;
+  }
+
+  .column-left {
+    padding-right: 2px;
+  }
+
+  .column-right {
+    padding-left: 2px;
+  }
+
+  .column-content {
+    background-color: #fff;
+    padding: 30px;
+  }
+}

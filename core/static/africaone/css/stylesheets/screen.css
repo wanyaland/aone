@@ -1333,6 +1333,29 @@ div.bigstars div.rateit-reset:hover {
   background: url('../images/star-17x14-grey.png?1488188657');
 }
 
+.review-form-wrapper {
+  margin-top: -80px;
+}
+.review-form-wrapper .column-title {
+  background-color: #f8f8f8;
+  color: #333333;
+  height: 80px;
+  line-height: 80px;
+  font-size: 2em;
+  font-weight: bold;
+  padding-left: 30px;
+}
+.review-form-wrapper .column-left {
+  padding-right: 2px;
+}
+.review-form-wrapper .column-right {
+  padding-left: 2px;
+}
+.review-form-wrapper .column-content {
+  background-color: #fff;
+  padding: 30px;
+}
+
 .businesss-review-item {
   padding: 35px 30px 45px 310px;
   position: relative;
