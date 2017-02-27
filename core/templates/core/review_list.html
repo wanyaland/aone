@@ -40,12 +40,11 @@
                 <div class="business-info clearfix">
                   <div class="business-info-left">
                     <div class="business-rating">
-                      {% for i in '1234' %}
-                        <img src="/static/africaone/static-images/icon-green-star.jpg">
-                      {% endfor %}
-                      <img src="/static/africaone/static-images/icon-grey-star.jpg">
-                      <span>123 reviews.</span>
+                      <div class="rateit bigstars" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="{{ business.get_avg_rating }}" data-rateit-readonly="true">
+                      </div>
+                      <span>{{ business.get_no_reviews }} review{{ business.get_no_reviews|pluralize:".,s." }}</span>
                     </div>
+                    
                     <div class="business-description">
                       {{ business.description|truncatechars:90 }}
                     </div>
@@ -70,11 +69,11 @@
             </div>
             <div class="business-bottom-block">
               <div class="write-review-button clearfix">
-                <div class="star-block">
+                <a class="star-block" href="{% url 'core:review_add' business_pk=business.pk %}">
                   {% for i in '12345' %}
                     <img src="/static/africaone/static-images/icon-white-star.jpg">
                   {% endfor %}
-                </div>
+                </a>
                 <a href="{% url 'core:review_add' business_pk=business.pk %}">Write a Review</a>
               </div>
               <span>Click stars to rate this restaurant</span>

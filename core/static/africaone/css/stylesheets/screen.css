@@ -904,7 +904,7 @@ ul.footer-menu a:hover {
 }
 .reviews-list-page-wrapper .column-right .couldnt-find-block {
   margin-bottom: 4px;
-  background: url('../images/couldnt-find-bg.png?1487754449') no-repeat center top #007fa9;
+  background: url('../images/couldnt-find-bg.png?1487774835') no-repeat center top #007fa9;
   -moz-background-size: cover;
   -o-background-size: cover;
   -webkit-background-size: cover;
@@ -1017,14 +1017,10 @@ ul.footer-menu a:hover {
 }
 .reviews-list-page-wrapper .business-block-wrapper .business-details .business-info .business-info-left .business-rating {
   width: 100%;
-  margin-left: -2px;
-}
-.reviews-list-page-wrapper .business-block-wrapper .business-details .business-info .business-info-left .business-rating img {
-  margin-right: -4px;
 }
 .reviews-list-page-wrapper .business-block-wrapper .business-details .business-info .business-info-left .business-rating span {
   color: #999999;
-  padding-left: 10px;
+  padding-left: 5px;
 }
 .reviews-list-page-wrapper .business-block-wrapper .business-details .business-info .business-info-center {
   display: table-cell;
@@ -1083,6 +1079,7 @@ ul.footer-menu a:hover {
   border-radius: 2px;
 }
 .reviews-list-page-wrapper .business-bottom-block .write-review-button .star-block {
+  display: block;
   float: left;
   height: 23px;
   padding: 5px 0 0 15px;
@@ -1339,6 +1336,29 @@ ul.footer-menu a:hover {
 }
 .star-rating-widget label {
   display: none;
+}
+
+div.bigstars div.rateit-range {
+  background: url('../images/star-17x14-grey.png?1488182354');
+  height: 14px;
+}
+
+div.bigstars div.rateit-hover {
+  background: url('../images/star-17x14-green.png?1488182269');
+}
+
+div.bigstars div.rateit-selected {
+  background: url('../images/star-17x14-green.png?1488182269');
+}
+
+div.bigstars div.rateit-reset {
+  background: url('../images/star-17x14-grey.png?1488182354');
+  width: 15px;
+  height: 14px;
+}
+
+div.bigstars div.rateit-reset:hover {
+  background: url('../images/star-17x14-grey.png?1488182354');
 }
 
 .businesss-review-item {
