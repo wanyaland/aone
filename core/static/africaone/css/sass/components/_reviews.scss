@@ -522,10 +522,123 @@ div.bigstars div.rateit-reset:hover
 
   .column-right {
     padding-left: 2px;
+    background-color: #ffffff;
   }
 
-  .column-content {
+  .business-block-wrapper {
+    padding: 30px;
+    background-color: #fff;
+    margin-bottom: 2px;
+  
+    .business-photo {
+      float: left;
+      padding-top: 5px;
+      width: 25%;
+
+      img {
+        width: 100%;
+        @include border-radius(2px);
+        display: block;
+      }
+    }
+
+    .business-details {
+      float: left;
+      padding-left: 30px;
+      width: 75%;
+
+      .business-name {
+        color: #007fa8;
+        @include ems_font_size(16px, $font-size-base);
+        font-weight: bold;
+        padding-bottom: 10px;
+      }
+
+      .business-info {
+        display: table;
+        color: #666666;
+        @include ems_font_size(12px, $font-size-base);
+        width: 100%;
+        line-height: 1.6;
+
+        .business-info-left {
+          display: table-cell;
+          min-width: 45%;
+          padding-right: 25px;
+
+          .business-rating {
+            width: 100%;
+
+            span {
+              color: #999999;
+              padding-left: 5px;
+            }
+          }
+
+          .business-address {
+            padding-top: 5px;
+            color: #676767;
+          }
+        }
+
+      }
+    }
+  }
+
+  .your-review-block {
     background-color: #fff;
     padding: 30px;
+
+    h3 {
+      margin: 0;
+      @include ems_font_size(22px, $font-size-base);
+      font-weight: normal;
+    }
+
+    textarea {
+      width: 100%;
+      height: 200px;
+      resize: none;
+      padding: 30px;
+      margin: 6px 0;
+
+      &.clear {
+        background-color: #fafafa;
+        color: #cbcbcb;
+      }
+    }
+
+    input.btn {
+      padding: 0 36px;
+      display: inline-block;
+      margin-right: 6px;
+
+      &.grey-btn {
+        color: #666666;
+        background-color: #f1f1f1;
+        border: 0;
+
+        &:hover {
+          color: #fff;
+          background: $blue;
+          border-color: $blue;
+        }
+      }
+    }
+
+    .stars-photo-block {
+      padding: 10px 0;
+    }
+
+    .stars-comment {
+      color: #999999;
+      @include ems_font_size(13px, $font-size-base);
+    }
+
+    .form-comment {
+      color: #666666;
+      @include ems_font_size(13px, $font-size-base);
+      margin-top: 20px;
+    }
   }
 }
