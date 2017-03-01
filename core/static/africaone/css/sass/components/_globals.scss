@@ -330,3 +330,54 @@ h2 {
     }
   }
 }
+
+div.rating-stars {
+  div.rateit-range {
+    background: image-url('star-17x14-grey.png');
+    height: 14px;
+  }
+
+  div.rateit-hover {
+    background: image-url('star-17x14-green.png');
+  }
+
+  div.rateit-selected {
+    background: image-url('star-17x14-green.png');
+  }
+
+  div.rateit-reset {
+    background: image-url('star-17x14-grey.png');
+    width: 17px;
+    height: 14px;
+  }
+
+  div.rateit-reset:hover {
+    background: image-url('star-17x14-grey.png');
+  }
+}
+
+
+div.rating-stars.blue {
+  div.rateit-range {
+    background: image-url('star-17x14-white.png');
+    height: 14px;
+  }
+
+  div.rateit-hover {
+    background: image-url('star-17x14-blue.png');
+  }
+
+  div.rateit-selected {
+    background: image-url('star-17x14-blue.png');
+  }
+
+  div.rateit-reset {
+    background: image-url('star-17x14-white.png');
+    width: 17px;
+    height: 14px;
+  }
+
+  div.rateit-reset:hover {
+    background: image-url('star-17x14-white.png');
+  }
+}

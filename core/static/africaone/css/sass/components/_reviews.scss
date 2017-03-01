@@ -474,35 +474,6 @@
 }
 
 
-div.bigstars div.rateit-range
-{
-  background: image-url('star-17x14-grey.png');
-  height: 14px;
-}
- 
-div.bigstars div.rateit-hover
-{
-  background: image-url('star-17x14-green.png');
-}
- 
-div.bigstars div.rateit-selected
-{
-  background: image-url('star-17x14-green.png');
-}
- 
-div.bigstars div.rateit-reset
-{
-  background: image-url('star-17x14-grey.png');
-  width: 15px;
-  height: 14px;
-}
- 
-div.bigstars div.rateit-reset:hover
-{
-  background: image-url('star-17x14-grey.png');
-}
-
-
 .review-form-wrapper {
   margin-top: -80px;
 
@@ -626,10 +597,6 @@ div.bigstars div.rateit-reset:hover
       }
     }
 
-    .stars-photo-block {
-      padding: 10px 0;
-    }
-
     .stars-comment {
       color: #999999;
       @include ems_font_size(13px, $font-size-base);
@@ -639,6 +606,58 @@ div.bigstars div.rateit-reset:hover
       color: #666666;
       @include ems_font_size(13px, $font-size-base);
       margin-top: 20px;
+    }
+
+    .stars-photo-block {
+      padding: 10px 0;
+    }
+
+    .rating-input {
+      padding: 5px 16px 3px 16px;
+      background: $green;
+      display: inline-block;
+      @include border-radius(3px 0 0 3px);
+      border: 1px solid $green;
+
+      .rateit {
+        padding-top: 2px;
+        vertical-align: top;
+      }
+
+      span {
+        color: #fff;
+        margin-left: 8px;
+      }
+    }
+
+    .photo-input {
+      display: inline-block;
+      background-color: #fff;
+      border: 1px solid #dcdcdc;
+      border-left: 0;
+      @include border-radius(0 3px 3px 0);
+      margin-left: -3.5px;
+      padding: 5px 16px 5px 16px;
+
+      .photo-icon {
+        display: inline-block;
+        vertical-align: middle;
+        background: sprite($global-sprite, 'add-photo-grey');
+        background-position: sprite-position($global-sprite, 'add-photo-grey');
+        @include sprite-dimensions($global-sprite, 'add-photo-grey');
+        height: 18px;
+      }
+
+      span {
+        color: #666666;
+        margin-left: 4px;
+        vertical-align: top;
+      }
+
+      &:hover {
+        background-color: #eeeeee;
+        cursor: pointer;
+      }
     }
   }
 }
