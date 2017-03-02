@@ -155,10 +155,13 @@ class ReviewTag(models.Model):
 class BusinessPhoto(models.Model):
     photo = models.ImageField(null=True,upload_to='businesses/%Y/%m/%d')
     #review = models.ForeignKey(Review,null=True)
+    BUSINESSPHOTO='BP'
+    REVIEWPHOTO ='RP'
+    USERPHOTO = 'UP'
     TYPE = (
-        ('BP','BusinessPhoto'),
-        ('RP','ReviewPhoto'),
-        ('UP','UserPhoto')
+        (BUSINESSPHOTO,'BusinessPhoto'),
+        (REVIEWPHOTO,'ReviewPhoto'),
+        (USERPHOTO,'UserPhoto')
     )
     TAG_HELPFUL='H'
     TAG_INAPPROPRIATE='I'
