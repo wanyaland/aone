@@ -41,43 +41,45 @@
         </div>
 
         <div class="your-review-block">
+          {% if form.errors %}
+            <div class="form-errors">
+              {% for field,error in form.errors.items %}
+                <div class="form-error-text">
+                  {% if field != '__all__' %}{{ field }}: {% endif %}
+                  {{ error|striptags }}
+                  {{ message }}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+
           <h3>Your Review</h3>
 
           <form action="{{action_url}}" method="post" enctype="multipart/form-data">
             {%csrf_token%}
 
             <div class="stars-photo-block">
-              <!-- Select Photos:{{form.files}} -->
               <div class="rating-input">
-                <div class="rateit rating-stars blue" data-rateit-resetable="false" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="0">
-                </div>
+                <div class="rateit rating-stars blue" data-rateit-resetable="false" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="{{ form.rating.value|default_if_none:'0' }}"></div>
+                <input type="hidden" name="rating" value="{{ form.rating.value|default_if_none:'' }}">
                 <span>Choose rating</span>
               </div>
               <div class="photo-input">
-                <div class="photo-icon">
-                </div>
+                <div class="photo-icon"></div>
                 <span>Add a photo</span>
+                {{form.files}}
               </div>
             </div>
 
             <div class="stars-comment">
               Click stars to rate this restaurant
             </div>
+            <div id="file-list"></div>
 
-            <textarea id="new-review-area"></textarea>
-            {% if form.errors %}
-              {% for field,error in form.errors.items %}
-                <div class="text-warning bigger-110 orange">
-                  <i class="icon-warning-sign"></i>
-                  {% if field != '__all__' %}{{ field }}{% endif %}
-                  {{ error|striptags }}
-                  {{message}}
-                </div>
-              {% endfor %}
-            {% endif %}
+            <textarea id="new-review-area" name="review">{{ form.review.value|default_if_none:'' }}</textarea>
 
             <input type="submit" class="btn line-45" value="SIGNUP AND POST">
-            <input type="button" class="btn grey-btn line-45" value="CANCEL">
+            <a href="{% url 'core:review_list' %}" class="btn grey-btn line-45">CANCEL</a>
           </form>
 
           <div class="form-comment">
@@ -91,59 +93,73 @@
           Other Reviews
         </div>
 
-        {# Fake reviews #}
-        {% for i in '123' %}
-        <div class="other-review-wrapper">
-          <div class="review-annotation-block">
-            <div class="review-header clearfix">
-              <div class="user-photo">
-                <img src="/static/africaone/static-images/empty-avatar.jpg">
-              </div>
-              <div class="header-info">
-                <div class="user-name">
-                  By Martha Mukasa
-                </div>
-                <div class="user-since">
-                  Member since 11 Aug 2010
-                </div>
-                <div class="rateit rating-stars" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="4" data-rateit-readonly="true">
-                </div>
-                <div class="rating-block clearfix">
-                  <div class="rating-description">
-                    4 out of 5 stars
-                  </div>
-                  <div class="date">
-                    On May 17, 2012
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="review-container">
-              <div class="review-title">
-                Excellent service, best in town.
-              </div>
-              <div class="review-text">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa....
-              <a href="#">Read more</a>
-              </div>
-            </div>
-
-            {% if i == '1'%}
-            <div class="review-photos">
-              {% for i in '1234' %}
-                <img src="/static/africaone/static-images/fake-user-photos-2.jpg">
-              {% endfor %}
-            </div>
-            {% endif %}
+        {% if not reviews %}
+          <div class="other-review-wrapper">
+            No reviews for {{ business.name }}
           </div>
-        </div>
-        {% endfor %}
+        {% endif %}
 
         {% for review in reviews %}
-          {# TODO #}
-          {# {% include 'core/review_detail_snippet.html' %} #}
+          {{tracking_hit_post}}
+          <div class="other-review-wrapper">
+            <div class="review-annotation-block">
+              <div class="review-header clearfix">
+                <div class="user-photo">
+                  {% if review.customer.photo %}
+                    <img src="{{review.customer.photo.url}}" class="img">
+                  {% else %}
+                    <img src="/static/africaone/static-images/empty-avatar.jpg">
+                  {% endif %}
+                </div>
+                <div class="header-info">
+                  <div class="user-name">
+                    By {{review.customer|default_if_none:'Anonymous'}}
+                  </div>
+
+                  <!-- TODO: doesn't exist in db -->
+                  <!-- <div class="user-since">
+                    Member since 11 Aug 2010
+                  </div> -->
+
+                  <div class="rateit rating-stars" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="{{ review.rating.score|default_if_none:'0' }}" data-rateit-readonly="true"></div>
+                  <div class="rating-block clearfix">
+                    <div class="rating-description">
+                      {{ review.rating.score|default_if_none:'0' }} out of 5 stars
+                    </div>
+                    <div class="date">
+                      On {{review.create_date|date:'M d, Y'}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="review-container">
+
+                <!-- TODO: doesn't exist in db -->
+                <!-- <div class="review-title">
+                  Excellent service, best in town.
+                </div> -->
+
+                <div class="review-text">
+                  {{ review.review|truncatechars:280 }}
+                  {% if review.review|length > 277 %}
+                    <a href="{% url 'core:review_detail' pk=review.id %}">Read more</a>
+                  {% endif %}
+                </div>
+              </div>
+
+              {% if review.businessphoto_set %}
+                <div class="review-photos">
+                  {% for review_photo in review.businessphoto_set.all %}
+                    <img src="{{ review_photo.photo.url }}">
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
         {% endfor %}
+
       </div>
     </div>
   </div>
@@ -152,21 +168,13 @@
 
 {% block scripts %}
   <script type="text/javascript">
-    // var input = document.getElementById('filesToUpload')
-    // var list = document.getElementById('fileList')
-
-    //for every file...
-    
-    // for (var x = 0; x < input.files.length; x++) {
-    
-    //add to list
-    
-    // var li = document.createElement('li');
-    // li.innerHTML = 'File ' + (x + 1) + ':  ' + input.files[x].name;
-      // list.append(li);
-    // }
-
     $(document).ready(function() {
+      setTextAreaPlaceholder();
+      handleRating();
+      handleFileNames();
+    });
+
+    function setTextAreaPlaceholder() {
       var area = $('#new-review-area');
       var placeholderText = 'Start your review here.\n\nYour review will help others find and learn about great local businesses. It will also support the local businesses.\n\nPlease don\'t review this business if you received anything for writing this review; or if you are in anyway connected to the owner or employees.';
 
@@ -188,7 +196,32 @@
           $(this).addClass('clear');
         }    
       });
-    });
+
+      $('.your-review-block form input[type="submit"]').click(function() {
+        if (area.hasClass('clear')) {
+          area.val('');
+        }
+      });
+    }
+
+    function handleRating() {
+      $('.rating-stars').bind('rated', function(event, value) {
+        console.log(typeof(value))
+        $('input[name="rating"]').val(value);
+      });
+    }
+
+    function handleFileNames() {
+      $('#id_files').change(function() {
+        var list = $('file-list');
+
+        for (var x = 0; x < $(this)[0].files.length; x++) {
+          var f = document.createElement('div');
+          f.innerHTML = 'File ' + (x + 1) + ':  ' + $(this)[0].files[x].name;
+          $('#file-list').append(f);
+        }
+      });
+    }
   </script>
 
 
