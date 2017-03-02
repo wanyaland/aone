@@ -90,16 +90,60 @@
         <div class="column-title">
           Other Reviews
         </div>
-        <div class="column-content">
-          {% for review in reviews %}
-            {# TODO #}
-            {# {% include 'core/review_detail_snippet.html' %} #}
-            <div class="space-6"></div>
-          {% endfor %}
-          <div style="padding: 150px 0; text-align: center;">
-            Under construction ...
+
+        {# Fake reviews #}
+        {% for i in '123' %}
+        <div class="other-review-wrapper">
+          <div class="review-annotation-block">
+            <div class="review-header clearfix">
+              <div class="user-photo">
+                <img src="/static/africaone/static-images/empty-avatar.jpg">
+              </div>
+              <div class="header-info">
+                <div class="user-name">
+                  By Martha Mukasa
+                </div>
+                <div class="user-since">
+                  Member since 11 Aug 2010
+                </div>
+                <div class="rateit rating-stars" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="4" data-rateit-readonly="true">
+                </div>
+                <div class="rating-block clearfix">
+                  <div class="rating-description">
+                    4 out of 5 stars
+                  </div>
+                  <div class="date">
+                    On May 17, 2012
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="review-container">
+              <div class="review-title">
+                Excellent service, best in town.
+              </div>
+              <div class="review-text">
+              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa....
+              <a href="#">Read more</a>
+              </div>
+            </div>
+
+            {% if i == '1'%}
+            <div class="review-photos">
+              {% for i in '1234' %}
+                <img src="/static/africaone/static-images/fake-user-photos-2.jpg">
+              {% endfor %}
+            </div>
+            {% endif %}
           </div>
         </div>
+        {% endfor %}
+
+        {% for review in reviews %}
+          {# TODO #}
+          {# {% include 'core/review_detail_snippet.html' %} #}
+        {% endfor %}
       </div>
     </div>
   </div>
