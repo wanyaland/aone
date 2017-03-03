@@ -759,9 +759,16 @@
     .review-text {
       color: #666666;
 
-      a {
-        color: $green;
-        font-weight: bold;
+      .short-text {
+        span {
+          color: $green;
+          font-weight: bold;
+          cursor: pointer;
+        }
+      }
+
+      .full-text {
+        display: none;
       }
     }
   }

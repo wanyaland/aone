@@ -116,10 +116,9 @@
                     By {{review.customer|default_if_none:'Anonymous'}}
                   </div>
 
-                  <!-- TODO: doesn't exist in db -->
-                  <!-- <div class="user-since">
-                    Member since 11 Aug 2010
-                  </div> -->
+                  <div class="user-since">
+                    Member since {{review.customer.user.date_joined|date:'M d, Y'}}
+                  </div>
 
                   <div class="rateit rating-stars" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="{{ review.rating.score|default_if_none:'0' }}" data-rateit-readonly="true"></div>
                   <div class="rating-block clearfix">
@@ -141,10 +140,15 @@
                 </div> -->
 
                 <div class="review-text">
-                  {{ review.review|truncatechars:280 }}
-                  {% if review.review|length > 277 %}
-                    <a href="{% url 'core:review_detail' pk=review.id %}">Read more</a>
-                  {% endif %}
+                  <div class="short-text">
+                    {{ review.review|truncatechars:280 }}
+                    {% if review.review|length > 277 %}
+                      <span class="read-more-link">Read more</span>
+                    {% endif %}
+                  </div>
+                  <div class="full-text">
+                    {{ review.review}}
+                  </div>
                 </div>
               </div>
 
@@ -169,12 +173,13 @@
 {% block scripts %}
   <script type="text/javascript">
     $(document).ready(function() {
-      setTextAreaPlaceholder();
-      handleRating();
-      handleFileNames();
+      textAreaPlaceholderHandler();
+      ratingHandler();
+      fileNamesHandler();
+      loadMoreHandler();
     });
 
-    function setTextAreaPlaceholder() {
+    function textAreaPlaceholderHandler() {
       var area = $('#new-review-area');
       var placeholderText = 'Start your review here.\n\nYour review will help others find and learn about great local businesses. It will also support the local businesses.\n\nPlease don\'t review this business if you received anything for writing this review; or if you are in anyway connected to the owner or employees.';
 
@@ -204,14 +209,14 @@
       });
     }
 
-    function handleRating() {
+    function ratingHandler() {
       $('.rating-stars').bind('rated', function(event, value) {
         console.log(typeof(value))
         $('input[name="rating"]').val(value);
       });
     }
 
-    function handleFileNames() {
+    function fileNamesHandler() {
       $('#id_files').change(function() {
         var list = $('file-list');
 
@@ -220,6 +225,14 @@
           f.innerHTML = 'File ' + (x + 1) + ':  ' + $(this)[0].files[x].name;
           $('#file-list').append(f);
         }
+      });
+    }
+
+    function loadMoreHandler() {
+      $('.read-more-link').click(function() {
+        textWrapper = $(this).parent().parent();
+        textWrapper.children('.short-text').hide();
+        textWrapper.children('.full-text').show();
       });
     }
   </script>

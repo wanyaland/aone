@@ -508,7 +508,7 @@ class ReviewCreate(CreateView):
     def get_context_data(self, **kwargs):
         pk = self.kwargs.get('business_pk')
         business = get_object_or_404(Business,pk=pk)
-        review_list = Review.objects.filter(business=business).order_by('-create_date')
+        review_list = Review.objects.filter(business=business).order_by('-create_date')[:10]
         context = super(CreateView,self).get_context_data(**kwargs)
         context['business']=business
         context['reviews']=review_list

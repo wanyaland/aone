@@ -1593,9 +1593,13 @@ ul.footer-menu a:hover {
 .other-review-wrapper .review-container .review-text {
   color: #666666;
 }
-.other-review-wrapper .review-container .review-text a {
+.other-review-wrapper .review-container .review-text .short-text span {
   color: #77c301;
   font-weight: bold;
+  cursor: pointer;
+}
+.other-review-wrapper .review-container .review-text .full-text {
+  display: none;
 }
 .other-review-wrapper .review-photos {
   border-top: 1px solid #cccccc;
