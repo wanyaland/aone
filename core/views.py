@@ -513,7 +513,7 @@ class ReviewCreate(CreateView):
         context['business']=business
         context['reviews']=review_list
         return context
-        return context
+
 
     def form_valid(self,form):
         context = self.get_context_data()
@@ -529,10 +529,10 @@ class ReviewCreate(CreateView):
                 'field_name': 'rating',
                 'score':score,
          }
-        # AddRatingView()(self.request,**params)
-        # for file in image_list:
-        #     BusinessPhoto.objects.create(photo=file,review=self.object)
-        # action.send(self.request,verb='created review',target=self.object)
+        AddRatingView()(self.request,**params)
+        for file in image_list:
+            BusinessPhoto.objects.create(photo=file,photo_type=BusinessPhoto.REVIEWPHOTO,business=form.instance.business)
+        action.send(self.request,verb='created review',target=self.object)
         return response
 
 class ReviewEdit(UpdateView):
