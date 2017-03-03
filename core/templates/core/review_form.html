@@ -60,7 +60,7 @@
 
             <div class="stars-photo-block">
               <div class="rating-input">
-                <div class="rateit rating-stars blue" data-rateit-resetable="false" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="{{ form.rating.value|default_if_none:'0' }}"></div>
+                <div class="rateit rating-stars blue" data-rateit-resetable="false" data-rateit-step="1" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="{{ form.rating.value|default_if_none:'0' }}"></div>
                 <input type="hidden" name="rating" value="{{ form.rating.value|default_if_none:'' }}">
                 <span>Choose rating</span>
               </div>
