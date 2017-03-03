@@ -779,8 +779,13 @@
     margin-top: 20px;
     text-align: center;
 
-    img {
+    a {
+      display: inline-block;
       width: 24%;
+
+      img {
+        width: 100%;
+      }
     }
   }
 }

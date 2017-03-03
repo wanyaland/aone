@@ -1607,8 +1607,12 @@ ul.footer-menu a:hover {
   margin-top: 20px;
   text-align: center;
 }
-.other-review-wrapper .review-photos img {
+.other-review-wrapper .review-photos a {
+  display: inline-block;
   width: 24%;
+}
+.other-review-wrapper .review-photos a img {
+  width: 100%;
 }
 
 .businesss-review-item {
