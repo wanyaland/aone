@@ -16,6 +16,7 @@ from django.core.files import File
 import os
 
 
+
 class HitCountTest(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
@@ -208,11 +209,22 @@ class ViewTest(TestCase):
         self.assertEqual(business.owner,Customer.objects.get(user=self.user))
         self.assertEqual(response.status_code,200)
 
-    def test_business_view_login_required(self):
+    def business_view_login_required(self):
         request = self.factory.get('/business_add/')
         response = BusinesView.as_view()(request)
         self.assertEqual(response.status_code,302)
         self.assertEqual(response['Location'],'/business/sign-up/')
+
+    def test_can_create_review(self):
+        """
+        Test Create review
+        """
+        data = {'rating':3,'review':'great restaurant'}
+        request = self.factory.post('reverse_add/1/',data=data)
+        response = ReviewCreate.as_view()(request)
+        self.assertEqual(response.status_code,200)
+
+
 
 
 

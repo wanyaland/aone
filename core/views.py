@@ -531,7 +531,7 @@ class ReviewCreate(CreateView):
          }
         AddRatingView()(self.request,**params)
         for file in image_list:
-            BusinessPhoto.objects.create(photo=file,photo_type=BusinessPhoto.REVIEWPHOTO,business=form.instance.business)
+            BusinessPhoto.objects.create(photo=file,photo_type=BusinessPhoto.REVIEWPHOTO,review=self.object)
         action.send(self.request,verb='created review',target=self.object)
         return response
 

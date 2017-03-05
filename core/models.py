@@ -154,7 +154,7 @@ class ReviewTag(models.Model):
 
 class BusinessPhoto(models.Model):
     photo = models.ImageField(null=True,upload_to='businesses/%Y/%m/%d')
-    #review = models.ForeignKey(Review,null=True)
+    review = models.ForeignKey(Review,null=True)
     BUSINESSPHOTO='BP'
     REVIEWPHOTO ='RP'
     USERPHOTO = 'UP'
