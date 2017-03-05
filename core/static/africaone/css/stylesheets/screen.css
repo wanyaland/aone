@@ -1440,17 +1440,18 @@ ul.footer-menu a:hover {
   background-color: #fafafa;
   color: #cbcbcb;
 }
-.review-form-wrapper .your-review-block input.btn {
+.review-form-wrapper .your-review-block input.btn,
+.review-form-wrapper .your-review-block a.btn {
   padding: 0 36px;
   display: inline-block;
   margin-right: 6px;
 }
-.review-form-wrapper .your-review-block input.btn.grey-btn {
+.review-form-wrapper .your-review-block a.btn.grey-btn {
   color: #666666;
   background-color: #f1f1f1;
   border: 0;
 }
-.review-form-wrapper .your-review-block input.btn.grey-btn:hover {
+.review-form-wrapper .your-review-block a.btn.grey-btn:hover {
   color: #fff;
   background: #007fa8;
   border-color: #007fa8;
@@ -1467,35 +1468,40 @@ ul.footer-menu a:hover {
 .review-form-wrapper .your-review-block .stars-photo-block {
   padding: 10px 0;
 }
-.review-form-wrapper .your-review-block .rating-input {
+.review-form-wrapper .your-review-block .stars-photo-block {
+  display: table;
+  padding-bottom: 0;
+}
+.review-form-wrapper .your-review-block .stars-photo-block .rating-input {
+  display: table-cell;
   padding: 5px 16px 3px 16px;
   background: #77c301;
-  display: inline-block;
   -moz-border-radius: 3px 0 0 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px 0 0 3px;
   border: 1px solid #77c301;
 }
-.review-form-wrapper .your-review-block .rating-input .rateit {
+.review-form-wrapper .your-review-block .stars-photo-block .rating-input .rateit {
   padding-top: 2px;
-  vertical-align: top;
 }
-.review-form-wrapper .your-review-block .rating-input span {
+.review-form-wrapper .your-review-block .stars-photo-block .rating-input span {
   color: #fff;
   margin-left: 8px;
+  vertical-align: top;
 }
-.review-form-wrapper .your-review-block .photo-input {
-  display: inline-block;
+.review-form-wrapper .your-review-block .stars-photo-block .photo-input {
+  display: table-cell;
   background-color: #fff;
   border: 1px solid #dcdcdc;
   border-left: 0;
   -moz-border-radius: 0 3px 3px 0;
   -webkit-border-radius: 0;
   border-radius: 0 3px 3px 0;
-  margin-left: -3.5px;
   padding: 5px 16px 5px 16px;
+  position: relative;
+  overflow: hidden;
 }
-.review-form-wrapper .your-review-block .photo-input .photo-icon {
+.review-form-wrapper .your-review-block .stars-photo-block .photo-input .photo-icon {
   display: inline-block;
   vertical-align: middle;
   background: url('../images/globals-s28fb260ac8.png') 0 0;
@@ -1504,14 +1510,34 @@ ul.footer-menu a:hover {
   width: 18px;
   height: 18px;
 }
-.review-form-wrapper .your-review-block .photo-input span {
+.review-form-wrapper .your-review-block .stars-photo-block .photo-input span {
   color: #666666;
   margin-left: 4px;
   vertical-align: top;
 }
-.review-form-wrapper .your-review-block .photo-input:hover {
+.review-form-wrapper .your-review-block .stars-photo-block .photo-input:hover {
   background-color: #eeeeee;
+}
+.review-form-wrapper .your-review-block .stars-photo-block .photo-input input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
   cursor: pointer;
+  opacity: 0;
+}
+.review-form-wrapper .your-review-block #file-list {
+  margin-top: 6px;
+  color: #999999;
+  font-size: 1em;
+}
+.review-form-wrapper .your-review-block .form-errors {
+  margin-bottom: 20px;
+}
+.review-form-wrapper .your-review-block .form-errors .form-error-text {
+  color: #ff0000;
 }
 
 .other-review-wrapper {
@@ -1567,9 +1593,13 @@ ul.footer-menu a:hover {
 .other-review-wrapper .review-container .review-text {
   color: #666666;
 }
-.other-review-wrapper .review-container .review-text a {
+.other-review-wrapper .review-container .review-text .short-text span {
   color: #77c301;
   font-weight: bold;
+  cursor: pointer;
+}
+.other-review-wrapper .review-container .review-text .full-text {
+  display: none;
 }
 .other-review-wrapper .review-photos {
   border-top: 1px solid #cccccc;
@@ -1577,8 +1607,12 @@ ul.footer-menu a:hover {
   margin-top: 20px;
   text-align: center;
 }
-.other-review-wrapper .review-photos img {
+.other-review-wrapper .review-photos a {
+  display: inline-block;
   width: 24%;
+}
+.other-review-wrapper .review-photos a img {
+  width: 100%;
 }
 
 .businesss-review-item {

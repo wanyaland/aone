@@ -508,7 +508,7 @@ class ReviewCreate(CreateView):
     def get_context_data(self, **kwargs):
         pk = self.kwargs.get('business_pk')
         business = get_object_or_404(Business,pk=pk)
-        review_list = Review.objects.filter(business=business)
+        review_list = Review.objects.filter(business=business).order_by('-create_date')[:10]
         context = super(CreateView,self).get_context_data(**kwargs)
         context['business']=business
         context['reviews']=review_list
@@ -518,6 +518,7 @@ class ReviewCreate(CreateView):
     def form_valid(self,form):
         context = self.get_context_data()
         form.instance.business = context['business']
+        form.instance.customer = self.request.user.customer
         #form.instance.rating.add(score=self.request.POST['rating'],user=self.request.user,ip_address=self.request.META['REMOTE_ADDR'])
         image_list =    self.request.FILES.getlist('files')
         response=super(ReviewCreate,self).form_valid(form)

@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.conf.urls import patterns,url
 from core.views import *
 from djangoratings.views import AddRatingFromModel
@@ -27,8 +28,8 @@ urlpatterns = patterns (
     url(r'^business_edit/(?P<pk>\d+)/$', BusinesView.as_view(), name='business_edit'),
     url(r'^add_business_successful', add_business_successful, name='add_business_successful'),
     url(r'^review_list', ReviewListView.as_view(), name='review_list'),
-    url(r'^review_add/(?P<business_pk>\d+)/$', ReviewCreate.as_view(), name='review_add'),
-    url(r'^review_edit/(?P<pk>\d+)/$', ReviewEdit.as_view(), name='review_edit'),
+    url(r'^review_add/(?P<business_pk>\d+)/$', login_required(ReviewCreate.as_view()), name='review_add'),
+    url(r'^review_edit/(?P<pk>\d+)/$', login_required(ReviewEdit.as_view()), name='review_edit'),
     url(r'^review_detail/(?P<pk>\d+)/$',ReviewDetail.as_view(),name='review_detail'),
     url(r'^business-user-edit/(?P<pk>\d+)/$', BusinessUserView.as_view(), name='business_user_edit'),
     url(r'business-user-add', BusinessUserView.as_view(), name='business_user_add'),

@@ -578,11 +578,14 @@
       }
     }
 
-    input.btn {
+    input.btn,
+    a.btn {
       padding: 0 36px;
       display: inline-block;
       margin-right: 6px;
+    }
 
+    a.btn {
       &.grey-btn {
         color: #666666;
         background-color: #f1f1f1;
@@ -611,51 +614,82 @@
       padding: 10px 0;
     }
 
-    .rating-input {
-      padding: 5px 16px 3px 16px;
-      background: $green;
-      display: inline-block;
-      @include border-radius(3px 0 0 3px);
-      border: 1px solid $green;
+    .stars-photo-block {
+      display: table;
+      padding-bottom: 0;
 
-      .rateit {
-        padding-top: 2px;
-        vertical-align: top;
+      .rating-input {
+        display: table-cell;
+
+        padding: 5px 16px 3px 16px;
+        background: $green;
+        @include border-radius(3px 0 0 3px);
+        border: 1px solid $green;
+
+        .rateit {
+          padding-top: 2px;
+        }
+
+        span {
+          color: #fff;
+          margin-left: 8px;
+          vertical-align: top;
+        }
       }
 
-      span {
-        color: #fff;
-        margin-left: 8px;
+      .photo-input {
+        display: table-cell;
+        background-color: #fff;
+        border: 1px solid #dcdcdc;
+        border-left: 0;
+        @include border-radius(0 3px 3px 0);
+        padding: 5px 16px 5px 16px;
+        position: relative;
+        overflow: hidden;
+
+        .photo-icon {
+          display: inline-block;
+          vertical-align: middle;
+          background: sprite($global-sprite, 'add-photo-grey');
+          background-position: sprite-position($global-sprite, 'add-photo-grey');
+          @include sprite-dimensions($global-sprite, 'add-photo-grey');
+          height: 18px;
+        }
+
+        span {
+          color: #666666;
+          margin-left: 4px;
+          vertical-align: top;
+        }
+
+        &:hover {
+          background-color: #eeeeee;
+        }
+
+        input {
+          position: absolute;
+          top: 0;
+          right: 0;
+          margin: 0;
+          padding: 0;
+          font-size: 24px;
+          cursor: pointer;
+          opacity: 0;
+        }
       }
     }
 
-    .photo-input {
-      display: inline-block;
-      background-color: #fff;
-      border: 1px solid #dcdcdc;
-      border-left: 0;
-      @include border-radius(0 3px 3px 0);
-      margin-left: -3.5px;
-      padding: 5px 16px 5px 16px;
+    #file-list {
+      margin-top: 6px;
+      color: #999999;
+      @include ems_font_size(13px, $font-size-base);
+    }
 
-      .photo-icon {
-        display: inline-block;
-        vertical-align: middle;
-        background: sprite($global-sprite, 'add-photo-grey');
-        background-position: sprite-position($global-sprite, 'add-photo-grey');
-        @include sprite-dimensions($global-sprite, 'add-photo-grey');
-        height: 18px;
-      }
-
-      span {
-        color: #666666;
-        margin-left: 4px;
-        vertical-align: top;
-      }
-
-      &:hover {
-        background-color: #eeeeee;
-        cursor: pointer;
+    .form-errors {
+      margin-bottom: 20px;
+      
+      .form-error-text {
+        color: #ff0000;
       }
     }
   }
@@ -725,9 +759,16 @@
     .review-text {
       color: #666666;
 
-      a {
-        color: $green;
-        font-weight: bold;
+      .short-text {
+        span {
+          color: $green;
+          font-weight: bold;
+          cursor: pointer;
+        }
+      }
+
+      .full-text {
+        display: none;
       }
     }
   }
@@ -738,8 +779,13 @@
     margin-top: 20px;
     text-align: center;
 
-    img {
+    a {
+      display: inline-block;
       width: 24%;
+
+      img {
+        width: 100%;
+      }
     }
   }
 }
