@@ -152,9 +152,9 @@
                 </div>
               </div>
 
-              {% if business.businessphoto_set %}
+              {% if review.businessphoto_set %}
                 <div class="review-photos">
-                  {% for review_photo in business.businessphoto_set.all %}
+                  {% for review_photo in review.businessphoto_set.all %}
                     <a href="{{ review_photo.photo.url }}" data-lightbox="review-{{ review.id }}">
                       <img src="{{ review_photo.photo.url }}">
                     </a>
@@ -217,7 +217,6 @@
 
     function ratingHandler() {
       $('.rating-stars').bind('rated', function(event, value) {
-        console.log(typeof(value))
         $('input[name="rating"]').val(value);
       });
     }
