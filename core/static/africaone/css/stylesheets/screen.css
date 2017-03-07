@@ -2564,7 +2564,7 @@ body.js-ready .africaone-form .price-field .free-price label {
 }
 
 .home-content-wrapper {
-  padding: 0 0 75px 0;
+  padding: 0;
 }
 .home-content-wrapper .big-col {
   float: left;
@@ -2661,6 +2661,114 @@ body.js-ready .africaone-form .price-field .free-price label {
   font-weight: 300;
   font-size: 1.92308em;
   color: #6a6a6a;
+}
+
+.block-recent-activity .block-content {
+  background-color: #fff;
+  margin-bottom: 3px;
+}
+.block-recent-activity .block-content .left-column {
+  float: left;
+  width: 35%;
+  padding: 30px 20px 30px 25px;
+}
+.block-recent-activity .block-content .left-column .user-photo {
+  width: 35%;
+  float: left;
+  padding: 3px 15px 0 0;
+}
+.block-recent-activity .block-content .left-column .user-photo img {
+  width: 100%;
+}
+.block-recent-activity .block-content .left-column .user-info {
+  width: 65%;
+  float: left;
+}
+.block-recent-activity .block-content .left-column .user-info .user-name {
+  color: #007fa8;
+  font-size: 1.15385em;
+  font-weight: bold;
+}
+.block-recent-activity .block-content .left-column .user-info .user-since {
+  color: #858585;
+  line-height: 1.5;
+}
+.block-recent-activity .block-content .right-column {
+  float: left;
+  width: 65%;
+  padding: 30px 30px 30px 20px;
+}
+.block-recent-activity .block-content .right-column .business-name {
+  color: #007fa8;
+  font-size: 1.23077em;
+  font-weight: bold;
+}
+.block-recent-activity .block-content .right-column .rating-stars {
+  margin-top: 6px;
+}
+.block-recent-activity .block-content .right-column .rating-block .rating-description {
+  float: left;
+  color: #999999;
+  line-height: 1;
+  padding-left: 2px;
+  font-size: 0.92308em;
+}
+.block-recent-activity .block-content .right-column .rating-block .date {
+  float: right;
+  color: #999999;
+  line-height: 1;
+  font-size: 0.92308em;
+}
+.block-recent-activity .block-content .right-column .review-text {
+  padding-top: 10px;
+  color: #666666;
+}
+.block-recent-activity .block-content .right-column .review-photos {
+  border-top: 1px solid #cccccc;
+  padding-top: 16px;
+  margin-top: 20px;
+  text-align: center;
+}
+.block-recent-activity .block-content .right-column .review-photos a {
+  display: inline-block;
+  width: 24%;
+}
+.block-recent-activity .block-content .right-column .review-photos a img {
+  width: 100%;
+}
+.block-recent-activity .block-content .right-column .review-feedback {
+  margin: 15px 0;
+  padding: 15px 5px;
+  border-top: solid 1px #ccc;
+  border-bottom: solid 1px #ccc;
+}
+.block-recent-activity .block-content .right-column .review-feedback label, .block-recent-activity .block-content .right-column .review-feedback a {
+  float: left;
+}
+.block-recent-activity .block-content .right-column .review-feedback label {
+  color: #aaa;
+  width: 126px;
+  line-height: 32px;
+}
+.block-recent-activity .block-content .right-column .review-feedback .btn {
+  line-height: 30px;
+  padding: 0 20px;
+  margin: 0 0 0 4px;
+}
+.block-recent-activity .block-content .right-column .share-review-block .share-review-btn {
+  display: inline-block;
+  cursor: pointer;
+  padding-right: 20px;
+  line-height: 30px;
+}
+.block-recent-activity .see-more-activity {
+  padding: 10px;
+  background-color: #fff;
+  text-align: center;
+}
+.block-recent-activity .see-more-activity a.btn {
+  display: inline-block;
+  padding: 0 50px;
 }
 
 .business-header {
