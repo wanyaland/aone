@@ -43,9 +43,10 @@ def index(request):
 
     last_reviews = Action.objects.filter(verb='created review')\
                    .values_list('target_object_id', flat=True)
+    last_reviews = [int(r) for r in last_reviews]
     recent_activities = Review.objects.filter(id__in=last_reviews).order_by('-create_date')[:2]
 
-    events =list(Event.objects.all())
+    events = list(Event.objects.all())
     popular_events = rank.rank_events(events)[:3]
     reviews = list(Review.objects.all())
     review_of_the_day = rank.rank_reviews(reviews)[:1]
