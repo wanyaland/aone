@@ -43,6 +43,7 @@ def index(request):
 
     last_reviews = Action.objects.filter(verb='created review')\
                    .values_list('target_object_id', flat=True)
+    last_reviews = [int(r) for r in last_reviews]
     recent_activities = Review.objects.filter(id__in=last_reviews).order_by('-create_date')[:2]
     events =list(Event.objects.all())
     popular_events = rank.rank_events(events)[:3]
@@ -638,7 +639,6 @@ class ResetPasswordRequestView(FormView):
                             'user':user,
                             'token':default_token_generator.make_token(user),
                             'protocol':'http',
-
                             }
                     subject_template_name='registration/password_reset_subject.txt'
                     email_template_name = 'core/auth-user/password_reset_email.html'
