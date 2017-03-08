@@ -1,131 +1,188 @@
-
+{% extends 'core/base.html' %}
 {% include 'core/components/page_head_tags.html' %}
 
-<div class="home-page-wrapper full-page-wrapper">
-
-  <div class="home-logo-menu-strip">
-    <a href="/" class="logo-link"></a>
-    {% include 'core/header/menu-main.html' %}
-    {% include 'core/header/login-links.html' %}
-  </div>
-
+{% block main %}
+  <div class="home-header-bg"></div>
   {% include 'core/reviews/banner-reviews.html' %}
 
-  <div class="home-find-form-wrapper">
-    {% include 'core/header/form-find-companies.html' %}
-  </div>
+  <div class="home-page-wrapper full-page-wrapper">
+    <div class="home-content-wrapper">
+      <div class="container">
 
-  {% block main %}
-
-  <div class="home-content-wrapper">
-    <div class="container">
-
-      <div class="home-row home-row-1 clearfix">
-
-        <div class="big-col wrapper-col"><div class="inner-wrapper">
-
-          <div class="block block-why-join">
-            <h2 class="big why-join">Why Join AfricaOne</h2>
-            <div class="customers-businesses clearfix">
-              <div class="customers-col col">
-                <h3>Customers</h3>
-                <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-                  Nullam id dolor id nibh ultricies vehicula ut id </p>
-                <a class="btn" href="{% url 'core:sign_up' %}">Sign Up</a>
-              </div>
-              <div class="businesses-col col">
-                <h3>Businesses</h3>
-                <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-                  Nullam id dolor id nibh ultricies vehicula ut id </p>
-                <a class="btn" href="{% url 'core:sign_up_business' %}">Sign Up</a>
-              </div>
-            </div>
+        <div class="top-header">
+          <div class="header-text">
+            <span class="left-quote"></span>
+            Trusted reviews of businesses near you and around Africa.
+            <span class="right-quote"></span>
           </div>
+          <a href="#" class="btn line-35">Learn more</a>
+        </div>
 
-        </div></div>
+        <div class="home-row home-row-1 clearfix">
 
-        <div class="small-col wrapper-col"><div class="inner-wrapper">
-
-          <div class="block block-mobile-app">
-            <h2>AfricaOne Mobile App</h2>
-            <div class="mobile-app-desc">
-              <div class="phones"></div>
-              <div class="desc">
-                <p>Download the AfricaOne Mobile App and use it on the Go. Review
-                  businesses and add photos.</p>
-                <div class="app-links">
-                  <a href="javascript:;" title="AfricaOne on the App Store"
-                     class="apple"></a>
-                  <a href="javascript:;" title="AfricaOne on Google Play"
-                     class="android"></a>
+          <div class="big-col wrapper-col">
+            <div class="inner-wrapper">
+              <div class="block block-why-join">
+                <h2 class="big why-join">Why Join AfricaOne</h2>
+                <div class="customers-businesses clearfix">
+                  <div class="customers-col col">
+                    <h3>Customers</h3>
+                    <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+                      Nullam id dolor id nibh ultricies vehicula ut id </p>
+                    <a class="btn" href="{% url 'core:sign_up' %}">Sign Up</a>
+                  </div>
+                  <div class="businesses-col col">
+                    <h3>Businesses</h3>
+                    <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+                      Nullam id dolor id nibh ultricies vehicula ut id </p>
+                    <a class="btn" href="{% url 'core:sign_up_business' %}">Sign Up</a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-        </div></div>
-      </div>
-
-      <div class="home-row home-row-2 clearfix">
-
-        <div class="big-col wrapper-col"><div class="inner-wrapper">
-
-          <!-- top on africaone -->
-          <div class="block block-top-businesses">
-            {% include 'core/businesses/top-africa-one.html' %}
-          </div>
-
-          <!-- recent activity -->
-          <div class="block block-recent-activity">
-            <h2>Recent Activity on AfricaOne</h2>
-              {% for activity in recent_activities %}
-              <div class="block-content">
-                {{activity}}
+          <div class="small-col wrapper-col">
+            <div class="inner-wrapper">
+              <div class="block block-mobile-app">
+                <h2>AfricaOne Mobile App</h2>
+                <div class="mobile-app-desc">
+                  <div class="phones"></div>
+                  <div class="desc">
+                    <p>Download the AfricaOne Mobile App and use it on the Go. Review
+                      businesses and add photos.</p>
+                    <div class="app-links">
+                      <a href="javascript:;" title="AfricaOne on the App Store"
+                         class="apple"></a>
+                      <a href="javascript:;" title="AfricaOne on Google Play"
+                         class="android"></a>
+                    </div>
+                  </div>
+                </div>
               </div>
-              {% endfor %}
+            </div>
           </div>
-        </div></div>
+        </div>
 
-        <div class="small-col wrapper-col"><div class="inner-wrapper">
+        <div class="home-row home-row-2 clearfix">
 
-          <!--review of the day -->
-          <div class="block block-review-day">
-            {% include 'core/reviews/review-of-the-day.html' %}
-          </div>
+          <div class="big-col wrapper-col">
+            <div class="inner-wrapper">
 
-          <!-- connect facebook -->
-          <div class="block block-facebook">
-            <h2>Connect on Facebook</h2>
-            <div class="connect-fb-wrapper">
-              {% include 'core/static/facebook.html' %}
+              <!-- top on africaone -->
+              <div class="block block-top-businesses">
+                {% include 'core/businesses/top-africa-one.html' %}
+              </div>
+
+              <!-- recent activity -->
+              <div class="block-recent-activity">
+                <h2>Recent Activity on AfricaOne</h2>
+                {% for review in recent_activities %}
+                  <div class="block-content clearfix">
+                    <div class="left-column">
+                      <div class="user-photo">
+                        {% if review.customer.photo %}
+                          <img src="{{review.customer.photo.url}}" class="img">
+                        {% else %}
+                          <img src="/static/africaone/static-images/empty-avatar.jpg">
+                        {% endif %}
+                      </div>
+                      <div class="user-info">
+                        <div class="user-name">
+                          By {{review.customer|default_if_none:'Anonymous'}}
+                        </div>
+
+                        <div class="user-since">
+                          Member since
+                          <br>{{review.customer.user.date_joined|date:'M d, Y'}}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="right-column">
+                      <div class="business-name">
+                        {{ review.business.name|upper }}
+                      </div>
+                      <div class="rateit rating-stars" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="{{ review.rating.score|default_if_none:'0' }}" data-rateit-readonly="true"></div>
+                      <div class="rating-block clearfix">
+                        <div class="rating-description">
+                          {{ review.rating.score|default_if_none:'0' }} out of 5 stars
+                        </div>
+                        <div class="date">
+                          On {{review.create_date|date:'M d, Y'}}
+                        </div>
+                      </div>
+                      <div class="review-text">
+                        <div class="full-text">
+                          {{ review.review }}
+                        </div>
+                      </div>
+
+                      {% if review.businessphoto_set.all %}
+                        <div class="review-photos">
+                          {% for review_photo in review.businessphoto_set.all %}
+                            <a href="{{ review_photo.photo.url }}" data-lightbox="review-{{ review.id }}">
+                              <img src="{{ review_photo.photo.url }}">
+                            </a>
+                          {% endfor %}
+                        </div>
+                      {% endif %}
+
+                      <div class="review-feedback clearfix">
+                        <label>Was this review?</label>
+                        <a class="btn btn-feedback btn-helpful grey-btn">Helpful</a>
+                        <a class="btn btn-feedback btn-funny grey-btn">Funny</a>
+                        <a class="btn btn-feedback btn-cool grey-btn">Cool</a>
+                      </div>
+
+                      <div class="share-review-block">
+                        <a class="share-review-btn btn-icon btn-share">
+                          <span class="icon"><span></span></span>Share this review
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+                
+                <div class="see-more-activity">
+                  <a href="#" class="btn line-35">SEE MORE AFRICAONE RECENT ACTIVITY</a>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <!-- events -->
-          <div class="block block-events">
-            {% include 'core/events/sidebar-list-events.html' %}
+          <div class="small-col wrapper-col">
+            <div class="inner-wrapper">
+
+              <!--review of the day -->
+              <div class="block block-review-day">
+                {% include 'core/reviews/review-of-the-day.html' %}
+              </div>
+
+              <!-- connect facebook -->
+              <div class="block block-facebook">
+                <h2>Connect on Facebook</h2>
+                <div class="connect-fb-wrapper">
+                  {% include 'core/static/facebook.html' %}
+                </div>
+              </div>
+
+              <!-- events -->
+              <div class="block block-events">
+                {% include 'core/events/sidebar-list-events.html' %}
+              </div>
+
+              <!-- news -->
+              <div class="block block-news">
+                {% include 'core/news/sidebar-list-news.html' %}
+              </div>
+            </div>
           </div>
 
-          <!-- news -->
-          <div class="block block-news">
-            {% include 'core/news/sidebar-list-news.html' %}
-          </div>
-
-        </div></div>
+        </div>
 
       </div>
-
     </div>
   </div>
-
 {% endblock %}
-
-{% include 'core/components/footer.html' %}
-
-</div>
-
-{% include 'core/components/page_footer_tags.html' %}
-
-</body>
-
-</html>

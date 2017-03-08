@@ -502,6 +502,11 @@ h2.big {
   height: 270px;
 }
 
+.home-header-bg {
+  background: url('../images/home-page-bg.jpg?1488879305') repeat-x center top;
+  height: 650px;
+}
+
 .message {
   position: relative;
   padding: 25px 70px;
@@ -2240,6 +2245,38 @@ body.js-ready .africaone-form .price-field .free-price label {
   line-height: 1.4em;
 }
 
+.home-page-wrapper {
+  margin-top: 160px;
+}
+.home-page-wrapper .top-header {
+  padding: 40px;
+  text-align: center;
+}
+.home-page-wrapper .top-header .header-text {
+  font-style: italic;
+  color: #333333;
+  font-weight: bold;
+  font-size: 1.92308em;
+}
+.home-page-wrapper .top-header .header-text span {
+  font-size: 1.92308em;
+  color: #cccccc;
+}
+.home-page-wrapper .top-header .header-text span.left-quote:before {
+  content: "\201c";
+  padding-right: 5px;
+}
+.home-page-wrapper .top-header .header-text span.right-quote:before {
+  content: "\201d";
+  position: relative;
+  bottom: -35px;
+  left: -5px;
+}
+.home-page-wrapper .top-header a.btn {
+  display: inline-block;
+  padding: 0 10px;
+  margin-top: 20px;
+}
 .home-page-wrapper h2 {
   font-size: 2.30769em;
   line-height: 1.1em;
@@ -2300,10 +2337,9 @@ body.js-ready .africaone-form .price-field .free-price label {
 }
 
 .home-banner-reviews-wrapper {
-  margin-top: -75px;
+  margin-top: -410px;
   position: relative;
   z-index: 5;
-  background: #ccc;
 }
 .home-banner-reviews-wrapper .search-intro {
   position: absolute;
@@ -2322,7 +2358,6 @@ body.js-ready .africaone-form .price-field .free-price label {
   background: no-repeat center top;
   background-size: cover;
   position: relative;
-  height: 650px;
   display: none;
 }
 .banner-review.banner-review-0 {
@@ -2332,26 +2367,10 @@ body.js-ready .africaone-form .price-field .free-price label {
   display: block;
   float: left;
 }
-.banner-review .banner-gradient {
-  position: absolute;
-  z-index: 5;
-  left: 0;
-  top: 0;
-  right: 0;
-  height: 264px;
-  background: url('../images/home-banner-gradient.png?1487314290') repeat-x 0 0;
-}
 
 .banner-review-desc {
-  position: absolute;
   width: 625px;
-  left: 50%;
-  top: 50%;
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  z-index: 10;
+  margin: 0 auto;
 }
 .banner-review-desc h2 {
   color: #fff;
@@ -2545,7 +2564,7 @@ body.js-ready .africaone-form .price-field .free-price label {
 }
 
 .home-content-wrapper {
-  padding: 65px 0 75px;
+  padding: 0;
 }
 .home-content-wrapper .big-col {
   float: left;
@@ -2642,6 +2661,114 @@ body.js-ready .africaone-form .price-field .free-price label {
   font-weight: 300;
   font-size: 1.92308em;
   color: #6a6a6a;
+}
+
+.block-recent-activity .block-content {
+  background-color: #fff;
+  margin-bottom: 3px;
+}
+.block-recent-activity .block-content .left-column {
+  float: left;
+  width: 35%;
+  padding: 30px 20px 30px 25px;
+}
+.block-recent-activity .block-content .left-column .user-photo {
+  width: 35%;
+  float: left;
+  padding: 3px 15px 0 0;
+}
+.block-recent-activity .block-content .left-column .user-photo img {
+  width: 100%;
+}
+.block-recent-activity .block-content .left-column .user-info {
+  width: 65%;
+  float: left;
+}
+.block-recent-activity .block-content .left-column .user-info .user-name {
+  color: #007fa8;
+  font-size: 1.15385em;
+  font-weight: bold;
+}
+.block-recent-activity .block-content .left-column .user-info .user-since {
+  color: #858585;
+  line-height: 1.5;
+}
+.block-recent-activity .block-content .right-column {
+  float: left;
+  width: 65%;
+  padding: 30px 30px 30px 20px;
+}
+.block-recent-activity .block-content .right-column .business-name {
+  color: #007fa8;
+  font-size: 1.23077em;
+  font-weight: bold;
+}
+.block-recent-activity .block-content .right-column .rating-stars {
+  margin-top: 6px;
+}
+.block-recent-activity .block-content .right-column .rating-block .rating-description {
+  float: left;
+  color: #999999;
+  line-height: 1;
+  padding-left: 2px;
+  font-size: 0.92308em;
+}
+.block-recent-activity .block-content .right-column .rating-block .date {
+  float: right;
+  color: #999999;
+  line-height: 1;
+  font-size: 0.92308em;
+}
+.block-recent-activity .block-content .right-column .review-text {
+  padding-top: 10px;
+  color: #666666;
+}
+.block-recent-activity .block-content .right-column .review-photos {
+  border-top: 1px solid #cccccc;
+  padding-top: 16px;
+  margin-top: 20px;
+  text-align: center;
+}
+.block-recent-activity .block-content .right-column .review-photos a {
+  display: inline-block;
+  width: 24%;
+}
+.block-recent-activity .block-content .right-column .review-photos a img {
+  width: 100%;
+}
+.block-recent-activity .block-content .right-column .review-feedback {
+  margin: 15px 0;
+  padding: 15px 5px;
+  border-top: solid 1px #ccc;
+  border-bottom: solid 1px #ccc;
+}
+.block-recent-activity .block-content .right-column .review-feedback label, .block-recent-activity .block-content .right-column .review-feedback a {
+  float: left;
+}
+.block-recent-activity .block-content .right-column .review-feedback label {
+  color: #aaa;
+  width: 126px;
+  line-height: 32px;
+}
+.block-recent-activity .block-content .right-column .review-feedback .btn {
+  line-height: 30px;
+  padding: 0 20px;
+  margin: 0 0 0 4px;
+}
+.block-recent-activity .block-content .right-column .share-review-block .share-review-btn {
+  display: inline-block;
+  cursor: pointer;
+  padding-right: 20px;
+  line-height: 30px;
+}
+.block-recent-activity .see-more-activity {
+  padding: 10px;
+  background-color: #fff;
+  text-align: center;
+}
+.block-recent-activity .see-more-activity a.btn {
+  display: inline-block;
+  padding: 0 50px;
 }
 
 .business-header {

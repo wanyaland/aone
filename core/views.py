@@ -40,7 +40,10 @@ from africa_one.settings import DEFAULT_FROM_EMAIL
 def index(request):
     rank = Ranking()
     parent_categories = ParentCategory.objects.all()
-    recent_activities = Action.objects.all()[:6]
+
+    last_reviews = Action.objects.filter(verb='created review')\
+                   .values_list('target_object_id', flat=True)
+    recent_activities = Review.objects.filter(id__in=last_reviews).order_by('-create_date')[:2]
     events =list(Event.objects.all())
     popular_events = rank.rank_events(events)[:3]
     reviews = list(Review.objects.all())
@@ -533,7 +536,7 @@ class ReviewCreate(CreateView):
         AddRatingView()(self.request,**params)
         for file in image_list:
             BusinessPhoto.objects.create(photo=file,photo_type=BusinessPhoto.REVIEWPHOTO,review=self.object)
-        #action.send(self.request,verb='created review',target=self.object)
+        action.send(self.request.user,verb='created review',target=self.object)
         return response
 
 class ReviewEdit(UpdateView):
