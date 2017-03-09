@@ -257,13 +257,13 @@ class BusinessUserView(View):
         customer = Customer.objects.filter(user=request.user)
         pk = self.kwargs.get('pk')
         if pk is None:
-            review_form = ReviewForm(request.POST)
-            business_form = BusinessFormUser(request.POST,request.FILES)
+            review_form = ReviewForm(request.POST,request.FILES)
+            business_form = BusinessFormUser(request.POST)
         else:
             review = get_object_or_404(Review,pk=pk)
             business = Review.objects.filter(review=review,customer=customer)
-            review_form = ReviewForm(instance=review,data=request.POST)
-            business_form = BusinessFormUser(instance=business,data=request.POST,files=request.FILES)
+            review_form = ReviewForm(instance=review,data=request.POST,files=request.FILES)
+            business_form = BusinessFormUser(instance=business,data=request.POST)
         if business_form.is_valid() and review_form.is_valid():
             review = review_form.save(commit=False)
             business = business_form.save()
@@ -271,7 +271,7 @@ class BusinessUserView(View):
             review.customer = Customer.objects.get(user=request.user)
             review.save()
             review_type = ContentType.objects.get_for_model(review)
-            score = review.POST['rating']
+            score = request.POST['rating']
             params = {
                 'content_type_id':review_type.id,
                 'object_id':review.id,
@@ -279,6 +279,9 @@ class BusinessUserView(View):
                 'score':score,
             }
             AddRatingView()(request,**params)
+            image_list = request.FILES.getlist('files')
+            for file in image_list:
+                BusinessPhoto.objects.create(photo=file,photo_type=BusinessPhoto.REVIEWPHOTO,review=review)
             action.send(request.user,verb='reviewed',target=business,action_object=review)
             return redirect('core:review_list')
         else:
@@ -525,7 +528,7 @@ class ReviewCreate(CreateView):
         form.instance.business = context['business']
         form.instance.customer = self.request.user.customer
         #form.instance.rating.add(score=self.request.POST['rating'],user=self.request.user,ip_address=self.request.META['REMOTE_ADDR'])
-        image_list =    self.request.FILES.getlist('files')
+        image_list = self.request.FILES.getlist('files')
         response=super(ReviewCreate,self).form_valid(form)
         review_type = ContentType.objects.get_for_model(self.object)
         score = self.request.POST['rating']

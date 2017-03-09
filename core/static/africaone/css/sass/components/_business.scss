@@ -269,6 +269,7 @@
 
   .business-info-wrapper {
     margin-bottom: 3px;
+    display: table;
   }
 
   .business-info {
@@ -290,6 +291,12 @@
     .business-inputs {
       input {
         margin-bottom: 10px;
+      }
+
+      .chosen-container-multi .chosen-choices {
+        background-image: none;
+        border: solid 1px #c4c4c4;
+        padding: 8px 15px;
       }
     }
   }

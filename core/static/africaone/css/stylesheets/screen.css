@@ -1896,6 +1896,7 @@ ul.footer-menu a:hover {
 }
 .add-business-user-wrapper .business-info-wrapper {
   margin-bottom: 3px;
+  display: table;
 }
 .add-business-user-wrapper .business-info {
   width: 50%;
@@ -1913,6 +1914,11 @@ ul.footer-menu a:hover {
 }
 .add-business-user-wrapper .business-info .business-inputs input {
   margin-bottom: 10px;
+}
+.add-business-user-wrapper .business-info .business-inputs .chosen-container-multi .chosen-choices {
+  background-image: none;
+  border: solid 1px #c4c4c4;
+  padding: 8px 15px;
 }
 .add-business-user-wrapper .business-map {
   width: 50%;

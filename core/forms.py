@@ -94,7 +94,7 @@ class BusinessFormUser(forms.ModelForm):
             'city':TextInput(attrs={'class':'form-control','placeholder':'City'}),
             'phone_number':TextInput(attrs={'class':'form-control','placeholder':'Phone Number'}),
             'web_address':TextInput(attrs={'class':'form-control','placeholder':'Web Address'}),
-            'categories':forms.CheckboxSelectMultiple(),
+            'categories':forms.SelectMultiple(attrs={'class':'chosen-select', 'data-placeholder':'Select up to 3 categories. The more specific, the better.*'}),
         }
 
 class ReviewForm(forms.ModelForm):
