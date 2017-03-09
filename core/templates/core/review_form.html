@@ -41,22 +41,22 @@
         </div>
 
         <div class="your-review-block">
-          {% if form.errors %}
-            <div class="form-errors">
-              {% for field,error in form.errors.items %}
-                <div class="form-error-text">
-                  {% if field != '__all__' %}{{ field }}: {% endif %}
-                  {{ error|striptags }}
-                  {{ message }}
-                </div>
-              {% endfor %}
-            </div>
-          {% endif %}
-
           <h3>Your Review</h3>
 
-          <form action="{{action_url}}" method="post" enctype="multipart/form-data">
+          <form class="add-review-form" action="{{action_url}}" method="post" enctype="multipart/form-data">
             {%csrf_token%}
+
+            {% if form.errors %}
+              <div class="form-errors">
+                {% for field,error in form.errors.items %}
+                  <div class="form-error-text">
+                    {% if field != '__all__' %}{{ field }}: {% endif %}
+                    {{ error|striptags }}
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
 
             <div class="stars-photo-block">
               <div class="rating-input">
@@ -80,11 +80,11 @@
 
             <input type="submit" class="btn line-45" value="POST">
             <a href="{% url 'core:review_list' %}" class="btn grey-btn line-45">CANCEL</a>
-          </form>
 
-          <div class="form-comment">
-            Please Note that you can always edit or remove your reviews later.
-          </div>
+            <div class="form-comment">
+              Please Note that you can always edit or remove your reviews later.
+            </div>
+          </form>
         </div>
       </div>
 
@@ -247,6 +247,4 @@
       })
     }
   </script>
-
-
 {% endblock %}

@@ -114,16 +114,6 @@
     }
   }
 
-  .column-title {
-    background-color: #f8f8f8;
-    color: #333333;
-    height: 80px;
-    line-height: 80px;
-    @include ems_font_size(26px, $font-size-base);
-    font-weight: bold;
-    padding-left: 30px;
-  }
-
   .column-info-line {
     background-color: #0083ae;
     padding-left: 30px;
@@ -477,16 +467,6 @@
 .review-form-wrapper {
   margin-top: -80px;
 
-  .column-title {
-    background-color: #f8f8f8;
-    color: #333333;
-    height: 80px;
-    line-height: 80px;
-    @include ems_font_size(26px, $font-size-base);
-    font-weight: bold;
-    padding-left: 30px;
-  }
-
   .column-left {
     padding-right: 2px;
   }
@@ -564,132 +544,131 @@
       @include ems_font_size(22px, $font-size-base);
       font-weight: normal;
     }
+  }
+}
 
-    textarea {
-      width: 100%;
-      height: 200px;
-      resize: none;
-      padding: 30px;
-      margin: 6px 0;
+.add-review-form {
+  textarea {
+    width: 100%;
+    height: 200px;
+    resize: none;
+    padding: 30px;
+    margin: 6px 0;
 
-      &.clear {
-        background-color: #fafafa;
-        color: #cbcbcb;
-      }
+    &.clear {
+      background-color: #fafafa;
+      color: #cbcbcb;
     }
+  }
 
-    input.btn,
-    a.btn {
-      padding: 0 36px;
-      display: inline-block;
-      margin-right: 6px;
-    }
+  input.btn,
+  a.btn {
+    padding: 0 36px;
+    display: inline-block;
+    margin-right: 6px;
+  }
 
-    a.btn {
-      &.grey-btn {
-        color: #666666;
-        background-color: #f1f1f1;
-        border: 0;
-
-        &:hover {
-          color: #fff;
-          background: $blue;
-          border-color: $blue;
-        }
-      }
-    }
-
-    .stars-comment {
-      color: #999999;
-      @include ems_font_size(13px, $font-size-base);
-    }
-
-    .form-comment {
+  a.btn {
+    &.grey-btn {
       color: #666666;
-      @include ems_font_size(13px, $font-size-base);
-      margin-top: 20px;
+      background-color: #f1f1f1;
+      border: 0;
+
+      &:hover {
+        color: #fff;
+        background: $blue;
+        border-color: $blue;
+      }
     }
+  }
 
-    .stars-photo-block {
-      padding: 10px 0;
+  .stars-comment {
+    color: #999999;
+    @include ems_font_size(13px, $font-size-base);
+  }
+
+  .form-comment {
+    color: #666666;
+    @include ems_font_size(13px, $font-size-base);
+    margin-top: 20px;
+  }
+
+  #file-list {
+    margin-top: 6px;
+    color: #999999;
+    @include ems_font_size(13px, $font-size-base);
+  }
+
+  .form-errors {
+    margin: 10px 0 5px 0;
+    
+    .form-error-text {
+      color: #ff0000;
     }
+  }
 
-    .stars-photo-block {
-      display: table;
-      padding-bottom: 0;
+  .stars-photo-block {
+    display: table;
+    padding-bottom: 0;
+    padding: 10px 0;
 
-      .rating-input {
-        display: table-cell;
+    .rating-input {
+      display: table-cell;
 
-        padding: 5px 16px 3px 16px;
-        background: $green;
-        @include border-radius(3px 0 0 3px);
-        border: 1px solid $green;
+      padding: 5px 16px 3px 16px;
+      background: $green;
+      @include border-radius(3px 0 0 3px);
+      border: 1px solid $green;
 
-        .rateit {
-          padding-top: 2px;
-        }
-
-        span {
-          color: #fff;
-          margin-left: 8px;
-          vertical-align: top;
-        }
+      .rateit {
+        padding-top: 2px;
       }
 
-      .photo-input {
-        display: table-cell;
-        background-color: #fff;
-        border: 1px solid #dcdcdc;
-        border-left: 0;
-        @include border-radius(0 3px 3px 0);
-        padding: 5px 16px 5px 16px;
-        position: relative;
-        overflow: hidden;
-
-        .photo-icon {
-          display: inline-block;
-          vertical-align: middle;
-          background: sprite($global-sprite, 'add-photo-grey');
-          background-position: sprite-position($global-sprite, 'add-photo-grey');
-          @include sprite-dimensions($global-sprite, 'add-photo-grey');
-          height: 18px;
-        }
-
-        span {
-          color: #666666;
-          margin-left: 4px;
-          vertical-align: top;
-        }
-
-        &:hover {
-          background-color: #eeeeee;
-        }
-
-        input {
-          position: absolute;
-          top: 0;
-          right: 0;
-          margin: 0;
-          padding: 0;
-          font-size: 24px;
-          cursor: pointer;
-          opacity: 0;
-        }
+      span {
+        color: #fff;
+        margin-left: 8px;
+        vertical-align: top;
       }
     }
 
-    #file-list {
-      margin-top: 6px;
-      color: #999999;
-      @include ems_font_size(13px, $font-size-base);
-    }
+    .photo-input {
+      display: table-cell;
+      background-color: #fff;
+      border: 1px solid #dcdcdc;
+      border-left: 0;
+      @include border-radius(0 3px 3px 0);
+      padding: 5px 16px 5px 16px;
+      position: relative;
+      overflow: hidden;
 
-    .form-errors {
-      margin-bottom: 20px;
-      
-      .form-error-text {
-        color: #ff0000;
+      .photo-icon {
+        display: inline-block;
+        vertical-align: middle;
+        background: sprite($global-sprite, 'add-photo-grey');
+        background-position: sprite-position($global-sprite, 'add-photo-grey');
+        @include sprite-dimensions($global-sprite, 'add-photo-grey');
+        height: 18px;
+      }
+
+      span {
+        color: #666666;
+        margin-left: 4px;
+        vertical-align: top;
+      }
+
+      &:hover {
+        background-color: #eeeeee;
+      }
+
+      input {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        padding: 0;
+        font-size: 24px;
+        cursor: pointer;
+        opacity: 0;
       }
     }
   }

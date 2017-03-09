@@ -1,14 +1,98 @@
 {% extends 'core/base.html' %}
+
 {% block main %}
-<div class="row">
-    <div class="col-md-6">
-        <form method="post" action="{{action_url}}" enctype="multipart/form-data">{% csrf_token %}
-    {{business_form.as_p}}
-    {{review_form.as_p}}
-    <button class="btn btn-primary" type="submit">Create Business</button>
- </form>
+  <div class="blue-header-bg"></div>
+
+  <div class="add-business-user-wrapper container">
+    <div class="business-info-wrapper clearfix">
+      <div class="business-info">
+        <div class="column-title">
+          ADD A BUSINESS TO REVIEW
+        </div>
+        <div class="column-content">
+          Please note that this business page will not be published to the public until it has been approved by our moderators.
+        </div>
+      </div>
+    
+      <div class="business-map">
+        <div class="column-title">
+          CHOOSE LOCATION ON MAP
+        </div>
+        <div class="column-content">
+          Map
+        </div>
+      </div>
     </div>
-</div>
 
+    <div class="review-wrapper">
+      <div class="column-title blue">
+        Write your review on this business
+      </div>
+      <div class="column-content">
+        <form class="add-review-form" action="{{ action_url }}" method="post" enctype="multipart/form-data">
+          {%csrf_token%}
 
+          <div class="stars-photo-block">
+            <div class="rating-input">
+              <div class="rateit rating-stars blue" data-rateit-resetable="false" data-rateit-step="1" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="{{ form.rating.value|default_if_none:'0' }}"></div>
+              <input type="hidden" name="rating" value="{{ form.rating.value|default_if_none:'' }}">
+              <span>Choose rating</span>
+            </div>
+            <div class="photo-input">
+              <div class="photo-icon"></div>
+              <span>Add a photo</span>
+              {{form.files}}
+            </div>
+          </div>
+
+          <div class="stars-comment">
+            Click stars to rate this restaurant
+          </div>
+          <div id="file-list"></div>
+
+          <textarea id="new-review-area" name="review">{{ form.review.value|default_if_none:'' }}</textarea>
+
+          <input type="submit" class="btn line-45" value="ADD BUSINESS AND REVIEW">
+          <a href="{% url 'core:review_list' %}" class="btn grey-btn line-45">CANCEL</a>
+
+          <div class="form-comment">
+            Please Note that you can always edit or remove your reviews later.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<!-- <form method="post" action="{{action_url}}" enctype="multipart/form-data">{% csrf_token %} -->
+  <!-- {{business_form.as_p}} -->
+  <!-- {{review_form.as_p}} -->
+  <!-- <button class="btn btn-primary" type="submit">Create Business</button> -->
+<!-- </form> -->
+{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      ratingHandler();
+      fileNamesHandler();
+    });
+
+    function ratingHandler() {
+      $('.rating-stars').bind('rated', function(event, value) {
+        $('input[name="rating"]').val(value);
+      });
+    }
+
+    function fileNamesHandler() {
+      $('#id_files').change(function() {
+        var list = $('file-list');
+
+        for (var x = 0; x < $(this)[0].files.length; x++) {
+          var f = document.createElement('div');
+          f.innerHTML = 'File ' + (x + 1) + ':  ' + $(this)[0].files[x].name;
+          $('#file-list').append(f);
+        }
+      });
+    }
+  </script>
 {% endblock %}

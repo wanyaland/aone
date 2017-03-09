@@ -256,3 +256,44 @@
     line-height: 1.5em;
   }
 }
+
+
+// Add business pages
+// 
+.add-business-user-wrapper {
+  margin-top: -80px;
+
+  .column-title {
+    padding-left: 40px;
+  }
+
+  .business-info-wrapper {
+    margin-bottom: 2px;
+  }
+
+  .business-info {
+    width: 50%;
+    float: left;
+    padding-right: 1px;
+
+    .column-content {
+      padding: 25px 40px 45px 40px;
+    }
+  }
+
+  .business-map {
+    width: 50%;
+    float: left;
+    padding-left: 1px;
+
+    .column-content {
+      padding: 40px;
+    }
+  }
+
+  .review-wrapper {
+    .column-content {
+      padding: 30px 40px;
+    }
+  }
+}
