@@ -237,13 +237,13 @@ class BusinessUserView(View):
         customer = Customer.objects.filter(user=request.user)
         pk = self.kwargs.get('pk')
         if pk is None:
-            business_form = BusinessForm()
+            business_form = BusinessFormUser()
             review_form = ReviewForm()
         else:
             review = get_object_or_404(Review,pk=pk)
             business = Review.objects.filter(review=review,customer=customer)
             review_form = ReviewForm(instance=review)
-            business_form = BusinessForm(instance=business)
+            business_form = BusinessFormUser(instance=business)
         return render(
             request,
             self.template_name,{
@@ -258,12 +258,12 @@ class BusinessUserView(View):
         pk = self.kwargs.get('pk')
         if pk is None:
             review_form = ReviewForm(request.POST)
-            business_form = BusinessForm(request.POST,request.FILES)
+            business_form = BusinessFormUser(request.POST,request.FILES)
         else:
             review = get_object_or_404(Review,pk=pk)
             business = Review.objects.filter(review=review,customer=customer)
             review_form = ReviewForm(instance=review,data=request.POST)
-            business_form = BusinessForm(instance=business,data=request.POST,files=request.FILES)
+            business_form = BusinessFormUser(instance=business,data=request.POST,files=request.FILES)
         if business_form.is_valid() and review_form.is_valid():
             review = review_form.save(commit=False)
             business = business_form.save()

@@ -73,11 +73,24 @@ class CustomerForm(forms.ModelForm):
 class BusinessForm(forms.ModelForm):
     class Meta:
         model = Business
-        fields =('name','address','email','web_address','phone_number','city','categories','photo')
+        fields =('name','address','email','web_address','phone_number','city','categories','photo','latitude','longitude')
         widgets = {
             'name':TextInput(attrs={'class':'form-control','placeholder':'Business Name'}),
             'address':TextInput(attrs={'class':'form-control','placeholder':'Address'}),
             'email':EmailInput(attrs={'class':'form-control','placeholder':'Email'}),
+            'city':TextInput(attrs={'class':'form-control','placeholder':'City'}),
+            'phone_number':TextInput(attrs={'class':'form-control','placeholder':'Phone Number'}),
+            'web_address':TextInput(attrs={'class':'form-control','placeholder':'Web Address'}),
+            'categories':forms.CheckboxSelectMultiple(),
+        }
+
+class BusinessFormUser(forms.ModelForm):
+    class Meta:
+        model = Business
+        fields =('name','address','web_address','phone_number','city','categories','latitude','longitude')
+        widgets = {
+            'name':TextInput(attrs={'class':'form-control','placeholder':'Business Name'}),
+            'address':TextInput(attrs={'class':'form-control','placeholder':'Address'}),
             'city':TextInput(attrs={'class':'form-control','placeholder':'City'}),
             'phone_number':TextInput(attrs={'class':'form-control','placeholder':'Phone Number'}),
             'web_address':TextInput(attrs={'class':'form-control','placeholder':'Web Address'}),
