@@ -220,7 +220,7 @@ class ViewTest(TestCase):
         Test Create review
         """
         data = {'rating':3,'review':'great restaurant'}
-        request = self.factory.post('reverse_add/1/',data=data)
+        request = self.factory.post('/review_add/',data=data)
         response = ReviewCreate.as_view()(request)
         self.assertEqual(response.status_code,200)
 
