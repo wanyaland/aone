@@ -1,14 +1,158 @@
 {% extends 'core/base.html' %}
+
 {% block main %}
-<div class="row">
-    <div class="col-md-6">
-        <form method="post" action="{{action_url}}" enctype="multipart/form-data">{% csrf_token %}
-    {{business_form.as_p}}
-    {{review_form.as_p}}
-    <button class="btn btn-primary" type="submit">Create Business</button>
- </form>
+  <div class="blue-header-bg"></div>
+
+  <form class="add-business-user-wrapper container" action="{{ action_url }}" method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+    <div class="business-info-wrapper clearfix">
+      <div class="business-info">
+        <div class="column-title">
+          ADD A BUSINESS TO REVIEW
+        </div>
+        <div class="column-content">
+          <div class="column-description">
+            Please note that this business page will not be published to the public until it has been approved by our moderators.
+          </div>
+
+          {% if business_form.errors %}
+            <div class="form-errors">
+              {% for field,error in business_form.errors.items %}
+                <div class="form-error-text">
+                  {% if field != '__all__' %}{{ field }}: {% endif %}
+                  {{ error|striptags }}
+                  {{ message }}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <div class="business-inputs">
+            <input class="app-input" name="name" placeholder="Add Business Name*" type="text" value="{{ business_form.name.value|default:'' }}">
+            <input class="app-input" name="address" placeholder="Add Address Line*" type="text" value="{{ business_form.address.value|default:'' }}">
+            <input class="app-input" name="city" placeholder="Add City*" type="text" value="{{ business_form.city.value|default:'' }}">
+            <input class="app-input" name="phone_number" placeholder="Add Phone Number*" type="text" value="{{ business_form.phone_number.value|default:'' }}">
+            <input class="app-input" name="web_address" placeholder="Add Website Address" type="text" value="{{ business_form.web_address.value|default:'' }}">
+          </div>
+        </div>
+      </div>
+    
+      <div class="business-map">
+        <div class="column-title">
+          CHOOSE LOCATION ON MAP
+        </div>
+        <div class="column-content">
+          <div id="business-location" class="business-location" data-business-location="{{ business_form.latitude.value|default:'0.347596' }},{{ business_form.longitude.value|default:'32.582520' }}"></div>
+          <input type="hidden" name="latitude" value="{{ business_form.latitude.value|default:'0.347596' }}">
+          <input type="hidden" name="longitude" value="{{ business_form.longitude.value|default:'32.582520' }}">
+        </div>
+      </div>
     </div>
-</div>
 
+    <div class="review-wrapper">
+      <div class="column-title blue">
+        Write your review on this business
+      </div>
+      <div class="column-content">
+        <div class="add-review-form">
+          {% if review_form.errors %}
+            <div class="form-errors">
+              {% for field,error in review_form.errors.items %}
+                <div class="form-error-text">
+                  {% if field != '__all__' %}{{ field }}: {% endif %}
+                  {{ error|striptags }}
+                  {{ message }}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
 
+          <div class="stars-photo-block">
+            <div class="rating-input">
+              <div class="rateit rating-stars blue" data-rateit-resetable="false" data-rateit-step="1" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="{{ form.rating.value|default_if_none:'0' }}"></div>
+              <input type="hidden" name="rating" value="{{ review_form.rating.value|default_if_none:'' }}">
+              <span>Choose rating</span>
+            </div>
+            <div class="photo-input">
+              <div class="photo-icon"></div>
+              <span>Add a photo</span>
+              {{review_form.files}}
+            </div>
+          </div>
+
+          <div class="stars-comment">
+            Click stars to rate this restaurant
+          </div>
+          <div id="file-list"></div>
+
+          <textarea id="new-review-area" name="review">{{ review_form.review.value|default_if_none:'' }}</textarea>
+
+          <input type="submit" class="btn line-45" value="ADD BUSINESS AND REVIEW">
+          <a href="{% url 'core:review_list' %}" class="btn grey-btn line-45">CANCEL</a>
+
+          <div class="form-comment">
+            Please Note that you can always edit or remove your reviews later.
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+<!-- <form method="post" action="{{action_url}}" enctype="multipart/form-data">{% csrf_token %} -->
+  <!-- {{business_form.as_p}} -->
+  <!-- {{review_form.as_p}} -->
+  <!-- <button class="btn btn-primary" type="submit">Create Business</button> -->
+<!-- </form> -->
+{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      ratingHandler();
+      fileNamesHandler();
+      loadMapScript();
+    });
+
+    function initializeMap() {
+      var mapElm = $('#business-location');
+      var mapPos = mapElm.data('business-location').split(',');
+      var latLng = new google.maps.LatLng(mapPos[0], mapPos[1]);
+
+      var map = new google.maps.Map(document.getElementById('business-location'), {
+        center: latLng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+
+      var marker = new google.maps.Marker({
+        position: latLng,
+        map: map
+      });
+
+      google.maps.event.addListener(map, 'click', function(event) {
+        marker.setPosition(event.latLng);
+        marker.setMap(map);
+        $('input[name="latitude"]').val(event.latLng.lat());
+        $('input[name="longitude"]').val(event.latLng.lng());
+      });
+    }
+
+    function ratingHandler() {
+      $('.rating-stars').bind('rated', function(event, value) {
+        $('input[name="rating"]').val(value);
+      });
+    }
+
+    function fileNamesHandler() {
+      $('#id_files').change(function() {
+        var list = $('file-list');
+
+        for (var x = 0; x < $(this)[0].files.length; x++) {
+          var f = document.createElement('div');
+          f.innerHTML = 'File ' + (x + 1) + ':  ' + $(this)[0].files[x].name;
+          $('#file-list').append(f);
+        }
+      });
+    }
+  </script>
 {% endblock %}

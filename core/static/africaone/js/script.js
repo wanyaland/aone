@@ -38,7 +38,6 @@ function initializeMap() {
   google.maps.event.addDomListener(window, 'resize', function() {
     map.setCenter(latLngPosn);
   });
-
 }
 
 function loadMapScript() {

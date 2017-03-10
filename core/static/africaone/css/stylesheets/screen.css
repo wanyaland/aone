@@ -639,6 +639,32 @@ div.rating-stars.blue div.rateit-reset:hover {
   background: url('../images/star-17x14-white.png?1488349071');
 }
 
+.column-title {
+  background-color: #f8f8f8;
+  color: #333333;
+  height: 80px;
+  line-height: 80px;
+  font-size: 2em;
+  font-weight: bold;
+  padding-left: 30px;
+}
+.column-title.blue {
+  background-color: #007fa8;
+  color: #fff;
+}
+
+.column-content {
+  background-color: #fff;
+}
+
+.app-input {
+  display: block;
+  width: 100%;
+  line-height: 43px;
+  border: solid 1px #c4c4c4;
+  padding: 0 15px;
+}
+
 /**
  * @file
  * Utility classes to hide elements in different ways.
@@ -1002,15 +1028,6 @@ ul.footer-menu a:hover {
   display: block;
   width: 100%;
 }
-.reviews-list-page-wrapper .column-title {
-  background-color: #f8f8f8;
-  color: #333333;
-  height: 80px;
-  line-height: 80px;
-  font-size: 2em;
-  font-weight: bold;
-  padding-left: 30px;
-}
 .reviews-list-page-wrapper .column-info-line {
   background-color: #0083ae;
   padding-left: 30px;
@@ -1359,15 +1376,6 @@ ul.footer-menu a:hover {
 .review-form-wrapper {
   margin-top: -80px;
 }
-.review-form-wrapper .column-title {
-  background-color: #f8f8f8;
-  color: #333333;
-  height: 80px;
-  line-height: 80px;
-  font-size: 2em;
-  font-weight: bold;
-  padding-left: 30px;
-}
 .review-form-wrapper .column-left {
   padding-right: 2px;
 }
@@ -1430,54 +1438,58 @@ ul.footer-menu a:hover {
   padding: 30px;
 }
 .review-form-wrapper .your-review-block h3 {
-  margin: 0;
+  margin: 0 0 10px 0;
   font-size: 1.69231em;
   font-weight: normal;
 }
-.review-form-wrapper .your-review-block textarea {
+
+.add-review-form textarea {
   width: 100%;
   height: 200px;
   resize: none;
   padding: 30px;
   margin: 6px 0;
 }
-.review-form-wrapper .your-review-block textarea.clear {
+.add-review-form textarea.clear {
   background-color: #fafafa;
   color: #cbcbcb;
 }
-.review-form-wrapper .your-review-block input.btn,
-.review-form-wrapper .your-review-block a.btn {
+.add-review-form input.btn,
+.add-review-form a.btn {
   padding: 0 36px;
   display: inline-block;
   margin-right: 6px;
 }
-.review-form-wrapper .your-review-block a.btn.grey-btn {
+.add-review-form a.btn.grey-btn {
   color: #666666;
   background-color: #f1f1f1;
   border: 0;
 }
-.review-form-wrapper .your-review-block a.btn.grey-btn:hover {
+.add-review-form a.btn.grey-btn:hover {
   color: #fff;
   background: #007fa8;
   border-color: #007fa8;
 }
-.review-form-wrapper .your-review-block .stars-comment {
+.add-review-form .stars-comment {
   color: #999999;
   font-size: 1em;
 }
-.review-form-wrapper .your-review-block .form-comment {
+.add-review-form .form-comment {
   color: #666666;
   font-size: 1em;
   margin-top: 20px;
 }
-.review-form-wrapper .your-review-block .stars-photo-block {
-  padding: 10px 0;
+.add-review-form #file-list {
+  margin-top: 6px;
+  color: #999999;
+  font-size: 1em;
 }
-.review-form-wrapper .your-review-block .stars-photo-block {
+.add-review-form .stars-photo-block {
   display: table;
   padding-bottom: 0;
+  padding: 10px 0;
 }
-.review-form-wrapper .your-review-block .stars-photo-block .rating-input {
+.add-review-form .stars-photo-block .rating-input {
   display: table-cell;
   padding: 5px 16px 3px 16px;
   background: #77c301;
@@ -1486,15 +1498,15 @@ ul.footer-menu a:hover {
   border-radius: 3px 0 0 3px;
   border: 1px solid #77c301;
 }
-.review-form-wrapper .your-review-block .stars-photo-block .rating-input .rateit {
+.add-review-form .stars-photo-block .rating-input .rateit {
   padding-top: 2px;
 }
-.review-form-wrapper .your-review-block .stars-photo-block .rating-input span {
+.add-review-form .stars-photo-block .rating-input span {
   color: #fff;
   margin-left: 8px;
   vertical-align: top;
 }
-.review-form-wrapper .your-review-block .stars-photo-block .photo-input {
+.add-review-form .stars-photo-block .photo-input {
   display: table-cell;
   background-color: #fff;
   border: 1px solid #dcdcdc;
@@ -1506,7 +1518,7 @@ ul.footer-menu a:hover {
   position: relative;
   overflow: hidden;
 }
-.review-form-wrapper .your-review-block .stars-photo-block .photo-input .photo-icon {
+.add-review-form .stars-photo-block .photo-input .photo-icon {
   display: inline-block;
   vertical-align: middle;
   background: url('../images/globals-s28fb260ac8.png') 0 0;
@@ -1515,15 +1527,15 @@ ul.footer-menu a:hover {
   width: 18px;
   height: 18px;
 }
-.review-form-wrapper .your-review-block .stars-photo-block .photo-input span {
+.add-review-form .stars-photo-block .photo-input span {
   color: #666666;
   margin-left: 4px;
   vertical-align: top;
 }
-.review-form-wrapper .your-review-block .stars-photo-block .photo-input:hover {
+.add-review-form .stars-photo-block .photo-input:hover {
   background-color: #eeeeee;
 }
-.review-form-wrapper .your-review-block .stars-photo-block .photo-input input {
+.add-review-form .stars-photo-block .photo-input input {
   position: absolute;
   top: 0;
   right: 0;
@@ -1532,17 +1544,6 @@ ul.footer-menu a:hover {
   font-size: 24px;
   cursor: pointer;
   opacity: 0;
-}
-.review-form-wrapper .your-review-block #file-list {
-  margin-top: 6px;
-  color: #999999;
-  font-size: 1em;
-}
-.review-form-wrapper .your-review-block .form-errors {
-  margin-bottom: 20px;
-}
-.review-form-wrapper .your-review-block .form-errors .form-error-text {
-  color: #ff0000;
 }
 
 .other-review-wrapper {
@@ -1885,6 +1886,49 @@ ul.footer-menu a:hover {
 .top-business-item .business-desc {
   color: #666;
   line-height: 1.5em;
+}
+
+.add-business-user-wrapper {
+  margin-top: -80px;
+}
+.add-business-user-wrapper .column-title {
+  padding-left: 40px;
+}
+.add-business-user-wrapper .business-info-wrapper {
+  margin-bottom: 3px;
+}
+.add-business-user-wrapper .business-info {
+  width: 50%;
+  float: left;
+  padding-right: 1px;
+}
+.add-business-user-wrapper .business-info .column-content {
+  min-height: 460px;
+  padding: 25px 40px 45px 40px;
+}
+.add-business-user-wrapper .business-info .column-content .column-description {
+  color: #666666;
+  font-size: 1em;
+  padding-bottom: 15px;
+}
+.add-business-user-wrapper .business-info .business-inputs input {
+  margin-bottom: 10px;
+}
+.add-business-user-wrapper .business-map {
+  width: 50%;
+  float: left;
+  padding-left: 1px;
+}
+.add-business-user-wrapper .business-map .column-content {
+  min-height: 460px;
+  padding: 40px;
+}
+.add-business-user-wrapper .business-map .business-location {
+  width: 100%;
+  height: 380px;
+}
+.add-business-user-wrapper .review-wrapper .column-content {
+  padding: 30px 40px;
 }
 
 .sidebar-events-news-list li {
@@ -2243,6 +2287,13 @@ body.js-ready .africaone-form .price-field .free-price label {
   color: #fff;
   padding: 20px;
   line-height: 1.4em;
+}
+
+.form-errors {
+  margin-bottom: 5px;
+}
+.form-errors .form-error-text {
+  color: #ff0000;
 }
 
 .home-page-wrapper {
