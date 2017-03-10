@@ -563,9 +563,13 @@ class GetHomePageBusinesses(View):
         rank = Ranking()
         ranked_listings = rank.rank_businesses(listings)
         for business in ranked_listings:
-             business_data={}
-             business_data['id']=business.pk
-             business_data['name']=business.name
+             business_data = {}
+             business_data['id'] = business.pk
+             business_data['name'] = business.name
+             business_data['rating'] = business.get_avg_rating()
+             business_data['no_reviews'] = business.get_no_reviews()
+             business_data['description'] = business.description
+             business_data['banner_photo'] = str(business.banner_photo)
              businesses.append(business_data)
         data={'businesses':businesses[:10]}
         return HttpResponse(json.dumps(data))

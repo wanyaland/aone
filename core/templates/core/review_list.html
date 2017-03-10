@@ -29,8 +29,8 @@
           {% for business in business_list %}
             <div class="business-block-wrapper clearfix">
               <div class="business-photo">
-                {% if bisiness.banner_photo %}
-                  <img src="{{ bisiness.banner_photo.url }}">
+                {% if business.banner_photo %}
+                  <img src="{{ business.banner_photo.url }}">
                 {% else %}
                   <img src="/static/africaone/static-images/no-logo.jpg">
                 {% endif %}
@@ -44,8 +44,7 @@
                 <div class="business-info clearfix">
                   <div class="business-info-left">
                     <div class="business-rating">
-                      <div class="rateit rating-stars" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="{{ business.get_avg_rating }}" data-rateit-readonly="true">
-                      </div>
+                      <div class="rateit rating-stars" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="{{ business.get_avg_rating }}" data-rateit-readonly="true"></div>
                       <span>{{ business.get_no_reviews }} review{{ business.get_no_reviews|pluralize:".,s." }}</span>
                     </div>
                     
