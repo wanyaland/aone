@@ -1,6 +1,21 @@
+.home-header {
+  .find-companies-caption {
+    background-color: rgba(0, 0, 0, 0.7);
+    @include ems_font_size(14px, $font-size-base);
+    text-align: center;
+    color: #fff;
+    line-height: 45px;
+    margin-top: -45px;
+  }
+}
+
+.home-header-bg {
+  background: image-url('home-page-2-bg.jpg') no-repeat center top;
+  height: 650px;
+}
 
 .home-page-wrapper {
-  margin-top: 160px;
+  margin-top: 60px;
 
   .top-header {
     padding: 40px;
@@ -61,21 +76,47 @@
 }
 
 .home-logo-menu-strip {
-  position: relative;
+  position: absolute;
+  top: 0;
   z-index: 10;
-  padding: 30px 255px 0 350px;
+  padding: 30px 0 0 0;
+  background: image-url('home-banner-gradient.png') repeat-x top;
+  height: 264px;
+  width: 100%;
+  
   .logo-link {
+    display: block;
     left: 45px; top: 30px;
     @include translateY(0);
     background: sprite($global-sprite, 'logo-header-white');
   }
+
   .header-login-links {
-    right: 45px; top: 33px;
-    @include translateY(0);
+    display: inline-block;
+    float: right;
+    position: relative;
+    right: 0;
+    top: 0;
+    @include translateY(3px);
+    padding: 0 45px 0 35px;
+    width: 270px;
+
+    &.clearfix {
+      overflow: visible;
+    }
+
+    .logged-in-user-name {
+      position: absolute;
+      top: -23px;
+    }
   }
+
   .main-menu {
+    display: block;
+    float: right;
     text-align: right;
     height: 45px;
+
     li {
       border-right: none;
       width: auto;
@@ -86,8 +127,7 @@
         border-left: none;
       }
     }
-    .connect-li {
-    }
+
     .parent-a {
       padding: 0 22px;
     }
@@ -95,8 +135,9 @@
 }
 
 .home-banner-reviews-wrapper {
-  margin-top: -410px;
-  position: relative;
+  position: absolute;
+  top: 180px;
+  width: 100%;
   z-index: 5;
   .search-intro {
     position: absolute;
@@ -281,7 +322,7 @@
 
 .home-find-form-wrapper {
   background: #fff;
-  padding: 30px;
+  padding: 30px 0;
 }
 
 .home-content-wrapper {

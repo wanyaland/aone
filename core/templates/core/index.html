@@ -1,14 +1,32 @@
 {% extends 'core/base.html' %}
-{% include 'core/components/page_head_tags.html' %}
+
+{% block header %}
+  <div class="home-header">
+    <div class="home-header-bg"></div>
+    <div class="home-logo-menu-strip clearfix">
+      <a href="/" class="logo-link float left"></a>
+      {% include 'core/header/login-links.html' %}
+      {% include 'core/header/menu-main.html' %}
+    </div>
+
+    {% include 'core/reviews/banner-reviews.html' %}
+
+    <div class="find-companies-caption">
+      Search and review businesses near you and around Africa. Start your review today.
+    </div>
+    <div class="home-find-form-wrapper">
+      {% include 'core/header/form-find-companies.html' %}
+    </div>
+  </div>
+{% endblock %}
 
 {% block main %}
-  <div class="home-header-bg"></div>
-  {% include 'core/reviews/banner-reviews.html' %}
-
-  <div class="home-page-wrapper full-page-wrapper">
+  <div class="home-page-wrapper">
     <div class="home-content-wrapper">
       <div class="container">
 
+        <!-- Design #2 -->
+<!--    
         <div class="top-header">
           <div class="header-text">
             <span class="left-quote"></span>
@@ -17,9 +35,8 @@
           </div>
           <a href="#" class="btn line-35">Learn more</a>
         </div>
-
-        <div class="home-row home-row-1 clearfix">
-
+ -->
+         <div class="home-row home-row-1 clearfix">
           <div class="big-col wrapper-col">
             <div class="inner-wrapper">
               <div class="block block-why-join">
