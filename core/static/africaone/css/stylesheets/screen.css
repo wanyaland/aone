@@ -4203,55 +4203,58 @@ body.js-ready .africaone-form .price-field .free-price label {
   display: block;
 }
 
-.news-list-page-wrapper {
+.news-layout-wrapper {
   margin-top: -80px;
 }
-.news-list-page-wrapper .left-column {
+.news-layout-wrapper .left-column {
   width: 65%;
   float: left;
   padding-right: 2px;
 }
-.news-list-page-wrapper .right-column {
+.news-layout-wrapper .right-column {
   width: 35%;
   float: left;
   padding-left: 1px;
 }
-.news-list-page-wrapper .news-block-wrapper {
+.news-layout-wrapper .right-column .column-title {
+  font-size: 1.53846em;
+}
+.news-layout-wrapper .news-block-wrapper {
   background-color: #fff;
   margin-bottom: 2px;
 }
-.news-list-page-wrapper .news-block-wrapper .news-photo {
+.news-layout-wrapper .news-block-wrapper .news-photo {
   float: left;
   width: 35%;
   padding: 25px 15px 30px 30px;
 }
-.news-list-page-wrapper .news-block-wrapper .news-photo img {
+.news-layout-wrapper .news-block-wrapper .news-photo img {
   width: 100%;
 }
-.news-list-page-wrapper .news-block-wrapper .news-block {
+.news-layout-wrapper .news-block-wrapper .news-block {
   float: left;
   width: 65%;
   padding: 30px 30px 30px 15px;
 }
-.news-list-page-wrapper .news-block-wrapper .news-block .news-title {
+.news-layout-wrapper .news-title {
   font-size: 1.30769em;
   coclor: #000;
   font-weight: bold;
 }
-.news-list-page-wrapper .news-block-wrapper .news-block .news-date {
+.news-layout-wrapper .news-date {
   font-size: 0.92308em;
   color: #999;
   padding-top: 10px;
 }
-.news-list-page-wrapper .news-block-wrapper .news-block .news-content {
+.news-layout-wrapper .news-content {
   font-size: 1em;
   color: #666;
   padding-top: 5px;
 }
-.news-list-page-wrapper .news-block-wrapper .news-block .news-content .read-more-link {
+.news-layout-wrapper .news-content .read-more-link {
   color: #77c301;
 }
-.news-list-page-wrapper .categories-wrapper a {
+.news-layout-wrapper .categories-wrapper a {
   display: block;
   color: #0083ae;
   font-weight: bold;
@@ -4259,11 +4262,11 @@ body.js-ready .africaone-form .price-field .free-price label {
   background: #fff;
   margin-bottom: 1px;
 }
-.news-list-page-wrapper .categories-wrapper a:hover {
+.news-layout-wrapper .categories-wrapper a:hover {
   background-color: #77c301;
   color: #fff;
 }
-.news-list-page-wrapper .recent-news-wrapper a {
+.news-layout-wrapper .recent-news-wrapper a {
   display: block;
   color: #666;
   font-weight: normal;
@@ -4271,26 +4274,42 @@ body.js-ready .africaone-form .price-field .free-price label {
   background: #fff;
   margin-bottom: 1px;
 }
-.news-list-page-wrapper .recent-news-wrapper a .news-short-title {
+.news-layout-wrapper .recent-news-wrapper a .news-short-title {
   font-weight: bold;
   color: #000;
 }
-.news-list-page-wrapper .recent-news-wrapper a:hover {
+.news-layout-wrapper .recent-news-wrapper a:hover {
   background-color: #77c301;
   color: #fff;
 }
-.news-list-page-wrapper .recent-news-wrapper a:hover .news-short-title {
+.news-layout-wrapper .recent-news-wrapper a:hover .news-short-title {
   color: #000;
 }
-.news-list-page-wrapper .pagination-block {
+.news-layout-wrapper .pagination-block {
   height: 52px;
   background-color: #fff;
   padding: 11px;
   text-align: center;
 }
-.news-list-page-wrapper .pagination-block .pager {
+.news-layout-wrapper .pagination-block .pager {
   padding: 0;
   border-bottom: 0;
+}
+.news-layout-wrapper .all-categories-btn-wrapper {
+  background-color: #fff;
+  padding: 30px;
+}
+.news-layout-wrapper .news-block-detail {
+  background-color: #fff;
+  padding: 30px;
+}
+.news-layout-wrapper .news-block-detail .news-photo {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.news-layout-wrapper .news-block-detail .news-photo img {
+  max-width: 100%;
+  max-height: 400px;
 }
 
 /*# sourceMappingURL=screen.css.map */

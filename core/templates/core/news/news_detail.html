@@ -5,8 +5,7 @@
     News
   </div>
 
-  {% for news in news_list %}
-  <div class="news-block-wrapper clearfix">
+  <div class="news-block-detail">
     <div class="news-photo">
       {% if news.photo %}
         <img src="{{ news.photo.url }}">
@@ -23,20 +22,9 @@
         {{ news.create_date }}
       </div>
       <div class="news-content">
-        {{ news.content|truncatechars:280 }}
-        {% if news.content|length > 277 %}
-          <a href="{% url 'core:news_detail' news.id %}" class="read-more-link">Read more</a>
-        {% endif %}
+        {{ news.content }}
       </div>
     </div>
   </div>
-  {% endfor %}
-
-  {% if is_paginated %}
-    <div class="pagination-block">
-      {% load paginator %}
-      {% paginator 2 category_filter %}
-    </div>
-  {% endif %}
 
 {% endblock%}

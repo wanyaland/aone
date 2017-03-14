@@ -689,3 +689,15 @@ class NewsListView(ListView):
             context['category_filter'] = '&category=' + self.request.GET['category']
 
         return context
+
+
+class NewsDetail(DetailView):
+    template_name = 'core/news/news_detail.html'
+    model=News
+
+    def get_context_data(self, **kwargs):
+        context = super(NewsDetail, self).get_context_data(**kwargs)
+        context['categories'] = NewsCategory.objects.all()
+        context['recent_news'] = News.objects.all().order_by('-create_date')[:5]
+
+        return context
