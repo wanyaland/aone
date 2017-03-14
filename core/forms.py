@@ -71,6 +71,8 @@ class CustomerForm(forms.ModelForm):
         fields = ['photo']
 
 class BusinessForm(forms.ModelForm):
+    open_hours = forms.CharField()
+    
     class Meta:
         model = Business
         fields =('name','address','email','web_address','phone_number','city','categories','photo','latitude','longitude')
@@ -81,7 +83,7 @@ class BusinessForm(forms.ModelForm):
             'city':TextInput(attrs={'class':'form-control','placeholder':'City'}),
             'phone_number':TextInput(attrs={'class':'form-control','placeholder':'Phone Number'}),
             'web_address':TextInput(attrs={'class':'form-control','placeholder':'Web Address'}),
-            'categories':forms.CheckboxSelectMultiple(),
+            'categories':forms.SelectMultiple(attrs={'class':'chosen-select', 'data-placeholder':'Select up to 3 categories. The more specific, the better.*'}),
         }
 
 class BusinessFormUser(forms.ModelForm):

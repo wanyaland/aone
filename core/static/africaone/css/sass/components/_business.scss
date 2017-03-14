@@ -260,7 +260,7 @@
 
 // Add business pages
 // 
-.add-business-user-wrapper {
+.add-business-wrapper {
   margin-top: -80px;
 
   .column-title {
@@ -297,6 +297,10 @@
         background-image: none;
         border: solid 1px #c4c4c4;
         padding: 8px 15px;
+
+        .search-field input {
+          color: #a9a9a9;
+        }
       }
     }
   }
@@ -320,6 +324,118 @@
   .review-wrapper {
     .column-content {
       padding: 30px 40px;
+    }
+  }
+
+
+  .form-buttons-wrapper {
+    margin-top: 25px;
+  }
+
+
+  .btn {
+    padding: 0 36px;
+    display: inline-block;
+    margin-right: 6px;
+    @include border-radius(0);
+    @include transition(all 0.3s ease-in);
+    
+    &.grey-btn {
+      color: #666666;
+      background-color: #f1f1f1;
+      border: 0;
+
+      &:hover {
+        color: #fff;
+        background: $blue;
+        border-color: $blue;
+      }
+    }
+  }
+
+  .upload-photo-btn-wrapper {
+    margin-top: 10px;
+
+    .upload-btn {
+      position: relative;
+      vertical-align: bottom;
+      overflow: hidden;
+      display: inline-block;
+      background-color: #fff;
+      color: #a9a9a9;
+      @include ems_font_size(13px, $font-size-base);
+      line-height: 43px;
+      padding: 0 15px;
+      border: 1px solid #c4c4c4;
+    }
+
+    input {
+      position: absolute;
+      top: 0;
+      right: 0;
+      line-height: 43px;
+      font-size: 24px;
+      cursor: pointer;
+      opacity: 0;
+    }
+
+    span {
+      padding-left: 5px;
+      line-height: 45px;
+      color: #a9a9a9;
+    }
+  }
+
+  .open-hours {
+    margin: 20px 0 0 0;
+
+    span {
+      padding-left: 15px;
+      color: #999;
+    }
+    
+    .schedule-wrapper {
+      margin-top: 3px;
+
+      .schedule-line {
+        margin-bottom: 10px;
+
+        .schedule-input  {
+          float: left;
+          line-height: 43px;
+          border: 1px solid #c4c4c4;
+          border-left: 0;
+          width: 125px;
+          padding-left: 15px;
+          background: #fff;
+          height: 45px;
+          outline: none;
+
+          &:first-child {
+            border-left: 1px solid #c4c4c4;
+          }
+        }
+
+        .btn {
+          float: right;
+          width: 125px;
+          padding: 0;
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  &.add-by-business-page {
+    .business-map {
+      .column-content {
+        min-height: 763px;
+      }
+
+      .business-location {
+        width: 100%;
+        min-height: 683px;
+      }
     }
   }
 }

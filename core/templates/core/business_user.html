@@ -3,7 +3,7 @@
 {% block main %}
   <div class="blue-header-bg"></div>
 
-  <form class="add-business-user-wrapper container" action="{{ action_url }}" method="post" enctype="multipart/form-data">
+  <form class="add-business-wrapper container" action="{{ action_url }}" method="post" enctype="multipart/form-data">
     {%csrf_token%}
     <div class="business-info-wrapper">
       <div class="business-info">
@@ -141,8 +141,6 @@
 
     function fileNamesHandler() {
       $('#id_files').change(function() {
-        var list = $('file-list');
-
         for (var x = 0; x < $(this)[0].files.length; x++) {
           var f = document.createElement('div');
           f.innerHTML = 'File ' + (x + 1) + ':  ' + $(this)[0].files[x].name;

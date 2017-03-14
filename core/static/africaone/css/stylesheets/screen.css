@@ -1888,53 +1888,150 @@ ul.footer-menu a:hover {
   line-height: 1.5em;
 }
 
-.add-business-user-wrapper {
+.add-business-wrapper {
   margin-top: -80px;
 }
-.add-business-user-wrapper .column-title {
+.add-business-wrapper .column-title {
   padding-left: 40px;
 }
-.add-business-user-wrapper .business-info-wrapper {
+.add-business-wrapper .business-info-wrapper {
   margin-bottom: 3px;
   display: table;
 }
-.add-business-user-wrapper .business-info {
+.add-business-wrapper .business-info {
   width: 50%;
   float: left;
   padding-right: 1px;
 }
-.add-business-user-wrapper .business-info .column-content {
+.add-business-wrapper .business-info .column-content {
   min-height: 460px;
   padding: 25px 40px 45px 40px;
 }
-.add-business-user-wrapper .business-info .column-content .column-description {
+.add-business-wrapper .business-info .column-content .column-description {
   color: #666666;
   font-size: 1em;
   padding-bottom: 15px;
 }
-.add-business-user-wrapper .business-info .business-inputs input {
+.add-business-wrapper .business-info .business-inputs input {
   margin-bottom: 10px;
 }
-.add-business-user-wrapper .business-info .business-inputs .chosen-container-multi .chosen-choices {
+.add-business-wrapper .business-info .business-inputs .chosen-container-multi .chosen-choices {
   background-image: none;
   border: solid 1px #c4c4c4;
   padding: 8px 15px;
 }
-.add-business-user-wrapper .business-map {
+.add-business-wrapper .business-info .business-inputs .chosen-container-multi .chosen-choices .search-field input {
+  color: #a9a9a9;
+}
+.add-business-wrapper .business-map {
   width: 50%;
   float: left;
   padding-left: 1px;
 }
-.add-business-user-wrapper .business-map .column-content {
+.add-business-wrapper .business-map .column-content {
   min-height: 460px;
   padding: 40px;
 }
-.add-business-user-wrapper .business-map .business-location {
+.add-business-wrapper .business-map .business-location {
   width: 100%;
   height: 380px;
 }
-.add-business-user-wrapper .review-wrapper .column-content {
+.add-business-wrapper .review-wrapper .column-content {
   padding: 30px 40px;
+}
+.add-business-wrapper .form-buttons-wrapper {
+  margin-top: 25px;
+}
+.add-business-wrapper .btn {
+  padding: 0 36px;
+  display: inline-block;
+  margin-right: 6px;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  -moz-transition: all 0.3s ease-in;
+  -o-transition: all 0.3s ease-in;
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+.add-business-wrapper .btn.grey-btn {
+  color: #666666;
+  background-color: #f1f1f1;
+  border: 0;
+}
+.add-business-wrapper .btn.grey-btn:hover {
+  color: #fff;
+  background: #007fa8;
+  border-color: #007fa8;
+}
+.add-business-wrapper .upload-photo-btn-wrapper {
+  margin-top: 10px;
+}
+.add-business-wrapper .upload-photo-btn-wrapper .upload-btn {
+  position: relative;
+  vertical-align: bottom;
+  overflow: hidden;
+  display: inline-block;
+  background-color: #fff;
+  color: #a9a9a9;
+  font-size: 1em;
+  line-height: 43px;
+  padding: 0 15px;
+  border: 1px solid #c4c4c4;
+}
+.add-business-wrapper .upload-photo-btn-wrapper input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  line-height: 43px;
+  font-size: 24px;
+  cursor: pointer;
+  opacity: 0;
+}
+.add-business-wrapper .upload-photo-btn-wrapper span {
+  padding-left: 5px;
+  line-height: 45px;
+  color: #a9a9a9;
+}
+.add-business-wrapper .open-hours {
+  margin: 20px 0 0 0;
+}
+.add-business-wrapper .open-hours span {
+  padding-left: 15px;
+  color: #999;
+}
+.add-business-wrapper .open-hours .schedule-wrapper {
+  margin-top: 3px;
+}
+.add-business-wrapper .open-hours .schedule-wrapper .schedule-line {
+  margin-bottom: 10px;
+}
+.add-business-wrapper .open-hours .schedule-wrapper .schedule-line .schedule-input {
+  float: left;
+  line-height: 43px;
+  border: 1px solid #c4c4c4;
+  border-left: 0;
+  width: 125px;
+  padding-left: 15px;
+  background: #fff;
+  height: 45px;
+  outline: none;
+}
+.add-business-wrapper .open-hours .schedule-wrapper .schedule-line .schedule-input:first-child {
+  border-left: 1px solid #c4c4c4;
+}
+.add-business-wrapper .open-hours .schedule-wrapper .schedule-line .btn {
+  float: right;
+  width: 125px;
+  padding: 0;
+  margin-right: 0;
+}
+.add-business-wrapper.add-by-business-page .business-map .column-content {
+  min-height: 763px;
+}
+.add-business-wrapper.add-by-business-page .business-map .business-location {
+  width: 100%;
+  min-height: 683px;
 }
 
 .sidebar-events-news-list li {
