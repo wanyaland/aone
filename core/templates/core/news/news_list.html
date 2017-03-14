@@ -1,0 +1,72 @@
+{% extends 'core/base.html' %}
+
+{% block main %}
+  <div class="blue-header-bg"></div>
+
+  <div class="news-list-page-wrapper container clearfix">
+    <div class="left-column">
+      <div class="column-title">
+        News
+      </div>
+
+      {% for news in news_list %}
+      <div class="news-block-wrapper clearfix">
+        <div class="news-photo">
+          {% if news.photo %}
+            <img src="{{ news.photo.url }}">
+          {% else %}
+            <img src="/static/africaone/static-images/no-logo.jpg">
+          {% endif %}
+        </div>
+
+        <div class="news-block">
+          <div class="news-title">
+            {{ news.title }}
+          </div>
+          <div class="news-date">
+            {{ news.create_date }}
+          </div>
+          <div class="news-content">
+            {{ news.content|truncatechars:280 }}
+            {% if news.content|length > 277 %}
+              <a href="#" class="read-more-link">Read more</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+      {% if is_paginated %}
+        <div class="pagination-block">
+          {% load paginator %}
+          {% paginator 2 category_filter %}
+        </div>
+      {% endif %}
+    </div>
+  
+    <div class="right-column">
+      <div class="column-title">
+        News categories
+      </div>
+      <div class="categories-wrapper">
+        {% for category in categories %}
+          <a href="{% url 'core:news_list' %}?category={{category.id}}">&bull; {{ category.name|upper }}</a>
+        {% endfor %}
+        <a href="{% url 'core:news_list' %}">&bull; ALL NEWS</a>
+      </div>
+
+      <div class="column-title">
+        Recent News
+      </div>
+      <div class="recent-news-wrapper">
+        {% for news in recent_news %}
+          <a href="">
+            <span class="news-short-title">{{ news.title }}</span>
+            <br>
+            {{ news.content|truncatechars:150 }}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

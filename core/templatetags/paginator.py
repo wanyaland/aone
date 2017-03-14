@@ -3,7 +3,7 @@ from django import template
 register = template.Library()
 
 @register.inclusion_tag('core/components/paginator.html', takes_context=True)
-def paginator(context, page_shift=2):
+def paginator(context, page_shift=2, filter=''):
     page_obj = context['page_obj']
     paginator = context['paginator']
     page_number = page_obj.number
@@ -33,5 +33,6 @@ def paginator(context, page_shift=2):
         'previous_page_number': page_obj.previous_page_number,
         'next_page_number': page_obj.next_page_number,
         'show_dots': show_dots,
-        'show_last': show_last
+        'show_last': show_last,
+        'filter': filter
     }

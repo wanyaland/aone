@@ -663,5 +663,29 @@ class ResetPasswordRequestView(FormView):
         messages.error(request,'No user is associated with this email address')
         return result
 
+
 class PasswordResetConfirmView(FormView):
     template_name = ''
+
+
+class NewsListView(ListView):
+    model = News
+    template_name = 'core/news/news_list.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        if 'category' in self.request.GET:
+            objects = self.model.objects.filter(category_id=self.request.GET['category'])
+        else:
+            objects = self.model.objects.all()
+
+        return objects
+
+    def get_context_data(self, **kwargs):
+        context = super(NewsListView, self).get_context_data(**kwargs)
+        context['categories'] = NewsCategory.objects.all()
+        context['recent_news'] = News.objects.all().order_by('-create_date')[:5]
+        if 'category' in self.request.GET:
+            context['category_filter'] = '&category=' + self.request.GET['category']
+
+        return context
