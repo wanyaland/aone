@@ -60,7 +60,3 @@ urlpatterns = patterns (
     url(r'^news_list', NewsListView.as_view(), name='news_list'),
     url(r'^news_detail/(?P<pk>\d+)/$',NewsDetail.as_view(),name='news_detail'),
 )
-
-from django.conf.urls.static import static
-from django.conf import settings
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
