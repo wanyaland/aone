@@ -49,7 +49,7 @@ class MultiFileField(forms.FileField):
         elif self.max_num and  num_files > self.max_num:
             raise ValidationError(self.error_messages['max_num'] % {'max_num': self.max_num, 'num_files': num_files})
         for uploaded_file in data:
-            if uploaded_file.size > self.maximum_file_size:
+            if uploaded_file and uploaded_file.size > self.maximum_file_size:
                 raise ValidationError(self.error_messages['file_size'] % { 'uploaded_file_name': uploaded_file.name})
 
 class RegistrationForm(UserCreationForm):
@@ -101,7 +101,7 @@ class BusinessFormUser(forms.ModelForm):
 
 class ReviewForm(forms.ModelForm):
     rating = forms.CharField(widget=forms.NumberInput(attrs={'class':'rating','data-min':'1','data-max':'5','step':'0.5','type':'number','id':'input-id','data-size':'xs',}))
-    files = MultiFileField(max_num=5,min_num=1,maximum_file_size=1024*1024*5)
+    files = MultiFileField(max_num=5, min_num=0, maximum_file_size=1024*1024*5)
     class Meta:
         model = Review
         fields = ('rating','review',)

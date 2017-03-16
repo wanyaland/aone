@@ -25,17 +25,6 @@
     <div class="home-content-wrapper">
       <div class="container">
 
-        <!-- Design #2 -->
-<!--    
-        <div class="top-header">
-          <div class="header-text">
-            <span class="left-quote"></span>
-            Trusted reviews of businesses near you and around Africa.
-            <span class="right-quote"></span>
-          </div>
-          <a href="#" class="btn line-35">Learn more</a>
-        </div>
- -->
          <div class="home-row home-row-1 clearfix">
           <div class="big-col wrapper-col">
             <div class="inner-wrapper">
@@ -120,7 +109,7 @@
                       <div class="business-name">
                         {{ review.business.name|upper }}
                       </div>
-                      <div class="rateit rating-stars" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="{{ review.rating.score|default_if_none:'0' }}" data-rateit-readonly="true"></div>
+                      <div class="rateit rating-stars" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="0" data-rateit-readonly="true"></div>
                       <div class="rating-block clearfix">
                         <div class="rating-description">
                           {{ review.rating.score|default_if_none:'0' }} out of 5 stars
@@ -208,6 +197,7 @@
   <script>
     $(document).ready(function() {
       categoriesHandler();
+      bannerHandler();
       getBusinessForCategory();
     });
 
@@ -287,6 +277,97 @@
 
         businessItem.show();
       }
+    }
+
+    function bannerHandler() {
+      var location = {
+        latitude: 0,
+        longitude: 0
+      };
+
+      initBanner();
+
+      africaOne.store.bannerItems = [];
+
+      $.post('/get_nearest_businesses/', {
+        latitude: location.latitude,
+        longitude: location.longitude
+      }).done(function (bannerData) {
+        var businesses = JSON.parse(bannerData).businesses;
+        if (businesses.length) {
+          africaOne.store.bannerItems = businesses;
+          addBusinessToBanner(businesses[0], 0);
+          $('.banner-spinner').hide();
+          $('.banner-review-container').show();
+        }
+      });
+    }
+
+    function addBusinessToBanner(business, i) {
+      var $banner = $('.banner-wrapper')
+      $('.business-name', $banner).text(business.name);
+      $('.review-content', $banner).attr('data-slide-number', i);
+      $('.rating-stars', $banner).rateit('value', 0);
+      $('input[name="rating"]', $banner).val('0')
+      $('.review-text', $banner).val('');
+      $('.button-wrapper', $banner).hide();
+      $('.banner-wrapper .error-message').hide();
+
+      var formAction = $('.banner-wrapper .business-info').attr('action');
+      $('.banner-wrapper .business-info').attr('action', formAction.replace(/\/\d+\//,'/'+business.id+'/'));
+
+      var photoUrl;
+      if (business.banner_photo) {
+        photoUrl = business.banner_photo
+      } else {
+        photoUrl = $('.business-photo img', $banner).attr('data-default-src');
+      }
+
+      $('.business-photo img', $banner).attr('src', '');
+      $('.business-photo img', $banner).attr('src', photoUrl);
+    }
+
+    function changeSlideHandler(step) {
+      return function() {
+        var $banner = $('.banner-wrapper');
+
+        var slideNumber = $('.review-content', $banner).attr('data-slide-number');
+        var nextSlideNumber = parseInt(slideNumber) + step;
+
+        if (nextSlideNumber > africaOne.store.bannerItems.length - 1) {
+          nextSlideNumber = 0;
+        }
+        if (nextSlideNumber < 0) {
+          nextSlideNumber = africaOne.store.bannerItems.length - 1;
+        } 
+
+        addBusinessToBanner(africaOne.store.bannerItems[nextSlideNumber], nextSlideNumber);
+      }
+    }
+
+    function initBanner() {
+      $('.banner-wrapper .slider-btn-next').click(changeSlideHandler(1));
+      $('.banner-wrapper .slider-btn-prev').click(changeSlideHandler(-1));
+      $('.banner-wrapper .review-text').on('keyup', function(event) {
+        if ($(this).val() === '') {
+          $('.banner-wrapper .button-wrapper').hide();
+        } else {
+          $('.banner-wrapper .button-wrapper').show();
+        }
+      });
+      $('.banner-wrapper .rating-stars').bind('rated', function(event, value) {
+        $('input[name="rating"]').val(value);
+      });
+      
+      $('.banner-wrapper .post-review-btn').click(function(event) {
+        event.preventDefault();
+        if ($('input[name="rating"]').val() === '0') {
+          $('.banner-wrapper .error-message').show();
+        } else {
+          $('.banner-wrapper .error-message').hide();
+          $('.banner-wrapper .business-info').submit();
+        }
+      });
     }
   </script>
 {% endblock%}

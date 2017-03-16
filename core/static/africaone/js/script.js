@@ -49,6 +49,7 @@ function loadMapScript() {
 }
 
 var africaOne = {};
+africaOne.store = {};
 
 //home page
 africaOne.initiateHomePage = function() {
@@ -58,7 +59,7 @@ africaOne.initiateHomePage = function() {
   if ($homePageWrapper.length <= 0) return;
 
   //banner slider
-  africaOne.initiateHomeBannerSlides();
+  // africaOne.initiateHomeBannerSlides();
 
 };
 
@@ -102,7 +103,7 @@ africaOne.initiateHomeBannerSlides = function() {
       $('.business-id', $newBannerItem).val(bannerInfo.businessID);
       $newBannerItem.appendTo($bannersList);
     });
-    
+
     setupBannerSlider();
   };
 

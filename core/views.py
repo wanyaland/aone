@@ -1,3 +1,4 @@
+import os
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import logout,login,authenticate
@@ -36,6 +37,7 @@ from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.template import loader
 from africa_one.settings import DEFAULT_FROM_EMAIL
+from django.conf import settings
 
 def index(request):
     rank = Ranking()
@@ -594,8 +596,9 @@ class GetNearestBusinesses(View):
             business_data['id'] = business.pk
             business_data['name'] = business.name
             business_data['rating'] = business.get_avg_rating()
+            business_data['banner_photo'] = ''
             if business.banner_photo:
-                business_data['banner_photo'] = business.banner_photo.name
+                business_data['banner_photo'] = os.path.join(settings.MEDIA_URL, business.banner_photo.name)
             businesses.append(business_data)
 
         data={'businesses': businesses[:6]}

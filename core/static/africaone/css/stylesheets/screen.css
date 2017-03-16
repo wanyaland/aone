@@ -670,6 +670,10 @@ div.rating-stars.blue div.rateit-reset:hover {
   padding: 0 15px;
 }
 
+.rateit-range {
+  cursor: pointer;
+}
+
 /**
  * @file
  * Utility classes to hide elements in different ways.
@@ -2559,6 +2563,166 @@ body.js-ready .africaone-form .price-field .free-price label {
 .unslider .banner-review {
   display: block;
   float: left;
+}
+
+.home-top-banner-reviews {
+  position: absolute;
+  top: 180px;
+  width: 100%;
+}
+.home-top-banner-reviews .banner-wrapper {
+  width: 625px;
+  margin: 0 auto;
+}
+.home-top-banner-reviews .banner-wrapper .banner-review-header {
+  background: #0083ae;
+  background: rgba(0, 131, 174, 0.9);
+  text-align: center;
+  color: #9cff00;
+  padding: 18px 6px 14px;
+  -moz-border-radius-topleft: 8px;
+  -webkit-border-top-left-radius: 8px;
+  border-top-left-radius: 8px;
+  -moz-border-radius-topright: 8px;
+  -webkit-border-top-right-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.home-top-banner-reviews .banner-wrapper .banner-review-header h2 {
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: 0 0 6px;
+}
+.home-top-banner-reviews .banner-wrapper .banner-review-container,
+.home-top-banner-reviews .banner-wrapper .banner-spinner {
+  background: #fff;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  margin-top: -8px;
+  padding: 25px 55px 35px;
+  position: relative;
+  min-height: 189px;
+}
+.home-top-banner-reviews .banner-wrapper .banner-review-container {
+  display: none;
+}
+.home-top-banner-reviews .banner-wrapper .banner-spinner {
+  text-align: center;
+}
+.home-top-banner-reviews .banner-wrapper .banner-spinner img {
+  padding-top: 50px;
+}
+.home-top-banner-reviews .banner-wrapper .review-content {
+  width: 100%;
+  display: table;
+}
+.home-top-banner-reviews .banner-wrapper .review-content .business-photo {
+  display: table-cell;
+  width: 35%;
+  padding-right: 30px;
+  text-align: center;
+  vertical-align: middle;
+}
+.home-top-banner-reviews .banner-wrapper .review-content .business-photo img {
+  max-width: 100%;
+  max-height: 123px;
+}
+.home-top-banner-reviews .banner-wrapper .review-content .business-info {
+  display: table-cell;
+  width: 65%;
+}
+.home-top-banner-reviews .banner-wrapper .review-content .business-info .business-name {
+  color: #0083ae;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.53846em;
+}
+.home-top-banner-reviews .banner-wrapper .review-content .business-info .business-rating {
+  padding: 4px 0;
+}
+.home-top-banner-reviews .banner-wrapper .review-content .business-info .business-rating .rating-stars {
+  padding-top: 1px;
+}
+.home-top-banner-reviews .banner-wrapper .review-content .business-info .business-rating .rating-description {
+  color: #666;
+  vertical-align: top;
+  padding-left: 2px;
+}
+.home-top-banner-reviews .banner-wrapper .review-content .business-info .review-text {
+  width: 100%;
+  resize: vertical;
+  background: #f1f1f1;
+  border: solid 1px #f1f1f1;
+  padding: 12px 15px;
+  outline: none;
+  min-height: 50px;
+}
+.home-top-banner-reviews .banner-wrapper .review-content .business-info .button-wrapper {
+  display: none;
+  position: absolute;
+}
+.home-top-banner-reviews .banner-wrapper .review-content .business-info .button-wrapper .btn {
+  display: inline-block;
+  line-height: 25px;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  padding: 0 15px;
+}
+.home-top-banner-reviews .banner-wrapper .review-content .business-info .error-message {
+  display: none;
+  color: red;
+  padding-left: 5px;
+}
+.home-top-banner-reviews .banner-wrapper .review-content .business-info .login-message {
+  color: #666;
+}
+.home-top-banner-reviews .slider-btn {
+  cursor: pointer;
+  position: absolute;
+  top: 84px;
+  width: 28px;
+  height: 28px;
+  background: #f1f1f1;
+  -moz-transition: background-color 0.3s ease-in;
+  -o-transition: background-color 0.3s ease-in;
+  -webkit-transition: background-color 0.3s ease-in;
+  transition: background-color 0.3s ease-in;
+}
+.home-top-banner-reviews .slider-btn .arrow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.home-top-banner-reviews .slider-btn:hover {
+  background-color: #77c301;
+}
+.home-top-banner-reviews .slider-btn.slider-btn-prev {
+  left: 0;
+}
+.home-top-banner-reviews .slider-btn.slider-btn-prev .arrow {
+  background: url('../images/globals-s28fb260ac8.png') 0 -58px;
+  height: 15px;
+  width: 6px;
+}
+.home-top-banner-reviews .slider-btn.slider-btn-prev:hover .arrow {
+  background-position: 0 -73px;
+}
+.home-top-banner-reviews .slider-btn.slider-btn-next {
+  right: 0;
+}
+.home-top-banner-reviews .slider-btn.slider-btn-next .arrow {
+  background: url('../images/globals-s28fb260ac8.png') 0 -28px;
+  height: 15px;
+  width: 6px;
+}
+.home-top-banner-reviews .slider-btn.slider-btn-next:hover .arrow {
+  background-position: 0 -43px;
 }
 
 .banner-review-desc {
