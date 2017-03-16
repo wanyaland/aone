@@ -25,64 +25,63 @@
         <div class="column-info-line">
           I don't see the business. <a href="{% url 'core:business_user_add'%}">Add a Busines</a>
         </div>
-        <div class="column-content">
-          {% for business in business_list %}
-            <div class="business-block-wrapper clearfix">
-              <div class="business-photo">
-                {% if business.banner_photo %}
-                  <img src="{{ business.banner_photo.url }}">
-                {% else %}
-                  <img src="/static/africaone/static-images/no-logo.jpg">
-                {% endif %}
+        
+        {% for business in business_list %}
+          <div class="business-block-wrapper clearfix">
+            <div class="business-photo">
+              {% if business.banner_photo %}
+                <img src="{{ business.banner_photo.url }}">
+              {% else %}
+                <img src="/static/africaone/static-images/no-logo.jpg">
+              {% endif %}
+            </div>
+
+            <div class="business-details">
+              <div class="business-name">
+                {{ business.name|upper }}
               </div>
 
-              <div class="business-details">
-                <div class="business-name">
-                  {{ business.name|upper }}
+              <div class="business-info clearfix">
+                <div class="business-info-left">
+                  <div class="business-rating">
+                    <div class="rateit rating-stars" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="{{ business.get_avg_rating }}" data-rateit-readonly="true"></div>
+                    <span>{{ business.get_no_reviews }} review{{ business.get_no_reviews|pluralize:".,s." }}</span>
+                  </div>
+                  
+                  <div class="business-description">
+                    {{ business.description|truncatechars:90 }}
+                  </div>
                 </div>
 
-                <div class="business-info clearfix">
-                  <div class="business-info-left">
-                    <div class="business-rating">
-                      <div class="rateit rating-stars" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="{{ business.get_avg_rating }}" data-rateit-readonly="true"></div>
-                      <span>{{ business.get_no_reviews }} review{{ business.get_no_reviews|pluralize:".,s." }}</span>
-                    </div>
-                    
-                    <div class="business-description">
-                      {{ business.description|truncatechars:90 }}
-                    </div>
+                <div class="business-info-center">
+                  <div class="business-address">
+                    {{ business.address }}
                   </div>
+                  {{ business.phone_number }}
+                </div>
 
-                  <div class="business-info-center">
-                    <div class="business-address">
-                      {{ business.address }}
-                    </div>
-                    {{ business.phone_number }}
-                  </div>
-
-                  <div class="business-info-right">
-                    <span>User photos</span>
-                    <div class="photos-icon-wrapper">
-                      <img src="/static/africaone/static-images/fake-user-photos.jpg">
-                      <span>+10</span>
-                    </div>
+                <div class="business-info-right">
+                  <span>User photos</span>
+                  <div class="photos-icon-wrapper">
+                    <img src="/static/africaone/static-images/fake-user-photos.jpg">
+                    <span>+10</span>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="business-bottom-block">
-              <div class="write-review-button clearfix">
-                <a class="star-block" href="{% url 'core:review_add' business_pk=business.pk %}">
-                  {% for i in '12345' %}
-                    <img src="/static/africaone/static-images/icon-white-star.jpg">
-                  {% endfor %}
-                </a>
-                <a href="{% url 'core:review_add' business_pk=business.pk %}">Write a Review</a>
-              </div>
-              <span>Click stars to rate this restaurant</span>
+          </div>
+          <div class="business-bottom-block">
+            <div class="write-review-button clearfix">
+              <a class="star-block" href="{% url 'core:review_add' business_pk=business.pk %}">
+                {% for i in '12345' %}
+                  <img src="/static/africaone/static-images/icon-white-star.jpg">
+                {% endfor %}
+              </a>
+              <a href="{% url 'core:review_add' business_pk=business.pk %}">Write a Review</a>
             </div>
-          {% endfor %}
-        </div>
+            <span>Click stars to rate this restaurant</span>
+          </div>
+        {% endfor %}
 
         <div class="pagination-block">
           {% if is_paginated %}{% load paginator %}{% paginator 2 %}{% endif %}

@@ -670,10 +670,6 @@ div.rating-stars.blue div.rateit-reset:hover {
   padding: 0 15px;
 }
 
-.rateit-range {
-  cursor: pointer;
-}
-
 /**
  * @file
  * Utility classes to hide elements in different ways.
@@ -959,12 +955,12 @@ ul.footer-menu a:hover {
   padding-right: 2px;
 }
 .reviews-list-page-wrapper .column-right {
-  padding-left: 2px;
+  padding-left: 1px;
 }
 .reviews-list-page-wrapper .column-right .map-block {
   background-color: #fff;
   padding: 15px 30px 20px 30px;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 .reviews-list-page-wrapper .column-right .map-block .checkbox-wrapper {
   padding-bottom: 15px;
@@ -983,7 +979,7 @@ ul.footer-menu a:hover {
   font-size: 1.15385em;
 }
 .reviews-list-page-wrapper .column-right .couldnt-find-block {
-  margin-bottom: 4px;
+  margin-bottom: 3px;
   background: url('../images/couldnt-find-bg.png?1487774835') no-repeat center top #007fa9;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -1015,7 +1011,7 @@ ul.footer-menu a:hover {
 .reviews-list-page-wrapper .column-right .facebook-block {
   background-color: #fff;
   padding: 20px 20px 45px 20px;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 .reviews-list-page-wrapper .column-right .facebook-block img {
   display: block;
@@ -1024,7 +1020,7 @@ ul.footer-menu a:hover {
 .reviews-list-page-wrapper .column-right .advert-block {
   background-color: #fff;
   padding: 20px 20px 45px 20px;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 .reviews-list-page-wrapper .column-right .advert-block span {
   display: block;
@@ -1135,7 +1131,7 @@ ul.footer-menu a:hover {
 .reviews-list-page-wrapper .business-bottom-block {
   height: 65px;
   background-color: #fff;
-  margin: 2px 0 5px 0;
+  margin: 1px 0 3px 0;
   padding-left: 30px;
   padding-top: 16px;
 }
@@ -2644,6 +2640,9 @@ body.js-ready .africaone-form .price-field .free-price label {
 .home-top-banner-reviews .banner-wrapper .review-content .business-info .business-rating .rating-stars {
   padding-top: 1px;
 }
+.home-top-banner-reviews .banner-wrapper .review-content .business-info .business-rating .rating-stars .rateit-range {
+  cursor: pointer;
+}
 .home-top-banner-reviews .banner-wrapper .review-content .business-info .business-rating .rating-description {
   color: #666;
   vertical-align: top;
@@ -3094,6 +3093,7 @@ body.js-ready .africaone-form .price-field .free-price label {
 }
 .block-recent-activity .block-content .right-column .review-photos a {
   display: inline-block;
+  vertical-align: top;
   width: 24%;
 }
 .block-recent-activity .block-content .right-column .review-photos a img {
@@ -3202,6 +3202,61 @@ body.js-ready .africaone-form .price-field .free-price label {
   margin-top: -10px;
   padding: 0;
   font-size: 1.07692em;
+}
+
+.review-of-day-block {
+  padding: 25px 25px 15px 25px;
+  margin-bottom: 3px;
+}
+.review-of-day-block .review-of-day-footer {
+  display: table;
+}
+.review-of-day-block .review-of-day-footer .business-photo {
+  display: table-cell;
+  padding-bottom: 15px;
+  vertical-align: top;
+}
+.review-of-day-block .review-of-day-footer .business-photo img {
+  width: 100%;
+}
+.review-of-day-block .review-of-day-footer .review-info {
+  display: table-cell;
+  vertical-align: top;
+  width: 65%;
+  padding: 0 20px 15px 20px;
+  font-size: 1.15385em;
+  color: #999999;
+}
+.review-of-day-block .review-of-day-footer .review-info .username {
+  color: #0083ae;
+}
+.review-of-day-block .review-of-day-footer .review-info .business-name {
+  color: #0083ae;
+}
+.review-of-day-block .review-of-day-footer .rating-stars {
+  display: block;
+  padding: 5px 0;
+}
+.review-of-day-block .review-of-day-footer .reviews-photo-wrapper {
+  width: 100%;
+}
+.review-of-day-block .review-of-day-footer .reviews-photo-wrapper .img-wrapper {
+  display: block;
+  float: left;
+  width: 33%;
+  padding-right: 2px;
+}
+.review-of-day-block .review-of-day-footer .reviews-photo-wrapper .img-wrapper img {
+  width: 100%;
+}
+.review-of-day-block .review-of-day-content {
+  color: #666;
+}
+.review-of-day-block .btn {
+  display: inline-block;
+  line-height: 30px;
+  padding: 0 15px;
+  margin-top: 10px;
 }
 
 .business-header {

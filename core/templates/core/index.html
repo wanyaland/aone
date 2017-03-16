@@ -194,11 +194,15 @@
 {% endblock %}
 
 {% block scripts %}
+  <link href="/static/africaone/js/plugins/lightbox2/css/lightbox.min.css" rel="stylesheet">
+  <script src="/static/africaone/js/plugins/lightbox2/js/lightbox.min.js"></script>
+
   <script>
     $(document).ready(function() {
       categoriesHandler();
       bannerHandler();
       getBusinessForCategory();
+      initLightbox();
     });
 
     function getBusinessForCategory(categoryId, categoryName) {
@@ -368,6 +372,12 @@
           $('.banner-wrapper .business-info').submit();
         }
       });
+
+      function initLightbox() {
+        lightbox.option({
+          'wrapAround': true
+        })
+      }
     }
   </script>
 {% endblock%}
