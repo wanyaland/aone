@@ -342,6 +342,10 @@
   .block {
     background: #fff;
     margin-bottom: 3px;
+
+    &.block-news {
+      background-color: transparent;
+    }
   }
   .customers-businesses {
     padding: 40px 30px;

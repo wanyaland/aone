@@ -657,6 +657,11 @@ div.rating-stars.blue div.rateit-reset:hover {
   background-color: #fff;
 }
 
+.column-button {
+  background-color: #fff;
+  padding: 20px;
+}
+
 .app-input {
   display: block;
   width: 100%;
@@ -2770,6 +2775,9 @@ body.js-ready .africaone-form .price-field .free-price label {
   background: #fff;
   margin-bottom: 3px;
 }
+.home-content-wrapper .block.block-news {
+  background-color: transparent;
+}
 .home-content-wrapper .customers-businesses {
   padding: 40px 30px;
   height: 238px;
@@ -4266,25 +4274,6 @@ body.js-ready .africaone-form .price-field .free-price label {
   background-color: #77c301;
   color: #fff;
 }
-.news-layout-wrapper .recent-news-wrapper a {
-  display: block;
-  color: #666;
-  font-weight: normal;
-  padding: 12px 20px;
-  background: #fff;
-  margin-bottom: 1px;
-}
-.news-layout-wrapper .recent-news-wrapper a .news-short-title {
-  font-weight: bold;
-  color: #000;
-}
-.news-layout-wrapper .recent-news-wrapper a:hover {
-  background-color: #77c301;
-  color: #fff;
-}
-.news-layout-wrapper .recent-news-wrapper a:hover .news-short-title {
-  color: #000;
-}
 .news-layout-wrapper .pagination-block {
   height: 52px;
   background-color: #fff;
@@ -4310,6 +4299,40 @@ body.js-ready .africaone-form .price-field .free-price label {
 .news-layout-wrapper .news-block-detail .news-photo img {
   max-width: 100%;
   max-height: 400px;
+}
+
+.recent-news-wrapper a {
+  display: block;
+  color: #666;
+  font-weight: normal;
+  padding: 12px 20px;
+  background: #fff;
+  margin-bottom: 1px;
+}
+.recent-news-wrapper a .news-short-title {
+  font-weight: bold;
+  color: #000;
+}
+.recent-news-wrapper a .news-title {
+  color: #0083ae;
+  font-size: 1.15385em;
+}
+.recent-news-wrapper a .news-date {
+  color: #868686;
+  font-size: 0.84615em;
+}
+.recent-news-wrapper a:hover {
+  background-color: #77c301;
+  color: #fff;
+}
+.recent-news-wrapper a:hover .news-short-title {
+  color: #000;
+}
+.recent-news-wrapper a:hover .news-title {
+  color: #fff;
+}
+.recent-news-wrapper a:hover .news-date {
+  color: #fff;
 }
 
 /*# sourceMappingURL=screen.css.map */

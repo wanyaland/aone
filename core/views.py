@@ -45,6 +45,7 @@ def index(request):
                    .values_list('target_object_id', flat=True)
     last_reviews = [int(r) for r in last_reviews]
     recent_activities = Review.objects.filter(id__in=last_reviews).order_by('-create_date')[:2]
+    recent_news = News.objects.all().order_by('-create_date')[:4]
 
     events = list(Event.objects.all())
     popular_events = rank.rank_events(events)[:3]
@@ -55,6 +56,7 @@ def index(request):
         'categories':parent_categories,
         'popular_events':popular_events,
         'recent_activities':recent_activities,
+        'recent_news':recent_news,
     })
 
 def logout_view(request):
@@ -581,6 +583,26 @@ class GetNearestBusinesses(View):
         return super(GetNearestBusinesses, self).dispatch(request, *args, **kwargs)
 
     def post(self,request,*args,**kwargs):
+        # DEV
+        businesses = list(Business.objects.all()[:10])
+        rank = Ranking()
+        ranked_businesses=rank.rank_businesses(businesses)
+
+        businesses = []
+        for business in ranked_businesses:
+            business_data = {}
+            business_data['id'] = business.pk
+            business_data['name'] = business.name
+            business_data['rating'] = business.get_avg_rating()
+            if business.banner_photo:
+                business_data['banner_photo'] = business.banner_photo.name
+            businesses.append(business_data)
+
+        data={'businesses': businesses[:6]}
+
+        return HttpResponse(json.dumps(data))
+        # ---DEV
+
         longitude = request.POST.get('longitude')
         latitude = request.POST.get('latitude')
         businesses = []
