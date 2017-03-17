@@ -1,0 +1,81 @@
+{% extends 'admin/base.html' %}
+
+{% block main %}
+  <div class="news-form-page">
+    <div class="news-list-block">
+      <div class="x_panel">
+        <div class="x_title">
+          {% if object %}
+              <h3>Edit News</h3>
+          {% else %}
+              <h3>Create News</h3>
+          {% endif %}
+        </div>
+        <div class="x_content">
+          <form action="" method="post" enctype="multipart/form-data" class="form-horizontal form-label-left">
+            {% csrf_token %}
+
+            {% if form.errors %}
+              <div class="form-errors">
+                {% for field,error in form.errors.items %}
+                  <div class="form-error-text">
+                    {% if field != '__all__' %}{{ field }}: {% endif %}
+                    {{ error|striptags }}
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <div class="form-group">
+              <label class="control-label col-md-2 col-sm-2 col-xs-12">Title</label>
+              <div class="col-md-5 col-sm-5 col-xs-12">
+                {{ form.title }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-md-2 col-sm-2 col-xs-12">Category</label>
+              <div class="col-md-5 col-sm-5 col-xs-12">
+                {{ form.category }}
+              </div>
+            </div>
+
+            <div class="form-group news-photo">
+              <label class="control-label col-md-2 col-sm-2 col-xs-12">Main photo</label>
+              <div class="col-md-5 col-sm-5 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_content">
+                    <div class="photo-wrapper">
+                      <img src="{{ form.photo.value.url }}">
+                    </div>
+                    <div class="ln_solid"></div>
+                    <input id="id_photo" name="photo" type="file">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-md-2 col-sm-2 col-xs-12">Content</label>
+              <div class="col-md-5 col-sm-5 col-xs-12">
+                {{ form.content }}
+              </div>
+            </div>
+
+            <div class="ln_solid"></div>
+
+            <div class="form-group">
+              <div class="col-md-10 col-sm-10 col-xs-12 col-md-offset-2">
+                <button class="btn btn-primary" type="submit">
+                  {{ object|yesno:"Update,Create" }}
+                </button>
+                <a href="{% url 'admin:news_list' %}" class="btn btn-default" type="submit">Cancel</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

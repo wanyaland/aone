@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 from django.forms import TextInput,EmailInput
-from models import Customer,Business,Review,BusinessPhoto
+from models import Customer,Business,Review,BusinessPhoto,News
 from django.forms.widgets import RadioFieldRenderer
 from django.core.exceptions import *
 
@@ -139,3 +139,13 @@ class SetPasswordForm(forms.Form):
                         )
             return password2
 
+
+class NewsForm(forms.ModelForm):
+    class Meta:
+        model = News
+        fields = ['title', 'category', 'photo', 'content']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'News title'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'content': forms.Textarea(attrs={'class': 'form-control'})
+        }

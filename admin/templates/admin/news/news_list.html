@@ -1,0 +1,58 @@
+{% extends 'admin/base.html' %}
+
+{% block main %}
+  <div class="news-list-page">
+    <div class="x_panel">
+      <div class="x_title">
+        <h3>News list</h3>
+      </div>  
+      <div class="x_content">
+        <div class="news-list-block">
+          <a href="{% url 'admin:news_create' %}" class="btn btn-success"><i class="fa fa-plus"></i>Add News</a>
+          <div class="x_panel">
+            <div class="x_content">
+              <table class="table table-hover news-list-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Category</th>
+                    <th>Title</th>
+                    <th>Created Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for news in news_list %}
+                    <tr class="news-row" data-href="{% url 'admin:news_update' news.id %}">
+                      <td>{{ news.id }}</td>
+                      <td>{{ news.category }}</td>
+                      <td>{{ news.title }}</td>
+                      <td>{{ news.create_date }}</td>
+                      <td>
+                        <a href="{% url 'admin:news_delete' news.id %}" class="btn btn-danger btn-xs delete-news-btn">Delete</a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function() {
+      $('.news-row').click(function() {
+        document.location = $(this).attr('data-href');
+      });
+
+      $('.delete-news-btn').click(function(event) {
+        event.stopPropagation();
+      })
+    });
+  </script>
+{% endblock %}
