@@ -627,6 +627,9 @@ body.dragging .manage-categories-wrapper .new-category {
   max-width: 100%;
   max-height: 100%;
 }
+.news-form-page .news-photo.bad .x_panel {
+  border-color: #ce5454;
+}
 .news-form-page #text-editor {
   border: 1px solid #e6e9ed;
   overflow: scroll;
@@ -636,16 +639,18 @@ body.dragging .manage-categories-wrapper .new-category {
 .news-form-page .btn-toolbar.editor {
   margin: 5px 0;
 }
-.news-form-page .upload-group {
+.news-form-page .upload-photo-wrapper {
+  position: relative;
   overflow: hidden;
 }
-.news-form-page .upload-group .imgUpload {
+.news-form-page .upload-photo-wrapper input {
+  display: block;
   position: absolute;
-  font-size: 24px;
   right: 0;
-  top: 0;
-  opacity: 0;
+  top: -1px;
+  font-size: 24px;
   cursor: pointer;
+  opacity: 0;
 }
 
 /*# sourceMappingURL=screen.css.map */
