@@ -4519,6 +4519,11 @@ body.js-ready .africaone-form .price-field .free-price label {
   max-width: 100%;
   max-height: 400px;
 }
+.news-layout-wrapper .empty-news-wrapper {
+  padding: 30px;
+  font-size: 1.38462em;
+  background-color: #fff;
+}
 
 .recent-news-wrapper a {
   display: block;

@@ -7,11 +7,11 @@
         <h3>News list</h3>
       </div>  
       <div class="x_content">
-        <div class="news-list-block">
+        <div class="news-categories-list-block">
           <a href="{% url 'admin:news_create' %}" class="btn btn-success"><i class="fa fa-plus"></i>Add News</a>
           <div class="x_panel">
             <div class="x_content">
-              <table class="table table-hover news-list-table">
+              <table class="table table-hover items-list-table">
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -23,13 +23,13 @@
                 </thead>
                 <tbody>
                   {% for news in news_list %}
-                    <tr class="news-row" data-href="{% url 'admin:news_update' news.id %}">
+                    <tr class="item-row" data-href="{% url 'admin:news_update' news.id %}">
                       <td>{{ news.id }}</td>
                       <td>{{ news.category }}</td>
                       <td>{{ news.title }}</td>
                       <td>{{ news.create_date }}</td>
                       <td>
-                        <a href="{% url 'admin:news_delete' news.id %}" class="btn btn-danger btn-xs delete-news-btn">Delete</a>
+                        <a href="{% url 'admin:news_delete' news.id %}" class="btn btn-danger btn-xs delete-row-btn">Delete</a>
                       </td>
                     </tr>
                   {% endfor %}
@@ -46,11 +46,11 @@
 {% block scripts %}
   <script>
     $(document).ready(function() {
-      $('.news-row').click(function() {
+      $('.item-row').click(function() {
         document.location = $(this).attr('data-href');
       });
 
-      $('.delete-news-btn').click(function(event) {
+      $('.delete-row-btn').click(function(event) {
         event.stopPropagation();
       })
     });

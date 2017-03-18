@@ -11,21 +11,10 @@
               <h3>Create News</h3>
           {% endif %}
         </div>
+
         <div class="x_content">
           <form action="" method="post" enctype="multipart/form-data" class="form-horizontal form-label-left">
             {% csrf_token %}
-
-            {% if form.errors %}
-              <div class="form-errors">
-                {% for field,error in form.errors.items %}
-                  <div class="form-error-text">
-                    {% if field != '__all__' %}{{ field }}: {% endif %}
-                    {{ error|striptags }}
-                    {{ message }}
-                  </div>
-                {% endfor %}
-              </div>
-            {% endif %}
 
             <div class="item form-group {{ form.title.errors|yesno:'bad,' }}">
               <label class="control-label col-md-2 col-sm-2 col-xs-12">Title</label>

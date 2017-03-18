@@ -107,6 +107,12 @@
       }
     }
   }
+
+  .empty-news-wrapper {
+    padding: 30px;
+    @include ems_font_size(18px, $font-size-base);
+    background-color: #fff;
+  }
 }
 
 .recent-news-wrapper {

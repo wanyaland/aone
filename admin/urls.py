@@ -46,4 +46,8 @@ urlpatterns = patterns(
     url(r'^news/create$', views.NewsCreate.as_view(), name='news_create'),
     url(r'^news/update/(?P<pk>\d+)$', views.NewsUpdate.as_view(), name='news_update'),
     url(r'^news/delete/(?P<pk>\d+)$', views.NewsDelete.as_view(), name='news_delete'),
+    url(r'^news_category/list$', views.NewsCategoryList.as_view(), name='news_category_list'),
+    url(r'^news_category/create$', views.NewsCategoryCreate.as_view(), name='news_category_create'),
+    url(r'^news_category/update/(?P<pk>\d+)$', views.NewsCategoryUpdate.as_view(), name='news_category_update'),
+    url(r'^news_category/delete/(?P<pk>\d+)$', views.NewsCategoryDelete.as_view(), name='news_category_delete'),
 )
