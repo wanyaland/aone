@@ -65,6 +65,7 @@ class RegistrationForm(UserCreationForm):
             'password2':TextInput(attrs={'class': 'form-control','placeholder': 'Repeat Password'}),
         }
 
+
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
