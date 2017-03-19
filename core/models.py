@@ -100,7 +100,7 @@ class Customer(models.Model):
     user = models.OneToOneField(User,unique=True)
     photo = models.FileField(null=True,upload_to='avatars/%Y/%m/%d',blank=True)
     user_type = models.CharField(choices=CHOICES,max_length=20,default=BUSINESS)
-    '''
+
     @receiver(post_save,sender=User)
     def create_user_customer(sender,instance,created,**kwargs):
         if created:
@@ -109,10 +109,10 @@ class Customer(models.Model):
     @receiver(post_save,sender=User)
     def save_user_customer(sender,instance,**kwargs):
         instance.customer.save()
-    '''
 
     def __unicode__(self):
         return "%s  " %(self.user.username)
+
 
 
 class Review(models.Model,HitCountMixin):
