@@ -677,7 +677,6 @@ class ResetPasswordRequestView(FormView):
                             'user':user,
                             'token':default_token_generator.make_token(user),
                             'protocol':'http',
-
                             }
                     subject_template_name='registration/password_reset_subject.txt'
                     email_template_name = 'core/auth-user/password_reset_email.html'
