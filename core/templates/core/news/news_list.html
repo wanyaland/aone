@@ -5,6 +5,12 @@
     News
   </div>
 
+  {% if news_list|length == 0%}
+    <div class="empty-news-wrapper">
+      No news here
+    </div>
+  {% endif%}
+
   {% for news in news_list %}
   <div class="news-block-wrapper clearfix">
     <div class="news-photo">

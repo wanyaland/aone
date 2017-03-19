@@ -705,9 +705,9 @@ class NewsListView(ListView):
 
     def get_queryset(self):
         if 'category' in self.request.GET:
-            objects = self.model.objects.filter(category_id=self.request.GET['category'])
+            objects = self.model.objects.filter(category_id=self.request.GET['category']).order_by('-create_date')
         else:
-            objects = self.model.objects.all()
+            objects = self.model.objects.all().order_by('-create_date')
 
         return objects
 
