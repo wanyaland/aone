@@ -1,7 +1,7 @@
 
 <div class="header-login-links clearfix">
   {% if user.is_authenticated %}
-  <div class="logged-in-user-name"><a href="{% url 'core:user_detail_test' user.customer.id %}">Welcome {{user.get_full_name|default:user.username}}</a></div>
+  <div class="logged-in-user-name"><a href="{% url 'core:user_detail' user.customer.id %}">Welcome {{user.get_full_name|default:user.username}}</a></div>
   <div class="btn-col"><a href="/logout" class="btn btn-logout">Log Out</a></div>
   {% else %}
   <div class="btn-col"><a href="/login" class="btn btn-login">Login</a></div>
