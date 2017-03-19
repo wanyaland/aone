@@ -73,6 +73,9 @@ a {
   &.line-35 {
     line-height: 35px;
   }
+  &.line-45 {
+    line-height: 45px;
+  }
   &.line-50 {
     line-height: 50px;
   }
@@ -230,6 +233,16 @@ h2 {
   height: 175px;
 }
 
+.blue-header-bg-lg {
+  background: #007eb0 image-url('banner-strip-bg.jpg') repeat-x center top;
+  height: 270px;
+}
+
+.home-header-bg {
+  background: image-url('home-page-bg.jpg') repeat-x center top;
+  height: 650px;
+}
+
 .message {
   position: relative;
   padding: 25px 70px;
@@ -321,4 +334,82 @@ h2 {
       color: #666;
     }
   }
+}
+
+div.rating-stars {
+  div.rateit-range {
+    background: image-url('star-17x14-grey.png');
+    height: 14px;
+  }
+
+  div.rateit-hover {
+    background: image-url('star-17x14-green.png');
+  }
+
+  div.rateit-selected {
+    background: image-url('star-17x14-green.png');
+  }
+
+  div.rateit-reset {
+    background: image-url('star-17x14-grey.png');
+    width: 17px;
+    height: 14px;
+  }
+
+  div.rateit-reset:hover {
+    background: image-url('star-17x14-grey.png');
+  }
+}
+
+
+div.rating-stars.blue {
+  div.rateit-range {
+    background: image-url('star-17x14-white.png');
+    height: 14px;
+  }
+
+  div.rateit-hover {
+    background: image-url('star-17x14-blue.png');
+  }
+
+  div.rateit-selected {
+    background: image-url('star-17x14-blue.png');
+  }
+
+  div.rateit-reset {
+    background: image-url('star-17x14-white.png');
+    width: 17px;
+    height: 14px;
+  }
+
+  div.rateit-reset:hover {
+    background: image-url('star-17x14-white.png');
+  }
+}
+
+.column-title {
+  background-color: #f8f8f8;
+  color: #333333;
+  height: 80px;
+  line-height: 80px;
+  @include ems_font_size(26px, $font-size-base);
+  font-weight: bold;
+  padding-left: 30px;
+
+  &.blue {
+    background-color: #007fa8;
+    color: #fff;
+  }
+}
+
+.column-content {
+  background-color: #fff;
+}
+
+.app-input {
+  display: block;
+  width: 100%;
+  line-height: 43px;
+  border: solid 1px #c4c4c4;
+  padding: 0 15px;
 }

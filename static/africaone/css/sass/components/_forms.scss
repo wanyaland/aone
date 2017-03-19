@@ -138,3 +138,11 @@
     line-height: 1.4em;
   }
 }
+
+.form-errors {
+  margin-bottom: 5px;
+  
+  .form-error-text {
+    color: #ff0000;
+  }
+}
