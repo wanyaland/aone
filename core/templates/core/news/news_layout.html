@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+
+{% block main %}
+  <div class="blue-header-bg"></div>
+
+  <div class="news-layout-wrapper container clearfix">
+    <div class="left-column">
+      {% block left_column %}
+      {% endblock%}
+    </div>
+  
+    <div class="right-column">
+      <div class="column-title">
+        News categories
+      </div>
+      <div class="categories-wrapper">
+        {% for category in categories %}
+          <a href="{% url 'core:news_list' %}?category={{category.id}}">&bull; {{ category.name|upper }}</a>
+        {% endfor %}
+      </div>
+
+      <div class="column-title">
+        Recent News
+      </div>
+      <div class="recent-news-wrapper">
+        {% for news in recent_news %}
+          <a href="{% url 'core:news_detail' news.id %}">
+            <span class="news-short-title">{{ news.title }}</span>
+            <br>
+            {{ news.content|truncatechars:150 }}
+          </a>
+        {% endfor %}
+      </div>
+      <div class="all-categories-btn-wrapper">
+        <a href="{% url 'core:news_list' %}" class="btn line-35">VIEW ALL NEWS</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

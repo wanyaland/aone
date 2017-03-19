@@ -214,12 +214,19 @@ class EventDiscussion(models.Model):
         return self.comment
 
 
+class NewsCategory(models.Model):
+    name = models.CharField(max_length=128)
+
+    def __unicode__(self):
+        return self.name
 
 
+class News(models.Model):
+    title = models.CharField(max_length=256)
+    photo = models.ImageField(null=True, upload_to='news/%Y/%m/%d')
+    content = models.TextField()
+    category = models.ForeignKey(NewsCategory, null=True, on_delete=models.SET_NULL)
+    create_date = models.DateTimeField(auto_now_add=True)
 
-
-
-
-
-
-
+    def __unicode__(self):
+        return self.content

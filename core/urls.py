@@ -57,4 +57,6 @@ urlpatterns = patterns (
     url(r'^tag_review/$',tag_review,name='tag_review'),
     url(r'^upload_photo/(?P<pk>\d+)/$',upload_business_photos,name='upload_photos'),
     url(r'^mark_photo/(?P<pk>\d+)/$',mark_photo,name='mark_photo'),
+    url(r'^news_list', NewsListView.as_view(), name='news_list'),
+    url(r'^news_detail/(?P<pk>\d+)/$',NewsDetail.as_view(),name='news_detail'),
 )

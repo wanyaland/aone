@@ -3,9 +3,9 @@
 {% block main %}
   <div class="blue-header-bg"></div>
 
-  <form class="add-business-user-wrapper container" action="{{ action_url }}" method="post" enctype="multipart/form-data">
+  <form class="add-business-wrapper container" action="{{ action_url }}" method="post" enctype="multipart/form-data">
     {%csrf_token%}
-    <div class="business-info-wrapper clearfix">
+    <div class="business-info-wrapper">
       <div class="business-info">
         <div class="column-title">
           ADD A BUSINESS TO REVIEW
@@ -33,6 +33,7 @@
             <input class="app-input" name="city" placeholder="Add City*" type="text" value="{{ business_form.city.value|default:'' }}">
             <input class="app-input" name="phone_number" placeholder="Add Phone Number*" type="text" value="{{ business_form.phone_number.value|default:'' }}">
             <input class="app-input" name="web_address" placeholder="Add Website Address" type="text" value="{{ business_form.web_address.value|default:'' }}">
+            {{ business_form.categories }}
           </div>
         </div>
       </div>
@@ -76,7 +77,7 @@
             <div class="photo-input">
               <div class="photo-icon"></div>
               <span>Add a photo</span>
-              {{review_form.files}}
+              {{ review_form.files }}
             </div>
           </div>
 
@@ -97,12 +98,6 @@
       </div>
     </div>
   </form>
-
-<!-- <form method="post" action="{{action_url}}" enctype="multipart/form-data">{% csrf_token %} -->
-  <!-- {{business_form.as_p}} -->
-  <!-- {{review_form.as_p}} -->
-  <!-- <button class="btn btn-primary" type="submit">Create Business</button> -->
-<!-- </form> -->
 {% endblock %}
 
 {% block scripts %}
@@ -110,6 +105,7 @@
     $(document).ready(function() {
       ratingHandler();
       fileNamesHandler();
+      chosenSelectHandler();
       loadMapScript();
     });
 
@@ -145,14 +141,16 @@
 
     function fileNamesHandler() {
       $('#id_files').change(function() {
-        var list = $('file-list');
-
         for (var x = 0; x < $(this)[0].files.length; x++) {
           var f = document.createElement('div');
           f.innerHTML = 'File ' + (x + 1) + ':  ' + $(this)[0].files[x].name;
           $('#file-list').append(f);
         }
       });
+    }
+
+    function chosenSelectHandler() {
+      $("#id_categories").chosen({max_selected_options: 5});
     }
   </script>
 {% endblock %}

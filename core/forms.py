@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 from django.forms import TextInput,EmailInput
-from models import Customer,Business,Review,BusinessPhoto
+from models import Customer, Business, Review, BusinessPhoto, News, NewsCategory
 from django.forms.widgets import RadioFieldRenderer
 from django.core.exceptions import *
 
@@ -49,7 +49,7 @@ class MultiFileField(forms.FileField):
         elif self.max_num and  num_files > self.max_num:
             raise ValidationError(self.error_messages['max_num'] % {'max_num': self.max_num, 'num_files': num_files})
         for uploaded_file in data:
-            if uploaded_file.size > self.maximum_file_size:
+            if uploaded_file and uploaded_file.size > self.maximum_file_size:
                 raise ValidationError(self.error_messages['file_size'] % { 'uploaded_file_name': uploaded_file.name})
 
 class RegistrationForm(UserCreationForm):
@@ -71,6 +71,8 @@ class CustomerForm(forms.ModelForm):
         fields = ['photo']
 
 class BusinessForm(forms.ModelForm):
+    open_hours = forms.CharField()
+    
     class Meta:
         model = Business
         fields =('name','address','email','web_address','phone_number','city','categories','photo','latitude','longitude')
@@ -81,7 +83,7 @@ class BusinessForm(forms.ModelForm):
             'city':TextInput(attrs={'class':'form-control','placeholder':'City'}),
             'phone_number':TextInput(attrs={'class':'form-control','placeholder':'Phone Number'}),
             'web_address':TextInput(attrs={'class':'form-control','placeholder':'Web Address'}),
-            'categories':forms.CheckboxSelectMultiple(),
+            'categories':forms.SelectMultiple(attrs={'class':'chosen-select', 'data-placeholder':'Select up to 3 categories. The more specific, the better.*'}),
         }
 
 class BusinessFormUser(forms.ModelForm):
@@ -94,12 +96,12 @@ class BusinessFormUser(forms.ModelForm):
             'city':TextInput(attrs={'class':'form-control','placeholder':'City'}),
             'phone_number':TextInput(attrs={'class':'form-control','placeholder':'Phone Number'}),
             'web_address':TextInput(attrs={'class':'form-control','placeholder':'Web Address'}),
-            'categories':forms.CheckboxSelectMultiple(),
+            'categories':forms.SelectMultiple(attrs={'class':'chosen-select', 'data-placeholder':'Select up to 3 categories. The more specific, the better.*'}),
         }
 
 class ReviewForm(forms.ModelForm):
     rating = forms.CharField(widget=forms.NumberInput(attrs={'class':'rating','data-min':'1','data-max':'5','step':'0.5','type':'number','id':'input-id','data-size':'xs',}))
-    files = MultiFileField(max_num=5,min_num=1,maximum_file_size=1024*1024*5)
+    files = MultiFileField(max_num=5, min_num=0, maximum_file_size=1024*1024*5)
     class Meta:
         model = Review
         fields = ('rating','review',)
@@ -137,3 +139,22 @@ class SetPasswordForm(forms.Form):
                         )
             return password2
 
+
+class NewsForm(forms.ModelForm):
+    class Meta:
+        model = News
+        fields = ['title', 'category', 'photo', 'content']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'News title'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'content': forms.Textarea(attrs={'class': 'form-control'})
+        }
+
+
+class NewsCategoryForm(forms.ModelForm):
+    class Meta:
+        model = NewsCategory
+        fields = ['name']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+        }

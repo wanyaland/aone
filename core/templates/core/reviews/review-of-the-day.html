@@ -1,32 +1,33 @@
 <h2>Review of the Day</h2>
-<div class="review-of-day-wrapper">
-  <div class="review-img clearfix">
-    <div class="business-img"></div>
-    <div class="details">
-      <div class="title">Black Shape</div>
-      <div class="business-reviews-stars-number">
-        <div class="review-stars-wrapper">
-          <div class="review-stars" data-rating="{{review.rating.score}}">
-            <div class="review-stars-default default"></div>
-            <div class="review-stars-rating rating"></div>
-          </div>
+
+<div class="review-of-day-block">
+  <div class="review-of-day-footer">
+    <div class="business-photo">
+      {% if review_of_the_day.business.banner_photo %}
+        <img src="{{ review_of_the_day.business.banner_photo.url }}">
+      {% else %}
+        <img src="/static/africaone/static-images/no-logo.jpg">
+      {% endif %}
+    </div>
+    <div class="review-info">
+      <span class="username">{{ review_of_the_day.customer.user.username }}</span> reviewed
+      <span class="business-name">{{ review_of_the_day.business.name }}</span>
+      <div class="rateit rating-stars" data-rateit-resetable="false" data-rateit-step="1" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="{{ review_of_the_day.rating.score|default_if_none:'0' }}" data-rateit-readonly="true"></div>
+      {% if review_of_the_day.businessphoto_set.all%}
+        <div class="reviews-photo-wrapper clearfix">
+          {% for p in review_of_the_day.businessphoto_set.all%}
+            {% if forloop.counter <= 3  %}
+              <div class="img-wrapper">
+                <img src="{{ p.photo.url }}">
+              </div>
+            {% endif %}
+          {% endfor %}
         </div>
-        <div class="text">4 out of 5 stars</div>
-      </div>
-      <ul class="photos list-unstyled">
-        <li class="img img-0"><img /></li>
-        <li class="img img-1"><img /></li>
-        <li class="img img-2 more-photos-overlay">
-          <img />
-          <div class="overlay-text">
-            <div class="txt">+10</div>
-          </div>
-        </li>
-      </ul>
+      {% endif %}
     </div>
   </div>
-  <div class="review-snippet">Cras mattis consectetur purus sit amet fermentum. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</div>
-  <div class="review-link">
-    <a href="javascript:;" class="btn">Read more</a>
+  <div class="review-of-day-content">
+    {{ review_of_the_day.review|truncatechars:200 }}
   </div>
+  <a href="{% url 'core:review_detail' review_of_the_day.id %}" class="btn">Read more</a>
 </div>

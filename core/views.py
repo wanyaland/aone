@@ -1,3 +1,4 @@
+import os
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import logout,login,authenticate
@@ -36,6 +37,7 @@ from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.template import loader
 from africa_one.settings import DEFAULT_FROM_EMAIL
+from django.conf import settings
 
 def index(request):
     rank = Ranking()
@@ -45,15 +47,19 @@ def index(request):
                    .values_list('target_object_id', flat=True)
     last_reviews = [int(r) for r in last_reviews]
     recent_activities = Review.objects.filter(id__in=last_reviews).order_by('-create_date')[:2]
-    events =list(Event.objects.all())
+    recent_news = News.objects.all().order_by('-create_date')[:4]
+
+    events = list(Event.objects.all())
     popular_events = rank.rank_events(events)[:3]
     reviews = list(Review.objects.all())
     review_of_the_day = rank.rank_reviews(reviews)[:1]
+
     return render(request,'core/index.html',{
-        'review_of_the_day':review_of_the_day,
+        'review_of_the_day':review_of_the_day[0],
         'categories':parent_categories,
         'popular_events':popular_events,
         'recent_activities':recent_activities,
+        'recent_news':recent_news,
     })
 
 def logout_view(request):
@@ -256,13 +262,13 @@ class BusinessUserView(View):
         customer = Customer.objects.filter(user=request.user)
         pk = self.kwargs.get('pk')
         if pk is None:
-            review_form = ReviewForm(request.POST)
-            business_form = BusinessFormUser(request.POST,request.FILES)
+            review_form = ReviewForm(request.POST,request.FILES)
+            business_form = BusinessFormUser(request.POST)
         else:
             review = get_object_or_404(Review,pk=pk)
             business = Review.objects.filter(review=review,customer=customer)
-            review_form = ReviewForm(instance=review,data=request.POST)
-            business_form = BusinessFormUser(instance=business,data=request.POST,files=request.FILES)
+            review_form = ReviewForm(instance=review,data=request.POST,files=request.FILES)
+            business_form = BusinessFormUser(instance=business,data=request.POST)
         if business_form.is_valid() and review_form.is_valid():
             review = review_form.save(commit=False)
             business = business_form.save()
@@ -270,7 +276,7 @@ class BusinessUserView(View):
             review.customer = Customer.objects.get(user=request.user)
             review.save()
             review_type = ContentType.objects.get_for_model(review)
-            score = review.POST['rating']
+            score = request.POST['rating']
             params = {
                 'content_type_id':review_type.id,
                 'object_id':review.id,
@@ -278,6 +284,9 @@ class BusinessUserView(View):
                 'score':score,
             }
             AddRatingView()(request,**params)
+            image_list = request.FILES.getlist('files')
+            for file in image_list:
+                BusinessPhoto.objects.create(photo=file,photo_type=BusinessPhoto.REVIEWPHOTO,review=review)
             action.send(request.user,verb='reviewed',target=business,action_object=review)
             return redirect('core:review_list')
         else:
@@ -524,7 +533,7 @@ class ReviewCreate(CreateView):
         form.instance.business = context['business']
         form.instance.customer = self.request.user.customer
         #form.instance.rating.add(score=self.request.POST['rating'],user=self.request.user,ip_address=self.request.META['REMOTE_ADDR'])
-        image_list =    self.request.FILES.getlist('files')
+        image_list = self.request.FILES.getlist('files')
         response=super(ReviewCreate,self).form_valid(form)
         review_type = ContentType.objects.get_for_model(self.object)
         score = self.request.POST['rating']
@@ -559,9 +568,14 @@ class GetHomePageBusinesses(View):
         rank = Ranking()
         ranked_listings = rank.rank_businesses(listings)
         for business in ranked_listings:
-             business_data={}
-             business_data['id']=business.pk
-             business_data['name']=business.name
+             business_data = {}
+             business_data['id'] = business.pk
+             business_data['name'] = business.name
+             business_data['rating'] = business.get_avg_rating()
+             business_data['no_reviews'] = business.get_no_reviews()
+             business_data['description'] = business.description
+             if business.banner_photo:
+                business_data['banner_photo'] = os.path.join(settings.MEDIA_URL, business.banner_photo.name)
              businesses.append(business_data)
         data={'businesses':businesses[:10]}
         return HttpResponse(json.dumps(data))
@@ -573,6 +587,30 @@ class GetNearestBusinesses(View):
         return super(GetNearestBusinesses, self).dispatch(request, *args, **kwargs)
 
     def post(self,request,*args,**kwargs):
+
+
+        # DEV (previous version doesn't work)
+        businesses = list(Business.objects.all()[:10])
+        rank = Ranking()
+        ranked_businesses=rank.rank_businesses(businesses)
+
+        businesses = []
+        for business in ranked_businesses:
+            business_data = {}
+            business_data['id'] = business.pk
+            business_data['name'] = business.name
+            business_data['rating'] = business.get_avg_rating()
+            business_data['banner_photo'] = ''
+            if business.banner_photo:
+                business_data['banner_photo'] = os.path.join(settings.MEDIA_URL, business.banner_photo.name)
+            businesses.append(business_data)
+
+        data={'businesses': businesses[:6]}
+
+        return HttpResponse(json.dumps(data))
+        # ---DEV
+
+
         longitude = request.POST.get('longitude')
         latitude = request.POST.get('latitude')
         businesses = []
@@ -654,5 +692,41 @@ class ResetPasswordRequestView(FormView):
         messages.error(request,'No user is associated with this email address')
         return result
 
+
 class PasswordResetConfirmView(FormView):
     template_name = ''
+
+
+class NewsListView(ListView):
+    model = News
+    template_name = 'core/news/news_list.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        if 'category' in self.request.GET:
+            objects = self.model.objects.filter(category_id=self.request.GET['category']).order_by('-create_date')
+        else:
+            objects = self.model.objects.all().order_by('-create_date')
+
+        return objects
+
+    def get_context_data(self, **kwargs):
+        context = super(NewsListView, self).get_context_data(**kwargs)
+        context['categories'] = NewsCategory.objects.all()
+        context['recent_news'] = News.objects.all().order_by('-create_date')[:5]
+        if 'category' in self.request.GET:
+            context['category_filter'] = '&category=' + self.request.GET['category']
+
+        return context
+
+
+class NewsDetail(DetailView):
+    template_name = 'core/news/news_detail.html'
+    model=News
+
+    def get_context_data(self, **kwargs):
+        context = super(NewsDetail, self).get_context_data(**kwargs)
+        context['categories'] = NewsCategory.objects.all()
+        context['recent_news'] = News.objects.all().order_by('-create_date')[:5]
+
+        return context

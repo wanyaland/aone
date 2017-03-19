@@ -134,11 +134,6 @@
 
               <div class="review-container">
 
-                <!-- TODO: doesn't exist in db -->
-                <!-- <div class="review-title">
-                  Excellent service, best in town.
-                </div> -->
-
                 <div class="review-text">
                   <div class="short-text">
                     {{ review.review|truncatechars:280 }}
@@ -152,7 +147,7 @@
                 </div>
               </div>
 
-              {% if review.businessphoto_set %}
+              {% if review.businessphoto_set.all %}
                 <div class="review-photos">
                   {% for review_photo in review.businessphoto_set.all %}
                     <a href="{{ review_photo.photo.url }}" data-lightbox="review-{{ review.id }}">

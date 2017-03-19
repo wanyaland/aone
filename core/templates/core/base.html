@@ -3,26 +3,27 @@
 
   <div class="full-page-wrapper">
 
-    <header class="page-header">
-      <div class="header-strip-1">
-        <div class="container clearfix">
+    {% block header %}
+      <header class="page-header">
+        <div class="header-strip-1">
+          <div class="container clearfix">
 
-          <a href="/" class="logo-link"></a>
+            <a href="/" class="logo-link"></a>
 
-          {% include 'core/header/form-find-companies.html' %}
+            {% include 'core/header/form-find-companies.html' %}
 
-          {% include 'core/header/login-links.html' %}
+            {% include 'core/header/login-links.html' %}
 
+          </div>
         </div>
-      </div>
 
-      <div class="header-menu-strip">
-        <div class="container clearfix">
-          {% include 'core/header/menu-main.html' %}
+        <div class="header-menu-strip">
+          <div class="container clearfix">
+            {% include 'core/header/menu-main.html' %}
+          </div>
         </div>
-      </div>
-
-    </header>
+      </header>
+    {% endblock %}
 
     <div class="main-content-wrapper">
       {% block main %}{% endblock %}
