@@ -2677,6 +2677,10 @@ body.js-ready .africaone-form .price-field .free-price label {
 .home-top-banner-reviews .banner-wrapper .review-content .business-info .login-message {
   color: #666;
 }
+.home-top-banner-reviews .banner-wrapper .review-content .business-info .login-message a {
+  font-weight: bold;
+  text-decoration: underline;
+}
 .home-top-banner-reviews .slider-btn {
   cursor: pointer;
   position: absolute;
