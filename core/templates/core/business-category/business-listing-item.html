@@ -1,34 +1,67 @@
 {% load admin_extras %}
+
 <div class="business-listing-item">
-  <div class="business-details-strip clearfix">
-    <div class="img col"></div>
-    <div class="business-details clearfix">
-      <div class="business-name-details col">
-        <h3><a href="{% url 'core:business_detail' 1%}">{{business}}</a></h3>
-        <div class="business-reviews-stars-number">
-          <div class="review-stars-wrapper">
-            <div class="review-stars" data-rating="">
-              <div class="review-stars-default default"></div>
-              <div class="review-stars-rating rating"></div>
-            </div>
-          </div>
-          <div class="text">{{business.get_no_reviews}} reviews</div>
-        </div>
-        <div class="desc">{{business.description}}</div>
+  <div class="business-details-strip">
+    <div class="business-photo">
+      {% if business.banner_photo %}
+        <img src="{{ business.banner_photo.url }}">
+      {% else %}
+        <img src="/static/africaone/static-images/no-logo.jpg">
+      {% endif %}
+    </div>
+
+    <div class="business-name-description">
+      <h3 class="business-name"><a href="{% url 'core:business_detail' business.id %}">{{business}}</a></h3>
+      <div class="business-rating">
+        <div class="rateit rating-stars" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="{{ business.get_avg_rating }}" data-rateit-readonly="true"></div>
+        <span>{{ business.get_no_reviews }} review{{ business.get_no_reviews|pluralize:".,s." }}</span>
       </div>
-      <div class="price-sub-categories col">
-        <div class="price"><span>$$</span>$$$</div>
-        <div class="sub-categories">{{ business.categories.all|list_categories }}</div>
-      </div>
-      <div class="address-phone-website col">
-        <div class="address">Plot 15A,<br/>{{business.address}}</div>
-        <div class="phone">{{business.phone_address}}</div>
-        <div class="website"><a href="#">{{business.web_address}}</a></div>
+      <div class="business-description">
+        {{business.description}}
       </div>
     </div>
+
+    <div class="price-sub-categories">
+      <div class="price">
+          {% spaceless %}
+          {% for i in '12345' %}
+            {% if forloop.counter <= business.price_range %}
+              <span class="marked">$</span>
+            {% else %}
+              <span>$</span>
+            {% endif %}
+          {% endfor %}
+          {% endspaceless %}
+      </div>
+      <div class="sub-categories">{{ business.categories.all|list_categories }}</div>
+    </div>
+
+    <div class="address-phone-website">
+      <div class="address">{{business.address}}</div>
+      <div class="phone">{{business.phone_address}}</div>
+      <div class="website"><a href="{{business.web_address}}" target="_blank">{{business.web_address}}</a></div>
+    </div>
   </div>
-  <div class="business-review clearfix">
-    <div class="user-img"></div>
-    <div class="user-review">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat... <a href="#" class="read-more">Read more</a></div>
+  <div class="business-review">
+    {% if business.review_set.all|length > 0 %}
+      {% with business.review_set.all.0 as review %}
+        <div class="user-photo">
+          {% if review.customer.photo %}
+            <img src="{{review.customer.photo.url}}" class="img">
+          {% else %}
+            <img src="/static/africaone/static-images/empty-avatar.jpg">
+          {% endif %}
+        </div>
+      
+        <div class="user-review">
+          <a href="{% url 'core:review_detail' review.id %}" class="read-more">
+            {{ review.review|truncatechars:300 }}
+            {% if review.review|length > 297 %}
+              <span>Read more</span>
+            {% endif %}
+          </a>
+        </div>
+      {% endwith %}
+    {% endif %}
   </div>
 </div>

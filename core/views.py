@@ -153,14 +153,18 @@ class CategoryLandingPageView(DetailView):
 class CategoryListingPageView(ListView):
     model = Business
     template_name = 'core/business-category/listing-page.html'
+    paginate_by = 10
+
     def get_queryset(self):
         query_set = super(CategoryListingPageView,self).get_queryset()
         return query_set
+
     def get_context_data(self, **kwargs):
         context = super(CategoryListingPageView,self).get_context_data(**kwargs)
         categories = Category.objects.all()
         context['categories'] = categories
         return context
+    
 
 def claim_business(request,pk):
     msg="Claim Business"

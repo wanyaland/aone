@@ -2,7 +2,6 @@
 {% load i18n %}
 
 {% block main %}
-
   <div class="category-landing-page-wrapper">
     <div class="blue-header-bg"></div>
     <div class="page-container container">
@@ -16,36 +15,36 @@
 
             <div class="businesses-listing-wrapper">
               <h1>Businesses in Kampala</h1>
-              <div class="sort-links-wrapper clearfix">
-                <div class="col col-label">Sort by:</div>
-                <div class="col col-link">
-                  <a href="#" title="Price (low to high)">Price (low to high)</a>
+              <div class="sort-links-wrapper">
+                <div class="sort-tab tab-caption">Sort by:</div>
+                <div class="sort-tab tab-with-link">
+                  <div class="tab-link">Price (low to high)</div>
+                  <div class="tab-link">Price (high to low)</div>
                 </div>
-                <div class="col col-link">
-                  <a href="#" title="Highest rated">Highest rated</a>
+                <div class="sort-tab tab-with-link">
+                  <div class="tab-link">Highest rated</div>
                 </div>
-                <div class="col col-link">
-                  <a href="#" title="Number of reviews">Most reviewed</a>
+                <div class="sort-tab tab-with-link">
+                  <div class="tab-link">Most reviewed</div>
+                </div>
+                <div class="sort-tab">
                 </div>
               </div>
+
+              <div class="items-wrapper">
+              </div>
               {% for business in business_list %}
-              {% include 'core/business-category/business-listing-item.html' %}
+                {% include 'core/business-category/business-listing-item.html' %}
               {% endfor %}
 
-              <ul class="pager pager-listing-businesses">
-                <li class="first"><a href="#">&lt;&lt;</a></li>
-                <li class="prev"><a href="#">&lt;</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li class="active"><a href="#">4</a></li>
-                <li class="spacer">........</li>
-                <li><a href="#">10</a></li>
-                <li class="next"><a href="#">&gt;</a></li>
-                <li class="last"><a href="#">&gt;&gt;</a></li>
-              </ul>
+              {% if is_paginated %}
+                <div class="pagination-block">
+                  {% load paginator %}
+                  {% paginator 2 %}
+                </div>
+              {% endif %}
             </div>
-
+<!-- 
             <div class="landing-strip sub-categories-strip">
               <h2>Restaurant Categories</h2>
               <div class="sub-categories-wrapper clearfix">
@@ -83,7 +82,7 @@
                 </ul>
               </div>
             </div>
-
+ -->
           </div>
         </div>
 
@@ -91,5 +90,23 @@
 
     </div>
   </div>
-
 {% endblock %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function() {
+      initLinksToAll();
+      loadBusinessItems();
+    });
+
+    function initLinksToAll() {
+      $('.view-all-subcategories').click(function() {
+        $('.checkbox-wrapper', $('.sub-categories-div')).removeClass('hidden-category');
+      });
+    }
+
+    function loadBusinessItems() {
+
+    }
+  </script>
+{% endblock%}

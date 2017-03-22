@@ -2144,7 +2144,7 @@ ul.events-list.events-list-3-col li {
 
 .filter-businesses-wrapper,
 .filter-content-wrapper {
-  background: #414647;
+  background: #f1f1f1;
 }
 
 .filters-col {
@@ -2261,6 +2261,19 @@ ul.events-list.events-list-3-col li {
 }
 .events-landing-page-wrapper .filter-content-col {
   min-height: 1015px;
+}
+
+.search-filters-wrapper {
+  background: #414647;
+}
+.search-filters-wrapper .sub-categories-div .hidden-category {
+  display: none;
+}
+.search-filters-wrapper .link-wrapper .view-all-link {
+  text-transform: uppercase;
+  margin: 20px 0 0;
+  color: #00c0ff;
+  cursor: pointer;
 }
 
 .africaone-form {
@@ -3941,99 +3954,117 @@ body.js-ready .africaone-form .price-field .free-price label {
   margin-bottom: 20px;
 }
 
+.businesses-listing-wrapper {
+  background-color: #f1f1f1;
+}
 .businesses-listing-wrapper .sort-links-wrapper {
+  display: table;
   background-color: #0083ae;
   color: #fff;
+  width: 100%;
 }
-.businesses-listing-wrapper .sort-links-wrapper .col {
-  float: left;
-  border-right: solid 1px #006e92;
+.businesses-listing-wrapper .sort-links-wrapper .sort-tab {
+  display: table-cell;
+  border-right: 1px solid #006e92;
+  height: 80px;
+  text-align: center;
+  vertical-align: middle;
 }
-.businesses-listing-wrapper .sort-links-wrapper .col-label {
-  padding: 30px 30px 30px 40px;
+.businesses-listing-wrapper .sort-links-wrapper .sort-tab.tab-caption {
+  width: 15%;
 }
-.businesses-listing-wrapper .sort-links-wrapper .col-link a {
-  display: block;
-  padding: 30px;
-  color: #fff;
+.businesses-listing-wrapper .sort-links-wrapper .sort-tab.tab-with-link {
+  width: 18%;
+}
+.businesses-listing-wrapper .sort-links-wrapper .sort-tab.tab-with-link .tab-link {
+  cursor: pointer;
+}
+.businesses-listing-wrapper .pagination-block {
+  height: 52px;
+  background-color: #fff;
+  padding: 11px;
+  text-align: center;
+}
+.businesses-listing-wrapper .pagination-block .pager {
+  padding: 0;
+  border-bottom: 0;
 }
 
 .business-listing-item {
-  padding: 35px 45px 30px;
-  border-bottom: solid 2px #f1f1f1;
-}
-.business-listing-item img {
-  display: block;
+  display: table;
+  table-layout: fixed;
   width: 100%;
-  height: auto;
+  padding: 30px 40px 25px 40px;
+  margin-bottom: 2px;
+  background-color: #fff;
 }
-.business-listing-item .business-details-strip .img {
-  float: left;
-  width: 165px;
-  background-color: #f2f2f2;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-  overflow: hidden;
-  min-height: 80px;
+.business-listing-item .business-photo {
+  display: table-cell;
+  vertical-align: top;
+  width: 20%;
 }
-.business-listing-item .business-details-strip .business-details {
-  margin-left: 200px;
+.business-listing-item .business-photo img {
+  width: 100%;
 }
-.business-listing-item .business-details-strip .business-details .col {
-  float: left;
+.business-listing-item .business-name-description {
+  display: table-cell;
+  vertical-align: top;
   width: 30%;
   padding: 0 30px;
 }
-.business-listing-item .business-details-strip .business-details .business-name-details {
-  width: 40%;
-  padding-left: 0;
-}
-.business-listing-item .business-details-strip .business-details .price-sub-categories {
-  border-left: solid 1px #f1f1f1;
-  border-right: solid 1px #f1f1f1;
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-.business-listing-item .business-details-strip .business-details .address-phone-website {
-  padding-right: 0;
-}
-.business-listing-item .business-details-strip .business-details .phone {
-  margin: 3px 0;
-}
-.business-listing-item .business-details-strip .business-details .price {
-  color: #dcdcdc;
-}
-.business-listing-item .business-details-strip .business-details .price span {
-  color: #424242;
-}
-.business-listing-item .business-details-strip h3 {
+.business-listing-item .business-name-description .business-name {
   margin: 0;
   font-size: 1.30769em;
   text-transform: uppercase;
 }
-.business-listing-item .business-details-strip h3 a {
+.business-listing-item .business-name-description .business-name a {
   color: #007fa8;
 }
-.business-listing-item .business-details-strip .business-reviews-stars-number {
-  margin: 5px 0;
+.business-listing-item .price-sub-categories {
+  display: table-cell;
+  vertical-align: top;
+  width: 25%;
+  padding: 0 30px;
+  border: 1px solid #f1f1f1;
+  border-width: 0 1px 0 1px;
+}
+.business-listing-item .price-sub-categories .price {
+  color: #dcdcdc;
+}
+.business-listing-item .price-sub-categories .price .marked {
+  color: #424242;
+}
+.business-listing-item .address-phone-website {
+  display: table-cell;
+  vertical-align: top;
+  width: 25%;
+  padding: 0 20px;
+  word-break: break-all;
 }
 .business-listing-item .business-review {
-  border-top: solid 1px #f1f1f1;
-  padding-top: 15px;
+  display: table;
   margin-top: 15px;
+  padding-top: 14px;
+  border-top: 1px solid #f1f1f1;
 }
-.business-listing-item .business-review .user-img {
-  float: left;
-  background-color: #d0d7db;
-  width: 45px;
-  min-height: 45px;
+.business-listing-item .business-review .user-photo {
+  display: table-cell;
+  vertical-align: top;
+  width: 10%;
+  padding-right: 20px;
+}
+.business-listing-item .business-review .user-photo img {
+  width: 100%;
 }
 .business-listing-item .business-review .user-review {
-  margin-left: 65px;
-  color: #999;
+  display: table-cell;
+  vertical-align: top;
+  width: 90%;
 }
 .business-listing-item .business-review .user-review a {
+  color: #999;
+}
+.business-listing-item .business-review .user-review a span {
   color: #70b700;
 }
 
