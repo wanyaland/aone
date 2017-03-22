@@ -30,19 +30,6 @@
         }
       }
     }
-
-    // .col {
-    //   float: left;
-    //   border-right: solid 1px #006e92;
-    // }
-    // .col-label {
-    //   padding: 30px 30px 30px 40px;
-    // }
-    // .col-link a {
-    //   display: block;
-    //   padding: 30px;
-    //   color: #fff;
-    // }
   }
 
   .pagination-block {
@@ -55,6 +42,16 @@
       padding: 0;
       border-bottom: 0;
     }
+  }
+}
+
+.business-items-wrapper {
+  &.message {
+    background-color: #fff;
+    @include ems_font_size(32px, 13px);
+    padding: 50px 30px;
+    color: #666;
+    text-align: center;
   }
 }
 

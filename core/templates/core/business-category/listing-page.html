@@ -6,7 +6,7 @@
     <div class="blue-header-bg"></div>
 
     <div class="page-container container">
-      <form class="filter-businesses-wrapper clearfix">
+      <div class="filter-businesses-wrapper clearfix">
         {% csrf_token %}
 
         {% include 'core/business-category/filters.html' %}
@@ -82,7 +82,7 @@
           </div>
         </div>
 
-      </form>
+      </div>
 
     </div>
   </div>
@@ -95,6 +95,10 @@
       loadBusinessItems();
       paginatorHandler();
       sortHandler();
+      priceInputHandler();
+      resetFilterHandler();
+      searchInputHandler();
+      ratingsInputHandler();
     });
 
     function initLinksToAll() {
@@ -104,16 +108,31 @@
     }
 
     function loadBusinessItems(scroll) {
+      var price = [];
+      $('input[name="price[]"]:checked').each(function() {
+        price.push(parseInt($(this).val()));
+      });
+
       params = {
         'page': $('input[name="page"]').val(),
-        'order-type': $('input[name="order-type"]').val()
+        'order-type': $('input[name="order-type"]').val(),
+        'price[]': price,
+        'search-text': $('.search-textbox').val(),
+        'rating': $('input[name="ratings"]:checked').val(),
       };
+
       scroll = scroll || false;
       params['csrfmiddlewaretoken'] = '{{ csrf_token }}';
 
       $.post('/category-name/listing/', params).done(function(data) {
-        $('.business-items-wrapper').html(data.data);
-        $('.rateit').rateit();
+        if (data.hasOwnProperty('data')) {
+          $('.business-items-wrapper').html(data.data).removeClass('message');
+          $('.rateit').rateit();
+        }
+        if (data.hasOwnProperty('message')) {
+          $('.business-items-wrapper').html(data.message).addClass('message');
+        }
+
         if (scroll) {
           $("html, body").animate({ scrollTop: 0 }, "slow");
         }
@@ -138,6 +157,41 @@
         $('.tab-link').removeClass('selected');
         $(this).addClass('selected');
         $('input[name="order-type"]').val(order);
+        loadBusinessItems();
+      });
+    }
+
+    function priceInputHandler() {
+      $('input[name="price[]"]').on('ifChanged', function() {
+        loadBusinessItems();
+      });
+    }
+
+    function resetFilterHandler() {
+      $('.reset-filters-btn').click(function() {
+        $('input[name="order-type"]').val('');
+        $('.tab-link').removeClass('selected');
+        $('input[name="price[]"]').iCheck('uncheck');
+        $('.search-textbox').val('')
+        $('input[name="ratings"]').iCheck('uncheck');
+        loadBusinessItems();
+      });
+    }
+
+    function searchInputHandler() {
+      $('.search-textbox').on('blur', function() {
+        loadBusinessItems();
+      });
+
+      $('.search-textbox').on('keypress', function(event) {
+        if (event.which === 13) {
+          $(this).blur();
+        }
+      });
+    }
+
+    function ratingsInputHandler() {
+      $('input[name="ratings"]').on('ifChecked', function() {
         loadBusinessItems();
       });
     }

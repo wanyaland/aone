@@ -168,11 +168,25 @@ class CategoryListingPageView(ListView):
 
     def post(self, request, *args, **kwargs):
         if self.request.is_ajax():
-
             # Filtering
             filtered_businesses = Business.objects \
                 .annotate(num_reviews = Count('review')) \
                 .annotate(avg_rating = Avg('review__rating_score'))
+
+            kwargs = {}
+
+            price = request.POST.getlist('price[]', [])
+            if price: kwargs['price_range__in'] = price
+
+            search_text = request.POST.get('search-text', None)
+            if search_text: kwargs['name__icontains'] = search_text
+
+            rating = request.POST.get('rating', None)
+            if rating:
+                kwargs['avg_rating__lte'] = float(rating)
+                kwargs['avg_rating__gt'] = float(rating)-1.0
+
+            filtered_businesses = filtered_businesses.filter(**kwargs)
 
             # Ordering
             order_type = request.POST.get('order-type', None)
@@ -200,13 +214,16 @@ class CategoryListingPageView(ListView):
 
             # Rendering
             context = {}
-            context['data'] = loader.render_to_string(
-                "core/business-category/businesses-list.html",
-                {
-                    'paginator': paginator,
-                    'page_obj': businesses
-                }
-            )
+            if len(businesses):
+                context['data'] = loader.render_to_string(
+                    "core/business-category/businesses-list.html",
+                    {
+                        'paginator': paginator,
+                        'page_obj': businesses
+                    }
+                )
+            else:
+                context['message'] = 'No data'
             return HttpResponse(json.dumps(context), content_type="application/json")
 
 def claim_business(request,pk):
