@@ -12,7 +12,7 @@ from django.views.generic import *
 from django.core.urlresolvers import reverse
 from djangoratings.views import AddRatingView,AddRatingFromModel
 from django.contrib.contenttypes.models import ContentType
-from django.db.models import Q
+from django.db.models import Q, Count, Avg
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.http import HttpResponse,HttpResponseRedirect
 import json
@@ -38,6 +38,7 @@ from django.contrib import messages
 from django.template import loader
 from africa_one.settings import DEFAULT_FROM_EMAIL
 from django.conf import settings
+
 
 def index(request):
     rank = Ranking()
@@ -164,7 +165,49 @@ class CategoryListingPageView(ListView):
         categories = Category.objects.all()
         context['categories'] = categories
         return context
-    
+
+    def post(self, request, *args, **kwargs):
+        if self.request.is_ajax():
+
+            # Filtering
+            filtered_businesses = Business.objects \
+                .annotate(num_reviews = Count('review')) \
+                .annotate(avg_rating = Avg('review__rating_score'))
+
+            # Ordering
+            order_type = request.POST.get('order-type', None)
+
+            if (order_type == 'sort-price-low-high'):
+                filtered_businesses = filtered_businesses.order_by('price_range')
+            if (order_type == 'sort-price-high-low'):
+                filtered_businesses = filtered_businesses.order_by('-price_range')
+            if (order_type == 'sort-rating-high'):
+                filtered_businesses = filtered_businesses.order_by('-avg_rating')
+            if (order_type == 'sort-review-high'):
+                filtered_businesses = filtered_businesses.order_by('-num_reviews')
+
+            # Pagination
+            paginate_by = 10
+            paginator = Paginator(filtered_businesses, paginate_by)
+            
+            page = request.POST.get('page', 1)
+            try:
+                businesses = paginator.page(page)
+            except PageNotAnInteger:
+                businesses = paginator.page(1)
+            except EmptyPage:
+                businesses = paginator.page(paginator.num_pages)
+
+            # Rendering
+            context = {}
+            context['data'] = loader.render_to_string(
+                "core/business-category/businesses-list.html",
+                {
+                    'paginator': paginator,
+                    'page_obj': businesses
+                }
+            )
+            return HttpResponse(json.dumps(context), content_type="application/json")
 
 def claim_business(request,pk):
     msg="Claim Business"

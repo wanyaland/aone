@@ -610,6 +610,8 @@ div.rating-stars div.rateit-hover {
 }
 div.rating-stars div.rateit-selected {
   background: url('../images/star-17x14-green.png?1488188657');
+  width: 17px;
+  height: 14px;
 }
 div.rating-stars div.rateit-reset {
   background: url('../images/star-17x14-grey.png?1488188657');
@@ -3978,6 +3980,9 @@ body.js-ready .africaone-form .price-field .free-price label {
 }
 .businesses-listing-wrapper .sort-links-wrapper .sort-tab.tab-with-link .tab-link {
   cursor: pointer;
+}
+.businesses-listing-wrapper .sort-links-wrapper .sort-tab.tab-with-link .tab-link.selected {
+  text-decoration: underline;
 }
 .businesses-listing-wrapper .pagination-block {
   height: 52px;

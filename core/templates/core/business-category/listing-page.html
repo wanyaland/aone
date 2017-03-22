@@ -4,9 +4,10 @@
 {% block main %}
   <div class="category-landing-page-wrapper">
     <div class="blue-header-bg"></div>
-    <div class="page-container container">
 
-      <div class="filter-businesses-wrapper clearfix">
+    <div class="page-container container">
+      <form class="filter-businesses-wrapper clearfix">
+        {% csrf_token %}
 
         {% include 'core/business-category/filters.html' %}
 
@@ -17,32 +18,27 @@
               <h1>Businesses in Kampala</h1>
               <div class="sort-links-wrapper">
                 <div class="sort-tab tab-caption">Sort by:</div>
+                <input type="hidden" name="order-type" value="">
+                
                 <div class="sort-tab tab-with-link">
-                  <div class="tab-link">Price (low to high)</div>
-                  <div class="tab-link">Price (high to low)</div>
+                  <div id="sort-price-low-high" class="tab-link">Price (low to high)</div>
+                  <div id="sort-price-high-low" class="tab-link">Price (high to low)</div>
                 </div>
                 <div class="sort-tab tab-with-link">
-                  <div class="tab-link">Highest rated</div>
+                  <div id="sort-rating-high" class="tab-link">Highest rated</div>
                 </div>
                 <div class="sort-tab tab-with-link">
-                  <div class="tab-link">Most reviewed</div>
+                  <div id="sort-review-high" class="tab-link">Most reviewed</div>
                 </div>
                 <div class="sort-tab">
                 </div>
               </div>
 
-              <div class="items-wrapper">
-              </div>
-              {% for business in business_list %}
-                {% include 'core/business-category/business-listing-item.html' %}
-              {% endfor %}
+              <input type="hidden" name="page" value="1">
 
-              {% if is_paginated %}
-                <div class="pagination-block">
-                  {% load paginator %}
-                  {% paginator 2 %}
-                </div>
-              {% endif %}
+              <div class="business-items-wrapper">
+              </div>
+
             </div>
 <!-- 
             <div class="landing-strip sub-categories-strip">
@@ -86,7 +82,7 @@
           </div>
         </div>
 
-      </div>
+      </form>
 
     </div>
   </div>
@@ -97,6 +93,8 @@
     $(document).ready(function() {
       initLinksToAll();
       loadBusinessItems();
+      paginatorHandler();
+      sortHandler();
     });
 
     function initLinksToAll() {
@@ -105,8 +103,43 @@
       });
     }
 
-    function loadBusinessItems() {
+    function loadBusinessItems(scroll) {
+      params = {
+        'page': $('input[name="page"]').val(),
+        'order-type': $('input[name="order-type"]').val()
+      };
+      scroll = scroll || false;
+      params['csrfmiddlewaretoken'] = '{{ csrf_token }}';
 
+      $.post('/category-name/listing/', params).done(function(data) {
+        $('.business-items-wrapper').html(data.data);
+        $('.rateit').rateit();
+        if (scroll) {
+          $("html, body").animate({ scrollTop: 0 }, "slow");
+        }
+      }).fail(function(error) {
+        console.log(error);
+      });
+    }
+
+    function paginatorHandler() {
+      $(document).on('click', '.pagination-block a', function(event) {
+        event.preventDefault();
+        var page = $(this).attr('href').split('=')[1]
+        $('input[name="page"]').val(page);
+        loadBusinessItems(true);
+      });
+    }
+
+    function sortHandler() {
+      $('.tab-link').click(function() {
+        var order = $(this).attr('id');
+
+        $('.tab-link').removeClass('selected');
+        $(this).addClass('selected');
+        $('input[name="order-type"]').val(order);
+        loadBusinessItems();
+      });
     }
   </script>
 {% endblock%}
