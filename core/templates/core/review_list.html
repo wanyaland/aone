@@ -38,7 +38,7 @@
 
             <div class="business-details">
               <div class="business-name">
-                {{ business.name|upper }}
+                <a href="{% url 'core:business_detail' business.id %}">{{ business.name|upper }}</a>
               </div>
 
               <div class="business-info clearfix">

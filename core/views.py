@@ -468,6 +468,7 @@ class BusinessDetail(HitCountDetailView):
     template_name = 'core/businesses/business_detail.html'
     model = Business
     count_hit = True
+
     '''
     def get(self,request,*args,**kwargs):
         sort = request.GET.get('sort')
@@ -480,11 +481,12 @@ class BusinessDetail(HitCountDetailView):
         context = self.get_context_data(reviews=self.reviews)
         return self.render_to_response(context)
     '''
+
     def get_context_data(self, **kwargs):
         context = super(BusinessDetail,self).get_context_data(**kwargs)
         self.business =self.get_object()
         context['avg_rating']=self.business.get_avg_rating()
-        self.reviews = self.business.review_set.all()
+        self.reviews = self.business.review_set.order_by('-create_date')
         self.categories = self.business.categories
         paginator = Paginator(self.reviews,5)
         page = self.request.GET.get('page')
