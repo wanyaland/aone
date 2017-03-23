@@ -99,6 +99,7 @@
       resetFilterHandler();
       searchInputHandler();
       ratingsInputHandler();
+      categoryInputHandler()
     });
 
     function initLinksToAll() {
@@ -113,12 +114,18 @@
         price.push(parseInt($(this).val()));
       });
 
+      var categories = [];
+      $('input[name="sub-categories[]"]:checked').each(function() {
+        categories.push(parseInt($(this).val()));
+      });
+
       params = {
         'page': $('input[name="page"]').val(),
         'order-type': $('input[name="order-type"]').val(),
         'price[]': price,
         'search-text': $('.search-textbox').val(),
         'rating': $('input[name="ratings"]:checked').val(),
+        'categories[]': categories,
       };
 
       scroll = scroll || false;
@@ -174,6 +181,7 @@
         $('input[name="price[]"]').iCheck('uncheck');
         $('.search-textbox').val('')
         $('input[name="ratings"]').iCheck('uncheck');
+        $('input[name="sub-categories[]"]').iCheck('uncheck');
         loadBusinessItems();
       });
     }
@@ -192,6 +200,12 @@
 
     function ratingsInputHandler() {
       $('input[name="ratings"]').on('ifChecked', function() {
+        loadBusinessItems();
+      });
+    }
+
+    function categoryInputHandler() {
+      $('input[name="sub-categories[]"]').on('ifChanged', function() {
         loadBusinessItems();
       });
     }

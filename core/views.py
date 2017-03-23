@@ -181,6 +181,9 @@ class CategoryListingPageView(ListView):
             search_text = request.POST.get('search-text', None)
             if search_text: kwargs['name__icontains'] = search_text
 
+            categories = request.POST.getlist('categories[]', [])
+            if categories: kwargs['categories__in'] = categories
+
             rating = request.POST.get('rating', None)
             if rating:
                 kwargs['avg_rating__lte'] = float(rating)
