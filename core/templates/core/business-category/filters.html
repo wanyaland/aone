@@ -7,7 +7,7 @@
   </div>
 
   <div class="filter-div search-div">
-    <input class="search-textbox" type="text" placeholder="Search by name" value="">
+    <input class="search-textbox" type="text" placeholder="Search by name" value="{{ request.GET.business_name|default:''}}">
   </div>
 
   <div class="filter-div features-div">
