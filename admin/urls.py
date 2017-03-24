@@ -50,4 +50,8 @@ urlpatterns = patterns(
     url(r'^news_category/create$', views.NewsCategoryCreate.as_view(), name='news_category_create'),
     url(r'^news_category/update/(?P<pk>\d+)$', views.NewsCategoryUpdate.as_view(), name='news_category_update'),
     url(r'^news_category/delete/(?P<pk>\d+)$', views.NewsCategoryDelete.as_view(), name='news_category_delete'),
+    url(r'^event_category/list$', views.EventCategoryList.as_view(), name='event_category_list'),
+    url(r'^event_category/create$', views.EventCategoryCreate.as_view(), name='event_category_create'),
+    url(r'^event_category/update/(?P<pk>\d+)$', views.EventCategoryUpdate.as_view(), name='event_category_update'),
+    url(r'^event_category/delete/(?P<pk>\d+)$', views.EventCategoryDelete.as_view(), name='event_category_delete'),
 )

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from core.models import Business,Category,ParentCategory,BusinessPhoto,Review,Event,Country,BusinessHours, News, NewsCategory
-from core.forms import NewsForm, NewsCategoryForm
+from core.models import Business,Category,ParentCategory,BusinessPhoto,Review,Event,Country,BusinessHours, News, NewsCategory, EventCategory
+from core.forms import NewsForm, NewsCategoryForm, EventCategoryForm
 from django.contrib.auth.models import User
 from django.views.generic import *
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
@@ -452,6 +452,34 @@ class NewsCategoryUpdate(UpdateView):
 class NewsCategoryDelete(DeleteView):
     model = NewsCategory
     success_url = reverse_lazy('admin:news_category_list')
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+
+
+class EventCategoryList(ListView):
+    model = EventCategory
+    template_name= 'admin/events/event_category_list.html'
+    context_object_name = 'categories_list'
+
+
+class EventCategoryCreate(CreateView):
+    model = EventCategory
+    form_class = EventCategoryForm
+    template_name= 'admin/events/event_category_form.html'
+    success_url = reverse_lazy('admin:event_category_list')
+
+
+class EventCategoryUpdate(UpdateView):
+    model = EventCategory
+    form_class = EventCategoryForm
+    template_name= 'admin/events/event_category_form.html'
+    success_url = reverse_lazy('admin:event_category_list')
+
+
+class EventCategoryDelete(DeleteView):
+    model = EventCategory
+    success_url = reverse_lazy('admin:event_category_list')
 
     def get(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)

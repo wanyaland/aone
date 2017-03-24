@@ -607,15 +607,18 @@ body.dragging .manage-categories-wrapper .new-category {
 }
 
 .news-list-page h3,
-.news-categories-list-page h3 {
+.news-categories-list-page h3,
+.event-categories-list-block h3 {
   color: #73879c;
 }
 .news-list-page .items-list-table tbody tr,
-.news-categories-list-page .items-list-table tbody tr {
+.news-categories-list-page .items-list-table tbody tr,
+.event-categories-list-block .items-list-table tbody tr {
   cursor: pointer;
 }
 .news-list-page .fa-plus,
-.news-categories-list-page .fa-plus {
+.news-categories-list-page .fa-plus,
+.event-categories-list-block .fa-plus {
   padding-right: 10px;
 }
 

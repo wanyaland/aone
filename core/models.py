@@ -175,7 +175,7 @@ class BusinessPhoto(models.Model):
     business = models.ForeignKey(Business,null=True)
     photo_type = models.CharField(null=True,choices=TYPE,max_length=20)
     caption = models.CharField(null=True,max_length=100)
-    created = models.DateTimeField(auto_now_add=True,default=datetime.now())
+    created = models.DateTimeField(default=datetime.now)
 
 class Features(models.Model):
     name = models.CharField(max_length=255)
@@ -185,8 +185,11 @@ class Features(models.Model):
 class EventCategory(models.Model):
     name = models.CharField(max_length=255)
 
+    def __unicode__(self):
+        return self.name
+
 class Event(models.Model,HitCountMixin):
-    photo = models.ImageField(null=True,upload_to='events/%Y/%m/%d')
+    photo = models.ImageField(null=True, blank=True, upload_to='events/%Y/%m/%d')
     hit_count_generic = GenericRelation(
         HitCount,object_id_field='object_pk',
         related_query_name='hit_count_generic_relation'
@@ -194,12 +197,14 @@ class Event(models.Model,HitCountMixin):
     name = models.CharField(max_length=20,null=True)
     categories= models.ManyToManyField(EventCategory)
     event_date = models.DateTimeField(null=True)
-    end_date = models.DateTimeField(null=True)
+    end_date = models.DateTimeField(null=True, blank=True)
     where = models.CharField(max_length=50,null=True)
     description = models.TextField(null=True)
-    website_url = models.URLField(null=True)
+    website_url = models.URLField(null=True, blank=True)
     price = models.IntegerField(null=True)
-    owner = models.OneToOneField(Customer,null=True)
+    owner = models.ForeignKey(Customer, null=True)
+    longitude = models.FloatField(null=True)
+    latitude = models.FloatField(null=True)
 
     def __unicode__(self):
         return self.name

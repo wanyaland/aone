@@ -431,17 +431,6 @@ def events_detail(request,pk):
     event=get_object_or_404(Event,pk=pk)
     return render(request, 'core/events/full.html',{'event':event})
 
-def create_event(request):
-    if request.method=='POST':
-        name = request.POST.get('event_name')
-        where = request.POST.get('where')
-        description = request.POST.get('description')
-        price = request.POST.get('price')
-        event = Event(name=name,description=description,where=where,price=price)
-        event.save()
-        action.send(request.user,verb='created event',target=event)
-        return redirect(reverse('core:events_landing'))
-    return render(request, 'core/events/create.html', {})
 
 class ReviewListView(ListView):
     model = Business
@@ -452,6 +441,7 @@ class ReviewListView(ListView):
 class ReviewDetail(HitCountDetailView):
     model = Review
     count_hit=True
+
 
 class EventDetail(HitCountDetailView):
     model=Event
@@ -799,3 +789,38 @@ class NewsDetail(DetailView):
         context['recent_news'] = News.objects.all().order_by('-create_date')[:5]
 
         return context
+
+
+class EventCreate(CreateView):
+    form_class = EventForm
+    template_name = 'core/events/create.html'
+
+    def get_success_url(self):
+        return reverse('core:events_landing')
+
+    def get_context_data(self, **kwargs):
+        context = super(EventCreate,self).get_context_data(**kwargs)
+        return context
+
+    def form_valid(self, form):
+        # Combine start_date
+        start_date = form.cleaned_data.get('start_date')
+        start_time = form.cleaned_data.get('start_time')
+        form.instance.event_date = datetime.datetime.combine(start_date, start_time)
+
+        # Combine end_date
+        finish_date = form.cleaned_data.get('finish_date')
+        finish_time = form.cleaned_data.get('finish_time')
+        if (finish_date):
+            if finish_time == None:
+                finish_time = datetime.time()
+            form.instance.end_date = datetime.datetime.combine(finish_date, finish_time)
+
+        # Add customer to the object
+        event_obj = form.save(commit=False)
+        event_obj.owner = self.request.user.customer
+        event_obj.save()
+
+        action.send(self.request.user, verb='created event', target=self.object)
+
+        return HttpResponseRedirect(self.get_success_url())

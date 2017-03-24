@@ -413,10 +413,72 @@ div.rating-stars.blue {
   padding: 20px;
 }
 
+
 .app-input {
   display: block;
   width: 100%;
-  line-height: 43px;
   border: solid 1px #c4c4c4;
   padding: 0 15px;
+}
+
+input.app-input {
+  line-height: 43px;
+}
+
+input.app-input,
+textarea.app-input {
+  @include input-placeholder {
+    color: #a9a9a9;
+  }
+}
+
+.app-form-group {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+
+  .input-label {
+    display: table-cell;
+    width: 60px;
+    color: #666;
+    vertical-align: middle;
+    padding-bottom: 10px;
+  }
+
+  .app-form-group-input {
+    display: table-cell;
+  }
+}
+
+.upload-photo-btn-wrapper {
+  margin-top: 10px;
+
+  .upload-btn {
+    position: relative;
+    vertical-align: bottom;
+    overflow: hidden;
+    display: inline-block;
+    background-color: #fff;
+    color: #a9a9a9;
+    @include ems_font_size(13px, $font-size-base);
+    line-height: 43px;
+    padding: 0 15px;
+    border: 1px solid #c4c4c4;
+  }
+
+  input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    line-height: 43px;
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0;
+  }
+
+  span {
+    padding-left: 5px;
+    line-height: 45px;
+    color: #a9a9a9;
+  }
 }
