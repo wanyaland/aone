@@ -4,9 +4,9 @@
   <div class="x_panel">
     <div class="x_title">
       {% if object %}
-          <h3>Edit News Category</h3>
+          <h3>Edit Event Category</h3>
       {% else %}
-          <h3>Create News Category</h3>
+          <h3>Create Event Category</h3>
       {% endif %}
     </div>
     
@@ -29,7 +29,7 @@
             <button class="btn btn-primary" type="submit">
               {{ object|yesno:"Update,Create" }}
             </button>
-            <a href="{% url 'admin:news_category_list' %}" class="btn btn-default" type="submit">Cancel</a>
+            <a href="{% url 'admin:event_category_list' %}" class="btn btn-default" type="submit">Cancel</a>
           </div>
         </div>
       </form>

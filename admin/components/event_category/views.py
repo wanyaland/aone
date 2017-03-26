@@ -6,21 +6,21 @@ from core.forms import EventCategoryForm
 
 class EventCategoryList(ListView):
     model = EventCategory
-    template_name= 'admin/events/event_category_list.html'
+    template_name= 'admin/event_category/event_category_list.html'
     context_object_name = 'categories_list'
 
 
 class EventCategoryCreate(CreateView):
     model = EventCategory
     form_class = EventCategoryForm
-    template_name= 'admin/events/event_category_form.html'
+    template_name= 'admin/event_category/event_category_form.html'
     success_url = reverse_lazy('admin:event_category_list')
 
 
 class EventCategoryUpdate(UpdateView):
     model = EventCategory
     form_class = EventCategoryForm
-    template_name= 'admin/events/event_category_form.html'
+    template_name= 'admin/event_category/event_category_form.html'
     success_url = reverse_lazy('admin:event_category_list')
 
 

@@ -4,14 +4,14 @@
   <div class="list-layout">
     <div class="x_panel">
       <div class="x_title">
-        <h3>News Categories</h3>
+        <h3>Events list</h3>
       </div>  
       <div class="x_content">
         <div class="row">
           <div class="col-xs-12">
-            <a href="{% url 'admin:news_category_create' %}" class="btn btn-success"><i class="fa fa-plus"></i>Add News Category</a>
+            <a href="{% url 'admin:event_create' %}" class="btn btn-success"><i class="fa fa-plus"></i>Add Event</a>
           </div>
-          <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="col-md-12">
             <div class="x_panel">
               <div class="x_content">
                 <table class="table table-hover items-list-table">
@@ -19,16 +19,18 @@
                     <tr>
                       <th>ID</th>
                       <th>Name</th>
-                      <th>Action</th>
+                      <th>Start Date</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for category in categories_list %}
-                      <tr class="item-row" data-href="{% url 'admin:news_category_update' category.id %}">
-                        <td>{{ category.id }}</td>
-                        <td>{{ category.name }}</td>
+                    {% for event in event_list %}
+                      <tr class="item-row" data-href="{% url 'admin:event_update' event.id %}">
+                        <td>{{ event.id }}</td>
+                        <td>{{ event.name }}</td>
+                        <td>{{ event.event_date|date:'d/m/Y, h:i a' }}</td>
                         <td>
-                          <a href="{% url 'admin:news_category_delete' category.id %}" class="btn btn-danger btn-xs delete-row-btn">Delete</a>
+                          <a href="{% url 'admin:event_delete' event.id %}" class="btn btn-danger btn-xs delete-row-btn">Delete</a>
                         </td>
                       </tr>
                     {% endfor %}

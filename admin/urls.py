@@ -45,5 +45,6 @@ urlpatterns = patterns(
 
     url(r'^news/', include('admin.components.news.urls')),
     url(r'^news_category/', include('admin.components.news_category.urls')),
+    url(r'^event/', include('admin.components.event.urls')),
     url(r'^event_category/', include('admin.components.event_category.urls')),
 )

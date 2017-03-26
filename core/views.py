@@ -798,29 +798,33 @@ class EventCreate(CreateView):
     def get_success_url(self):
         return reverse('core:events_landing')
 
-    def get_context_data(self, **kwargs):
-        context = super(EventCreate,self).get_context_data(**kwargs)
-        return context
-
     def form_valid(self, form):
-        # Combine start_date
-        start_date = form.cleaned_data.get('start_date')
-        start_time = form.cleaned_data.get('start_time')
-        form.instance.event_date = datetime.datetime.combine(start_date, start_time)
+        form = combineEventDateAndTime(form)
 
-        # Combine end_date
-        finish_date = form.cleaned_data.get('finish_date')
-        finish_time = form.cleaned_data.get('finish_time')
-        if (finish_date):
-            if finish_time == None:
-                finish_time = datetime.time()
-            form.instance.end_date = datetime.datetime.combine(finish_date, finish_time)
-
-        # Add customer to the object
         event_obj = form.save(commit=False)
         event_obj.owner = self.request.user.customer
         event_obj.save()
+        form.save_m2m()
 
-        action.send(self.request.user, verb='created event', target=self.object)
+        action.send(self.request.user, verb='created event', target=event_obj)
 
         return HttpResponseRedirect(self.get_success_url())
+
+
+def combineEventDateAndTime(form):
+    # Combine start_date
+    start_date = form.cleaned_data.get('start_date')
+    start_time = form.cleaned_data.get('start_time')
+    form.instance.event_date = datetime.datetime.combine(start_date, start_time)
+
+    # Combine end_date
+    finish_date = form.cleaned_data.get('finish_date')
+    finish_time = form.cleaned_data.get('finish_time')
+    if (finish_date):
+        if finish_time == None:
+            finish_time = datetime.time()
+        form.instance.end_date = datetime.datetime.combine(finish_date, finish_time)
+    else:
+        form.instance.end_date = None
+
+    return form
