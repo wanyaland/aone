@@ -12,4 +12,4 @@ def get_range(value):
 
 @register.filter
 def list_categories(value):
-    return ','.join(str(x) for x in value)
+    return ', '.join(str(x) for x in value)

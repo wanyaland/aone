@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
-from core.models import Business,Category,ParentCategory,BusinessPhoto,Review,Event,Country,BusinessHours, News, NewsCategory
-from core.forms import NewsForm, NewsCategoryForm
+from core.models import Business,Category,ParentCategory,BusinessPhoto,Review,Event,Country,BusinessHours
 from django.contrib.auth.models import User
 from django.views.generic import *
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
@@ -400,83 +399,3 @@ class GetCategories(View):
             parent_category['categories']=cat_arrays
             parent_cats.append(parent_category)
         return HttpResponse(json.dumps(parent_cats),content_type="application/json")
-
-
-class NewsList(ListView):
-    model = News
-    template_name= 'admin/news/news_list.html'
-
-
-class NewsCreate(CreateView):
-    model = News
-    form_class = NewsForm
-    template_name= 'admin/news/news_form.html'
-    success_url = reverse_lazy('admin:news_list')
-
-
-class NewsUpdate(UpdateView):
-    model = News
-    form_class = NewsForm
-    template_name= 'admin/news/news_form.html'
-    success_url = reverse_lazy('admin:news_list')
-
-
-class NewsDelete(DeleteView):
-    model = News
-    success_url = reverse_lazy('admin:news_list')
-
-    def get(self, request, *args, **kwargs):
-        return self.post(request, *args, **kwargs)
-
-
-class NewsCategoryList(ListView):
-    model = NewsCategory
-    template_name= 'admin/news/news_category_list.html'
-    context_object_name = 'categories_list'
-
-
-class NewsCategoryCreate(CreateView):
-    model = NewsCategory
-    form_class = NewsCategoryForm
-    template_name= 'admin/news/news_category_form.html'
-    success_url = reverse_lazy('admin:news_category_list')
-
-
-class NewsCategoryUpdate(UpdateView):
-    model = NewsCategory
-    form_class = NewsCategoryForm
-    template_name= 'admin/news/news_category_form.html'
-    success_url = reverse_lazy('admin:news_category_list')
-
-
-class NewsCategoryDelete(DeleteView):
-    model = NewsCategory
-    success_url = reverse_lazy('admin:news_category_list')
-
-    def get(self, request, *args, **kwargs):
-        return self.post(request, *args, **kwargs)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

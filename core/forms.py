@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 from django.forms import TextInput,EmailInput
-from models import Customer, Business, Review, BusinessPhoto, News, NewsCategory
+from models import Customer, Business, Review, BusinessPhoto, News, NewsCategory, EventCategory, Event
 from django.forms.widgets import RadioFieldRenderer
 from django.core.exceptions import *
 
@@ -76,7 +76,7 @@ class BusinessForm(forms.ModelForm):
     
     class Meta:
         model = Business
-        fields =('name','address','email','web_address','phone_number','city','categories','photo','latitude','longitude')
+        fields =('name','address','email','web_address','phone_number','city','categories','photo', 'latitude','longitude')
         widgets = {
             'name':TextInput(attrs={'class':'form-control','placeholder':'Business Name'}),
             'address':TextInput(attrs={'class':'form-control','placeholder':'Address'}),
@@ -158,4 +158,27 @@ class NewsCategoryForm(forms.ModelForm):
         fields = ['name']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+
+class EventCategoryForm(forms.ModelForm):
+    class Meta:
+        model = EventCategory
+        fields = ['name']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+
+class EventForm(forms.ModelForm):
+    start_date = forms.DateField(required=True, input_formats=['%d/%m/%Y', '%d/%m/%y', '%d-%m-%Y', '%d-%m-%y'])
+    start_time = forms.TimeField(required=True, input_formats=['%H:%M', '%I:%M%p', '%I:%M %p'])
+    finish_date = forms.DateField(required=False, input_formats=['%d/%m/%Y', '%d/%m/%y', '%d-%m-%Y', '%d-%m-%y'])
+    finish_time = forms.TimeField(required=False, input_formats=['%H:%M', '%I:%M%p', '%I:%M %p'])
+
+    class Meta:
+        model = Event
+        fields = ('name', 'price', 'photo', 'website_url', 'description', 'where', 'categories', 'latitude', 'longitude')
+        widgets = {
+            'categories':forms.SelectMultiple(attrs={'class':'chosen-select', 'data-placeholder':'Select up to 3 categories. The more specific, the better.*'}),
         }

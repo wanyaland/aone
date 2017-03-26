@@ -2,12 +2,12 @@
 {% load i18n %}
 
 {% block main %}
-
   <div class="category-landing-page-wrapper">
     <div class="blue-header-bg"></div>
-    <div class="page-container container">
 
+    <div class="page-container container">
       <div class="filter-businesses-wrapper clearfix">
+        {% csrf_token %}
 
         {% include 'core/business-category/filters.html' %}
 
@@ -16,36 +16,31 @@
 
             <div class="businesses-listing-wrapper">
               <h1>Businesses in Kampala</h1>
-              <div class="sort-links-wrapper clearfix">
-                <div class="col col-label">Sort by:</div>
-                <div class="col col-link">
-                  <a href="#" title="Price (low to high)">Price (low to high)</a>
+              <div class="sort-links-wrapper">
+                <div class="sort-tab tab-caption">Sort by:</div>
+                <input type="hidden" name="order-type" value="">
+                
+                <div class="sort-tab tab-with-link">
+                  <div id="sort-price-low-high" class="tab-link">Price (low to high)</div>
+                  <div id="sort-price-high-low" class="tab-link">Price (high to low)</div>
                 </div>
-                <div class="col col-link">
-                  <a href="#" title="Highest rated">Highest rated</a>
+                <div class="sort-tab tab-with-link">
+                  <div id="sort-rating-high" class="tab-link">Highest rated</div>
                 </div>
-                <div class="col col-link">
-                  <a href="#" title="Number of reviews">Most reviewed</a>
+                <div class="sort-tab tab-with-link">
+                  <div id="sort-review-high" class="tab-link">Most reviewed</div>
+                </div>
+                <div class="sort-tab">
                 </div>
               </div>
-              {% for business in business_list %}
-              {% include 'core/business-category/business-listing-item.html' %}
-              {% endfor %}
 
-              <ul class="pager pager-listing-businesses">
-                <li class="first"><a href="#">&lt;&lt;</a></li>
-                <li class="prev"><a href="#">&lt;</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li class="active"><a href="#">4</a></li>
-                <li class="spacer">........</li>
-                <li><a href="#">10</a></li>
-                <li class="next"><a href="#">&gt;</a></li>
-                <li class="last"><a href="#">&gt;&gt;</a></li>
-              </ul>
+              <input type="hidden" name="page" value="1">
+
+              <div class="business-items-wrapper">
+              </div>
+
             </div>
-
+<!-- 
             <div class="landing-strip sub-categories-strip">
               <h2>Restaurant Categories</h2>
               <div class="sub-categories-wrapper clearfix">
@@ -83,7 +78,7 @@
                 </ul>
               </div>
             </div>
-
+ -->
           </div>
         </div>
 
@@ -91,5 +86,128 @@
 
     </div>
   </div>
-
 {% endblock %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function() {
+      initLinksToAll();
+      loadBusinessItems();
+      paginatorHandler();
+      sortHandler();
+      priceInputHandler();
+      resetFilterHandler();
+      searchInputHandler();
+      ratingsInputHandler();
+      categoryInputHandler()
+    });
+
+    function initLinksToAll() {
+      $('.view-all-subcategories').click(function() {
+        $('.checkbox-wrapper', $('.sub-categories-div')).removeClass('hidden-category');
+      });
+    }
+
+    function loadBusinessItems(scroll) {
+      var price = [];
+      $('input[name="price[]"]:checked').each(function() {
+        price.push(parseInt($(this).val()));
+      });
+
+      var categories = [];
+      $('input[name="sub-categories[]"]:checked').each(function() {
+        categories.push(parseInt($(this).val()));
+      });
+
+      params = {
+        'page': $('input[name="page"]').val(),
+        'order-type': $('input[name="order-type"]').val(),
+        'price[]': price,
+        'search-text': $('.search-textbox').val(),
+        'rating': $('input[name="ratings"]:checked').val(),
+        'categories[]': categories,
+      };
+
+      scroll = scroll || false;
+      params['csrfmiddlewaretoken'] = '{{ csrf_token }}';
+
+      $.post('/category-name/listing/', params).done(function(data) {
+        if (data.hasOwnProperty('data')) {
+          $('.business-items-wrapper').html(data.data).removeClass('message');
+          $('.rateit').rateit();
+        }
+        if (data.hasOwnProperty('message')) {
+          $('.business-items-wrapper').html(data.message).addClass('message');
+        }
+
+        if (scroll) {
+          $("html, body").animate({ scrollTop: 0 }, "slow");
+        }
+      }).fail(function(error) {
+        console.log(error);
+      });
+    }
+
+    function paginatorHandler() {
+      $(document).on('click', '.pagination-block a', function(event) {
+        event.preventDefault();
+        var page = $(this).attr('href').split('=')[1]
+        $('input[name="page"]').val(page);
+        loadBusinessItems(true);
+      });
+    }
+
+    function sortHandler() {
+      $('.tab-link').click(function() {
+        var order = $(this).attr('id');
+
+        $('.tab-link').removeClass('selected');
+        $(this).addClass('selected');
+        $('input[name="order-type"]').val(order);
+        loadBusinessItems();
+      });
+    }
+
+    function priceInputHandler() {
+      $('input[name="price[]"]').on('ifChanged', function() {
+        loadBusinessItems();
+      });
+    }
+
+    function resetFilterHandler() {
+      $('.reset-filters-btn').click(function() {
+        $('input[name="order-type"]').val('');
+        $('.tab-link').removeClass('selected');
+        $('input[name="price[]"]').iCheck('uncheck');
+        $('.search-textbox').val('')
+        $('input[name="ratings"]').iCheck('uncheck');
+        $('input[name="sub-categories[]"]').iCheck('uncheck');
+        loadBusinessItems();
+      });
+    }
+
+    function searchInputHandler() {
+      $('.search-textbox').on('blur', function() {
+        loadBusinessItems();
+      });
+
+      $('.search-textbox').on('keypress', function(event) {
+        if (event.which === 13) {
+          $(this).blur();
+        }
+      });
+    }
+
+    function ratingsInputHandler() {
+      $('input[name="ratings"]').on('ifChecked', function() {
+        loadBusinessItems();
+      });
+    }
+
+    function categoryInputHandler() {
+      $('input[name="sub-categories[]"]').on('ifChanged', function() {
+        loadBusinessItems();
+      });
+    }
+  </script>
+{% endblock%}

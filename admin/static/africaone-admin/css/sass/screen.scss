@@ -88,10 +88,10 @@ body.dragging * {
   transition-property:         transform, opacity;
 }
 
+@import "partials/common";
 @import "partials/dashboard";
 @import "partials/create_business";
 @import "partials/manage_reviews";
 @import "partials/manage_categories";
 @import "partials/manage_business_photos";
 @import "partials/listings";
-@import "partials/news";

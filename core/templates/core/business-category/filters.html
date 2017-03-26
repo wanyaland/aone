@@ -3,11 +3,11 @@
   <h2>Search Restaurants</h2>
 
   <div class="filter-div reset-btn-div">
-    <a href="javascript:;" class="btn reset-filters-btn">Reset filters</a>
+    <button type="button" class="btn reset-filters-btn">Reset filters</button>
   </div>
 
   <div class="filter-div search-div">
-    <input class="search-textbox" type="text" placeholder="Search by name" value=""/>
+    <input class="search-textbox" type="text" placeholder="Search by name" value="{{ request.GET.business_name|default:''}}">
   </div>
 
   <div class="filter-div features-div">
@@ -17,31 +17,31 @@
       <div class="clearfix price-cols">
         <div class="price-col price-col-1">
           <div class="filter filter-price checkbox-wrapper">
-            <input type="radio" id="price-1" name="price" value="1">
+            <input type="checkbox" id="price-1" name="price[]" value="1">
             <label for="price-1"><span>$</span>$$$$</label>
           </div>
           <div class="filter filter-price checkbox-wrapper">
-            <input type="radio" id="price-2" name="price" value="2">
+            <input type="checkbox" id="price-2" name="price[]" value="2">
             <label for="price-2"><span>$$</span>$$$</label>
           </div>
           <div class="filter filter-price checkbox-wrapper">
-            <input type="radio" id="price-3" name="price" value="3">
+            <input type="checkbox" id="price-3" name="price[]" value="3">
             <label for="price-3"><span>$$$</span>$$</label>
           </div>
         </div>
         <div class="price-col price-col-2">
           <div class="filter filter-price checkbox-wrapper">
-            <input type="radio" id="price-4" name="price" value="4">
+            <input type="checkbox" id="price-4" name="price[]" value="4">
             <label for="price-4"><span>$$$$</span>$</label>
           </div>
           <div class="filter filter-price checkbox-wrapper">
-            <input type="radio" id="price-5" name="price" value="5">
+            <input type="checkbox" id="price-5" name="price[]" value="5">
             <label for="price-5"><span>$$$$$</span></label>
           </div>
         </div>
       </div>
     </div>
-    <div class="filter checkbox-wrapper">
+    <!-- <div class="filter checkbox-wrapper">
       <input type="checkbox" id="filter-credit-cards" name="credit-cards">
       <label for="filter-credit-cards">Accepts Credit Cards</label>
     </div>
@@ -67,7 +67,7 @@
     </div>
     <div class="link-wrapper">
       <a href="javascript:;" class="link">More Features</a>
-    </div>
+    </div> -->
   </div>
 
   <div class="filter-div map-div">
@@ -86,14 +86,16 @@
   <div class="filter-div sub-categories-div">
     <div class="div-title">By Sub-Category</div>
     {% for category in categories %}
-    <div class="filter checkbox-wrapper">
-      <input type="checkbox" id="sub-categories-{{forloop.counter}}" name="sub-categories[]">
-      <label for="sub-categories-{{forloop.counter}}">"{{category}}"</label>
-    </div>
+      <div class="filter checkbox-wrapper {% if forloop.counter > 6%}hidden-category{% endif %}">
+        <input type="checkbox" id="sub-categories-{{forloop.counter}}" name="sub-categories[]" value="{{ category.id }}">
+        <label for="sub-categories-{{forloop.counter}}">"{{category}}"</label>
+      </div>
     {% endfor %}
-    <div class="link-wrapper">
-      <a href="javascript:;" class="link">View all sub-categories</a>
-    </div>
+    {% if categories|length > 6%}
+      <div class="link-wrapper">
+        <div class="view-all-link view-all-subcategories">View all sub-categories</div>
+      </div>
+    {% endif %}
   </div>
 
   <div class="filter-div sub-categories-div">
