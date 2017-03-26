@@ -353,39 +353,6 @@
     }
   }
 
-  .upload-photo-btn-wrapper {
-    margin-top: 10px;
-
-    .upload-btn {
-      position: relative;
-      vertical-align: bottom;
-      overflow: hidden;
-      display: inline-block;
-      background-color: #fff;
-      color: #a9a9a9;
-      @include ems_font_size(13px, $font-size-base);
-      line-height: 43px;
-      padding: 0 15px;
-      border: 1px solid #c4c4c4;
-    }
-
-    input {
-      position: absolute;
-      top: 0;
-      right: 0;
-      line-height: 43px;
-      font-size: 24px;
-      cursor: pointer;
-      opacity: 0;
-    }
-
-    span {
-      padding-left: 5px;
-      line-height: 45px;
-      color: #a9a9a9;
-    }
-  }
-
   .open-hours {
     margin: 20px 0 0 0;
 

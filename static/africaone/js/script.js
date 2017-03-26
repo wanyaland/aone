@@ -49,16 +49,17 @@ function loadMapScript() {
 }
 
 var africaOne = {};
+africaOne.store = {};
 
 //home page
 africaOne.initiateHomePage = function() {
 
   //check for home page wrapper
-  var $homePageWrapper = $('.home-page-wrapper.full-page-wrapper');
+  var $homePageWrapper = $('.home-page-wrapper');
   if ($homePageWrapper.length <= 0) return;
 
   //banner slider
-  africaOne.initiateHomeBannerSlides();
+  // africaOne.initiateHomeBannerSlides();
 
 };
 
@@ -79,17 +80,18 @@ africaOne.initiateHomeBannerSlides = function() {
   };
 
   var getBanners = function() {
-    $.get('/get_nearest_businesses/', {
+    $.post('/get_nearest_businesses/', {
       latitude: location.latitude,
       longitude: location.longitude
     }).done(function (bannerData) {
       console.log(bannerData);
-      setupBanners(bannerData);
+      // setupBanners(bannerData.businesses);
     });
   };
 
   var setupBanners = function(bannerData) {
     var $bannerItem = $('.banner-review-html-holder', $bannersList).remove();
+
     $.each(bannerData, function(index, bannerInfo) {
       var $newBannerItem = $bannerItem.clone().removeClass('banner-review-html-holder');
       $newBannerItem.addClass('banner-review-' + index);
@@ -101,6 +103,7 @@ africaOne.initiateHomeBannerSlides = function() {
       $('.business-id', $newBannerItem).val(bannerInfo.businessID);
       $newBannerItem.appendTo($bannersList);
     });
+
     setupBannerSlider();
   };
 

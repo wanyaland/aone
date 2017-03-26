@@ -288,6 +288,10 @@
 
         .login-message {
           color: #666;
+          a {
+            font-weight: bold;
+            text-decoration: underline;
+          }
         }
       }
     }    

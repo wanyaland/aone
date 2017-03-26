@@ -12,7 +12,7 @@ from django.views.generic import *
 from django.core.urlresolvers import reverse
 from djangoratings.views import AddRatingView,AddRatingFromModel
 from django.contrib.contenttypes.models import ContentType
-from django.db.models import Q
+from django.db.models import Q, Count, Avg
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.http import HttpResponse,HttpResponseRedirect
 import json
@@ -38,6 +38,7 @@ from django.contrib import messages
 from django.template import loader
 from africa_one.settings import DEFAULT_FROM_EMAIL
 from django.conf import settings
+
 
 def index(request):
     rank = Ranking()
@@ -153,14 +154,80 @@ class CategoryLandingPageView(DetailView):
 class CategoryListingPageView(ListView):
     model = Business
     template_name = 'core/business-category/listing-page.html'
+    paginate_by = 10
+
     def get_queryset(self):
         query_set = super(CategoryListingPageView,self).get_queryset()
         return query_set
+
     def get_context_data(self, **kwargs):
         context = super(CategoryListingPageView,self).get_context_data(**kwargs)
         categories = Category.objects.all()
         context['categories'] = categories
         return context
+
+    def post(self, request, *args, **kwargs):
+        if self.request.is_ajax():
+            # Filtering
+            filtered_businesses = Business.objects \
+                .annotate(num_reviews = Count('review')) \
+                .annotate(avg_rating = Avg('review__rating_score'))
+
+            kwargs = {}
+
+            price = request.POST.getlist('price[]', [])
+            if price: kwargs['price_range__in'] = price
+
+            search_text = request.POST.get('search-text', None)
+            if search_text: kwargs['name__icontains'] = search_text
+
+            categories = request.POST.getlist('categories[]', [])
+            if categories: kwargs['categories__in'] = categories
+
+            rating = request.POST.get('rating', None)
+            if rating:
+                kwargs['avg_rating__lte'] = float(rating)
+                kwargs['avg_rating__gt'] = float(rating)-1.0
+
+            filtered_businesses = filtered_businesses.filter(**kwargs)
+
+            # Ordering
+            order_type = request.POST.get('order-type', None)
+
+            if (order_type == 'sort-price-low-high'):
+                filtered_businesses = filtered_businesses.order_by('price_range')
+            if (order_type == 'sort-price-high-low'):
+                filtered_businesses = filtered_businesses.order_by('-price_range')
+            if (order_type == 'sort-rating-high'):
+                filtered_businesses = filtered_businesses.order_by('-avg_rating')
+            if (order_type == 'sort-review-high'):
+                filtered_businesses = filtered_businesses.order_by('-num_reviews')
+
+            # Pagination
+            paginate_by = 10
+            paginator = Paginator(filtered_businesses, paginate_by)
+            
+            page = request.POST.get('page', 1)
+            try:
+                businesses = paginator.page(page)
+            except PageNotAnInteger:
+                businesses = paginator.page(1)
+            except EmptyPage:
+                businesses = paginator.page(paginator.num_pages)
+
+            # Rendering
+            context = {}
+            if len(businesses):
+                context['data'] = loader.render_to_string(
+                    "core/business-category/businesses-list.html",
+                    {
+                        'paginator': paginator,
+                        'page_obj': businesses
+                    }
+                )
+            else:
+                context['message'] = 'No data'
+            return HttpResponse(json.dumps(context), content_type="application/json")
 
 def claim_business(request,pk):
     msg="Claim Business"
@@ -364,17 +431,6 @@ def events_detail(request,pk):
     event=get_object_or_404(Event,pk=pk)
     return render(request, 'core/events/full.html',{'event':event})
 
-def create_event(request):
-    if request.method=='POST':
-        name = request.POST.get('event_name')
-        where = request.POST.get('where')
-        description = request.POST.get('description')
-        price = request.POST.get('price')
-        event = Event(name=name,description=description,where=where,price=price)
-        event.save()
-        action.send(request.user,verb='created event',target=event)
-        return redirect(reverse('core:events_landing'))
-    return render(request, 'core/events/create.html', {})
 
 class ReviewListView(ListView):
     model = Business
@@ -385,6 +441,7 @@ class ReviewListView(ListView):
 class ReviewDetail(HitCountDetailView):
     model = Review
     count_hit=True
+
 
 class EventDetail(HitCountDetailView):
     model=Event
@@ -404,6 +461,7 @@ class BusinessDetail(HitCountDetailView):
     template_name = 'core/businesses/business_detail.html'
     model = Business
     count_hit = True
+
     '''
     def get(self,request,*args,**kwargs):
         sort = request.GET.get('sort')
@@ -416,11 +474,12 @@ class BusinessDetail(HitCountDetailView):
         context = self.get_context_data(reviews=self.reviews)
         return self.render_to_response(context)
     '''
+
     def get_context_data(self, **kwargs):
         context = super(BusinessDetail,self).get_context_data(**kwargs)
         self.business =self.get_object()
         context['avg_rating']=self.business.get_avg_rating()
-        self.reviews = self.business.review_set.all()
+        self.reviews = self.business.review_set.order_by('-create_date')
         self.categories = self.business.categories
         paginator = Paginator(self.reviews,5)
         page = self.request.GET.get('page')
@@ -730,3 +789,44 @@ class NewsDetail(DetailView):
         context['recent_news'] = News.objects.all().order_by('-create_date')[:5]
 
         return context
+<<<<<<< HEAD
+=======
+
+
+class EventCreate(CreateView):
+    form_class = EventForm
+    template_name = 'core/events/create.html'
+
+    def get_success_url(self):
+        return reverse('core:events_landing')
+
+    def form_valid(self, form):
+        form = combineEventDateAndTime(form)
+
+        event_obj = form.save(commit=False)
+        event_obj.owner = self.request.user.customer
+        event_obj.save()
+        form.save_m2m()
+
+        action.send(self.request.user, verb='created event', target=event_obj)
+
+        return HttpResponseRedirect(self.get_success_url())
+
+
+def combineEventDateAndTime(form):
+    # Combine start_date
+    start_date = form.cleaned_data.get('start_date')
+    start_time = form.cleaned_data.get('start_time')
+    form.instance.event_date = datetime.datetime.combine(start_date, start_time)
+
+    # Combine end_date
+    finish_date = form.cleaned_data.get('finish_date')
+    finish_time = form.cleaned_data.get('finish_time')
+    if (finish_date):
+        if finish_time == None:
+            finish_time = datetime.time()
+        form.instance.end_date = datetime.datetime.combine(finish_date, finish_time)
+    else:
+        form.instance.end_date = None
+
+    return form

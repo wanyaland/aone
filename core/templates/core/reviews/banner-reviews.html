@@ -36,7 +36,9 @@
               <input type="button" class="btn post-review-btn" value="Post">
               <span class="error-message">Pick a rating first!</span>
             {% else %}
-              <span class="login-message">You have to login to post a review</span>
+              <span class="login-message">
+                You have to <a href="{% url 'core:login' %}">login</a> to post a review
+              </span>
             {% endif %}
           </div>
         </form>

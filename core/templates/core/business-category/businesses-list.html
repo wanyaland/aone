@@ -1,0 +1,77 @@
+{% load admin_extras %}
+
+{% for business in page_obj %}
+  <div class="business-listing-item">
+    <div class="business-details-strip">
+      <div class="business-photo">
+        {% if business.banner_photo %}
+          <img src="{{ business.banner_photo.url }}">
+        {% else %}
+          <img src="/static/africaone/static-images/no-logo.jpg">
+        {% endif %}
+      </div>
+
+      <div class="business-name-description">
+        <h3 class="business-name"><a href="{% url 'core:business_detail' business.id %}">{{business}}</a></h3>
+        <div class="business-rating">
+          <div class="rateit rating-stars" data-rateit-starwidth="16.8" data-rateit-starheight="14" data-rateit-value="{{ business.get_avg_rating }}" data-rateit-readonly="true"></div>
+          <span>{{ business.get_no_reviews }} review{{ business.get_no_reviews|pluralize:".,s." }}</span>
+          <span>{{ business.avg_rating }}</span>
+        </div>
+        <div class="business-description">
+          {{business.description|default:''}}
+        </div>
+      </div>
+
+      <div class="price-sub-categories">
+        <div class="price">
+            {% spaceless %}
+              {% for i in '12345' %}
+                {% if forloop.counter <= business.price_range %}
+                  <span class="marked">$</span>
+                {% else %}
+                  <span>$</span>
+                {% endif %}
+              {% endfor %}
+            {% endspaceless %}
+        </div>
+        <div class="sub-categories">{{ business.categories.all|list_categories }}</div>
+      </div>
+
+      <div class="address-phone-website">
+        <div class="address">{{business.address}}</div>
+        <div class="phone">{{business.phone_address}}</div>
+        <div class="website"><a href="{{business.web_address}}" target="_blank">{{business.web_address}}</a></div>
+      </div>
+    </div>
+    <div class="business-review">
+      {% if business.review_set.all|length > 0 %}
+        {% with business.review_set.all.0 as review %}
+          <div class="user-photo">
+            {% if review.customer.photo %}
+              <img src="{{review.customer.photo.url}}" class="img">
+            {% else %}
+              <img src="/static/africaone/static-images/empty-avatar.jpg">
+            {% endif %}
+          </div>
+        
+          <div class="user-review">
+            <a href="{% url 'core:review_detail' review.id %}" class="read-more">
+              {{ review.review|truncatechars:300 }}
+              {% if review.review|length > 297 %}
+                <span>Read more</span>
+              {% endif %}
+            </a>
+          </div>
+        {% endwith %}
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}
+
+{% if paginator.num_pages > 1 %}
+  <div class="pagination-block">
+    {% load paginator %}
+    {% paginator 2 %}
+  </div>
+{% endif %}

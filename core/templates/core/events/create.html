@@ -2,99 +2,176 @@
 {% load i18n %}
 
 {% block main %}
+  <div class="blue-header-bg"></div>
 
-  <div class="create-event-page-wrapper blue-header-h1-top">
+  <form class="add-event-wrapper container" action="{% url 'core:events_create' %}" method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+    
+    <div class="event-info-wrapper">
+      <div class="event-info">
+        <div class="column-title">
+          CREATE A NEW EVENT
+        </div>
+        <div class="column-content">
 
-    <div class="blue-header-bg"></div>
+          {% if form.errors %}
+              <div class="form-errors">
+              {% for field in form %}
+                  {% for error in field.errors %}
+                      <div class="form-error-text">
+                        {% if field != '__all__' %}
+                            {{ field.label }}:
+                        {% endif %}
+                        {{ error }}
+                      </div>
+                  {% endfor %}
+              {% endfor %}
+              </div>
+          {% endif %}
 
-    <div class="full-page-content-wrapper">
-
-      <div class="page-container container">
-
-        <form action="{% url 'core:events_create' %}" class="create-event-form africaone-form cols-2 clearfix" method="post">
-          {%csrf_token%}
-          <div class="form-col event-details-col">
-            <h2 class="grey-bg big">Create a new event</h2>
-            <div class="form-fields-wrapper">
-              <div class="form-field"><input type="text" class="form-text" placeholder="Event Name*" name="event_name"></div>
-              <div class="form-field field-with-label clearfix">
-                <div class="label">When<span class="required">*</span></div>
-                <div class="field">
-                  <div class="clearfix datetime-field datetime-start-field">
-                    <div class="field-inner-wrapper date-field-wrapper">
-                      <input type="text" class="form-text date-field" placeholder="Start date: DD/MM/YYYY" name="event_date">
-                    </div>
-                    <div class="field-inner-wrapper time-field-wrapper">
-                      <input type="text" class="form-text time-field" placeholder="Time: 12:00 am">
-                    </div>
-                  </div>
-                  <div class="clearfix datetime-field datetime-end-field">
-                    <div class="field-inner-wrapper date-field-wrapper">
-                      <input type="text" class="form-text date-field" placeholder="End date: DD/MM/YYYY" name="end_date">
-                    </div>
-                    <div class="field-inner-wrapper time-field-wrapper">
-                      <input type="text" class="form-text time-field" placeholder="Time: 12:00 am">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="form-field field-with-label clearfix">
-                <div class="label">Where<span class="required">*</span></div>
-                <div class="field"><input type="text" class="form-text" name="where"></div>
-              </div>
-              <div class="form-field">
-                <textarea name="description" class="form-text form-textarea" placeholder="Description*"></textarea>
-              </div>
-              <div class="form-field"><input type="text" class="form-text url-field" placeholder="Website URL" name="website_url"></div>
-              <div class="form-field field-with-label price-field clearfix">
-                <div class="label">Price*</div>
-                <div class="field"><input type="text" placeholder="UGX" class="form-text"></div>
-                <div class="free-price">
-                  <input type="checkbox" class="checkbox fancy-checkbox" id="free-event">
-                  <label for="free-event">This is a free event</label></div>
-              </div>
-              <div class="form-field">
-                <select name="categories" id="event-categories" class="chosen-select" data-placeholder="Choose three categories for this event ..." multiple>
-                  <option value></option>
-                  <option value="1">Category One</option>
-                  <option value="2">Category Two</option>
-                  <option value="3">Category Three</option>
-                </select>
-              </div>
-              <div class="submit-btns clearfix">
-                <input type="submit" class="form-btn btn line-50" value="Create Event">
-                <a href="#" class="cancel btn cancel-btn link line-50">Cancel</a>
+          <div class="event-inputs">
+            <input class="app-input" name="name" placeholder="Event Name*" type="text" value="{{ form.name.value|default:'' }}">
+            
+            <div class="app-form-group start-datetime-group">
+              <div class="input-label">When*</div>
+              <div class="app-form-group-input clearfix">
+                <input class="app-input date-input" name="start_date" type="text" value="{{ form.start_date.value|default:'' }}" placeholder="Start date: DD/MM/YYYY">
+                <input class="app-input time-input" name="start_time" type="text" value="{{ form.start_time.value|default:'' }}" placeholder="Time: 12:00am">
               </div>
             </div>
-          </div>
 
-          <div class="form-col form-col-right event-location-col">
-            <h2 class="grey-bg big">Location on map</h2>
-            <div class="form-fields-wrapper">
-              <div class="search-map-wrapper">
-                <div class="search-map">
-                  <div class="location-finder gllpLatlonPicker">
-                    <div class="location-search-field clearfix form-field">
-                      <input type="text" placeholder="Search for event location" class="form-text location-search gllpSearchField">
-                      <input type="button" class="btn form-btn gllpSearchButton" value="Go">
-                    </div>
-                    <div class="map-div gllpMap"></div>
-                    <div class="feedback">Please pick your location on the map above by moving the marker OR double clicking on the map.</div>
-                    <input type="hidden" value="" name="latitude" class="location-latitude gllpLatitude" />
-                    <input type="hidden" value="" name="longitude" class="location-longitude gllpLongitude" />
-                    <input type="hidden" class="gllpZoom" value="16" />
-                  </div>
+            <div class="app-form-group">
+              <div class="input-label"></div>
+              <div class="app-form-group-input clearfix">
+                <input class="app-input date-input" name="finish_date" type="text" value="{{ form.finish_date.value|default:'' }}" placeholder="End date: DD/MM/YYYY">
+                <input class="app-input time-input" name="finish_time" type="text" value="{{ form.finish_time.value|default:'' }}" placeholder="Time: 12:00am">
+              </div>
+            </div>
+
+            <div class="app-form-group">
+              <div class="input-label">Where*</div>
+              <div class="app-form-group-input">
+                <input class="app-input" name="where" type="text" value="{{ form.where.value|default:'' }}">
+              </div>
+            </div>
+
+            <textarea class="app-input" name="description" placeholder="Description*">{{ form.description.value|default_if_none:'' }}</textarea>
+            
+            <input class="app-input" name="website_url" placeholder="Website URL" type="text" value="{{ form.website_url.value|default:'' }}">
+            
+            <div class="app-form-group">
+              <div class="input-label">Price*</div>
+              <div class="app-form-group-input clearfix">
+                <input class="app-input price-input" name="price" type="text" value="{{ form.price.value|default:'' }}" placeholder="UGX">
+                <div class="price-checkbox-wrapper">
+                  <input type="checkbox" class="event-checkbox" value="">
+                  <span>This is a free event</span>
                 </div>
               </div>
             </div>
+
+            {{ form.categories }}
+
+            <div class="upload-photo-btn-wrapper">
+              <div class="upload-btn">
+                Click here to Add Event photo
+                {{ form.photo }}
+              </div>
+              <span class="file-name">No file chosen</span>
+            </div>
           </div>
 
-        </form>
-
+          <div class="form-buttons-wrapper">
+            <input type="submit" class="btn line-45 create-btn" value="CREATE EVENT">
+            <a href="{% url 'core:events_landing' %}" class="btn link line-45 cancel-btn">Cancel</a>
+          </div>
+        </div>
       </div>
-
+    
+      <div class="event-map">
+        <div class="column-title">
+          LOCATION ON MAP
+        </div>
+        <div class="column-content">
+          <div id="event-location" class="event-location" data-event-location="{{ form.latitude.value|default:'0.347596' }},{{ form.longitude.value|default:'32.582520' }}"></div>
+          <input type="hidden" name="latitude" value="{{ form.latitude.value|default:'0.347596' }}">
+          <input type="hidden" name="longitude" value="{{ form.longitude.value|default:'32.582520' }}">
+        </div>
+      </div>
     </div>
+  </form>
+{% endblock %}
 
-  </div>
+{% block scripts %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      chosenSelectHandler();
+      loadMapScript();
+      fileNameHandler();
+      checkboxHandler();
+      formHandler();
+    });
 
+    function initializeMap() {
+      var mapElm = $('#event-location');
+      var mapPos = mapElm.data('event-location').split(',');
+      var latLng = new google.maps.LatLng(mapPos[0], mapPos[1]);
+
+      var map = new google.maps.Map(document.getElementById('event-location'), {
+        center: latLng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+
+      var marker = new google.maps.Marker({
+        position: latLng,
+        map: map
+      });
+
+      google.maps.event.addListener(map, 'click', function(event) {
+        marker.setPosition(event.latLng);
+        marker.setMap(map);
+        $('input[name="latitude"]').val(event.latLng.lat());
+        $('input[name="longitude"]').val(event.latLng.lng());
+      });
+    }
+
+    function fileNameHandler() {
+      $('#id_photo').change(function() {
+        $('.file-name').text($(this)[0].files[0].name);
+      });
+    }
+
+    function chosenSelectHandler() {
+      $("#id_categories").chosen({max_selected_options: 5});
+    }
+
+    function checkboxHandler() {
+      $('.event-checkbox').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        increaseArea: '20%'
+      });
+
+      $('.event-checkbox').on('ifChecked', function() {
+        $('input[name="price"]').val('0');
+        $('input[name="price"]').attr('disabled', true);
+      });
+
+      $('.event-checkbox').on('ifUnchecked', function() {
+        $('input[name="price"]').val('');
+        $('input[name="price"]').attr('disabled', false);
+      });
+
+      // Check state on load 
+      if ($('input[name="price"]').val() === '0') {
+        $('.event-checkbox').iCheck('check');
+      }
+    }
+
+    function formHandler() {
+      $('.add-event-wrapper').submit(function() {
+        $('input[name="price"]').attr('disabled', false);
+      });
+    }
+  </script>
 {% endblock %}

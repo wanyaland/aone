@@ -24,12 +24,12 @@
   }
 
   .column-right {
-    padding-left: 2px;
+    padding-left: 1px;
 
     .map-block {
       background-color: #fff;
       padding: 15px 30px 20px 30px;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
 
       .checkbox-wrapper {
         padding-bottom: 15px;
@@ -52,7 +52,7 @@
     }
 
     .couldnt-find-block {
-      margin-bottom: 4px;
+      margin-bottom: 3px;
       background: image-url('couldnt-find-bg.png') no-repeat center top rgba(0, 127, 169, 1);
       @include background-size(cover);
       padding: 45px 45px 45px 35px;
@@ -86,7 +86,7 @@
     .facebook-block {
       background-color: #fff;
       padding: 20px 20px 45px 20px;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
 
       img {
         display: block;
@@ -97,7 +97,7 @@
     .advert-block {
       background-color: #fff;
       padding: 20px 20px 45px 20px;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
 
       span {
         display: block;
@@ -228,7 +228,7 @@
   .business-bottom-block {
     height: 65px;
     background-color: #fff;
-    margin: 2px 0 5px 0;
+    margin: 1px 0 3px 0;
     padding-left: 30px;
     padding-top: 16px;
 

@@ -1,6 +1,6 @@
 .filter-businesses-wrapper,
 .filter-content-wrapper {
-  background: #414647;
+  background: #f1f1f1;
 }
 
 .filters-col {
@@ -21,7 +21,7 @@
     line-height: 36px;
     background: #f5f5f5;
     color: #83898b;
-    max-width: 145px;
+    padding: 0 30px;
   }
   .search-textbox {
     width: 100%;
@@ -137,5 +137,24 @@
   }
   .events-landing-page-wrapper & {
     min-height: 1015px;
+  }
+}
+
+.search-filters-wrapper {
+  background: #414647;
+
+  .sub-categories-div {
+    .hidden-category {
+      display: none;
+    }
+  }
+
+  .link-wrapper {
+    .view-all-link {
+      text-transform: uppercase;
+      margin: 20px 0 0;
+      color: #00c0ff;
+      cursor: pointer;
+    }
   }
 }
