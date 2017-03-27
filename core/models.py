@@ -205,6 +205,7 @@ class Event(models.Model,HitCountMixin):
     owner = models.ForeignKey(Customer, null=True)
     longitude = models.FloatField(null=True)
     latitude = models.FloatField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     def __unicode__(self):
         return self.name
@@ -212,7 +213,7 @@ class Event(models.Model,HitCountMixin):
 class EventDiscussion(models.Model):
     customer = models.ForeignKey(Customer)
     comment = models.TextField()
-    date = models.DateField(auto_now=True)
+    date = models.DateTimeField(auto_now=True)
     event = models.ForeignKey(Event)
 
     def __unicode__(self):

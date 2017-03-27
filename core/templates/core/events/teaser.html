@@ -4,7 +4,7 @@
     <img src="{{event.photo.url}}" alt=""> {%endif%}
   </div>
   <div class="name-date">
-    <div class="name"><a href="{% url 'core:events_full_view' event.id %}">{{event}}</a></div>
+    <div class="name"><a href="{% url 'core:event_detail' event.id %}">{{event}}</a></div>
     <div class="date">{{event.event_date}}</div>
   </div>
 </div>

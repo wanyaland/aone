@@ -1,62 +1,52 @@
-
 .sidebar-events-news-list {
   li {
     border-bottom: solid 1px #f1f1f1;
   }
 }
 
-.sidebar-teaser {
-  a, img, span {
-    display: block;
-  }
-  a {
-    position: relative;
-    padding: 20px 30px;
+a.sidebar-event-item {
+  display: block;
+  padding: 20px;
+  color: #579ebc;
+  @include clearfix();
+  @include transition(all 0.3s ease-in);
+
+  .event-photo-wrapper {
+    float: left;
+    width: 25%;
+
     img {
-      position: absolute;
-      background: #ccc;
-      width: 80px; height: auto;
-      min-height: 40px;
-      left: 30px; top: 20px;
+      width: 100%;
     }
+  }
+
+  .event-details-warapper {
+    float: left;
+    width: 75%;
+    padding-left: 15px;
+
     .title {
       line-height: 1.3em;
       @include ems_font_size(15px, $font-size-base);
       margin-bottom: 3px;
     }
+
     .date {
       @include ems_font_size(11px, $font-size-base);
       color: #868686;
       @include transition(color .3s ease-in);
     }
-    &:hover {
-      background-color: $green;
+  }
+
+  &:hover {
+    background-color: $green;
+    color: #fff;
+    .date {
       color: #fff;
-      .date {
-        color: #fff;
-      }
-    }
-  }
-  &.with-img {
-    a {
-      padding-left: 140px;
-    }
-  }
-  .smaller-teasers & {
-    a {
-      padding: 16px 20px;
-      img {
-        width: 55px;
-        left: 20px;
-      }
-    }
-    &.with-img {
-      a {
-        padding-left: 95px;
-      }
     }
   }
 }
+
 
 ul.events-list {
   margin: 0 -13px;

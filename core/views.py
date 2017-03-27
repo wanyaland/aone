@@ -421,15 +421,15 @@ def UserDetailTestPageView(request,pk):
 
 def events_landing(request):
     events = Event.objects.all()
-    context = {'events':events}
+    recent_events = Event.objects.order_by('-created_at')[:6]
+    context = {
+        'events': events,
+        'recent_events': recent_events
+    }
     return render(request, 'core/events/landing.html',context)
 
 def events_listing(request):
     return render(request, 'core/events/listing.html')
-
-def events_detail(request,pk):
-    event=get_object_or_404(Event,pk=pk)
-    return render(request, 'core/events/full.html',{'event':event})
 
 
 class ReviewListView(ListView):
@@ -444,18 +444,35 @@ class ReviewDetail(HitCountDetailView):
 
 
 class EventDetail(HitCountDetailView):
-    model=Event
+    model = Event
     count_hit = True
+    template_name = 'core/events/full.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(EventDetail, self).get_context_data(**kwargs)
+        today = datetime.date.today()
+        start_week = today - datetime.timedelta(today.weekday())
+        end_week = start_week + datetime.timedelta(7)
+        context['week_events'] = Event.objects.filter(event_date__range=[start_week, end_week]).order_by('event_date')
+
+        return context
 
 
-def event_comment(request,pk):
-    event = get_object_or_404(Event,pk=pk)
-    if request.method=='POST':
+def event_comment(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+
+    if request.method == 'POST':
+        customer  = request.user.customer
         comment = request.POST.get('comment')
-        event.comment = comment
-        event.save()
-    action.send(request.user,verb='commented',target=event)
-    return reverse('core:events_full_view',event.id)
+        
+        event.eventdiscussion_set.create(
+            customer=customer,
+            comment=comment
+        )
+        action.send(request.user, verb='commented', target=event)
+
+    return redirect('core:event_detail', event.id)
+
 
 class BusinessDetail(HitCountDetailView):
     template_name = 'core/businesses/business_detail.html'

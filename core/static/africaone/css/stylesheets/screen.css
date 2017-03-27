@@ -2082,28 +2082,35 @@ ul.footer-menu a:hover {
   border-bottom: solid 1px #f1f1f1;
 }
 
-.sidebar-teaser a, .sidebar-teaser img, .sidebar-teaser span {
+a.sidebar-event-item {
   display: block;
+  padding: 20px;
+  color: #579ebc;
+  overflow: hidden;
+  *zoom: 1;
+  -moz-transition: all 0.3s ease-in;
+  -o-transition: all 0.3s ease-in;
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
 }
-.sidebar-teaser a {
-  position: relative;
-  padding: 20px 30px;
+a.sidebar-event-item .event-photo-wrapper {
+  float: left;
+  width: 25%;
 }
-.sidebar-teaser a img {
-  position: absolute;
-  background: #ccc;
-  width: 80px;
-  height: auto;
-  min-height: 40px;
-  left: 30px;
-  top: 20px;
+a.sidebar-event-item .event-photo-wrapper img {
+  width: 100%;
 }
-.sidebar-teaser a .title {
+a.sidebar-event-item .event-details-warapper {
+  float: left;
+  width: 75%;
+  padding-left: 15px;
+}
+a.sidebar-event-item .event-details-warapper .title {
   line-height: 1.3em;
   font-size: 1.15385em;
   margin-bottom: 3px;
 }
-.sidebar-teaser a .date {
+a.sidebar-event-item .event-details-warapper .date {
   font-size: 0.84615em;
   color: #868686;
   -moz-transition: color 0.3s ease-in;
@@ -2111,25 +2118,12 @@ ul.footer-menu a:hover {
   -webkit-transition: color 0.3s ease-in;
   transition: color 0.3s ease-in;
 }
-.sidebar-teaser a:hover {
+a.sidebar-event-item:hover {
   background-color: #77c301;
   color: #fff;
 }
-.sidebar-teaser a:hover .date {
+a.sidebar-event-item:hover .date {
   color: #fff;
-}
-.sidebar-teaser.with-img a {
-  padding-left: 140px;
-}
-.smaller-teasers .sidebar-teaser a {
-  padding: 16px 20px;
-}
-.smaller-teasers .sidebar-teaser a img {
-  width: 55px;
-  left: 20px;
-}
-.smaller-teasers .sidebar-teaser.with-img a {
-  padding-left: 95px;
 }
 
 ul.events-list {
@@ -4468,26 +4462,26 @@ body.js-ready .africaone-form .price-field .free-price label {
 .full-event-page-wrapper .other-events-list .smaller-teasers .sidebar-teaser.with-img img {
   left: 30px;
 }
-.full-event-page-wrapper .venue-map-wrapper {
+.full-event-page-wrapper .event-map-wrapper {
   background-color: #333;
   color: #fff;
   padding: 0 30px 30px;
 }
-.full-event-page-wrapper .venue-map-wrapper .title {
+.full-event-page-wrapper .event-map-wrapper .title {
   text-align: center;
   font-weight: bold;
   font-size: 1.15385em;
   text-transform: uppercase;
   padding: 30px 0 20px;
 }
-.full-event-page-wrapper .venue-map-wrapper .btn {
+.full-event-page-wrapper .event-map-wrapper .btn {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 1.15385em;
   line-height: 35px;
   margin-top: 2px;
 }
-.full-event-page-wrapper .venue-map-wrapper .venue-map {
+.full-event-page-wrapper .event-map-wrapper .event-location {
   height: 175px;
   background-color: #ccc;
 }
