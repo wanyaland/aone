@@ -10,14 +10,17 @@
     text-transform: none;
     @include ems_font_size(25px, $font-size-base);
   }
-  .featured-popular-events-col {
+
+  .events-list-wrapper {
     float: left;
     width: 100%;
+
     .block-content {
       padding: 40px 40px 10px;
     }
   }
-  .featured-popular-events {
+
+  .events-col {
     margin-right: 280px;
     border-right: solid 1px #f1f1f1;
     h2 {
@@ -50,8 +53,13 @@
       }
     }
   }
-  .popular-events {
-    border-top: solid 3px #f1f1f1;
+  .featured-events {
+    border-bottom: solid 3px #f1f1f1;
+  }
+
+  .featured-events,
+  .sorted-events {
+    display: none;
   }
 }
 

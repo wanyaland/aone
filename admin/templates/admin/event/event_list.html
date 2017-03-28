@@ -19,6 +19,7 @@
                     <tr>
                       <th>ID</th>
                       <th>Name</th>
+                      <th>Featured</th>
                       <th>Start Date</th>
                       <th>Actions</th>
                     </tr>
@@ -28,6 +29,7 @@
                       <tr class="item-row" data-href="{% url 'admin:event_update' event.id %}">
                         <td>{{ event.id }}</td>
                         <td>{{ event.name }}</td>
+                        <td>{{ event.featured|yesno:'Yes,No' }}</td>
                         <td>{{ event.event_date|date:'d/m/Y, h:i a' }}</td>
                         <td>
                           <a href="{% url 'admin:event_delete' event.id %}" class="btn btn-danger btn-xs delete-row-btn">Delete</a>

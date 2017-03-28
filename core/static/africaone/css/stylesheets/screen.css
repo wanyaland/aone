@@ -2143,21 +2143,34 @@ ul.events-list.events-list-3-col li {
 }
 
 .event-teaser {
-  padding-bottom: 35px;
+  padding-bottom: 15px;
 }
-.event-teaser a, .event-teaser img {
+.event-teaser a {
   display: block;
 }
 .event-teaser img {
-  width: 100%;
-  height: auto;
+  display: block;
+  max-height: 100%;
+  max-width: 100%;
   background: #dbdbdb;
+  position: absolute;
+  bottom: 0;
 }
 .event-teaser .img {
+  position: relative;
+  width: 100%;
   margin-bottom: 8px;
 }
 .events-list-2-col .event-teaser .img {
   margin-bottom: 15px;
+  height: 180px;
+}
+.events-list-3-col .event-teaser .img {
+  margin-bottom: 15px;
+  height: 120px;
+}
+.event-teaser .name-date {
+  height: 80px;
 }
 .event-teaser .name a {
   font-weight: bold;
@@ -2173,6 +2186,43 @@ ul.events-list.events-list-3-col li {
 .event-teaser .date {
   font-size: 0.84615em;
   color: #666;
+}
+
+.events-list-item {
+  overflow: hidden;
+  *zoom: 1;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  border-bottom: solid 2px #f1f1f1;
+}
+.events-list-item .item-photo {
+  width: 35%;
+  float: left;
+}
+.events-list-item .item-photo img {
+  width: 100%;
+}
+.events-list-item .item-details {
+  width: 65%;
+  float: left;
+  padding-left: 20px;
+}
+.events-list-item .item-details .item-name a {
+  text-transform: uppercase;
+  color: #007fa8;
+  font-weight: bold;
+  line-height: 1.2em;
+  font-size: 1.07692em;
+}
+.events-list-item .item-details .item-where {
+  padding-bottom: 15px;
+}
+.events-list-item .item-details .item-submitted-by {
+  padding-top: 10px;
+  text-align: right;
+}
+.events-list-item .item-details .item-submitted-by span {
+  font-weight: bold;
 }
 
 .add-event-wrapper {
@@ -4379,18 +4429,18 @@ body.js-ready .africaone-form .price-field .free-price label {
   text-transform: none;
   font-size: 1.92308em;
 }
-.events-landing-page-content .featured-popular-events-col {
+.events-landing-page-content .events-list-wrapper {
   float: left;
   width: 100%;
 }
-.events-landing-page-content .featured-popular-events-col .block-content {
+.events-landing-page-content .events-list-wrapper .block-content {
   padding: 40px 40px 10px;
 }
-.events-landing-page-content .featured-popular-events {
+.events-landing-page-content .events-col {
   margin-right: 280px;
   border-right: solid 1px #f1f1f1;
 }
-.events-landing-page-content .featured-popular-events h2 {
+.events-landing-page-content .events-col h2 {
   line-height: 80px;
   padding: 0 40px;
 }
@@ -4419,8 +4469,12 @@ body.js-ready .africaone-form .price-field .free-price label {
   color: #fff;
   background-color: #007fa8;
 }
-.events-landing-page-content .popular-events {
-  border-top: solid 3px #f1f1f1;
+.events-landing-page-content .featured-events {
+  border-bottom: solid 3px #f1f1f1;
+}
+.events-landing-page-content .featured-events,
+.events-landing-page-content .sorted-events {
+  display: none;
 }
 
 .full-event-page-wrapper h1 {

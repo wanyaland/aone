@@ -2,7 +2,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
 from core.models import Event
-from core.forms import EventForm
+from core.forms import EventFormAdmin
 from core.views import combineEventDateAndTime
 
 
@@ -13,7 +13,7 @@ class EventList(ListView):
 
 class EventCreate(CreateView):
     model = Event
-    form_class = EventForm
+    form_class = EventFormAdmin
     template_name= 'admin/event/event_form.html'
 
     def get_success_url(self):
@@ -32,7 +32,7 @@ class EventCreate(CreateView):
 
 class EventUpdate(UpdateView):
     model = Event
-    form_class = EventForm
+    form_class = EventFormAdmin
     template_name= 'admin/event/event_form.html'
 
     def get_success_url(self):

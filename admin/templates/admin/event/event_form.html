@@ -52,6 +52,17 @@
             <div class="alert">{{ form.description.errors|striptags }}</div>
           </div>
 
+          <div class="item form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12">Featured Event</label>
+            <div class="col-md-5 col-sm-5 col-xs-12">
+              <div class="checkbox">
+                <label>
+                  {{ form.featured }}
+                </label>
+              </div>
+            </div>
+          </div>
+
           <div class="item form-group {{ form.start_date.errors|yesno:'bad,' }}">
             <label class="control-label col-md-2 col-sm-2 col-xs-12">Start date</label>
             <div class="col-md-2 col-sm-4 col-xs-12">

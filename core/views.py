@@ -156,10 +156,6 @@ class CategoryListingPageView(ListView):
     template_name = 'core/business-category/listing-page.html'
     paginate_by = 10
 
-    def get_queryset(self):
-        query_set = super(CategoryListingPageView,self).get_queryset()
-        return query_set
-
     def get_context_data(self, **kwargs):
         context = super(CategoryListingPageView,self).get_context_data(**kwargs)
         categories = Category.objects.all()
@@ -411,22 +407,164 @@ class BusinesView(View):
                 }
             )
 
+
 def add_business_successful(request):
     # return render(request,'core/business_successful.html')
     return render(request,'core/businesses/add_business_success.html', {})
+
 
 def UserDetailTestPageView(request,pk):
     customer = get_object_or_404(Customer,pk=pk)
     return render(request, 'core/user/user_detail-temp.html', {'customer':customer,})
 
-def events_landing(request):
-    events = Event.objects.all()
-    recent_events = Event.objects.order_by('-created_at')[:6]
-    context = {
-        'events': events,
-        'recent_events': recent_events
-    }
-    return render(request, 'core/events/landing.html',context)
+
+class EventView(View):
+    def get(self, request):
+        events = Event.objects.all()
+        recent_events = Event.objects.order_by('-created_at')[:6]
+        categories = EventCategory.objects.all()
+        context = {
+            'events': events,
+            'recent_events': recent_events,
+            'categories': categories
+        }
+        
+        return render(request, 'core/events/landing.html', context)
+
+    def post(self, request):
+        narrow = request.POST.get('narrow', None)
+        sort_type = request.POST.get('sort-type', None)
+        categories = request.POST.getlist('categories[]', [])
+
+        context = {}
+        kwargs = {}
+        order = {
+            'popular': 'pk',
+            'recently': '-created_at',
+            'date': '-event_date'
+        }[sort_type]
+        if categories: kwargs['categories__in'] = categories
+
+        list_template = 'core/events/_narrowed_events.html'
+        if narrow:
+            # Show only narrowed list
+            title = {
+                'today': 'Today\'s Events',
+                'tomorrow': 'Tomorrow\'s Events',
+                'this-weekend': 'This Weekend\'s Events',
+                'this-week': 'This Week\'s Events',
+                'next-week': 'Next Week\'s Events',
+                'week-after-next': 'Week\'s after next Events',
+                'past': 'Past Events',
+                'choose-date': 'Date',
+            }[narrow]
+        else:
+            list_template = 'core/events/_sorted_events.html'
+
+            featured_events = Event.objects.filter(**kwargs).filter(featured=True)
+            featured_events = featured_events.order_by(order)
+            if featured_events.count():
+                context['featured_events'] = loader.render_to_string(
+                    "core/events/_featured_events.html",
+                    { 'events': featured_events }
+                )
+
+            title = {
+                'popular': 'Popular Events',
+                'recently': 'Recent Added Events',
+                'date': 'Events by date'
+            }[sort_type]
+
+        
+
+        filtered_events = Event.objects.filter(**kwargs)
+        filtered_events = filtered_events.order_by(order)
+
+        paginate_by = 9
+        paginator = Paginator(filtered_events, paginate_by)
+        
+        page = request.POST.get('page', 1)
+
+        try:
+            sorted_events = paginator.page(page)
+        except PageNotAnInteger:
+            sorted_events = paginator.page(1)
+        except EmptyPage:
+            sorted_events = paginator.page(paginator.num_pages)
+
+        context['sorted_events'] = loader.render_to_string(
+            list_template,
+            {
+                'title': title,
+                'events': sorted_events,
+                'page_obj': sorted_events,
+                'paginator': paginator
+            }
+        )
+
+        return HttpResponse(json.dumps(context), content_type="application/json")
+        # Filtering
+        # filtered_businesses = Business.objects \
+        #     .annotate(num_reviews = Count('review')) \
+        #     .annotate(avg_rating = Avg('review__rating_score'))
+
+        # kwargs = {}
+
+        # price = request.POST.getlist('price[]', [])
+        # if price: kwargs['price_range__in'] = price
+
+        # search_text = request.POST.get('search-text', None)
+        # if search_text: kwargs['name__icontains'] = search_text
+
+        # categories = request.POST.getlist('categories[]', [])
+        # if categories: kwargs['categories__in'] = categories
+
+        # rating = request.POST.get('rating', None)
+        # if rating:
+        #     kwargs['avg_rating__lte'] = float(rating)
+        #     kwargs['avg_rating__gt'] = float(rating)-1.0
+
+        # filtered_businesses = filtered_businesses.filter(**kwargs)
+
+        # # Ordering
+        # order_type = request.POST.get('order-type', None)
+
+        # if (order_type == 'sort-price-low-high'):
+        #     filtered_businesses = filtered_businesses.order_by('price_range')
+        # if (order_type == 'sort-price-high-low'):
+        #     filtered_businesses = filtered_businesses.order_by('-price_range')
+        # if (order_type == 'sort-rating-high'):
+        #     filtered_businesses = filtered_businesses.order_by('-avg_rating')
+        # if (order_type == 'sort-review-high'):
+        #     filtered_businesses = filtered_businesses.order_by('-num_reviews')
+
+        # # Pagination
+        # paginate_by = 10
+        # paginator = Paginator(filtered_businesses, paginate_by)
+        
+        # page = request.POST.get('page', 1)
+        # try:
+        #     businesses = paginator.page(page)
+        # except PageNotAnInteger:
+        #     businesses = paginator.page(1)
+        # except EmptyPage:
+        #     businesses = paginator.page(paginator.num_pages)
+
+        # # Rendering
+        # context = {}
+        # if len(businesses):
+        #     context['data'] = loader.render_to_string(
+        #         "core/business-category/businesses-list.html",
+        #         {
+        #             'paginator': paginator,
+        #             'page_obj': businesses
+        #         }
+        #     )
+        # else:
+        #     context['message'] = 'No data'
+        # return HttpResponse(json.dumps(context), content_type="application/json")
+
+
 
 def events_listing(request):
     return render(request, 'core/events/listing.html')
