@@ -276,10 +276,9 @@ def sign_up_moderator(request):
 def sign_up(request):
     if request.method=='POST':
         form = RegistrationForm(request.POST)
-        customer_form = CustomerForm(request.POST,request.FILES)
-        if  form.is_valid() and customer_form.is_valid() :
+        if form.is_valid() :
             user = form.save()
-            customer = customer_form.save(commit=False)
+            customer = Customer.objects.get(user=user)
             customer.user = user
             customer.user_type = Customer.CUSTOMER
             user.save()
@@ -287,9 +286,8 @@ def sign_up(request):
             return redirect('core:home')
     else:
         form = RegistrationForm()
-        customer_form = CustomerForm()
     return render(request,'core/auth-user/sign_up.html',{
-        'form':form,'customer_form':customer_form
+        'form':form
     })
 
 
@@ -939,6 +937,7 @@ class NewsDetail(DetailView):
         return context
 
 
+
 class EventCreate(CreateView):
     form_class = EventForm
     template_name = 'core/events/create.html'
@@ -976,3 +975,6 @@ def combineEventDateAndTime(form):
         form.instance.end_date = None
 
     return form
+
+
+
