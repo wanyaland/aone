@@ -79,6 +79,7 @@
         'narrow': $('input[name="narrow"]:checked').val(),
         'sort-type': $('input[name="sort-type"]:checked').val(),
         'categories[]': categories,
+        'filter-date': $('input[name="date-input"]').val()
       };
 
       params['csrfmiddlewaretoken'] = '{{ csrf_token }}';
@@ -108,26 +109,43 @@
         $('input[name="narrow"]').iCheck('uncheck');
         $('input[name="categories[]"]').iCheck('uncheck');
         $('#sort-popular').iCheck('check');
+        resetDateFilter();
+        $('.event-date-input').hide();
         loadEvents();
       });
     }
 
     function filterHandlers() {
       $('input[name="narrow"]').on('ifChecked', function() {
+        if ($(this).val() === 'choose-date') {
+          $('.event-date-input').show();
+        } else {
+          resetDateFilter();
+          $('.event-date-input').hide();
+        }
+
         if (!onResetFilterEvent) {
           loadEvents();
         }
       });
+
       $('input[name="sort-type"]').on('ifChecked', function() {
         if (!onResetFilterEvent) {
           loadEvents();
         }
       });
+
       $('input[name="categories[]"]').on('ifChanged', function() {
         if (!onResetFilterEvent) {
           loadEvents();
         }
       });
+
+      $('input[name="date-input"]').change(function() {
+        loadEvents();
+      });
+
+      resetDateFilter();
     }
 
     function paginatorHandler() {
@@ -137,6 +155,14 @@
         $('input[name="page"]').val(page);
         loadEvents(true);
       });
+    }
+
+    function resetDateFilter() {
+      var today = new Date();
+      formatedDate = ('0' + today.getDate()).slice(-2) + '/'
+             + ('0' + (today.getMonth()+1)).slice(-2) + '/'
+             + today.getFullYear();
+      $('input[name="date-input"]').val(formatedDate);
     }
   </script>
 {% endblock %}

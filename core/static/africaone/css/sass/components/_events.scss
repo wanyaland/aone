@@ -116,6 +116,12 @@ ul.events-list {
   }
 }
 
+.event-date-input {
+  padding-left: 25px;
+  display: none;
+  color: #666;
+}
+
 .events-list-item {
   @include clearfix();
   padding: 10px 0;

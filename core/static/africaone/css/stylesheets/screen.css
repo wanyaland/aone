@@ -2188,6 +2188,12 @@ ul.events-list.events-list-3-col li {
   color: #666;
 }
 
+.event-date-input {
+  padding-left: 25px;
+  display: none;
+  color: #666;
+}
+
 .events-list-item {
   overflow: hidden;
   *zoom: 1;

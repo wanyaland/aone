@@ -58,7 +58,7 @@ def index(request):
     return render(request,'core/index.html',{
         'review_of_the_day':review_of_the_day[0],
         'categories':parent_categories,
-        'popular_events':popular_events,
+        'events':popular_events,
         'recent_activities':recent_activities,
         'recent_news':recent_news,
     })
@@ -433,37 +433,89 @@ class EventView(View):
 
     def post(self, request):
         narrow = request.POST.get('narrow', None)
+        filter_date = request.POST.get('filter-date', None)
         sort_type = request.POST.get('sort-type', None)
         categories = request.POST.getlist('categories[]', [])
 
         context = {}
         kwargs = {}
         order = {
-            'popular': 'pk',
+            'popular': 'popular',
             'recently': '-created_at',
             'date': '-event_date'
         }[sort_type]
         if categories: kwargs['categories__in'] = categories
 
+
+        title = 'Events'
         list_template = 'core/events/_narrowed_events.html'
+        filtered_events = Event.objects.filter(**kwargs)
+
         if narrow:
-            # Show only narrowed list
-            title = {
-                'today': 'Today\'s Events',
-                'tomorrow': 'Tomorrow\'s Events',
-                'this-weekend': 'This Weekend\'s Events',
-                'this-week': 'This Week\'s Events',
-                'next-week': 'Next Week\'s Events',
-                'week-after-next': 'Week\'s after next Events',
-                'past': 'Past Events',
-                'choose-date': 'Date',
-            }[narrow]
+            # Show only narrowed list (without featured_events)
+
+            today = datetime.date.today()
+            if narrow == 'today':
+                title = 'Today\'s Events'
+                from_date = today
+                to_date = today + datetime.timedelta(1)
+
+            if narrow == 'tomorrow':
+                title = 'Tomorrow\'s Events'
+                from_date = today + datetime.timedelta(1)
+                to_date = today + datetime.timedelta(2)
+
+            if narrow == 'this-weekend':
+                title = 'This Weekend\'s Events'
+                from_date = today - datetime.timedelta(today.weekday()) + datetime.timedelta(5)
+                to_date = from_date + datetime.timedelta(2)
+
+            if narrow == 'this-week':
+                title = 'This Week\'s Events'
+                from_date = today - datetime.timedelta(today.weekday())
+                to_date = from_date + datetime.timedelta(7)
+
+            if narrow == 'next-week':
+                title = 'Next Week\'s Events'
+                from_date = today - datetime.timedelta(today.weekday()) + datetime.timedelta(7)
+                to_date = from_date + datetime.timedelta(7)
+
+            if narrow == 'week-after-next':
+                title = 'Week\'s after next Events'
+                from_date = today - datetime.timedelta(today.weekday()) + datetime.timedelta(14)
+                to_date = from_date + datetime.timedelta(7)
+
+            if narrow == 'past':
+                title = 'Past Events'
+                from_date = datetime.date.min
+                to_date = today
+
+            if narrow == 'choose-date':
+                try:
+                    current_date = datetime.datetime.strptime(filter_date, '%d/%m/%Y')
+                    title = 'Events on ' + filter_date
+                    from_date = current_date
+                    to_date = current_date + datetime.timedelta(1)
+                except:
+                    title = 'Wrong date format'
+                    from_date = datetime.date.min
+                    to_date = datetime.date.min
+
+            filtered_events = filtered_events.filter(event_date__range=[from_date, to_date])
+                
         else:
+            # Add featured_events to context
             list_template = 'core/events/_sorted_events.html'
 
             featured_events = Event.objects.filter(**kwargs).filter(featured=True)
-            featured_events = featured_events.order_by(order)
-            if featured_events.count():
+
+            if order == 'popular':
+                rank = Ranking()
+                featured_events = rank.rank_events_queryset(featured_events)
+            else:
+                featured_events = featured_events.order_by(order)
+
+            if featured_events:
                 context['featured_events'] = loader.render_to_string(
                     "core/events/_featured_events.html",
                     { 'events': featured_events }
@@ -476,9 +528,11 @@ class EventView(View):
             }[sort_type]
 
         
-
-        filtered_events = Event.objects.filter(**kwargs)
-        filtered_events = filtered_events.order_by(order)
+        if order == 'popular':
+            rank = Ranking()
+            filtered_events = rank.rank_events_queryset(filtered_events)
+        else:
+            filtered_events = filtered_events.order_by(order)
 
         paginate_by = 9
         paginator = Paginator(filtered_events, paginate_by)
@@ -503,67 +557,6 @@ class EventView(View):
         )
 
         return HttpResponse(json.dumps(context), content_type="application/json")
-        # Filtering
-        # filtered_businesses = Business.objects \
-        #     .annotate(num_reviews = Count('review')) \
-        #     .annotate(avg_rating = Avg('review__rating_score'))
-
-        # kwargs = {}
-
-        # price = request.POST.getlist('price[]', [])
-        # if price: kwargs['price_range__in'] = price
-
-        # search_text = request.POST.get('search-text', None)
-        # if search_text: kwargs['name__icontains'] = search_text
-
-        # categories = request.POST.getlist('categories[]', [])
-        # if categories: kwargs['categories__in'] = categories
-
-        # rating = request.POST.get('rating', None)
-        # if rating:
-        #     kwargs['avg_rating__lte'] = float(rating)
-        #     kwargs['avg_rating__gt'] = float(rating)-1.0
-
-        # filtered_businesses = filtered_businesses.filter(**kwargs)
-
-        # # Ordering
-        # order_type = request.POST.get('order-type', None)
-
-        # if (order_type == 'sort-price-low-high'):
-        #     filtered_businesses = filtered_businesses.order_by('price_range')
-        # if (order_type == 'sort-price-high-low'):
-        #     filtered_businesses = filtered_businesses.order_by('-price_range')
-        # if (order_type == 'sort-rating-high'):
-        #     filtered_businesses = filtered_businesses.order_by('-avg_rating')
-        # if (order_type == 'sort-review-high'):
-        #     filtered_businesses = filtered_businesses.order_by('-num_reviews')
-
-        # # Pagination
-        # paginate_by = 10
-        # paginator = Paginator(filtered_businesses, paginate_by)
-        
-        # page = request.POST.get('page', 1)
-        # try:
-        #     businesses = paginator.page(page)
-        # except PageNotAnInteger:
-        #     businesses = paginator.page(1)
-        # except EmptyPage:
-        #     businesses = paginator.page(paginator.num_pages)
-
-        # # Rendering
-        # context = {}
-        # if len(businesses):
-        #     context['data'] = loader.render_to_string(
-        #         "core/business-category/businesses-list.html",
-        #         {
-        #             'paginator': paginator,
-        #             'page_obj': businesses
-        #         }
-        #     )
-        # else:
-        #     context['message'] = 'No data'
-        # return HttpResponse(json.dumps(context), content_type="application/json")
-
 
 
 def events_listing(request):
