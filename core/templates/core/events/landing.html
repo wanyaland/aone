@@ -14,34 +14,16 @@
         <div class="filter-content-col">
           <div class="events-landing-page-content clearfix">
 
-            <div class="featured-popular-events-col">
-              <div class="featured-popular-events">
+            <div class="events-list-wrapper">
+              <div class="events-col">
 
                 <div class="featured-events">
-                  <h2>Featured Events</h2>
-                  <div class="block-content">
-                    <ul class="clearfix events-list list-unstyled events-list-2-col">
-                        {% for event in events %}
-                      <li>
-                        {% include 'core/events/teaser.html' %}
-                      </li>
-                      {% endfor %}
-                    </ul>
-                  </div>
                 </div>
 
-                <div class="popular-events">
-                  <h2>Popular Events</h2>
-                  <div class="block-content">
-                    <ul class="clearfix events-list list-unstyled events-list-3-col">
-                      {% for event in events %}
-                      <li>
-                        {% include 'core/events/teaser.html' %}
-                      </li>
-                      {% endfor %}
-                    </ul>
-                  </div>
+                <div class="sorted-events">
                 </div>
+
+                <input type="hidden" name="page" value="1">
 
               </div>
             </div>
@@ -54,7 +36,7 @@
                 <h2>Recently Added Events</h2>
                 <div class="block-content">
                   <ul class="sidebar-events-news-list sidebar-events-list smaller-teasers list-unstyled">
-                    {% for event in events %}
+                    {% for event in recent_events %}
                     <li>
                       {% include 'core/events/sidebar-view.html' %}
                     </li>
@@ -72,4 +54,115 @@
     </div>
   </div>
 
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function() {
+      loadEvents();
+      resetFilterHandler();
+      filterHandlers();
+      paginatorHandler();
+    });
+
+    function loadEvents(scroll) {
+      onResetFilterEvent = false;
+      $('.featured-events, .sorted-events').hide();
+
+      var categories = [];
+      $('input[name="categories[]"]:checked').each(function() {
+        categories.push(parseInt($(this).val()));
+      });
+
+      var params = {
+        'page': $('input[name="page"]').val(),
+        'narrow': $('input[name="narrow"]:checked').val(),
+        'sort-type': $('input[name="sort-type"]:checked').val(),
+        'categories[]': categories,
+        'filter-date': $('input[name="date-input"]').val()
+      };
+
+      params['csrfmiddlewaretoken'] = '{{ csrf_token }}';
+
+      scroll = scroll || false;
+
+      $.post('/events/', params).done(function(data) {
+        if (data.hasOwnProperty('featured_events')) {
+          $('.featured-events').html(data.featured_events).show();
+        }
+        if (data.hasOwnProperty('sorted_events')) {
+          $('.sorted-events').html(data.sorted_events).show();
+        }
+        if (scroll) {
+          $("html, body").animate({ scrollTop: $('.sorted-events').offset().top }, "slow");
+        }
+      }).fail(function(error) {
+        console.log(error);
+      })
+    }
+
+    function resetFilterHandler() {
+      onResetFilterEvent = false;
+
+      $('.reset-filters-btn').click(function() {
+        onResetFilterEvent = true;
+        $('input[name="narrow"]').iCheck('uncheck');
+        $('input[name="categories[]"]').iCheck('uncheck');
+        $('#sort-popular').iCheck('check');
+        resetDateFilter();
+        $('.event-date-input').hide();
+        loadEvents();
+      });
+    }
+
+    function filterHandlers() {
+      $('input[name="narrow"]').on('ifChecked', function() {
+        if ($(this).val() === 'choose-date') {
+          $('.event-date-input').show();
+        } else {
+          resetDateFilter();
+          $('.event-date-input').hide();
+        }
+
+        if (!onResetFilterEvent) {
+          loadEvents();
+        }
+      });
+
+      $('input[name="sort-type"]').on('ifChecked', function() {
+        if (!onResetFilterEvent) {
+          loadEvents();
+        }
+      });
+
+      $('input[name="categories[]"]').on('ifChanged', function() {
+        if (!onResetFilterEvent) {
+          loadEvents();
+        }
+      });
+
+      $('input[name="date-input"]').change(function() {
+        loadEvents();
+      });
+
+      resetDateFilter();
+    }
+
+    function paginatorHandler() {
+      $(document).on('click', '.pagination-block a', function(event) {
+        event.preventDefault();
+        var page = $(this).attr('href').split('=')[1]
+        $('input[name="page"]').val(page);
+        loadEvents(true);
+      });
+    }
+
+    function resetDateFilter() {
+      var today = new Date();
+      formatedDate = ('0' + today.getDate()).slice(-2) + '/'
+             + ('0' + (today.getMonth()+1)).slice(-2) + '/'
+             + today.getFullYear();
+      $('input[name="date-input"]').val(formatedDate);
+    }
+  </script>
 {% endblock %}

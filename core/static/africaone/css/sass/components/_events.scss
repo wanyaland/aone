@@ -1,62 +1,52 @@
-
 .sidebar-events-news-list {
   li {
     border-bottom: solid 1px #f1f1f1;
   }
 }
 
-.sidebar-teaser {
-  a, img, span {
-    display: block;
-  }
-  a {
-    position: relative;
-    padding: 20px 30px;
+a.sidebar-event-item {
+  display: block;
+  padding: 20px;
+  color: #579ebc;
+  @include clearfix();
+  @include transition(all 0.3s ease-in);
+
+  .event-photo-wrapper {
+    float: left;
+    width: 25%;
+
     img {
-      position: absolute;
-      background: #ccc;
-      width: 80px; height: auto;
-      min-height: 40px;
-      left: 30px; top: 20px;
+      width: 100%;
     }
+  }
+
+  .event-details-warapper {
+    float: left;
+    width: 75%;
+    padding-left: 15px;
+
     .title {
       line-height: 1.3em;
       @include ems_font_size(15px, $font-size-base);
       margin-bottom: 3px;
     }
+
     .date {
       @include ems_font_size(11px, $font-size-base);
       color: #868686;
       @include transition(color .3s ease-in);
     }
-    &:hover {
-      background-color: $green;
+  }
+
+  &:hover {
+    background-color: $green;
+    color: #fff;
+    .date {
       color: #fff;
-      .date {
-        color: #fff;
-      }
-    }
-  }
-  &.with-img {
-    a {
-      padding-left: 140px;
-    }
-  }
-  .smaller-teasers & {
-    a {
-      padding: 16px 20px;
-      img {
-        width: 55px;
-        left: 20px;
-      }
-    }
-    &.with-img {
-      a {
-        padding-left: 95px;
-      }
     }
   }
 }
+
 
 ul.events-list {
   margin: 0 -13px;
@@ -75,21 +65,38 @@ ul.events-list {
 }
 
 .event-teaser {
-  padding-bottom: 35px;
-  a, img {
+  padding-bottom: 15px;
+  a {
     display: block;
   }
   img {
-    width: 100%;
-    height: auto;
+    display: block;
+    max-height: 100%; 
+    max-width: 100%;
     background: #dbdbdb;
+    position: absolute;
+    bottom: 0;
   }
   .img {
+    position: relative;
+    width: 100%;
     margin-bottom: 8px;
+
     .events-list-2-col & {
       margin-bottom: 15px;
+      height: 180px;
+    }
+
+    .events-list-3-col & {
+      margin-bottom: 15px;
+      height: 120px;
     }
   }
+
+  .name-date {
+    height: 80px;
+  }
+
   .name {
     a {
       font-weight: bold;
@@ -106,6 +113,56 @@ ul.events-list {
   .date {
     @include ems_font_size(11px, $font-size-base);
     color: #666;
+  }
+}
+
+.event-date-input {
+  padding-left: 25px;
+  display: none;
+  color: #666;
+}
+
+.events-list-item {
+  @include clearfix();
+  padding: 10px 0;
+  margin-bottom: 20px;
+  border-bottom: solid 2px #f1f1f1;
+
+  .item-photo {
+    width: 35%;
+    float: left;
+    img {
+      width: 100%;
+    }
+  }
+
+  .item-details {
+    width: 65%;
+    float: left;
+    padding-left: 20px;
+
+    .item-name {
+      a {
+        text-transform: uppercase;
+        color: $blue;
+        font-weight: bold;
+        line-height: 1.2em;
+        @include ems_font_size(14px, $font-size-base);
+      }
+    }
+
+    .item-where {
+      padding-bottom: 15px;
+    }
+
+    .item-submitted-by {
+      padding-top: 10px;
+      text-align: right;
+
+      span {
+        font-weight: bold;
+      }
+    }
   }
 }
 

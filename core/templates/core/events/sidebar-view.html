@@ -1,9 +1,17 @@
-<div class="with-img event-sidebar-view sidebar-teaser">
-  <a href="javascript:;">
-    <img />
-    <span class="details">
-      <span class="title">{{event}}</span>
-      <span class="date">Wed 04 Jun 2016 at 4:30pm</span>
-    </span>
-  </a>
-</div>
+<a href="{% url 'core:event_detail' event.id %}" class="sidebar-event-item">
+  <div class="event-photo-wrapper">
+    {% if event.photo %}
+      <img src="{{ event.photo.url }}">
+    {% else %}
+      <img src="/static/africaone/static-images/no-logo.jpg">
+    {% endif %}
+  </div>
+  <div class="event-details-warapper">
+    <div class="title">
+      {{ event.name }}
+    </div>
+    <div class="date">
+      {{ event.event_date|date:'D d M Y' }} at {{ event.event_date|date:'h:i a' }}
+    </div>
+  </div>
+</a>

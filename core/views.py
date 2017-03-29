@@ -58,7 +58,7 @@ def index(request):
     return render(request,'core/index.html',{
         'review_of_the_day':review_of_the_day[0],
         'categories':parent_categories,
-        'popular_events':popular_events,
+        'events':popular_events,
         'recent_activities':recent_activities,
         'recent_news':recent_news,
     })
@@ -155,10 +155,6 @@ class CategoryListingPageView(ListView):
     model = Business
     template_name = 'core/business-category/listing-page.html'
     paginate_by = 10
-
-    def get_queryset(self):
-        query_set = super(CategoryListingPageView,self).get_queryset()
-        return query_set
 
     def get_context_data(self, **kwargs):
         context = super(CategoryListingPageView,self).get_context_data(**kwargs)
@@ -409,25 +405,160 @@ class BusinesView(View):
                 }
             )
 
+
 def add_business_successful(request):
     # return render(request,'core/business_successful.html')
     return render(request,'core/businesses/add_business_success.html', {})
+
 
 def UserDetailTestPageView(request,pk):
     customer = get_object_or_404(Customer,pk=pk)
     return render(request, 'core/user/user_detail-temp.html', {'customer':customer,})
 
-def events_landing(request):
-    events = Event.objects.all()
-    context = {'events':events}
-    return render(request, 'core/events/landing.html',context)
+
+class EventView(View):
+    def get(self, request):
+        events = Event.objects.all()
+        recent_events = Event.objects.order_by('-created_at')[:6]
+        categories = EventCategory.objects.all()
+        context = {
+            'events': events,
+            'recent_events': recent_events,
+            'categories': categories
+        }
+        
+        return render(request, 'core/events/landing.html', context)
+
+    def post(self, request):
+        narrow = request.POST.get('narrow', None)
+        filter_date = request.POST.get('filter-date', None)
+        sort_type = request.POST.get('sort-type', None)
+        categories = request.POST.getlist('categories[]', [])
+
+        context = {}
+        kwargs = {}
+        order = {
+            'popular': 'popular',
+            'recently': '-created_at',
+            'date': '-event_date'
+        }[sort_type]
+        if categories: kwargs['categories__in'] = categories
+
+
+        title = 'Events'
+        list_template = 'core/events/_narrowed_events.html'
+        filtered_events = Event.objects.filter(**kwargs)
+
+        if narrow:
+            # Show only narrowed list (without featured_events)
+
+            today = datetime.date.today()
+            if narrow == 'today':
+                title = 'Today\'s Events'
+                from_date = today
+                to_date = today + datetime.timedelta(1)
+
+            if narrow == 'tomorrow':
+                title = 'Tomorrow\'s Events'
+                from_date = today + datetime.timedelta(1)
+                to_date = today + datetime.timedelta(2)
+
+            if narrow == 'this-weekend':
+                title = 'This Weekend\'s Events'
+                from_date = today - datetime.timedelta(today.weekday()) + datetime.timedelta(5)
+                to_date = from_date + datetime.timedelta(2)
+
+            if narrow == 'this-week':
+                title = 'This Week\'s Events'
+                from_date = today - datetime.timedelta(today.weekday())
+                to_date = from_date + datetime.timedelta(7)
+
+            if narrow == 'next-week':
+                title = 'Next Week\'s Events'
+                from_date = today - datetime.timedelta(today.weekday()) + datetime.timedelta(7)
+                to_date = from_date + datetime.timedelta(7)
+
+            if narrow == 'week-after-next':
+                title = 'Week\'s after next Events'
+                from_date = today - datetime.timedelta(today.weekday()) + datetime.timedelta(14)
+                to_date = from_date + datetime.timedelta(7)
+
+            if narrow == 'past':
+                title = 'Past Events'
+                from_date = datetime.date.min
+                to_date = today
+
+            if narrow == 'choose-date':
+                try:
+                    current_date = datetime.datetime.strptime(filter_date, '%d/%m/%Y')
+                    title = 'Events on ' + filter_date
+                    from_date = current_date
+                    to_date = current_date + datetime.timedelta(1)
+                except:
+                    title = 'Wrong date format'
+                    from_date = datetime.date.min
+                    to_date = datetime.date.min
+
+            filtered_events = filtered_events.filter(event_date__range=[from_date, to_date])
+                
+        else:
+            # Add featured_events to context
+            list_template = 'core/events/_sorted_events.html'
+
+            featured_events = Event.objects.filter(**kwargs).filter(featured=True)
+
+            if order == 'popular':
+                rank = Ranking()
+                featured_events = rank.rank_events_queryset(featured_events)
+            else:
+                featured_events = featured_events.order_by(order)
+
+            if featured_events:
+                context['featured_events'] = loader.render_to_string(
+                    "core/events/_featured_events.html",
+                    { 'events': featured_events }
+                )
+
+            title = {
+                'popular': 'Popular Events',
+                'recently': 'Recent Added Events',
+                'date': 'Events by date'
+            }[sort_type]
+
+        
+        if order == 'popular':
+            rank = Ranking()
+            filtered_events = rank.rank_events_queryset(filtered_events)
+        else:
+            filtered_events = filtered_events.order_by(order)
+
+        paginate_by = 9
+        paginator = Paginator(filtered_events, paginate_by)
+        
+        page = request.POST.get('page', 1)
+
+        try:
+            sorted_events = paginator.page(page)
+        except PageNotAnInteger:
+            sorted_events = paginator.page(1)
+        except EmptyPage:
+            sorted_events = paginator.page(paginator.num_pages)
+
+        context['sorted_events'] = loader.render_to_string(
+            list_template,
+            {
+                'title': title,
+                'events': sorted_events,
+                'page_obj': sorted_events,
+                'paginator': paginator
+            }
+        )
+
+        return HttpResponse(json.dumps(context), content_type="application/json")
+
 
 def events_listing(request):
     return render(request, 'core/events/listing.html')
-
-def events_detail(request,pk):
-    event=get_object_or_404(Event,pk=pk)
-    return render(request, 'core/events/full.html',{'event':event})
 
 
 class ReviewListView(ListView):
@@ -442,18 +573,35 @@ class ReviewDetail(HitCountDetailView):
 
 
 class EventDetail(HitCountDetailView):
-    model=Event
+    model = Event
     count_hit = True
+    template_name = 'core/events/full.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(EventDetail, self).get_context_data(**kwargs)
+        today = datetime.date.today()
+        start_week = today - datetime.timedelta(today.weekday())
+        end_week = start_week + datetime.timedelta(7)
+        context['week_events'] = Event.objects.filter(event_date__range=[start_week, end_week]).order_by('event_date')
+
+        return context
 
 
-def event_comment(request,pk):
-    event = get_object_or_404(Event,pk=pk)
-    if request.method=='POST':
+def event_comment(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+
+    if request.method == 'POST':
+        customer  = request.user.customer
         comment = request.POST.get('comment')
-        event.comment = comment
-        event.save()
-    action.send(request.user,verb='commented',target=event)
-    return reverse('core:events_full_view',event.id)
+        
+        event.eventdiscussion_set.create(
+            customer=customer,
+            comment=comment
+        )
+        action.send(request.user, verb='commented', target=event)
+
+    return redirect('core:event_detail', event.id)
+
 
 class BusinessDetail(HitCountDetailView):
     template_name = 'core/businesses/business_detail.html'

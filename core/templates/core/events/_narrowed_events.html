@@ -1,0 +1,44 @@
+<h2>{{ title|default:'Today\'s Events' }}</h2>
+<div class="block-content">
+  {% if events|length == 0 %}
+    <h3>No events</h3>
+  {% endif %}
+
+  {% for event in events %}
+    <div class="events-list-item">
+      <div class="item-photo">
+        {% if event.photo %}
+          <img src="{{event.photo.url}}">
+        {% else %}
+          <img src="/static/africaone/static-images/no-logo.jpg">
+        {% endif %}
+      </div>
+
+      <div class="item-details">
+        <div class="item-name">
+          <a href="{% url 'core:event_detail' event.id %}">{{ event.name }}</a>
+        </div>
+        <div class="item-date">
+          {{ event.event_date }}
+        </div>
+        <div class="item-where">
+          {{ event.where }}
+        </div>
+        <div class="item-description">
+          {{ event.description|truncatechars:270 }}
+        </div>
+        <div class="item-submitted-by">
+          <span>Submitted by: </span>
+          {{ event.owner.user.username }}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+{% if paginator.num_pages > 1 %}
+  <div class="pagination-block">
+    {% load paginator %}
+    {% paginator 2 %}
+  </div>
+{% endif %}

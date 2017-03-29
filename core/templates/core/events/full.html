@@ -9,32 +9,54 @@
 
     <div class="full-page-content-wrapper">
 
-      <div class="page-container container">
-        <h1>{{event}}</h1>
+      <div class="event-detail-page page-container container">
+        <h1>{{ event.name }}</h1>
         <div class="event-content-wrapper clearfix">
           <div class="event-content-col">
             <div class="event-content">
 
-              <div class="categories"><a href="#">Drama</a>, <a href="#">Theatre</a>, <a href="#">Comedy</a></div>
+              <div class="categories">
+                {% for category in event.categories.all %}
+                  <a href="#">
+                    {{ category.name }}{% if forloop.counter != event.categories.all|length %},{% endif %}
+                  </a>
+                {% endfor %}
+              </div>
 
               <div class="event-pic-details-wrapper clearfix">
                 <div class="event-pic-col">
-                  <div class="event-pic"><img src="/static/africaone/content-images/patiserrie-medium.jpg" alt=""></div>
+                  <div class="event-pic">
+                    {% if event.photo %}
+                      <img src="{{ event.photo.url }}">
+                    {% else %}
+                      <img src="/static/africaone/static-images/no-logo.jpg">
+                    {% endif %}
+                  </div>
                 </div>
                 <div class="event-details">
-                  <div class="line line-venue line-first">{{event.where}}</div>
-                  <div class="line line-phone">+256 712 345 678</div>
-                  <div class="line line-date-time">{{event.event_date}}</div>
-                  <div class="line line-tickets line-last">Tickets: UGX {{event.price}}</div>
+                  <div class="line line-venue line-first">{{ event.where }}</div>
+                  <!-- <div class="line line-phone">+222 222 222 222</div> -->
+                  <div class="line line-date-time">
+                    {{ event.event_date|date:'l d F, Y' }},
+                    {{ event.event_date|date:'h:i a' }}
+                    {% if event.end_date %}
+                      <br>to<br>
+                      {{ event.end_date|date:'l d F, Y' }},
+                      {{ event.end_date|date:'h:i a' }}
+                    {% endif %}
+                  </div>
+                  <div class="line line-tickets line-last">Tickets: UGX {{ event.price }}</div>
                 </div>
               </div>
 
               <div class="about-event-wrapper">
                 <h2>About this Event</h2>
-                <div class="about-info">{{event.description}}
+                <div class="about-info">{{ event.description }}
                 </div>
                 <ul class="event-links list-unstyled list-inline">
-                  <li><a href="{{event.website_url}}" class="btn website-btn">Official event website</a></li>
+                  {% if event.website_url %}
+                    <li><a target="_blank" href="{{ event.website_url }}" class="btn website-btn">Official event website</a></li>
+                  {% endif %}
                   <li><a href="#" class="btn share-btn">Share this event</a></li>
                 </ul>
               </div>
@@ -43,19 +65,25 @@
                 <div class="comments-list-wrapper">
                   <h2>Discuss event</h2>
                   <div class="comments-list">
-                    {% for comment in event.eventdiscusssion.set_all %}
+                    {% for comment in event.eventdiscussion_set.all %}
                     <div class="comment clearfix">
                       <div class="img-name-wrapper">
-                        <div class="img"><img src="/static/africaone/content-images/javas.jpg" alt=""></div>
+                        <div class="img">
+                          {% if comment.customer.photo %}
+                            <img src="{{ comment.customer.photo.url }}" class="img">
+                          {% else %}
+                            <img src="/static/africaone/static-images/empty-avatar.jpg">
+                          {% endif %}
+                        </div>
                         <div class="name-details">
-                          <div class="user-name"><a href="#">By Martha Mukasa</a></div>
-                          <div class="city">Kampala</div>
-                          <div class="no-reviews">18 reviews</div>
+                          <div class="user-name"><a href="#">{{ comment.customer.user.username }}</a></div>
+                          <!-- <div class="city">Kampala</div> -->
+                          <div class="no-reviews">{{ comment.customer.review_set.count }} reviews</div>
                         </div>
                       </div>
                       <div class="comment-body">
-                        <div class="time">5 minutes ago</div>
-                        <div class="body">{{comment}}
+                        <div class="time">{{ comment.date|date:'d.m.Y' }} at {{ comment.date|date:'h:i a' }}</div>
+                        <div class="body">{{ comment.comment }}
                         </div>
                       </div>
                     </div>
@@ -64,12 +92,16 @@
                   </div>
                   <div class="enter-comment-wrapper">
                     <h2>Enter your comment</h2>
-                    <form action="{% url 'core:event_comment' event.id %}">{% csrf_token %}
+                    <form action="{% url 'core:event_comment' event.id %}" method="POST">{% csrf_token %}
                       <div class="textarea-div">
                         <textarea name="comment" id="" cols="30" rows="10" class="form-textarea" placeholder="Type your comment here ..."></textarea>
                       </div>
                       <div class="submit-btn-wrapper">
-                        <input type="submit" value="Post Comment" class="btn submit-btn">
+                        {% if user.is_authenticated %}
+                          <input type="submit" value="Post Comment" class="btn submit-btn">
+                        {% else %}
+                          You have to <a href="{% url 'core:login' %}?next={{ request.path }}">login</a> to post a comment
+                        {% endif %}
                       </div>
                     </form>
                   </div>
@@ -81,25 +113,22 @@
 
           <div class="event-sidebar">
 
-            <div class="venue-map-wrapper">
+            <div class="event-map-wrapper">
               <div class="title">Map to Venue</div>
-              <div class="venue-map"></div>
-              <div class="btn-wrapper"><a href="#" class="btn bigger-map-btn">View on a bigger map</a></div>
+              <!-- <div class="venue-map"></div> -->
+              <div id="event-location" class="event-location" data-event-location="{{ event.latitude }},{{ event.longitude }}"></div>
+              <div class="btn-wrapper"><a target="_blank" href="https://www.google.com/maps/?q={{ event.latitude }}+{{ event.longitude }}&z=15" class="btn bigger-map-btn">View on a bigger map</a></div>
             </div>
 
             <div class="other-events-list">
               <h2>Other Events this Week</h2>
               <div class="block-content">
                 <ul class="sidebar-events-news-list sidebar-events-list smaller-teasers list-unstyled">
+                {% for event in week_events %}
                   <li>
                     {% include 'core/events/sidebar-view.html' %}
                   </li>
-                  <li>
-                    {% include 'core/events/sidebar-view.html' %}
-                  </li>
-                  <li>
-                    {% include 'core/events/sidebar-view.html' %}
-                  </li>
+                {% endfor %}
                 </ul>
               </div>
             </div>
@@ -112,5 +141,36 @@
     </div>
 
   </div>
+{% endblock %}
 
+{% block scripts %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      loadMapScript();
+    });
+
+    function initializeMap() {
+      var mapElm = $('#event-location');
+      var mapPos = mapElm.data('event-location').split(',');
+      var latLng = new google.maps.LatLng(mapPos[0], mapPos[1]);
+
+      var map = new google.maps.Map(document.getElementById('event-location'), {
+        center: latLng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+
+      var marker = new google.maps.Marker({
+        position: latLng,
+        map: map
+      });
+
+      // google.maps.event.addListener(map, 'click', function(event) {
+      //   marker.setPosition(event.latLng);
+      //   marker.setMap(map);
+      //   $('input[name="latitude"]').val(event.latLng.lat());
+      //   $('input[name="longitude"]').val(event.latLng.lng());
+      // });
+    }
+  </script>
 {% endblock %}

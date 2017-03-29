@@ -178,7 +178,13 @@ class EventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ('name', 'price', 'photo', 'website_url', 'description', 'where', 'categories', 'latitude', 'longitude')
+        fields = ['name', 'price', 'photo', 'website_url', 'description', 'where', 'categories', 'latitude', 'longitude',]
         widgets = {
             'categories':forms.SelectMultiple(attrs={'class':'chosen-select', 'data-placeholder':'Select up to 3 categories. The more specific, the better.*'}),
         }
+
+class EventFormAdmin(EventForm):
+    def __init__(self, *args, **kwargs):
+        super(EventFormAdmin, self).__init__(*args, **kwargs)
+        self.fields['featured'] = forms.BooleanField(required=False)
+        self.Meta.fields.append('featured')

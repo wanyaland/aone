@@ -64,6 +64,10 @@ class Ranking(object):
         events.sort(key=lambda x:self.get_rank_events(x),reverse=True)
         return events
 
+    def rank_events_queryset(self, events):
+        sorted_result = sorted(events, key=lambda x:self.get_rank_events(x), reverse=True)
+        return sorted_result
+
 
 
 

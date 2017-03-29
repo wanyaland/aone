@@ -109,6 +109,7 @@
     }
 
     function loadBusinessItems(scroll) {
+      onResetFilterEvent = false;
       var price = [];
       $('input[name="price[]"]:checked').each(function() {
         price.push(parseInt($(this).val()));
@@ -130,7 +131,7 @@
 
       scroll = scroll || false;
       params['csrfmiddlewaretoken'] = '{{ csrf_token }}';
-
+      
       $.post('/category-name/listing/', params).done(function(data) {
         if (data.hasOwnProperty('data')) {
           $('.business-items-wrapper').html(data.data).removeClass('message');
@@ -170,12 +171,17 @@
 
     function priceInputHandler() {
       $('input[name="price[]"]').on('ifChanged', function() {
-        loadBusinessItems();
+        if (!onResetFilterEvent) {
+          loadBusinessItems();
+        }
       });
     }
 
     function resetFilterHandler() {
+      onResetFilterEvent = false;
+      
       $('.reset-filters-btn').click(function() {
+        onResetFilterEvent = true;
         $('input[name="order-type"]').val('');
         $('.tab-link').removeClass('selected');
         $('input[name="price[]"]').iCheck('uncheck');
@@ -200,13 +206,17 @@
 
     function ratingsInputHandler() {
       $('input[name="ratings"]').on('ifChecked', function() {
-        loadBusinessItems();
+        if (!onResetFilterEvent) {
+          loadBusinessItems();
+        }
       });
     }
 
     function categoryInputHandler() {
       $('input[name="sub-categories[]"]').on('ifChanged', function() {
-        loadBusinessItems();
+        if (!onResetFilterEvent) {
+          loadBusinessItems();
+        }
       });
     }
   </script>
