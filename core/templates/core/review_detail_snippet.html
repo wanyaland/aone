@@ -38,11 +38,11 @@
     </div>
     {% endif %}
 
-    <div class="review-feedback clearfix">
+    <div class="review-feedback clearfix" data-review-id="{{ review.id }}">
       <label>Was this review?</label>
-      <a class="btn btn-feedback btn-helpful grey-btn">Helpful</a>
-      <a class="btn btn-feedback btn-funny grey-btn">Funny</a>
-      <a class="btn btn-feedback btn-cool grey-btn">Cool</a>
+      <a class="btn btn-feedback btn-helpful grey-btn" data-tag="HELPFUL">Helpful</a>
+      <a class="btn btn-feedback btn-funny grey-btn" data-tag="FUNNY">Funny</a>
+      <a class="btn btn-feedback btn-cool grey-btn" data-tag="COOL">Cool</a>
     </div>
     <div class="share-review">
       <a class="share-review-btn btn-icon btn-share"><span class="icon"><span></span></span>Share this review</a>

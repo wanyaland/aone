@@ -782,7 +782,7 @@ class GetHomePageBusinesses(View):
              if business.banner_photo:
                 business_data['banner_photo'] = os.path.join(settings.MEDIA_URL, business.banner_photo.name)
              businesses.append(business_data)
-        data={'businesses':businesses[:10]}
+        data={'businesses':businesses[:4]}
         return HttpResponse(json.dumps(data))
 
 class GetNearestBusinesses(View):

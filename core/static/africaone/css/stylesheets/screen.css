@@ -4634,7 +4634,6 @@ body.js-ready .africaone-form .price-field .free-price label {
   display: block;
 }
 .full-event-page-wrapper .comment .img-name-wrapper .img {
-  background-color: #d0d7db;
   float: left;
   width: 70px;
   -moz-border-radius: 4px;
@@ -4766,8 +4765,7 @@ body.js-ready .africaone-form .price-field .free-price label {
   margin-bottom: 20px;
 }
 .news-layout-wrapper .news-block-detail .news-photo img {
-  max-width: 100%;
-  max-height: 400px;
+  width: 100%;
 }
 .news-layout-wrapper .empty-news-wrapper {
   padding: 30px;

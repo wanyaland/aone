@@ -109,6 +109,9 @@ body.dragging * {
 .edit-form-layout .one-photo-block.bad .x_panel {
   border-color: #ce5454;
 }
+.edit-form-layout .one-photo-block.small-photo .photo-wrapper {
+  height: 100px;
+}
 .edit-form-layout .upload-photo-btn-wrapper {
   position: relative;
   overflow: hidden;

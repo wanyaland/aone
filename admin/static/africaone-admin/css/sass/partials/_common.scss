@@ -39,6 +39,12 @@
         border-color: #ce5454;
       }
     }
+
+    &.small-photo {
+      .photo-wrapper {
+        height: 100px;
+      }
+    }
   }
 
   .upload-photo-btn-wrapper {

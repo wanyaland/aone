@@ -43,6 +43,7 @@ urlpatterns = patterns(
     url(r'^create-users/$',views.CreateUser.as_view(),
         name='create_user'),
 
+    url(r'^users/', include('admin.components.user.urls')),
     url(r'^news/', include('admin.components.news.urls')),
     url(r'^news_category/', include('admin.components.news_category.urls')),
     url(r'^event/', include('admin.components.event.urls')),

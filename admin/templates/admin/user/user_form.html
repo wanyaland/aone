@@ -1,0 +1,130 @@
+{% extends 'admin/base.html' %}
+
+{% block main %}
+  <div class="edit-form-layout">
+    <div class="x_panel">
+      <div class="x_title">
+        {% if object %}
+            <h3>Edit User</h3>
+        {% else %}
+            <h3>Create User</h3>
+        {% endif %}
+      </div>
+
+      <div class="x_content">
+        <form action="" method="post" enctype="multipart/form-data" class="form-horizontal form-label-left">
+          {% csrf_token %}
+
+          <div class="item form-group {{ form.username.errors|yesno:'bad,' }}">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12">Name</label>
+            <div class="col-md-5 col-sm-5 col-xs-12">
+              <input type="text" class="form-control" name="username" value="{{ form.username.value|default:'' }}">
+            </div>
+            <div class="alert">{{ form.username.errors|striptags }}</div>
+          </div>
+
+          <div class="item form-group {{ form.email.errors|yesno:'bad,' }}">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12">Email address</label>
+            <div class="col-md-5 col-sm-5 col-xs-12">
+              <input type="email" class="form-control" name="email" value="{{ form.email.value|default:'' }}">
+            </div>
+            <div class="alert">{{ form.email.errors|striptags }}</div>
+          </div>
+
+          <div class="item form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12">Superuser status</label>
+            <div class="col-md-5 col-sm-5 col-xs-12">
+              <div class="checkbox">
+                <label>
+                  {{ form.is_superuser }}
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="item form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12">Staff status</label>
+            <div class="col-md-5 col-sm-5 col-xs-12">
+              <div class="checkbox">
+                <label>
+                  {{ form.is_staff }}
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="item form-group">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12">Active</label>
+            <div class="col-md-5 col-sm-5 col-xs-12">
+              <div class="checkbox">
+                <label>
+                  {{ form.is_active }}
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="item form-group one-photo-block small-photo {{ form.photo.errors|yesno:'bad,' }}">
+            <label class="control-label col-md-2 col-sm-2 col-xs-12">Photo</label>
+            <div class="col-md-2 col-sm-3 col-xs-8">
+              <div class="x_panel">
+                <div class="x_content">
+                  <div class="photo-wrapper">
+                    {% if form.photo.value %}
+                      <img src="{{ form.photo.value.url }}">
+                    {% else %}
+                      <img src="">
+                    {% endif %}
+                  </div>
+
+                  <div class="ln_solid"></div>
+                  
+                  <button type="button" class="btn btn-primary upload-photo-btn-wrapper">
+                    Add photo
+                    <input id="id_photo" name="photo" type="file">
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="alert">{{ form.photo.errors|striptags }}</div>
+          </div>
+
+          <div class="ln_solid"></div>
+
+          <div class="form-group">
+            <div class="col-md-10 col-sm-10 col-xs-12 col-md-offset-2">
+              <button class="btn btn-primary" type="submit">
+                {{ object|yesno:"Update,Create" }}
+              </button>
+              <a href="{% url 'admin:user_list' %}" class="btn btn-default" type="submit">Cancel</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function() {
+      uploadPhotoHabdler();
+    });
+
+    function uploadPhotoHabdler() {
+      $('#id_photo').on('change', function() {
+        var file = $(this)[0].files[0];
+        var img = $('.photo-wrapper img');
+        var reader = new FileReader();
+
+        reader.onload = (function(aImg) {
+          return function(e) {
+            aImg.attr('src', e.target.result);
+          };
+        })(img);
+
+        reader.readAsDataURL(file);
+      });
+    }
+  </script>
+{% endblock %}
