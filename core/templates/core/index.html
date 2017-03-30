@@ -106,9 +106,9 @@
                     </div>
 
                     <div class="right-column">
-                      <div class="business-name">
+                      <a href="{% url 'core:business_detail' review.business.id %}" class="business-name">
                         {{ review.business.name|upper }}
-                      </div>
+                      </a>
                       <div class="rateit rating-stars" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="0" data-rateit-readonly="true"></div>
                       <div class="rating-block clearfix">
                         <div class="rating-description">
@@ -134,11 +134,11 @@
                         </div>
                       {% endif %}
 
-                      <div class="review-feedback clearfix">
+                      <div class="review-feedback clearfix" data-review-id="{{ review.id }}">
                         <label>Was this review?</label>
-                        <a class="btn btn-feedback btn-helpful grey-btn">Helpful</a>
-                        <a class="btn btn-feedback btn-funny grey-btn">Funny</a>
-                        <a class="btn btn-feedback btn-cool grey-btn">Cool</a>
+                        <a class="btn btn-feedback btn-helpful grey-btn" data-tag="HELPFUL">Helpful</a>
+                        <a class="btn btn-feedback btn-funny grey-btn" data-tag="FUNNY">Funny</a>
+                        <a class="btn btn-feedback btn-cool grey-btn" data-tag="COOL">Cool</a>
                       </div>
 
                       <div class="share-review-block">
@@ -203,6 +203,7 @@
       bannerHandler();
       getBusinessForCategory();
       initLightbox();
+      feedbackHandler();
     });
 
     function getBusinessForCategory(categoryId, categoryName) {
@@ -378,6 +379,21 @@
       lightbox.option({
         'wrapAround': true
       })
+    }
+
+    function feedbackHandler() {
+      $('.btn-feedback').click(function(event) {
+        var params = {};
+        event.preventDefault();
+
+        params['csrfmiddlewaretoken'] = '{{ csrf_token }}';
+        params['tag'] = $(this).attr('data-tag');
+        params['review_id'] = parseInt($(this).parent().attr('data-review-id'));
+
+        $.post('/tag_review/', params).fail(function(err) {
+          console.log(err);
+        });
+      });
     }
   </script>
 {% endblock%}

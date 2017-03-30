@@ -189,3 +189,26 @@
 </div>
 
 {% endblock %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function() {
+      feedbackHandler();
+    });
+
+    function feedbackHandler() {
+      $('.btn-feedback').click(function(event) {
+        var params = {};
+        event.preventDefault();
+
+        params['csrfmiddlewaretoken'] = '{{ csrf_token }}';
+        params['tag'] = $(this).attr('data-tag');
+        params['review_id'] = parseInt($(this).parent().attr('data-review-id'));
+
+        $.post('/tag_review/', params).fail(function(err) {
+          console.log(err);
+        });
+      });
+    }
+  </script>
+{% endblock %}
