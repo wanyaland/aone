@@ -183,8 +183,17 @@ class EventForm(forms.ModelForm):
             'categories':forms.SelectMultiple(attrs={'class':'chosen-select', 'data-placeholder':'Select up to 3 categories. The more specific, the better.*'}),
         }
 
+
 class EventFormAdmin(EventForm):
     def __init__(self, *args, **kwargs):
         super(EventFormAdmin, self).__init__(*args, **kwargs)
         self.fields['featured'] = forms.BooleanField(required=False)
         self.Meta.fields.append('featured')
+
+
+class CustomerForm(forms.ModelForm):
+    photo = forms.FileField(required=False)
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'is_staff', 'is_active', 'is_superuser',)
