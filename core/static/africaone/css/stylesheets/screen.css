@@ -366,7 +366,7 @@ ul.list-inline li {
   display: block;
 }
 .btn-icon .icon {
-  background: url('../images/globals-s28fb260ac8.png') 0 -615px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -650px;
   position: absolute;
   top: 50%;
   left: 15px;
@@ -376,7 +376,7 @@ ul.list-inline li {
   transform: translateY(-50%);
 }
 .btn-icon .icon span {
-  background: url('../images/globals-s28fb260ac8.png') 0 -629px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -664px;
   height: 14px;
   width: 18px;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
@@ -445,7 +445,7 @@ h2.big {
 }
 .mobile-app-desc .phones {
   position: absolute;
-  background: url('../images/globals-s28fb260ac8.png') 0 -461px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -478px;
   height: 154px;
   width: 122px;
   left: 33px;
@@ -457,7 +457,7 @@ h2.big {
 .mobile-app-desc .app-links a {
   display: block;
   margin: 6px 0 0;
-  background: url('../images/globals-s28fb260ac8.png') 0 -88px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -88px;
   height: 44px;
   width: 134px;
 }
@@ -801,7 +801,7 @@ textarea.app-input::-webkit-input-placeholder {
 
 .logo-link {
   display: block;
-  background: url('../images/globals-s28fb260ac8.png') 0 -316px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -333px;
   height: 45px;
   width: 187px;
   position: absolute;
@@ -935,7 +935,7 @@ textarea.app-input::-webkit-input-placeholder {
   color: #fff;
 }
 .main-menu .social-link {
-  background: url('../images/globals-s28fb260ac8.png') 0 -253px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -253px;
   margin-left: 15px;
 }
 .main-menu .social-link span {
@@ -945,7 +945,7 @@ textarea.app-input::-webkit-input-placeholder {
   -o-transition: opacity 0.3s ease-in;
   -webkit-transition: opacity 0.3s ease-in;
   transition: opacity 0.3s ease-in;
-  background: url('../images/globals-s28fb260ac8.png') 0 -232px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -232px;
   height: 21px;
   width: 22px;
 }
@@ -1248,7 +1248,7 @@ ul.footer-menu a:hover {
 }
 
 .review-stars {
-  background: url('../images/globals-s28fb260ac8.png') 0 -218px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -218px;
   height: 14px;
   width: 102px;
 }
@@ -1256,7 +1256,7 @@ ul.footer-menu a:hover {
   background-position: 0 -204px;
 }
 .review-stars .rating {
-  background: url('../images/globals-s28fb260ac8.png') 0 -190px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -190px;
   height: 14px;
   width: 0;
 }
@@ -1413,7 +1413,7 @@ ul.footer-menu a:hover {
   position: absolute;
   left: 0;
   top: 0;
-  background: url('../images/globals-s28fb260ac8.png') 0 -190px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -190px;
   width: 0;
   height: 14px;
 }
@@ -1594,7 +1594,7 @@ ul.footer-menu a:hover {
 .add-review-form .stars-photo-block .photo-input .photo-icon {
   display: inline-block;
   vertical-align: middle;
-  background: url('../images/globals-s28fb260ac8.png') 0 0;
+  background: url('../images/globals-s28dfb19d09.png') 0 0;
   background-position: 0 0;
   height: 14px;
   width: 18px;
@@ -1819,7 +1819,7 @@ ul.footer-menu a:hover {
   -ms-transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
-  background: url('../images/globals-s28fb260ac8.png') 0 -253px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -253px;
   height: 21px;
   width: 22px;
 }
@@ -1882,26 +1882,8 @@ ul.footer-menu a:hover {
   border-bottom: none;
 }
 
-.similar-business-item {
-  padding: 30px 25px;
-  border-bottom: solid 1px #f1f1f1;
-  color: #666;
-}
-.similar-business-item .img {
-  background: #f2f2f2;
-  float: left;
-  width: 130px;
-  height: 95px;
-}
-.similar-business-item .details {
-  margin-left: 150px;
-}
-.similar-business-item .title a {
-  text-transform: uppercase;
-  color: #007fa8;
-  font-weight: bold;
-  line-height: 1.2em;
-  font-size: 1.07692em;
+.business-features-col .block-content {
+  padding: 25px;
 }
 
 .top-business-item {
@@ -2617,6 +2599,123 @@ body.js-ready .africaone-form .price-field .free-price label {
   color: #ff0000;
 }
 
+.review-card-block {
+  overflow: hidden;
+  *zoom: 1;
+  background-color: #fff;
+  margin-bottom: 3px;
+}
+.review-card-block .review-card-left-column {
+  float: left;
+  width: 35%;
+  padding: 30px 20px 30px 25px;
+}
+.review-card-block .review-card-left-column .user-photo {
+  width: 35%;
+  float: left;
+  padding: 3px 15px 0 0;
+}
+.review-card-block .review-card-left-column .user-photo img {
+  width: 100%;
+}
+.review-card-block .review-card-left-column .user-info {
+  width: 65%;
+  float: left;
+}
+.review-card-block .review-card-left-column .user-info .user-name {
+  color: #007fa8;
+  font-size: 1.15385em;
+  font-weight: bold;
+}
+.review-card-block .review-card-left-column .user-info .user-since {
+  color: #858585;
+  line-height: 1.5;
+}
+.review-card-block .review-card-right-column {
+  float: left;
+  width: 65%;
+  padding: 30px 30px 30px 20px;
+}
+.review-card-block .review-card-right-column .business-name {
+  color: #007fa8;
+  font-size: 1.23077em;
+  font-weight: bold;
+}
+.review-card-block .review-card-right-column .rating-block .rating-stars {
+  float: left;
+}
+.review-card-block .review-card-right-column .rating-block .rating-description {
+  float: left;
+  color: #999999;
+  line-height: 1;
+  padding-left: 6px;
+  padding-top: 6px;
+  font-size: 0.92308em;
+}
+.review-card-block .review-card-right-column .rating-block .date {
+  float: right;
+  padding-top: 6px;
+  color: #999999;
+  line-height: 1;
+  font-size: 0.92308em;
+}
+.review-card-block .review-card-right-column .review-text {
+  padding-top: 10px;
+  color: #666666;
+}
+.review-card-block .review-card-right-column .review-photos {
+  border-top: 1px solid #cccccc;
+  padding-top: 16px;
+  margin-top: 20px;
+  text-align: center;
+}
+.review-card-block .review-card-right-column .review-photos a {
+  display: inline-block;
+  vertical-align: top;
+  width: 24%;
+}
+.review-card-block .review-card-right-column .review-photos a img {
+  width: 100%;
+}
+.review-card-block .review-card-right-column .review-feedback {
+  margin: 15px 0;
+  padding: 15px 5px;
+  border-top: solid 1px #ccc;
+  border-bottom: solid 1px #ccc;
+}
+.review-card-block .review-card-right-column .review-feedback label, .review-card-block .review-card-right-column .review-feedback a {
+  float: left;
+}
+.review-card-block .review-card-right-column .review-feedback label {
+  color: #aaa;
+  width: 126px;
+  line-height: 32px;
+}
+.review-card-block .review-card-right-column .review-feedback .btn {
+  line-height: 30px;
+  padding: 0 20px;
+  margin: 0 0 0 4px;
+}
+.review-card-block .review-card-right-column .review-feedback .feedback-vote {
+  margin-left: 132px;
+  color: #666;
+}
+.review-card-block .review-card-right-column .share-review-block .share-review-btn {
+  display: inline-block;
+  cursor: pointer;
+  padding-right: 20px;
+  line-height: 30px;
+  position: relative;
+}
+.review-card-block .review-card-right-column .share-review-block .share-review-btn .share-icon {
+  position: absolute;
+  left: 10px;
+  top: 8px;
+}
+.review-card-block .review-card-right-column .share-review-block .share-review-btn .share-btn-text {
+  margin-left: 35px;
+}
+
 .home-header .find-companies-caption {
   background-color: rgba(0, 0, 0, 0.7);
   font-size: 1.07692em;
@@ -2699,7 +2798,7 @@ body.js-ready .africaone-form .price-field .free-price label {
   -ms-transform: translateY(0);
   -webkit-transform: translateY(0);
   transform: translateY(0);
-  background: url('../images/globals-s28fb260ac8.png') 0 -361px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -378px;
 }
 .home-logo-menu-strip .header-login-links {
   display: inline-block;
@@ -2922,7 +3021,7 @@ body.js-ready .africaone-form .price-field .free-price label {
   left: 0;
 }
 .home-top-banner-reviews .slider-btn.slider-btn-prev .arrow {
-  background: url('../images/globals-s28fb260ac8.png') 0 -58px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -58px;
   height: 15px;
   width: 6px;
 }
@@ -2933,7 +3032,7 @@ body.js-ready .africaone-form .price-field .free-price label {
   right: 0;
 }
 .home-top-banner-reviews .slider-btn.slider-btn-next .arrow {
-  background: url('../images/globals-s28fb260ac8.png') 0 -28px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -28px;
   height: 15px;
   width: 6px;
 }
@@ -3025,7 +3124,7 @@ body.js-ready .africaone-form .price-field .free-price label {
   transition: background-color 0.3s ease-in;
 }
 .banner-review-desc .slider-btn .arrow {
-  background: url('../images/globals-s28fb260ac8.png') 0 -58px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -58px;
   height: 15px;
   width: 6px;
   position: absolute;
@@ -3476,206 +3575,361 @@ body.js-ready .africaone-form .price-field .free-price label {
   margin-top: 10px;
 }
 
-.business-header {
+.business-page-wrapper .rating-block {
+  overflow: hidden;
+  *zoom: 1;
+}
+.business-page-wrapper .rating-block .rating-stars {
+  float: left;
+}
+.business-page-wrapper .rating-block .rating-caption {
+  margin-left: 5px;
+  float: left;
+}
+.business-page-wrapper .columns-wrapper {
+  overflow: hidden;
+  *zoom: 1;
+}
+.business-page-wrapper .left-column {
+  width: 65%;
+  float: left;
+  padding-right: 2px;
+}
+.business-page-wrapper .right-column {
+  width: 35%;
+  float: left;
+}
+.business-page-wrapper .right-column .right-column-block {
+  margin-bottom: 2px;
+}
+.business-page-wrapper .right-column .block-header {
+  background: #fff;
+  padding: 30px;
+  font-size: 25px;
+  font-weight: bold;
+}
+.business-page-wrapper .right-column .block-content {
+  background: #fff;
+  padding: 0 30px 30px 30px;
+}
+.business-page-wrapper .right-column .similar-businesses .block-content {
+  padding: 0;
+}
+
+.business-page-header-wrapper {
   background: #af7d42;
   padding: 95px 0 0;
+  background: url('../images/business-page-bg.jpg?1492701016') no-repeat top center;
 }
-
-.business-title-header {
+.business-page-header-wrapper .business-page-header {
+  overflow: hidden;
+  *zoom: 1;
+  padding: 30px 20px 10px 20px;
   background: #fff;
-  -moz-border-radius-topleft: 4px;
-  -webkit-border-top-left-radius: 4px;
-  border-top-left-radius: 4px;
-  -moz-border-radius-topright: 4px;
-  -webkit-border-top-right-radius: 4px;
-  border-top-right-radius: 4px;
-  padding: 30px 525px 15px 25px;
-  position: relative;
+  border-bottom: 1px solid #dcdcdc;
 }
-.business-title-header .business-title-categories {
-  position: relative;
-  padding-right: 190px;
+.business-page-header-wrapper .business-page-header .business-name-block {
+  width: 35%;
+  float: left;
 }
-.business-title-header .business-reviews-stars-number {
-  position: absolute;
-  width: 190px;
-  right: 0;
-  top: 7px;
+.business-page-header-wrapper .business-page-header .business-name-block .business-name {
+  font-size: 1.7rem;
+  line-height: 1.8rem;
+  font-weight: bold;
 }
-.business-title-header .categories {
-  margin: 6px 0 0;
+.business-page-header-wrapper .business-page-header .business-name-block .business-category {
+  font-size: 15px;
 }
-.business-title-header .categories, .business-title-header .categories a {
+.business-page-header-wrapper .business-page-header .rating-block {
+  width: 25%;
+  float: left;
+  padding-left: 15px;
+  padding-top: 5px;
+}
+.business-page-header-wrapper .business-page-header .start-review-block {
+  width: 40%;
+  float: left;
+}
+.business-page-header-wrapper .business-page-header .start-review-block .start-review-three-buttons-wrapper {
+  overflow: hidden;
+  *zoom: 1;
+}
+.business-page-header-wrapper .business-page-header .start-review-block .start-review-three-buttons-wrapper .rating-button {
+  overflow: hidden;
+  *zoom: 1;
+  -moz-border-radius-topleft: 2px;
+  -webkit-border-top-left-radius: 2px;
+  border-top-left-radius: 2px;
+  -moz-border-radius-bottomleft: 2px;
+  -webkit-border-bottom-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  float: left;
+  background: #77c200;
+  border-color: #dcdcdc;
+  padding: 5px 10px 4px 10px;
+}
+.business-page-header-wrapper .business-page-header .start-review-block .start-review-three-buttons-wrapper .rating-button .rating-stars {
+  float: left;
+  padding-top: 2px;
+  cursor: pointer;
+}
+.business-page-header-wrapper .business-page-header .start-review-block .start-review-three-buttons-wrapper .rating-button .rating-caption {
+  float: left;
+  padding-left: 5px;
+  color: #fff;
+}
+.business-page-header-wrapper .business-page-header .start-review-block .start-review-three-buttons-wrapper .add-photo-button {
+  overflow: hidden;
+  *zoom: 1;
+  display: block;
+  border: 1px solid #dcdcdc;
+  border-width: 1px 0;
+  float: left;
+  padding: 5px 15px 4px 15px;
+}
+.business-page-header-wrapper .business-page-header .start-review-block .start-review-three-buttons-wrapper .add-photo-button .photo-icon {
+  float: left;
+  margin-top: 3px;
+}
+.business-page-header-wrapper .business-page-header .start-review-block .start-review-three-buttons-wrapper .add-photo-button .photo-icon-caption {
   color: #666;
+  float: left;
+  padding-left: 10px;
 }
-.business-title-header .categories a:hover {
-  color: #77c301;
+.business-page-header-wrapper .business-page-header .start-review-block .start-review-three-buttons-wrapper .share-button {
+  overflow: hidden;
+  *zoom: 1;
+  display: block;
+  border: 1px solid #dcdcdc;
+  -moz-border-radius-topright: 2px;
+  -webkit-border-top-right-radius: 2px;
+  border-top-right-radius: 2px;
+  -moz-border-radius-bottomright: 2px;
+  -webkit-border-bottom-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  float: left;
+  padding: 5px 20px 4px 10px;
 }
-
-.start-business-review {
-  position: absolute;
-  right: 25px;
-  top: 29px;
-  width: 500px;
+.business-page-header-wrapper .business-page-header .start-review-block .start-review-three-buttons-wrapper .share-button .share-icon {
+  float: left;
+  margin-top: 3px;
 }
-.start-business-review .btn-icon {
-  float: right;
+.business-page-header-wrapper .business-page-header .start-review-block .start-review-three-buttons-wrapper .share-button .share-icon-caption {
+  color: #666;
+  float: left;
+  padding-left: 10px;
 }
-.start-business-review .btn-take-photo {
-  width: 135px;
-  border-right: none;
-  border-left: none;
-}
-.start-business-review .btn-take-photo .icon {
-  background-position: 0 0;
-}
-.start-business-review .btn-take-photo .icon span {
-  background-position: 0 -14px;
-}
-.start-business-review .btn-share {
-  width: 108px;
-  -moz-border-radius-topleft: 0;
-  -webkit-border-top-left-radius: 0;
-  border-top-left-radius: 0;
-  -moz-border-radius-bottomleft: 0;
-  -webkit-border-bottom-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.start-business-review .start-review-wrapper {
-  float: right;
-  width: 245px;
-}
-.start-business-review .start-review-wrapper .help-txt {
+.business-page-header-wrapper .business-page-header .start-review-block .buttons-caption {
   color: #999;
 }
-.start-business-review .start-review-wrapper .write-review-wrapper {
-  line-height: 32px;
-  -moz-border-radius-topright: 0;
-  -webkit-border-top-right-radius: 0;
-  border-top-right-radius: 0;
-  -moz-border-radius-bottomright: 0;
-  -webkit-border-bottom-right-radius: 0;
-  border-bottom-right-radius: 0;
+.business-page-header-wrapper .business-photos-wrapper {
+  height: 230px;
+  background: rgba(135, 0, 0, 0.8);
+  margin-top: -1px;
+  padding: 25px 30px;
 }
-
-.business-photos-carousel {
-  background: #fff;
-  padding: 20px;
+.business-page-header-wrapper .business-photos-wrapper .slick-slide {
+  height: 180px;
+  padding: 0 5px;
 }
 
 .business-details-wrapper {
+  overflow: hidden;
+  *zoom: 1;
+  padding: 45px 30px 30px 30px;
   background: #fff;
-  padding: 45px 455px 30px 315px;
-  position: relative;
-  min-height: 300px;
-}
-.business-details-wrapper .business-details-col {
-  position: absolute;
-  left: 25px;
-  top: 45px;
-  width: 230px;
-}
-.business-details-wrapper .business-map-col {
-  position: absolute;
-  right: 25px;
-  top: 45px;
-  width: 390px;
-}
-.business-details-wrapper .business-map-col #business-map {
-  border: solid 1px #ccc;
-  height: 188px;
-}
-.business-details-wrapper .business-map-col .btn {
-  font-weight: bold;
-  font-size: 1.15385em;
-  text-transform: uppercase;
-  margin: 3px 0 0;
-}
-
-.business-details-col {
   color: #666;
-  line-height: 1.3em;
-}
-
-.business-reviews-features-wrapper {
-  margin-top: 2px;
-}
-.business-reviews-features-wrapper .business-reviews-col {
-  float: left;
-  width: 100%;
-  padding-right: 417px;
-}
-.business-reviews-features-wrapper .business-features-col {
-  float: left;
-  width: 415px;
-  margin-left: -415px;
-}
-.business-reviews-features-wrapper .business-features-col .block {
-  background: #fff;
   margin-bottom: 2px;
 }
-.business-reviews-features-wrapper .business-features-col h2 {
-  padding: 30px 25px;
-  border-bottom: solid 1px #f1f1f1;
+.business-details-wrapper .business-details-block {
+  width: 25%;
+  float: left;
+  padding-right: 10px;
 }
-.business-reviews-features-wrapper .business-features-col .block-facebook h2 {
-  border-bottom: none;
+.business-details-wrapper .business-details-block .details-item {
+  position: relative;
+  margin-bottom: 10px;
+}
+.business-details-wrapper .business-details-block .details-item .details-item-description {
+  margin-left: 30px;
+}
+.business-details-wrapper .business-details-block .details-item .open-hours-icon {
+  position: absolute;
+  left: 5px;
+  top: 3px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -632px;
+  background-position: 0 -632px;
+  height: 18px;
+  width: 16px;
+}
+.business-details-wrapper .business-details-block .details-item .telephone-icon {
+  position: absolute;
+  left: 5px;
+  top: 3px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -734px;
+  background-position: 0 -734px;
+  height: 16px;
+  width: 15px;
+}
+.business-details-wrapper .business-details-block .details-item .website-icon {
+  position: absolute;
+  left: 5px;
+  top: 3px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -750px;
+  background-position: 0 -750px;
+  height: 16px;
+  width: 16px;
+}
+.business-details-wrapper .business-details-block .details-item .location-icon {
+  position: absolute;
+  left: 5px;
+  top: 3px;
+  background: url('../images/globals-s28dfb19d09.png') 0 -316px;
+  background-position: 0 -316px;
+  height: 17px;
+  width: 11px;
+}
+.business-details-wrapper .business-description-block {
+  width: 40%;
+  float: left;
+  padding: 0 20px;
+}
+.business-details-wrapper .business-map-block {
+  width: 35%;
+  float: left;
+  padding-left: 20px;
+}
+.business-details-wrapper .business-map-block #map-block {
+  height: 200px;
+  border: 1px solid #dcdcdc;
 }
 
-.business-reviews-col-wrapper {
+.customer-reviews-wrapper .customer-reviews-header {
   background: #fff;
+  padding: 35px 30px 30px 30px;
 }
-.business-reviews-col-wrapper .title-ratings-wrapper {
-  padding: 35px 30px 0;
+.customer-reviews-wrapper .customer-reviews-header .reviews-title {
+  overflow: hidden;
+  *zoom: 1;
+  padding-bottom: 20px;
 }
-.business-reviews-col-wrapper .title-ratings-wrapper h2 {
-  font-size: 2.30769em;
+.customer-reviews-wrapper .customer-reviews-header .reviews-title .title {
   float: left;
+  font-size: 1.7rem;
+  line-height: 1.8rem;
+  font-weight: bold;
 }
-.business-reviews-col-wrapper .title-ratings-wrapper .ratings-wrapper {
+.customer-reviews-wrapper .customer-reviews-header .reviews-title .rating-block {
   float: left;
-  padding: 6px 0 0 15px;
+  padding-left: 15px;
+  padding-top: 5px;
 }
-.business-reviews-col-wrapper .sort-wrapper {
-  padding: 20px 30px 25px;
+.customer-reviews-wrapper .customer-reviews-header .reviews-sort-block {
+  overflow: hidden;
+  *zoom: 1;
   color: #666;
 }
-.business-reviews-col-wrapper .sort-wrapper label {
-  display: block;
-  width: 56px;
-  line-height: 32px;
+.customer-reviews-wrapper .customer-reviews-header .reviews-sort-block .sort-caption {
   float: left;
+  padding-right: 10px;
+  padding-top: 5px;
 }
-.business-reviews-col-wrapper .sort-wrapper .btn {
+.customer-reviews-wrapper .customer-reviews-header .reviews-sort-block .reviews-sort-btn {
   float: left;
+  width: 80px;
+  margin-left: 15px;
   line-height: 30px;
-  padding: 0 30px;
-  margin-left: 10px;
 }
-.business-reviews-col-wrapper .trust-us-wrapper {
+.customer-reviews-wrapper .trust-info-wrapper {
+  overflow: hidden;
+  *zoom: 1;
   background: #007fa8;
-  color: #fff;
   padding: 20px 30px;
+  color: #fff;
 }
-.business-reviews-col-wrapper .trust-us-wrapper p {
-  margin: 0 0 5px;
+.customer-reviews-wrapper .trust-info-wrapper .trust-info {
+  width: 65%;
+  float: left;
 }
-.business-reviews-col-wrapper .trust-us-wrapper p.link {
-  margin: 0;
+.customer-reviews-wrapper .trust-info-wrapper .trust-info p {
+  margin: 5px 0;
 }
-.business-reviews-col-wrapper .trust-us-wrapper p.link a {
+.customer-reviews-wrapper .trust-info-wrapper .trust-info a {
   color: #9bff00;
 }
-.business-reviews-col-wrapper .trust-us-wrapper .trust-info {
+.customer-reviews-wrapper .trust-info-wrapper .trust-write-review {
+  width: 35%;
   float: left;
-  width: 330px;
 }
-.business-reviews-col-wrapper .trust-us-wrapper .write-review-col {
-  float: right;
-  width: 265px;
+.customer-reviews-wrapper .trust-info-wrapper .rating-button {
+  overflow: hidden;
+  *zoom: 1;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  background: #77c200;
+  border-color: #dcdcdc;
+  padding: 9px 20px 8px 20px;
+  margin-top: 10px;
 }
-.business-reviews-col-wrapper .trust-us-wrapper .write-review-col .intro {
-  padding-bottom: 10px;
+.customer-reviews-wrapper .trust-info-wrapper .rating-button .rating-stars {
+  padding-top: 2px;
+  cursor: pointer;
+  float: left;
+}
+.customer-reviews-wrapper .trust-info-wrapper .rating-button .rating-caption {
+  margin-left: 5px;
+  float: left;
+}
+
+.similar-businesses .block-header {
+  margin-bottom: 1px;
+}
+.similar-businesses .similar-business-item {
+  overflow: hidden;
+  *zoom: 1;
+  padding: 30px 25px;
+  border-bottom: solid 1px #f1f1f1;
+  color: #666;
+}
+.similar-businesses .similar-business-item .business-photo {
+  width: 30%;
+  float: left;
+}
+.similar-businesses .similar-business-item .business-photo img {
+  width: 100%;
+}
+.similar-businesses .similar-business-item .details {
+  padding-left: 15px;
+  width: 70%;
+  float: left;
+}
+.similar-businesses .similar-business-item .details .title a {
+  text-transform: uppercase;
+  color: #007fa8;
+  font-weight: bold;
+  line-height: 1.2em;
+  font-size: 14px;
+}
+.similar-businesses .similar-business-item .details .rating-stars {
+  display: inline-block;
+}
+.similar-businesses .similar-business-item .details .text {
+  display: inline-block;
+}
+
+.photo-icon {
+  background: url('../images/globals-s28dfb19d09.png') 0 0;
+  background-position: 0 0;
+  height: 14px;
+  width: 18px;
+}
+
+.share-icon {
+  background: url('../images/globals-s28dfb19d09.png') 0 -650px;
+  background-position: 0 -650px;
+  height: 14px;
+  width: 18px;
 }
 
 .user-auth-page {

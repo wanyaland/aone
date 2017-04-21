@@ -1,214 +1,78 @@
 {% extends 'core/base.html'%}
 {% block main %}
 
-<div class="business-header">
-  <div class="container">
-    <div class="business-title-header clearfix">
-      <div class="business-title-categories">
-        <h1 class="business-title">{{business.name}}</h1>
-        <div class="categories">
-          <div class="todo">
-            {% for category in categories %}
-            {{category}}
-            {% endfor %}
-          </div>
-        </div>
-        <div class="business-reviews-stars-number">
-          <div class="review-stars-wrapper">
-            <div class="review-stars" data-rating="{{business.get_avg_rating}}">
-              <div class="review-stars-rating rating"></div>
-            </div>
-          </div>
-          <div class="text">{{business.get_no_reviews}} reviews</div>
-        </div>
-      </div>
-      <div class="start-business-review">
-        <a class="btn-icon btn-share" href="javascript:;"><span class="icon"><span></span></span>Share</a>
-        <a class="btn-icon no-radius btn-take-photo" href="javascript:;"><span class="icon"><span></span></span>Add a photo</a>
-        <div class="start-review-wrapper">
-          <div class="write-review-wrapper">
-            <div class="review-stars blue">
-              <div class="rating"></div>
-            </div>
-            <div class="txt">Write a Review</div>
-          </div>
-          <div class="help-txt">Click stars to rate this business</div>
-        </div>
-      </div>
-    </div>
-    <div class="business-photos-carousel">
-      <ul class="list-unstyled business-photos-list">
-        {% for photo in review_photos %}
-        <li> <a id="carousel-selector-{{photo.id}}">
-          <img src="{{photo.photo.url}}" class="img-responsive">
-        </a></li>
-        {% endfor %}
-      </ul>
+<div class="business-page-wrapper">
+  <div class="business-page-header-wrapper">
+    <div class="container">
+      <!-- Business page header -->
+      {% include 'core/businesses/_business_page_header.html' %}
     </div>
   </div>
-</div>
 
-<div class="container">
-  <div class="business-body-wrapper">
-    <div class="business-details-wrapper">
+  <div class="container">
+    <!-- Business details -->
+    {% include 'core/businesses/_business_page_company_details.html' %}
+  </div>
 
-      <div class="business-details-col">
-        <div class="todo">TODO: {{business.price_range}}, {{business.start_time}}-{{business.end_time}}, {{business.phone_number}}, {{business.web_address}}</div>
-        <div class="icon-detail business-address-icon">
-          <div class="icon"></div>
-          <div class="address value">{{business.address}}<br/>{{business.city}}</div>
-        </div>
+  <div class="container">
+    <div class="columns-wrapper">
+      <div class="left-column">
+        <!-- Customer reviews -->
+        {% include 'core/businesses/_business_page_customer_reviews.html' %}
       </div>
-      <div class="business-categories-col">
-        <div class="business-categories">
-          <div class="todo">
-            {% for category in categories %}
-            {{category}}
-            {% endfor %}.</div>
-        </div>
-        <div class="business-desc">
-          {{business.description}}
-        </div>
-      </div>
-      <div class="business-map-col">
-        <div id="business-map" data-business-location="{{business.location}}" data-title="{{business.name}}"></div>
-        <a href="javascript:;" title="Get directions to this location" class="btn">Get Directions</a>
-      </div>
-    </div>
 
-    <div class="business-reviews-features-wrapper clearfix">
-
-      <div class="col business-reviews-col"><div class="business-reviews-col-wrapper">
-        <div class="clearfix title-ratings-wrapper">
-          <h2>Customer Reviews</h2>
-          <div class="ratings-wrapper">
-            <div class="business-reviews-stars-number">
-              <div class="review-stars-wrapper">
-                <div class="review-stars" data-rating="{{business.get_avg_rating}}">
-                  <div class="review-stars-default default"></div>
-                  <div class="review-stars-rating rating"></div>
-                </div>
-              </div>
-              <div class="text">{{business.get_no_reviews}} reviews</div>
+      <div class="right-column">
+        {% if business.features.all %}
+          <div class="right-column-block">
+            <div class="block-header">Business Features</div>
+            <div class="block-content">
+              {% for feature in business.features.all %}
+                <div>{{ feature }}</div>
+              {% endfor %}
             </div>
           </div>
-        </div>
+        {% endif %}
 
-        <div class="sort-wrapper clearfix">
-          <label>Sort by:</label>
-            <a href="?sort=date" class="sort-btn btn btn-date grey-btn">Date</a>
-            <a href="?sort=rating" class="sort-btn btn btn-rating grey-btn">Rating</a>
-        </div>
-
-        <div class="trust-us-wrapper clearfix">
-          <div class="trust-info">
-            <p>Your trust is our top concern.</p>
-            <p>Businesses can't pay to alter or remove their reviews.</p>
-            <p class="link"><a href="javascript:;">Learn more</a></p>
-          </div>
-          <div class="write-review-col">
-            <div class="intro">Start your review of <strong>{{business.name}}</strong></div>
-            <div class="write-review-wrapper">
-              <div class="review-stars blue">
-                <div class="rating"></div>
-              </div>
-              <div class="txt">Select your rating.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="business-reviews-list-wrapper">
-
-          {% for review in reviews %}
-          {% include 'core/review_detail_snippet.html' %}
-          {% endfor %}
-          <div class="pagination">
-            <span class="step-links">
-              {% if reviews.has_previous %}
-                <a href="?page={{reviews.previous_page_number}}">previous</a>
-              {% endif %}
-              <span class="current">
-                Page {{reviews.number}} of {{reviews.paginator.num_pages}}
-              </span>
-              {% if reviews.has_next %}
-                 <a href="?page={{reviews.next_page_number}}">next</a>
-              {% endif %}
-            </span>
-          </div>
-
-        </div>
-
-      </div></div>
-
-      <div class="col business-features-col">
-        <div class="block block-features">
-          <h2>Business Features</h2>
+        <div class="right-column-block">
+          <div class="block-header">Connect on Facebook</div>
           <div class="block-content">
-            {% for feature in business.features.all %}
-            {{feature}}
-            {% endfor %}
+            {% include 'core/static/facebook.html' %}
           </div>
         </div>
-        <div class="block block-facebook">
-          <h2>Connect on Facebook</h2>
-          <div class="block-content">
-          </div>
-        </div>
-        <div class="block block-similar-businesses">
-          <h2>Similar Businesses</h2>
+
+        <div class="similar-businesses">
+          <div class="block-header">Similar Businesses</div>
           <div class="block-content">
             {% for business in business_set %}
-              <div class="similar-business-item clearfix">
-                {% if business.photo %}
-                  <img src="{{business.photo.url}}" class="img">
-                {% endif %}
-                <div class="details">
-                  <div class="title">
-                    <a href="{% url 'core:business_detail' pk=business.pk %}">{{business.name}}</a>
-                  </div>
-                  <div class="business-reviews-stars-number user-business-review">
-                    <div class="review-stars-wrapper">
-                      <div class="review-stars" data-rating="{{business.get_avg_rating}}">
-                        <div class="review-stars-default default"></div>
-                        <div class="review-stars-rating rating"></div>
-                      </div>
-                    </div>
-                    <div class="text">{{business.get_no_reviews}} reviews</div>
-                  </div>
-                  <div class="desc">{{business.description}}</div>
-                </div>
-              </div>
+              {% include 'core/businesses/_similar_businesses.html' %}
             {% endfor %}
           </div>
         </div>
       </div>
-
     </div>
-
   </div>
 </div>
 
 {% endblock %}
 
 {% block scripts %}
+  <script src="/static/africaone/js/plugins/slick/slick.min.js" type="text/javascript"></script>
+  {% include 'core/js_components/js_map_with_static_marker.html' %}
+  {% include 'core/js_components/js_review_card.html' %}
+  {% include 'core/js_components/js_lightbox.html' %}
+
   <script>
     $(document).ready(function() {
-      feedbackHandler();
-    });
-
-    function feedbackHandler() {
-      $('.btn-feedback').click(function(event) {
-        var params = {};
-        event.preventDefault();
-
-        params['csrfmiddlewaretoken'] = '{{ csrf_token }}';
-        params['tag'] = $(this).attr('data-tag');
-        params['review_id'] = parseInt($(this).parent().attr('data-review-id'));
-
-        $.post('/tag_review/', params).fail(function(err) {
-          console.log(err);
-        });
+      $('.rating-button .rating-stars').click(function() {
+        location.href = "{% url 'core:review_add' business_pk=business.pk %}";
       });
-    }
+
+      loadMapScript();
+
+      $('.carousel-block').slick({
+        variableWidth: true,
+        adaptiveHeight: true
+      });
+    });
   </script>
 {% endblock %}
