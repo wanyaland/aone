@@ -1,0 +1,143 @@
+.review-card-block {
+  @include clearfix();
+  background-color: #fff;
+  margin-bottom: 3px;
+
+  .review-card-left-column {
+    float: left;
+    width: 35%;
+    padding: 30px 20px 30px 25px;
+
+    .user-photo {
+      width: 35%;
+      float: left;
+      padding: 3px 15px 0 0;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .user-info {
+      width: 65%;
+      float: left;
+
+      .user-name {
+        color: #007fa8;
+        @include ems_font_size(15px, $font-size-base);
+        font-weight: bold;
+      }
+
+      .user-since {
+        color: #858585;
+        line-height: 1.5;
+      }
+    }
+  }
+
+  .review-card-right-column {
+    float: left;
+    width: 65%;
+    padding: 30px 30px 30px 20px;
+
+    .business-name {
+      color: #007fa8;
+      @include ems_font_size(16px, $font-size-base);
+      font-weight: bold;
+    }
+
+
+    .rating-block {
+      .rating-stars {
+        float: left;
+      }
+
+      .rating-description {
+        float: left;
+        color: #999999;
+        line-height: 1;
+        padding-left: 6px;
+        padding-top: 6px;
+        @include ems_font_size(12px, $font-size-base);
+      }
+
+      .date {
+        float: right;
+        padding-top: 6px;
+        color: #999999;
+        line-height: 1;
+        @include ems_font_size(12px, $font-size-base);
+      }
+    }
+
+    .review-text {
+      padding-top: 10px;
+      color: #666666;
+    }
+
+    .review-photos {
+      border-top: 1px solid #cccccc;
+      padding-top: 16px;
+      margin-top: 20px;
+      text-align: center;
+
+      a {
+        display: inline-block;
+        vertical-align: top;
+        width: 24%;
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+
+    .review-feedback {
+      margin: 15px 0;
+      padding: 15px 5px;
+      border-top: solid 1px #ccc;
+      border-bottom: solid 1px #ccc;
+
+      label, a {
+        float: left;
+      }
+
+      label {
+        color: #aaa;
+        width: 126px;
+        line-height: 32px;
+      }
+
+      .btn {
+        line-height: 30px;
+        padding: 0 20px;
+        margin: 0 0 0 4px;
+      }
+
+      .feedback-vote {
+        margin-left: 132px;
+        color: #666;
+      }
+    }
+
+    .share-review-block {
+      .share-review-btn {
+        display: inline-block;
+        cursor: pointer;
+        padding-right: 20px;
+        line-height: 30px;
+        position: relative;
+
+        .share-icon {
+          position: absolute;
+          left: 10px;
+          top: 8px;
+        }
+
+        .share-btn-text {
+          margin-left: 35px;
+        }
+      }
+    }
+  }
+}

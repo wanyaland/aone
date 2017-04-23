@@ -83,71 +83,9 @@
               <!-- recent activity -->
               <div class="block-recent-activity">
                 <h2>Recent Activity on AfricaOne</h2>
+                
                 {% for review in recent_activities %}
-                  <div class="block-content clearfix">
-                    <div class="left-column">
-                      <div class="user-photo">
-                        {% if review.customer.photo %}
-                          <img src="{{review.customer.photo.url}}" class="img">
-                        {% else %}
-                          <img src="/static/africaone/static-images/empty-avatar.jpg">
-                        {% endif %}
-                      </div>
-                      <div class="user-info">
-                        <div class="user-name">
-                          By {{review.customer|default_if_none:'Anonymous'}}
-                        </div>
-
-                        <div class="user-since">
-                          Member since
-                          <br>{{review.customer.user.date_joined|date:'M d, Y'}}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="right-column">
-                      <a href="{% url 'core:business_detail' review.business.id %}" class="business-name">
-                        {{ review.business.name|upper }}
-                      </a>
-                      <div class="rateit rating-stars" data-rateit-starwidth="17" data-rateit-starheight="14" data-rateit-value="0" data-rateit-readonly="true"></div>
-                      <div class="rating-block clearfix">
-                        <div class="rating-description">
-                          {{ review.rating.score|default_if_none:'0' }} out of 5 stars
-                        </div>
-                        <div class="date">
-                          On {{review.create_date|date:'M d, Y'}}
-                        </div>
-                      </div>
-                      <div class="review-text">
-                        <div class="full-text">
-                          {{ review.review }}
-                        </div>
-                      </div>
-
-                      {% if review.businessphoto_set.all %}
-                        <div class="review-photos">
-                          {% for review_photo in review.businessphoto_set.all %}
-                            <a href="{{ review_photo.photo.url }}" data-lightbox="review-{{ review.id }}">
-                              <img src="{{ review_photo.photo.url }}">
-                            </a>
-                          {% endfor %}
-                        </div>
-                      {% endif %}
-
-                      <div class="review-feedback clearfix" data-review-id="{{ review.id }}">
-                        <label>Was this review?</label>
-                        <a class="btn btn-feedback btn-helpful grey-btn" data-tag="HELPFUL">Helpful</a>
-                        <a class="btn btn-feedback btn-funny grey-btn" data-tag="FUNNY">Funny</a>
-                        <a class="btn btn-feedback btn-cool grey-btn" data-tag="COOL">Cool</a>
-                      </div>
-
-                      <div class="share-review-block">
-                        <a class="share-review-btn btn-icon btn-share">
-                          <span class="icon"><span></span></span>Share this review
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+                  {% include 'core/reviews/_review_card.html' %}
                 {% endfor %}
                 
                 <div class="see-more-activity">
@@ -194,15 +132,14 @@
 {% endblock %}
 
 {% block scripts %}
-  <link href="/static/africaone/js/plugins/lightbox2/css/lightbox.min.css" rel="stylesheet">
-  <script src="/static/africaone/js/plugins/lightbox2/js/lightbox.min.js"></script>
+  {% include 'core/js_components/js_review_card.html' %}
+  {% include 'core/js_components/js_lightbox.html' %}
 
   <script>
     $(document).ready(function() {
       categoriesHandler();
       bannerHandler();
       getBusinessForCategory();
-      initLightbox();
       feedbackHandler();
     });
 
@@ -372,27 +309,6 @@
           $('.banner-wrapper .error-message').hide();
           $('.banner-wrapper .business-info').submit();
         }
-      });
-    }
-
-    function initLightbox() {
-      lightbox.option({
-        'wrapAround': true
-      })
-    }
-
-    function feedbackHandler() {
-      $('.btn-feedback').click(function(event) {
-        var params = {};
-        event.preventDefault();
-
-        params['csrfmiddlewaretoken'] = '{{ csrf_token }}';
-        params['tag'] = $(this).attr('data-tag');
-        params['review_id'] = parseInt($(this).parent().attr('data-review-id'));
-
-        $.post('/tag_review/', params).fail(function(err) {
-          console.log(err);
-        });
       });
     }
   </script>

@@ -1,0 +1,18 @@
+<script>
+  function initializeMap() {
+    var mapElm = $('#map-block');
+    var mapPos = mapElm.data('business-location').split(',');
+    var latLng = new google.maps.LatLng(mapPos[0], mapPos[1]);
+
+    var map = new google.maps.Map(document.getElementById('map-block'), {
+      center: latLng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var marker = new google.maps.Marker({
+      position: latLng,
+      map: map
+    });
+  }
+</script>

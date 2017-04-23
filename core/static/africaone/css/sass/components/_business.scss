@@ -181,27 +181,9 @@
   }
 }
 
-.similar-business-item {
-  padding: 30px 25px;
-  border-bottom: solid 1px #f1f1f1;
-  color: #666;
-  .img {
-    background: #f2f2f2;
-    float: left;
-    width: 130px;
-    height: 95px;
-  }
-  .details {
-    margin-left: 150px;
-  }
-  .title {
-    a {
-      text-transform: uppercase;
-      color: $blue;
-      font-weight: bold;
-      line-height: 1.2em;
-      @include ems_font_size(14px, $font-size-base);
-    }
+.business-features-col {
+  .block-content {
+    padding: 25px;
   }
 }
 
