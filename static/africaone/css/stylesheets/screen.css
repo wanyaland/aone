@@ -610,6 +610,8 @@ div.rating-stars div.rateit-hover {
 }
 div.rating-stars div.rateit-selected {
   background: url('../images/star-17x14-green.png?1488188657');
+  width: 17px;
+  height: 14px;
 }
 div.rating-stars div.rateit-reset {
   background: url('../images/star-17x14-grey.png?1488188657');
@@ -665,9 +667,75 @@ div.rating-stars.blue div.rateit-reset:hover {
 .app-input {
   display: block;
   width: 100%;
-  line-height: 43px;
   border: solid 1px #c4c4c4;
   padding: 0 15px;
+}
+
+input.app-input {
+  line-height: 43px;
+}
+
+input.app-input:-moz-placeholder,
+textarea.app-input:-moz-placeholder {
+  color: #a9a9a9;
+}
+input.app-input::-moz-placeholder,
+textarea.app-input::-moz-placeholder {
+  color: #a9a9a9;
+}
+input.app-input:-ms-input-placeholder,
+textarea.app-input:-ms-input-placeholder {
+  color: #a9a9a9;
+}
+input.app-input::-webkit-input-placeholder,
+textarea.app-input::-webkit-input-placeholder {
+  color: #a9a9a9;
+}
+
+.app-form-group {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+.app-form-group .input-label {
+  display: table-cell;
+  width: 60px;
+  color: #666;
+  vertical-align: middle;
+  padding-bottom: 10px;
+}
+.app-form-group .app-form-group-input {
+  display: table-cell;
+}
+
+.upload-photo-btn-wrapper {
+  margin-top: 10px;
+}
+.upload-photo-btn-wrapper .upload-btn {
+  position: relative;
+  vertical-align: bottom;
+  overflow: hidden;
+  display: inline-block;
+  background-color: #fff;
+  color: #a9a9a9;
+  font-size: 1em;
+  line-height: 43px;
+  padding: 0 15px;
+  border: 1px solid #c4c4c4;
+}
+.upload-photo-btn-wrapper input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  line-height: 43px;
+  font-size: 24px;
+  cursor: pointer;
+  opacity: 0;
+}
+.upload-photo-btn-wrapper span {
+  padding-left: 5px;
+  line-height: 45px;
+  color: #a9a9a9;
 }
 
 /**
@@ -1969,35 +2037,6 @@ ul.footer-menu a:hover {
   background: #007fa8;
   border-color: #007fa8;
 }
-.add-business-wrapper .upload-photo-btn-wrapper {
-  margin-top: 10px;
-}
-.add-business-wrapper .upload-photo-btn-wrapper .upload-btn {
-  position: relative;
-  vertical-align: bottom;
-  overflow: hidden;
-  display: inline-block;
-  background-color: #fff;
-  color: #a9a9a9;
-  font-size: 1em;
-  line-height: 43px;
-  padding: 0 15px;
-  border: 1px solid #c4c4c4;
-}
-.add-business-wrapper .upload-photo-btn-wrapper input {
-  position: absolute;
-  top: 0;
-  right: 0;
-  line-height: 43px;
-  font-size: 24px;
-  cursor: pointer;
-  opacity: 0;
-}
-.add-business-wrapper .upload-photo-btn-wrapper span {
-  padding-left: 5px;
-  line-height: 45px;
-  color: #a9a9a9;
-}
 .add-business-wrapper .open-hours {
   margin: 20px 0 0 0;
 }
@@ -2043,28 +2082,35 @@ ul.footer-menu a:hover {
   border-bottom: solid 1px #f1f1f1;
 }
 
-.sidebar-teaser a, .sidebar-teaser img, .sidebar-teaser span {
+a.sidebar-event-item {
   display: block;
+  padding: 20px;
+  color: #579ebc;
+  overflow: hidden;
+  *zoom: 1;
+  -moz-transition: all 0.3s ease-in;
+  -o-transition: all 0.3s ease-in;
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
 }
-.sidebar-teaser a {
-  position: relative;
-  padding: 20px 30px;
+a.sidebar-event-item .event-photo-wrapper {
+  float: left;
+  width: 25%;
 }
-.sidebar-teaser a img {
-  position: absolute;
-  background: #ccc;
-  width: 80px;
-  height: auto;
-  min-height: 40px;
-  left: 30px;
-  top: 20px;
+a.sidebar-event-item .event-photo-wrapper img {
+  width: 100%;
 }
-.sidebar-teaser a .title {
+a.sidebar-event-item .event-details-warapper {
+  float: left;
+  width: 75%;
+  padding-left: 15px;
+}
+a.sidebar-event-item .event-details-warapper .title {
   line-height: 1.3em;
   font-size: 1.15385em;
   margin-bottom: 3px;
 }
-.sidebar-teaser a .date {
+a.sidebar-event-item .event-details-warapper .date {
   font-size: 0.84615em;
   color: #868686;
   -moz-transition: color 0.3s ease-in;
@@ -2072,25 +2118,12 @@ ul.footer-menu a:hover {
   -webkit-transition: color 0.3s ease-in;
   transition: color 0.3s ease-in;
 }
-.sidebar-teaser a:hover {
+a.sidebar-event-item:hover {
   background-color: #77c301;
   color: #fff;
 }
-.sidebar-teaser a:hover .date {
+a.sidebar-event-item:hover .date {
   color: #fff;
-}
-.sidebar-teaser.with-img a {
-  padding-left: 140px;
-}
-.smaller-teasers .sidebar-teaser a {
-  padding: 16px 20px;
-}
-.smaller-teasers .sidebar-teaser a img {
-  width: 55px;
-  left: 20px;
-}
-.smaller-teasers .sidebar-teaser.with-img a {
-  padding-left: 95px;
 }
 
 ul.events-list {
@@ -2110,21 +2143,34 @@ ul.events-list.events-list-3-col li {
 }
 
 .event-teaser {
-  padding-bottom: 35px;
+  padding-bottom: 15px;
 }
-.event-teaser a, .event-teaser img {
+.event-teaser a {
   display: block;
 }
 .event-teaser img {
-  width: 100%;
-  height: auto;
+  display: block;
+  max-height: 100%;
+  max-width: 100%;
   background: #dbdbdb;
+  position: absolute;
+  bottom: 0;
 }
 .event-teaser .img {
+  position: relative;
+  width: 100%;
   margin-bottom: 8px;
 }
 .events-list-2-col .event-teaser .img {
   margin-bottom: 15px;
+  height: 180px;
+}
+.events-list-3-col .event-teaser .img {
+  margin-bottom: 15px;
+  height: 120px;
+}
+.event-teaser .name-date {
+  height: 80px;
 }
 .event-teaser .name a {
   font-weight: bold;
@@ -2142,9 +2188,163 @@ ul.events-list.events-list-3-col li {
   color: #666;
 }
 
+.event-date-input {
+  padding-left: 25px;
+  display: none;
+  color: #666;
+}
+
+.events-list-item {
+  overflow: hidden;
+  *zoom: 1;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  border-bottom: solid 2px #f1f1f1;
+}
+.events-list-item .item-photo {
+  width: 35%;
+  float: left;
+}
+.events-list-item .item-photo img {
+  width: 100%;
+}
+.events-list-item .item-details {
+  width: 65%;
+  float: left;
+  padding-left: 20px;
+}
+.events-list-item .item-details .item-name a {
+  text-transform: uppercase;
+  color: #007fa8;
+  font-weight: bold;
+  line-height: 1.2em;
+  font-size: 1.07692em;
+}
+.events-list-item .item-details .item-where {
+  padding-bottom: 15px;
+}
+.events-list-item .item-details .item-submitted-by {
+  padding-top: 10px;
+  text-align: right;
+}
+.events-list-item .item-details .item-submitted-by span {
+  font-weight: bold;
+}
+
+.add-event-wrapper {
+  margin-top: -80px;
+}
+.add-event-wrapper .column-title {
+  padding-left: 40px;
+}
+.add-event-wrapper .event-info-wrapper {
+  margin-bottom: 3px;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+.add-event-wrapper .event-info {
+  width: 50%;
+  float: left;
+  padding-right: 1px;
+}
+.add-event-wrapper .event-info .column-content {
+  min-height: 460px;
+  padding: 25px 40px 45px 40px;
+}
+.add-event-wrapper .event-info .column-content .column-description {
+  color: #666666;
+  font-size: 1em;
+  padding-bottom: 15px;
+}
+.add-event-wrapper .event-info .event-inputs input {
+  margin-bottom: 10px;
+}
+.add-event-wrapper .event-info .event-inputs .chosen-container-multi .chosen-choices {
+  background-image: none;
+  border: solid 1px #c4c4c4;
+  padding: 8px 15px;
+}
+.add-event-wrapper .event-info .event-inputs .chosen-container-multi .chosen-choices .search-field input {
+  color: #a9a9a9;
+}
+.add-event-wrapper .event-info .event-inputs textarea {
+  width: 100%;
+  height: 110px;
+  resize: vertical;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+}
+.add-event-wrapper .event-info .event-inputs .app-input.date-input {
+  display: block;
+  float: left;
+  width: 64.5%;
+}
+.add-event-wrapper .event-info .event-inputs .app-input.time-input {
+  display: block;
+  float: right;
+  width: 35%;
+}
+.add-event-wrapper .event-info .event-inputs .start-datetime-group .app-input {
+  margin-bottom: 0.5%;
+}
+.add-event-wrapper .event-info .event-inputs .app-form-group-input .app-input.price-input {
+  display: block;
+  float: left;
+  width: 55%;
+}
+.add-event-wrapper .event-info .event-inputs .app-form-group-input .price-checkbox-wrapper {
+  float: right;
+  width: 44%;
+  background-color: #f1f1f1;
+  border: 1px solid #c4c4c4;
+  color: #666;
+  padding-left: 10px;
+  line-height: 43px;
+}
+.add-event-wrapper .event-info .event-inputs .app-form-group-input .price-checkbox-wrapper span {
+  margin-left: 10px;
+}
+.add-event-wrapper .event-map {
+  width: 50%;
+  float: left;
+  padding-left: 1px;
+}
+.add-event-wrapper .event-map .column-content {
+  min-height: 682px;
+  padding: 40px;
+}
+.add-event-wrapper .event-map .event-location {
+  width: 100%;
+  height: 602px;
+}
+.add-event-wrapper .review-wrapper .column-content {
+  padding: 30px 40px;
+}
+.add-event-wrapper .form-buttons-wrapper {
+  margin-top: 25px;
+}
+.add-event-wrapper .btn {
+  display: inline-block;
+}
+.add-event-wrapper .btn.create-btn {
+  padding: 0 36px;
+  margin-right: 6px;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  -moz-transition: all 0.3s ease-in;
+  -o-transition: all 0.3s ease-in;
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+.add-event-wrapper .btn.link:hover {
+  text-decoration: underline;
+}
+
 .filter-businesses-wrapper,
 .filter-content-wrapper {
-  background: #414647;
+  background: #f1f1f1;
 }
 
 .filters-col {
@@ -2166,7 +2366,7 @@ ul.events-list.events-list-3-col li {
   line-height: 36px;
   background: #f5f5f5;
   color: #83898b;
-  max-width: 145px;
+  padding: 0 30px;
 }
 .filters-col .search-textbox {
   width: 100%;
@@ -2261,6 +2461,19 @@ ul.events-list.events-list-3-col li {
 }
 .events-landing-page-wrapper .filter-content-col {
   min-height: 1015px;
+}
+
+.search-filters-wrapper {
+  background: #414647;
+}
+.search-filters-wrapper .sub-categories-div .hidden-category {
+  display: none;
+}
+.search-filters-wrapper .link-wrapper .view-all-link {
+  text-transform: uppercase;
+  margin: 20px 0 0;
+  color: #00c0ff;
+  cursor: pointer;
 }
 
 .africaone-form {
@@ -2676,6 +2889,10 @@ body.js-ready .africaone-form .price-field .free-price label {
 }
 .home-top-banner-reviews .banner-wrapper .review-content .business-info .login-message {
   color: #666;
+}
+.home-top-banner-reviews .banner-wrapper .review-content .business-info .login-message a {
+  font-weight: bold;
+  text-decoration: underline;
 }
 .home-top-banner-reviews .slider-btn {
   cursor: pointer;
@@ -3937,99 +4154,128 @@ body.js-ready .africaone-form .price-field .free-price label {
   margin-bottom: 20px;
 }
 
+.businesses-listing-wrapper {
+  background-color: #f1f1f1;
+}
 .businesses-listing-wrapper .sort-links-wrapper {
+  display: table;
   background-color: #0083ae;
   color: #fff;
+  width: 100%;
 }
-.businesses-listing-wrapper .sort-links-wrapper .col {
-  float: left;
-  border-right: solid 1px #006e92;
+.businesses-listing-wrapper .sort-links-wrapper .sort-tab {
+  display: table-cell;
+  border-right: 1px solid #006e92;
+  height: 80px;
+  text-align: center;
+  vertical-align: middle;
 }
-.businesses-listing-wrapper .sort-links-wrapper .col-label {
-  padding: 30px 30px 30px 40px;
+.businesses-listing-wrapper .sort-links-wrapper .sort-tab.tab-caption {
+  width: 15%;
 }
-.businesses-listing-wrapper .sort-links-wrapper .col-link a {
-  display: block;
-  padding: 30px;
-  color: #fff;
+.businesses-listing-wrapper .sort-links-wrapper .sort-tab.tab-with-link {
+  width: 18%;
+}
+.businesses-listing-wrapper .sort-links-wrapper .sort-tab.tab-with-link .tab-link {
+  cursor: pointer;
+}
+.businesses-listing-wrapper .sort-links-wrapper .sort-tab.tab-with-link .tab-link.selected {
+  text-decoration: underline;
+}
+.businesses-listing-wrapper .pagination-block {
+  height: 52px;
+  background-color: #fff;
+  padding: 11px;
+  text-align: center;
+}
+.businesses-listing-wrapper .pagination-block .pager {
+  padding: 0;
+  border-bottom: 0;
+}
+
+.business-items-wrapper.message {
+  background-color: #fff;
+  font-size: 2.46154em;
+  padding: 50px 30px;
+  color: #666;
+  text-align: center;
 }
 
 .business-listing-item {
-  padding: 35px 45px 30px;
-  border-bottom: solid 2px #f1f1f1;
-}
-.business-listing-item img {
-  display: block;
+  display: table;
+  table-layout: fixed;
   width: 100%;
-  height: auto;
+  padding: 30px 40px 25px 40px;
+  margin-bottom: 2px;
+  background-color: #fff;
 }
-.business-listing-item .business-details-strip .img {
-  float: left;
-  width: 165px;
-  background-color: #f2f2f2;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-  overflow: hidden;
-  min-height: 80px;
+.business-listing-item .business-photo {
+  display: table-cell;
+  vertical-align: top;
+  width: 20%;
 }
-.business-listing-item .business-details-strip .business-details {
-  margin-left: 200px;
+.business-listing-item .business-photo img {
+  width: 100%;
 }
-.business-listing-item .business-details-strip .business-details .col {
-  float: left;
+.business-listing-item .business-name-description {
+  display: table-cell;
+  vertical-align: top;
   width: 30%;
   padding: 0 30px;
 }
-.business-listing-item .business-details-strip .business-details .business-name-details {
-  width: 40%;
-  padding-left: 0;
-}
-.business-listing-item .business-details-strip .business-details .price-sub-categories {
-  border-left: solid 1px #f1f1f1;
-  border-right: solid 1px #f1f1f1;
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-.business-listing-item .business-details-strip .business-details .address-phone-website {
-  padding-right: 0;
-}
-.business-listing-item .business-details-strip .business-details .phone {
-  margin: 3px 0;
-}
-.business-listing-item .business-details-strip .business-details .price {
-  color: #dcdcdc;
-}
-.business-listing-item .business-details-strip .business-details .price span {
-  color: #424242;
-}
-.business-listing-item .business-details-strip h3 {
+.business-listing-item .business-name-description .business-name {
   margin: 0;
   font-size: 1.30769em;
   text-transform: uppercase;
 }
-.business-listing-item .business-details-strip h3 a {
+.business-listing-item .business-name-description .business-name a {
   color: #007fa8;
 }
-.business-listing-item .business-details-strip .business-reviews-stars-number {
-  margin: 5px 0;
+.business-listing-item .price-sub-categories {
+  display: table-cell;
+  vertical-align: top;
+  width: 25%;
+  padding: 0 30px;
+  border: 1px solid #f1f1f1;
+  border-width: 0 1px 0 1px;
+}
+.business-listing-item .price-sub-categories .price {
+  color: #dcdcdc;
+}
+.business-listing-item .price-sub-categories .price .marked {
+  color: #424242;
+}
+.business-listing-item .address-phone-website {
+  display: table-cell;
+  vertical-align: top;
+  width: 25%;
+  padding: 0 20px;
+  word-break: break-all;
 }
 .business-listing-item .business-review {
-  border-top: solid 1px #f1f1f1;
-  padding-top: 15px;
+  display: table;
   margin-top: 15px;
+  padding-top: 14px;
+  border-top: 1px solid #f1f1f1;
 }
-.business-listing-item .business-review .user-img {
-  float: left;
-  background-color: #d0d7db;
-  width: 45px;
-  min-height: 45px;
+.business-listing-item .business-review .user-photo {
+  display: table-cell;
+  vertical-align: top;
+  width: 10%;
+  padding-right: 20px;
+}
+.business-listing-item .business-review .user-photo img {
+  width: 100%;
 }
 .business-listing-item .business-review .user-review {
-  margin-left: 65px;
-  color: #999;
+  display: table-cell;
+  vertical-align: top;
+  width: 90%;
 }
 .business-listing-item .business-review .user-review a {
+  color: #999;
+}
+.business-listing-item .business-review .user-review a span {
   color: #70b700;
 }
 
@@ -4189,18 +4435,18 @@ body.js-ready .africaone-form .price-field .free-price label {
   text-transform: none;
   font-size: 1.92308em;
 }
-.events-landing-page-content .featured-popular-events-col {
+.events-landing-page-content .events-list-wrapper {
   float: left;
   width: 100%;
 }
-.events-landing-page-content .featured-popular-events-col .block-content {
+.events-landing-page-content .events-list-wrapper .block-content {
   padding: 40px 40px 10px;
 }
-.events-landing-page-content .featured-popular-events {
+.events-landing-page-content .events-col {
   margin-right: 280px;
   border-right: solid 1px #f1f1f1;
 }
-.events-landing-page-content .featured-popular-events h2 {
+.events-landing-page-content .events-col h2 {
   line-height: 80px;
   padding: 0 40px;
 }
@@ -4229,8 +4475,12 @@ body.js-ready .africaone-form .price-field .free-price label {
   color: #fff;
   background-color: #007fa8;
 }
-.events-landing-page-content .popular-events {
-  border-top: solid 3px #f1f1f1;
+.events-landing-page-content .featured-events {
+  border-bottom: solid 3px #f1f1f1;
+}
+.events-landing-page-content .featured-events,
+.events-landing-page-content .sorted-events {
+  display: none;
 }
 
 .full-event-page-wrapper h1 {
@@ -4272,26 +4522,26 @@ body.js-ready .africaone-form .price-field .free-price label {
 .full-event-page-wrapper .other-events-list .smaller-teasers .sidebar-teaser.with-img img {
   left: 30px;
 }
-.full-event-page-wrapper .venue-map-wrapper {
+.full-event-page-wrapper .event-map-wrapper {
   background-color: #333;
   color: #fff;
   padding: 0 30px 30px;
 }
-.full-event-page-wrapper .venue-map-wrapper .title {
+.full-event-page-wrapper .event-map-wrapper .title {
   text-align: center;
   font-weight: bold;
   font-size: 1.15385em;
   text-transform: uppercase;
   padding: 30px 0 20px;
 }
-.full-event-page-wrapper .venue-map-wrapper .btn {
+.full-event-page-wrapper .event-map-wrapper .btn {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 1.15385em;
   line-height: 35px;
   margin-top: 2px;
 }
-.full-event-page-wrapper .venue-map-wrapper .venue-map {
+.full-event-page-wrapper .event-map-wrapper .event-location {
   height: 175px;
   background-color: #ccc;
 }
@@ -4384,7 +4634,6 @@ body.js-ready .africaone-form .price-field .free-price label {
   display: block;
 }
 .full-event-page-wrapper .comment .img-name-wrapper .img {
-  background-color: #d0d7db;
   float: left;
   width: 70px;
   -moz-border-radius: 4px;
@@ -4516,8 +4765,7 @@ body.js-ready .africaone-form .price-field .free-price label {
   margin-bottom: 20px;
 }
 .news-layout-wrapper .news-block-detail .news-photo img {
-  max-width: 100%;
-  max-height: 400px;
+  width: 100%;
 }
 .news-layout-wrapper .empty-news-wrapper {
   padding: 30px;
