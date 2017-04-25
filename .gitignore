@@ -1,7 +1,7 @@
 env/
 *.pyc
 .idea/
-businesses/
+
 db.sqlite3
 africa_one/settings.py
 
