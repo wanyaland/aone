@@ -1,186 +1,413 @@
+.business-page-wrapper {
+  .rating-block {
+    @include clearfix();
 
-.business-header {
-  background: #af7d42;
-  padding: 95px 0 0;
-}
-.business-title-header {
-  background: #fff;
-  @include border-top-left-radius(4px);
-  @include border-top-right-radius(4px);
-  padding: 30px 525px 15px 25px;
-  position: relative;
-  .business-title-categories {
-    position: relative;
-    padding-right: 190px;
-  }
-  .business-reviews-stars-number {
-    position: absolute;
-    width: 190px;
-    right: 0; top: 7px;
-  }
-  .categories {
-    margin: 6px 0 0;
-    &, a {
-      color: #666;
+    .rating-stars {
+      float: left;
     }
-    a:hover {
-      color: $green;
-    }
-  }
-}
 
-.start-business-review {
-  position: absolute;
-  right: 25px; top: 29px;
-  width: 500px;
-  .btn-icon {
-    float: right;
-  }
-  .btn-take-photo {
-    width: 135px;
-    border-right: none;
-    border-left: none;
-    .icon {
-      background-position: sprite-position($global-sprite, 'add-photo-grey');
-      span {
-        background-position: sprite-position($global-sprite, 'add-photo-white');
-      }
+    .rating-caption {
+      margin-left: 5px;
+      float: left;
     }
   }
-  .btn-share {
-    width: 108px;
-    @include border-top-left-radius(0);
-    @include border-bottom-left-radius(0);
-  }
-  .start-review-wrapper {
-    float: right;
-    width: 245px;
-    .help-txt {
-      color: #999;
-    }
-    .write-review-wrapper {
-      line-height: 32px;
-      @include border-top-right-radius(0);
-      @include border-bottom-right-radius(0);
-    }
-  }
-}
 
-.business-photos-carousel {
-  background: #fff;
-  padding: 20px;
-}
-
-.business-details-wrapper {
-  background: #fff;
-  padding: 45px 455px 30px 315px;
-  position: relative;
-  min-height: 300px;
-  .business-details-col {
-    position: absolute;
-    left: 25px; top: 45px;
-    width: 230px;
+  .columns-wrapper {
+    @include clearfix();
   }
-  .business-map-col {
-    position: absolute;
-    right: 25px; top: 45px;
-    width: 390px;
-    #business-map {
-      border: solid 1px #ccc;
-      height: 188px;
-    }
-    .btn {
-      font-weight: bold;
-      @include ems_font_size(15px, $font-size-base);
-      text-transform: uppercase;
-      margin: 3px 0 0;
-    }
-  }
-  .business-categories-col {}
-}
 
-.business-details-col {
-  color: #666;
-  line-height: 1.3em;
-}
-
-.business-reviews-features-wrapper {
-  margin-top: 2px;
-  .business-reviews-col {
+  .left-column {
+    width: 65%;
     float: left;
-    width: 100%;
-    padding-right: 417px;
+    padding-right: 2px;
   }
-  .business-features-col {
+
+  .right-column {
+    width: 35%;
     float: left;
-    width: 415px;
-    margin-left: -415px;
-    .block {
-      background: #fff;
+
+    .right-column-block {
       margin-bottom: 2px;
     }
-    h2 {
-      padding: 30px 25px;
-      border-bottom: solid 1px #f1f1f1;
+
+    .block-header {
+      background: #fff;
+      padding: 30px;
+      font-size: 25px;
+      font-weight: bold;
     }
-    .block-facebook h2 {
-      border-bottom: none;
+
+    .block-content {
+      background: #fff;
+      padding: 0 30px 30px 30px;
+    }
+
+    .similar-businesses {
+      .block-content {
+        padding: 0;
+      }
     }
   }
 }
 
-.business-reviews-col-wrapper {
-  background: #fff;
-  .title-ratings-wrapper {
-    padding: 35px 30px 0;
-    h2 {
-      @include ems_font_size(30px, $font-size-base);
+
+.business-page-header-wrapper {
+  background: #af7d42;
+  padding: 95px 0 0;
+  background: image-url('business-page-bg.jpg') no-repeat top center;
+
+  .business-page-header {
+    @include clearfix();
+    padding: 30px 20px 10px 20px;
+    background: #fff;
+    border-bottom: 1px solid #dcdcdc;
+
+    .business-name-block {
+      width: 35%;
       float: left;
+
+      .business-name {
+        font-size: 1.7rem;
+        line-height: 1.8rem;
+        font-weight: bold;
+      }
+
+      .business-category {
+        font-size: 15px;
+      }
     }
-    .ratings-wrapper {
+
+    .rating-block {
+      width: 25%;
       float: left;
-      padding: 6px 0 0 15px;
+      padding-left: 15px;
+      padding-top: 5px;
     }
-  }
-  .sort-wrapper {
-    padding: 20px 30px 25px;
-    color: #666;
-    label {
-      display: block;
-      width: 56px;
-      line-height: 32px;
+    
+    .start-review-block {
+      width: 40%;
       float: left;
-    }
-    .btn {
-      float: left;
-      line-height: 30px;
-      padding: 0 30px;
-      margin-left: 10px;
-    }
-  }
-  .trust-us-wrapper {
-    background: $blue;
-    color: #fff;
-    padding: 20px 30px;
-    p {
-      margin: 0 0 5px;
-      &.link {
-        margin: 0;
-        a {
-          color: #9bff00;
+
+      .start-review-three-buttons-wrapper {
+        @include clearfix();
+
+        .rating-button {
+          @include clearfix();
+          @include border-top-left-radius(2px);
+          @include border-bottom-left-radius(2px);
+          float: left;
+          background: #77c200;
+          border-color: #dcdcdc;
+          padding: 5px 10px 4px 10px;
+
+          .rating-stars {
+            float: left;
+            padding-top: 2px;
+            cursor: pointer;
+          }
+
+          .rating-caption {
+            float: left;
+            padding-left: 5px;
+            color: #fff;
+          }
+        }
+
+        .add-photo-button {
+          @include clearfix();
+          display: block;
+          border: 1px solid #dcdcdc;
+          border-width: 1px 0;
+          float: left;
+          padding: 5px 15px 4px 15px;
+
+          .photo-icon {
+            float: left;
+            margin-top: 3px;
+          }
+
+          .photo-icon-caption {
+            color: #666;
+            float: left;
+            padding-left: 10px;
+          }
+        }
+
+        .share-button {
+          @include clearfix();
+          display: block;
+          border: 1px solid #dcdcdc;
+          @include border-top-right-radius(2px);
+          @include border-bottom-right-radius(2px);
+          float: left;
+          padding: 5px 20px 4px 10px;
+
+          .share-icon {
+            float: left;
+            margin-top: 3px;
+          }
+
+          .share-icon-caption {
+            color: #666;
+            float: left;
+            padding-left: 10px;
+          }
         }
       }
-    }
-    .trust-info {
-      float: left;
-      width: 330px;
-    }
-    .write-review-col {
-      float: right;
-      width: 265px;
-      .intro {
-        padding-bottom: 10px;
+
+      .buttons-caption {
+        color: #999;
+      }
+    }    
+  }
+
+  .business-photos-wrapper {
+    height: 230px;
+    background: rgba(135, 0, 0, 0.8);
+    margin-top: -1px;
+    padding: 25px 30px;
+
+    // @include clearfix();
+
+    .slick-slide {
+      height: 180px;
+      padding: 0 5px;
+    //   width: 24%;
+    //   float: left;
+    //   margin: 0 0.5%;
+    //   text-align: center;
+    //   border: 1px solid rgba(135, 0, 0, 1);
+
+    //   img {
+    //     height: 100%;
+    //     max-width: 100%;
+    //   }
+    } 
+  }
+}
+
+
+.business-details-wrapper {
+  @include clearfix();
+  padding: 45px 30px 30px 30px;
+  background: #fff;
+  color: #666;
+  margin-bottom: 2px;
+  
+  .business-details-block {
+    width: 25%;
+    float: left;
+    padding-right: 10px;
+
+    .details-item {
+      position: relative;
+      margin-bottom: 10px;
+
+      .details-item-description {
+        margin-left: 30px;
+      }
+
+      .open-hours-icon {
+        position: absolute;
+        left: 5px;
+        top: 3px;
+        background: sprite($global-sprite, 'open-hours-icon');
+        background-position: sprite-position($global-sprite, 'open-hours-icon');
+        @include sprite-dimensions($global-sprite, 'open-hours-icon');
+      }
+
+      .telephone-icon {
+        position: absolute;
+        left: 5px;
+        top: 3px;
+        background: sprite($global-sprite, 'telephone-icon');
+        background-position: sprite-position($global-sprite, 'telephone-icon');
+        @include sprite-dimensions($global-sprite, 'telephone-icon');
+      }
+
+      .website-icon {
+        position: absolute;
+        left: 5px;
+        top: 3px;
+        background: sprite($global-sprite, 'website-icon');
+        background-position: sprite-position($global-sprite, 'website-icon');
+        @include sprite-dimensions($global-sprite, 'website-icon');
+      }
+
+      .location-icon {
+        position: absolute;
+        left: 5px;
+        top: 3px;
+        background: sprite($global-sprite, 'location-icon');
+        background-position: sprite-position($global-sprite, 'location-icon');
+        @include sprite-dimensions($global-sprite, 'location-icon');
       }
     }
   }
+
+  .business-description-block {
+    width: 40%;
+    float: left;
+    padding: 0 20px;
+  }
+
+  .business-map-block {
+    width: 35%;
+    float: left;
+    padding-left: 20px;
+
+    #map-block {
+      height: 200px;
+      border: 1px solid #dcdcdc;
+    }
+  }
+}
+
+
+.customer-reviews-wrapper {
+  .customer-reviews-header {
+    background: #fff;
+    padding: 35px 30px 30px 30px;
+
+    .reviews-title {
+      @include clearfix();
+      padding-bottom: 20px;
+
+      .title {
+        float: left;
+        font-size: 1.7rem;
+        line-height: 1.8rem;
+        font-weight: bold;
+      }
+
+      .rating-block {
+        float: left;
+        padding-left: 15px;
+        padding-top: 5px;
+      }
+    }
+
+    .reviews-sort-block {
+      @include clearfix();
+      color: #666;
+
+      .sort-caption {
+        float: left;
+        padding-right: 10px;
+        padding-top: 5px;
+      }
+
+      .reviews-sort-btn {
+        float: left;
+        width: 80px;
+        margin-left: 15px;
+        line-height: 30px;
+      }
+    }
+  }
+
+  .trust-info-wrapper {
+    @include clearfix();
+    background: #007fa8;
+    padding: 20px 30px;
+    color: #fff;
+
+    .trust-info {
+      width: 65%;
+      float: left;
+      
+      p {
+        margin: 5px 0;
+      }
+
+      a {
+        color: #9bff00;
+      }
+    }
+
+    .trust-write-review {
+      width: 35%;
+      float: left;
+    }
+
+    .rating-button {
+      @include clearfix();
+      @include border-radius(2px);
+      background: #77c200;
+      border-color: #dcdcdc;
+      padding: 9px 20px 8px 20px;
+      margin-top: 10px;
+
+      .rating-stars {
+        padding-top: 2px;
+        cursor: pointer;
+        float: left;
+      }
+
+      .rating-caption {
+        margin-left: 5px;
+        float: left;
+      }
+    }
+  }
+}
+
+
+.similar-businesses {
+  .block-header {
+    margin-bottom: 1px;
+  }
+
+  .similar-business-item {
+    @include clearfix();
+    padding: 30px 25px;
+    border-bottom: solid 1px #f1f1f1;
+    color: #666;
+
+    .business-photo {
+      width: 30%;
+      float: left;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .details {
+      padding-left: 15px;
+      width: 70%;
+      float: left;
+
+      .title {
+        a {
+          text-transform: uppercase;
+          color: $blue;
+          font-weight: bold;
+          line-height: 1.2em;
+          font-size: 14px;
+        }
+      }
+
+      .rating-stars {
+        display: inline-block;
+      }
+
+      .text {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+
+.photo-icon {
+  background: sprite($global-sprite, 'add-photo-grey');
+  background-position: sprite-position($global-sprite, 'add-photo-grey');
+  @include sprite-dimensions($global-sprite, 'add-photo-grey');
+}
+
+.share-icon {
+  background: sprite($global-sprite, 'share-grey');
+  background-position: sprite-position($global-sprite, 'share-grey');
+  @include sprite-dimensions($global-sprite, 'share-grey');
 }
