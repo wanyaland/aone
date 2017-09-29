@@ -1,9 +1,0 @@
-{% extends 'core/base.html' %}
-{% block main %}
-<form method="post" action="." enctype="multipart/form-data">
-    {%csrf_token%}
-    {{form.as_p}}
-    <input type="submit" class="btn-sm btn-primary" value="Upload"/>
-</form>
-
-{% endblock %}
