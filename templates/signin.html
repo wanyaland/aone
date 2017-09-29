@@ -1,0 +1,38 @@
+<div class="siginincontainer">
+    <h1 class="text-center">Sign in</h1>
+    <form id="login" class="form-horizontal margin-top-30"  method="post">
+        <p class="status"></p>
+        <div class="form-group">
+            <label for="username">Username or Email Address *</label>
+            <input type="text" class="form-control" id="username" name="username" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password *</label>
+            <input type="password" class="form-control" id="password" name="password" />
+        </div>
+        <div class="form-group"></div>
+        <div class="form-group">
+            <div class="checkbox pad-bottom-10">
+                <input id="check1" type="checkbox" name="remember" value="yes">
+                <label for="check1">Keep me signed in</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Sign in" class="lp-secondary-btn width-full btn-first-hover" />
+        </div>
+        <input type="hidden" id="security" name="security" value="8f9ad6e310" />
+        <input type="hidden" name="_wp_http_referer" value="/" />
+    </form>
+    <div class="pop-form-bottom">
+        <div class="bottom-links">
+            <a  class="signUpClick">Not a member? Sign up</a>
+            <a  class="forgetPasswordClick pull-right" >Forgot Password</a>
+        </div>
+        <p class="margin-top-15">Connect with your Social Network</p>
+
+        {% include 'sociallogin.html' %}
+
+    </div>
+    <a class="md-close"><i class="fa fa-close"></i></a>
+</div>

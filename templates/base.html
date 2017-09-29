@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<html lang="en-US">
+    <head>
+        {% include 'head_meta.html' %}
+
+        <title>{% block title%}Africa One &#8211; Africa Business Directory{% endblock title %}</title>
+        {% include "common_js.html" %}
+        {% include "common_css.html" %}
+
+        {% block additional_js %}{% endblock additional_js %}
+        {% block additional_css %}{% endblock additional_css %}
+
+        {% include 'additional_js.html' %}
+        {% include 'additional_css.html' %}
+
+    </head>
+    <body class="home page-template-default page page-id-17 wpb-js-composer js-comp-ver-5.2 vc_responsive" data-submitlink="./submit-listing/" data-sliderstyle="style1">
+        {% block body %}
+            {% block header %}
+                {% include 'header.html' %}
+            {% endblock header %}
+
+            {% block content %}{% endblock content %}
+
+            {% block footer %}
+                {% include 'footer.html' %}
+            {% endblock footer %}
+        {% endblock body %}
+
+    </body>
+    {% include 'additional_js_footer.html' %}
+    {% include 'additional_css_footer.html' %}
+
+    {% block additional_js_footer %}{% endblock additional_js_footer %}
+    {% block additional_css_footer %}{% endblock additional_css_footer %}
+
+</html>

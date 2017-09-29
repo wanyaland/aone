@@ -1,0 +1,390 @@
+
+.businesss-review-item {
+  padding: 35px 30px 45px 310px;
+  position: relative;
+  border-bottom: solid 2px #f1f1f1;
+  .user {
+    position: absolute;
+    left: 30px; top: 35px;
+    width: 245px;
+    .img {
+      float: left;
+      width: 70px;
+      height: 70px;
+      background: #cfd7da;
+      @include border-radius(3px);
+    }
+    .user-details {
+      float: right;
+      width: 150px;
+      line-height: 1.3em;
+      color: #999;
+    }
+    .user-name {
+      font-weight: bold;
+      color: #579ebc;
+      @include ems_font_size(14px, $font-size-base);
+      margin-bottom: 5px;
+    }
+  }
+  .review-body-wrapper {
+    .title-wrapper {
+      margin: 15px 0;
+      position: relative;
+      h2 {
+        font-weight: normal;
+        @include ems_font_size(15px, $font-size-base);
+      }
+      .review-date {
+        position: absolute;
+        width: 150px;
+        overflow: hidden;
+        color: #999;
+        white-space: nowrap;
+        right: 0; top: 0;
+      }
+    }
+    .review-text {
+      color: #666;
+    }
+  }
+  .review-images-list {
+    margin: 15px -2px;
+    padding: 15px 0 0;
+    border-top: solid 1px #ccc;
+    li {
+      float: left;
+      padding: 0 2px;
+    }
+    img {
+      height: 75px;
+      width: auto;
+    }
+  }
+  .review-feedback {
+    margin: 15px 0;
+    padding: 15px 0;
+    border-top: solid 1px #ccc;
+    border-bottom: solid 1px #ccc;
+    label, a {
+      float: left;
+    }
+    label {
+      color: #aaa;
+      width: 126px;
+      line-height: 32px;
+    }
+    .btn {
+      line-height: 30px;
+      padding: 0 20px;
+      margin: 0 0 0 4px;
+    }
+  }
+  .share-review-btn {
+    line-height: 30px;
+    width: 160px;
+  }
+}
+
+.user-review-wrapper {
+  padding-left: 30px;
+  .share-review-col {
+    float: left;
+    width: 250px;
+    padding-left: 40px;
+    margin-left: -250px;
+    h2 {
+      @include ems_font_size(25px, $font-size-base);
+      margin: 0 0 25px;
+    }
+    .social-btn {
+      background: #4e6ca4;
+      @include border-radius(3px);
+      line-height: 50px;
+      color: #fff;
+      padding: 0 0 0 55px;
+      text-transform: uppercase;
+      position: relative;
+      margin-bottom: 12px;
+      &, span {
+        display: block;
+      }
+      .icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        @include translateY(-50%);
+        background: sprite($global-sprite, 'header-social-fb-white');
+        @include sprite-dimensions($global-sprite, 'header-social-fb-white');
+      }
+      &.twitter {
+        background-color: #00aef1;
+        .icon {
+          background-position: sprite-position($global-sprite, 'header-social-twitter-white');
+        }
+      }
+      &:hover {
+      }
+    }
+  }
+  .review-details-wrapper {
+    float: left;
+    width: 100%;
+  }
+  .review-details {
+    margin-right: 250px;
+    padding-right: 40px;
+    border-right: solid 1px #f1f1f1;
+  }
+  .business-img-name {
+    float: left;
+    width: 235px;
+    .img {
+      background: #f2f2f2;
+      @include border-radius(5px);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    a {
+      color: #007fa8;
+    }
+    h2 {
+      text-transform: uppercase;
+      @include ems_font_size(17px, $font-size-base);
+    }
+    .sub-categories {
+      margin: 3px 0 16px;
+      line-height: 1.4em;
+    }
+    .address {
+      margin: 15px 0 18px;
+      line-height: 1.4em;
+    }
+  }
+  .review-body-wrapper {
+    margin-left: 285px;
+    .title-wrapper {
+      h2 {
+        font-weight: 500;
+      }
+    }
+    .review-feedback {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+  }
+}
+
+.business-features-col {
+  .block-content {
+    padding: 25px;
+  }
+}
+
+.top-business-item {
+  position: relative;
+  min-height: 135px;
+  border-top: solid 1px #f1f1f1;
+  padding: 20px 100px 20px 155px;
+  img {
+    width: 100%; height: auto;
+  }
+  .business-img {
+    position: absolute;
+    width: 130px;
+    min-height: 70px;
+    left: 0; top: 20px;
+    background: #f2f2f2;
+    @include border-radius(3px);
+    overflow: hidden;
+  }
+  .business-user-photos {
+    position: absolute;
+    right: 0; bottom: 20px;
+    width: 65px;
+    .title {
+      @include ems_font_size(11px, $font-size-base);
+      color: #999;
+      line-height: 1.1em;
+      margin-bottom: 5px;
+    }
+    .images {
+      min-height: 40px;
+      background: #ccc;
+    }
+  }
+  .user-title {
+    @include ems_font_size(15px, $font-size-base);
+    a {
+      font-weight: 500;
+    }
+  }
+  .business-title {
+    text-transform: uppercase;
+    font-weight: bold;
+    @include ems_font_size(17px, $font-size-base);
+  }
+  .business-reviews-stars-number {
+    margin: 10px 0;
+  }
+  .business-desc {
+    color: #666;
+    line-height: 1.5em;
+  }
+}
+
+
+// Add business pages
+// 
+.add-business-wrapper {
+  margin-top: -80px;
+
+  .column-title {
+    padding-left: 40px;
+  }
+
+  .business-info-wrapper {
+    margin-bottom: 3px;
+    display: table;
+  }
+
+  .business-info {
+    width: 50%;
+    float: left;
+    padding-right: 1px;
+
+    .column-content {
+      min-height: 460px;
+      padding: 25px 40px 45px 40px;
+
+      .column-description {
+        color: #666666;
+        @include ems_font_size(13px, $font-size-base);
+        padding-bottom: 15px;
+      }
+    }
+
+    .business-inputs {
+      input {
+        margin-bottom: 10px;
+      }
+
+      .chosen-container-multi .chosen-choices {
+        background-image: none;
+        border: solid 1px #c4c4c4;
+        padding: 8px 15px;
+
+        .search-field input {
+          color: #a9a9a9;
+        }
+      }
+    }
+  }
+
+  .business-map {
+    width: 50%;
+    float: left;
+    padding-left: 1px;
+
+    .column-content {
+      min-height: 460px;
+      padding: 40px;
+    }
+
+    .business-location {
+      width: 100%;
+      height: 380px;
+    }
+  }
+
+  .review-wrapper {
+    .column-content {
+      padding: 30px 40px;
+    }
+  }
+
+
+  .form-buttons-wrapper {
+    margin-top: 25px;
+  }
+
+
+  .btn {
+    padding: 0 36px;
+    display: inline-block;
+    margin-right: 6px;
+    @include border-radius(0);
+    @include transition(all 0.3s ease-in);
+    
+    &.grey-btn {
+      color: #666666;
+      background-color: #f1f1f1;
+      border: 0;
+
+      &:hover {
+        color: #fff;
+        background: $blue;
+        border-color: $blue;
+      }
+    }
+  }
+
+  .open-hours {
+    margin: 20px 0 0 0;
+
+    span {
+      padding-left: 15px;
+      color: #999;
+    }
+    
+    .schedule-wrapper {
+      margin-top: 3px;
+
+      .schedule-line {
+        margin-bottom: 10px;
+
+        .schedule-input  {
+          float: left;
+          line-height: 43px;
+          border: 1px solid #c4c4c4;
+          border-left: 0;
+          width: 125px;
+          padding-left: 15px;
+          background: #fff;
+          height: 45px;
+          outline: none;
+
+          &:first-child {
+            border-left: 1px solid #c4c4c4;
+          }
+        }
+
+        .btn {
+          float: right;
+          width: 125px;
+          padding: 0;
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  &.add-by-business-page {
+    .business-map {
+      .column-content {
+        min-height: 763px;
+      }
+
+      .business-location {
+        width: 100%;
+        min-height: 683px;
+      }
+    }
+  }
+}

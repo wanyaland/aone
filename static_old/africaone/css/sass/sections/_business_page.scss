@@ -1,0 +1,413 @@
+.business-page-wrapper {
+  .rating-block {
+    @include clearfix();
+
+    .rating-stars {
+      float: left;
+    }
+
+    .rating-caption {
+      margin-left: 5px;
+      float: left;
+    }
+  }
+
+  .columns-wrapper {
+    @include clearfix();
+  }
+
+  .left-column {
+    width: 65%;
+    float: left;
+    padding-right: 2px;
+  }
+
+  .right-column {
+    width: 35%;
+    float: left;
+
+    .right-column-block {
+      margin-bottom: 2px;
+    }
+
+    .block-header {
+      background: #fff;
+      padding: 30px;
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .block-content {
+      background: #fff;
+      padding: 0 30px 30px 30px;
+    }
+
+    .similar-businesses {
+      .block-content {
+        padding: 0;
+      }
+    }
+  }
+}
+
+
+.business-page-header-wrapper {
+  background: #af7d42;
+  padding: 95px 0 0;
+  background: image-url('business-page-bg.jpg') no-repeat top center;
+
+  .business-page-header {
+    @include clearfix();
+    padding: 30px 20px 10px 20px;
+    background: #fff;
+    border-bottom: 1px solid #dcdcdc;
+
+    .business-name-block {
+      width: 35%;
+      float: left;
+
+      .business-name {
+        font-size: 1.7rem;
+        line-height: 1.8rem;
+        font-weight: bold;
+      }
+
+      .business-category {
+        font-size: 15px;
+      }
+    }
+
+    .rating-block {
+      width: 25%;
+      float: left;
+      padding-left: 15px;
+      padding-top: 5px;
+    }
+    
+    .start-review-block {
+      width: 40%;
+      float: left;
+
+      .start-review-three-buttons-wrapper {
+        @include clearfix();
+
+        .rating-button {
+          @include clearfix();
+          @include border-top-left-radius(2px);
+          @include border-bottom-left-radius(2px);
+          float: left;
+          background: #77c200;
+          border-color: #dcdcdc;
+          padding: 5px 10px 4px 10px;
+
+          .rating-stars {
+            float: left;
+            padding-top: 2px;
+            cursor: pointer;
+          }
+
+          .rating-caption {
+            float: left;
+            padding-left: 5px;
+            color: #fff;
+          }
+        }
+
+        .add-photo-button {
+          @include clearfix();
+          display: block;
+          border: 1px solid #dcdcdc;
+          border-width: 1px 0;
+          float: left;
+          padding: 5px 15px 4px 15px;
+
+          .photo-icon {
+            float: left;
+            margin-top: 3px;
+          }
+
+          .photo-icon-caption {
+            color: #666;
+            float: left;
+            padding-left: 10px;
+          }
+        }
+
+        .share-button {
+          @include clearfix();
+          display: block;
+          border: 1px solid #dcdcdc;
+          @include border-top-right-radius(2px);
+          @include border-bottom-right-radius(2px);
+          float: left;
+          padding: 5px 20px 4px 10px;
+
+          .share-icon {
+            float: left;
+            margin-top: 3px;
+          }
+
+          .share-icon-caption {
+            color: #666;
+            float: left;
+            padding-left: 10px;
+          }
+        }
+      }
+
+      .buttons-caption {
+        color: #999;
+      }
+    }    
+  }
+
+  .business-photos-wrapper {
+    height: 230px;
+    background: rgba(135, 0, 0, 0.8);
+    margin-top: -1px;
+    padding: 25px 30px;
+
+    // @include clearfix();
+
+    .slick-slide {
+      height: 180px;
+      padding: 0 5px;
+    //   width: 24%;
+    //   float: left;
+    //   margin: 0 0.5%;
+    //   text-align: center;
+    //   border: 1px solid rgba(135, 0, 0, 1);
+
+    //   img {
+    //     height: 100%;
+    //     max-width: 100%;
+    //   }
+    } 
+  }
+}
+
+
+.business-details-wrapper {
+  @include clearfix();
+  padding: 45px 30px 30px 30px;
+  background: #fff;
+  color: #666;
+  margin-bottom: 2px;
+  
+  .business-details-block {
+    width: 25%;
+    float: left;
+    padding-right: 10px;
+
+    .details-item {
+      position: relative;
+      margin-bottom: 10px;
+
+      .details-item-description {
+        margin-left: 30px;
+      }
+
+      .open-hours-icon {
+        position: absolute;
+        left: 5px;
+        top: 3px;
+        background: sprite($global-sprite, 'open-hours-icon');
+        background-position: sprite-position($global-sprite, 'open-hours-icon');
+        @include sprite-dimensions($global-sprite, 'open-hours-icon');
+      }
+
+      .telephone-icon {
+        position: absolute;
+        left: 5px;
+        top: 3px;
+        background: sprite($global-sprite, 'telephone-icon');
+        background-position: sprite-position($global-sprite, 'telephone-icon');
+        @include sprite-dimensions($global-sprite, 'telephone-icon');
+      }
+
+      .website-icon {
+        position: absolute;
+        left: 5px;
+        top: 3px;
+        background: sprite($global-sprite, 'website-icon');
+        background-position: sprite-position($global-sprite, 'website-icon');
+        @include sprite-dimensions($global-sprite, 'website-icon');
+      }
+
+      .location-icon {
+        position: absolute;
+        left: 5px;
+        top: 3px;
+        background: sprite($global-sprite, 'location-icon');
+        background-position: sprite-position($global-sprite, 'location-icon');
+        @include sprite-dimensions($global-sprite, 'location-icon');
+      }
+    }
+  }
+
+  .business-description-block {
+    width: 40%;
+    float: left;
+    padding: 0 20px;
+  }
+
+  .business-map-block {
+    width: 35%;
+    float: left;
+    padding-left: 20px;
+
+    #map-block {
+      height: 200px;
+      border: 1px solid #dcdcdc;
+    }
+  }
+}
+
+
+.customer-reviews-wrapper {
+  .customer-reviews-header {
+    background: #fff;
+    padding: 35px 30px 30px 30px;
+
+    .reviews-title {
+      @include clearfix();
+      padding-bottom: 20px;
+
+      .title {
+        float: left;
+        font-size: 1.7rem;
+        line-height: 1.8rem;
+        font-weight: bold;
+      }
+
+      .rating-block {
+        float: left;
+        padding-left: 15px;
+        padding-top: 5px;
+      }
+    }
+
+    .reviews-sort-block {
+      @include clearfix();
+      color: #666;
+
+      .sort-caption {
+        float: left;
+        padding-right: 10px;
+        padding-top: 5px;
+      }
+
+      .reviews-sort-btn {
+        float: left;
+        width: 80px;
+        margin-left: 15px;
+        line-height: 30px;
+      }
+    }
+  }
+
+  .trust-info-wrapper {
+    @include clearfix();
+    background: #007fa8;
+    padding: 20px 30px;
+    color: #fff;
+
+    .trust-info {
+      width: 65%;
+      float: left;
+      
+      p {
+        margin: 5px 0;
+      }
+
+      a {
+        color: #9bff00;
+      }
+    }
+
+    .trust-write-review {
+      width: 35%;
+      float: left;
+    }
+
+    .rating-button {
+      @include clearfix();
+      @include border-radius(2px);
+      background: #77c200;
+      border-color: #dcdcdc;
+      padding: 9px 20px 8px 20px;
+      margin-top: 10px;
+
+      .rating-stars {
+        padding-top: 2px;
+        cursor: pointer;
+        float: left;
+      }
+
+      .rating-caption {
+        margin-left: 5px;
+        float: left;
+      }
+    }
+  }
+}
+
+
+.similar-businesses {
+  .block-header {
+    margin-bottom: 1px;
+  }
+
+  .similar-business-item {
+    @include clearfix();
+    padding: 30px 25px;
+    border-bottom: solid 1px #f1f1f1;
+    color: #666;
+
+    .business-photo {
+      width: 30%;
+      float: left;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .details {
+      padding-left: 15px;
+      width: 70%;
+      float: left;
+
+      .title {
+        a {
+          text-transform: uppercase;
+          color: $blue;
+          font-weight: bold;
+          line-height: 1.2em;
+          font-size: 14px;
+        }
+      }
+
+      .rating-stars {
+        display: inline-block;
+      }
+
+      .text {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+
+.photo-icon {
+  background: sprite($global-sprite, 'add-photo-grey');
+  background-position: sprite-position($global-sprite, 'add-photo-grey');
+  @include sprite-dimensions($global-sprite, 'add-photo-grey');
+}
+
+.share-icon {
+  background: sprite($global-sprite, 'share-grey');
+  background-position: sprite-position($global-sprite, 'share-grey');
+  @include sprite-dimensions($global-sprite, 'share-grey');
+}

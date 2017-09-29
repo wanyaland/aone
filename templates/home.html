@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<div id="page" class="clearfix"  data-mtoken=""  data-mstyle="" data-sitelogo="{% static 'logo/AfricaOneLogo-1.svg' %}" data-site-url="./"  data-ipapi="ip_api">
+    {% block header %}
+    <div class="pos-relative">
+        <div class="header-container lp-header-bg">
+            {% include 'header.html' %}
+            {% include 'dynamic_invoice.html' %}
+            {% include 'signin_signup.html'  %}
+            {% include 'pricing_plan.html' %}
+
+            <div class="md-overlay"></div>
+            <!-- Overlay for Popup -->
+
+            {% include 'home_search.html' %}
+        </div>
+    </div>
+    {% endblock header %}
+    {% block content %}
+        {% include 'home_categories.html' %}
+        <section>
+            {% include 'home_happening_cities.html' %}
+            {% include 'home_directory_solution.html' %}
+            {% include 'home_exclusive.html' %}
+            {% include 'testimonial.html' %}
+            {% include 'news_tips.html' %}
+        </section>
+    {% endblock content %}
+    {% block footer %}
+        {% include 'footer.html' %}
+    {% endblock footer %}
+</div>
+
+{% endblock body %}

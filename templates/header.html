@@ -1,0 +1,109 @@
+{% load static %}
+<header class="header-without-topbar header-normal pos-relative lp-header-full-width">
+    <div class="lp-header-overlay"></div>
+    <div id="menu" class="small-screen">
+        <a href="./submit-listing/index.html" class="lpl-button">Add Listing</a>
+        <a class="lpl-button md-trigger" data-modal="modal-3">Join Now</a>
+    </div>
+    <div class="lp-menu-bar">
+        <div class="fullwidth-header">
+            <div class="row">
+                <div class="col-md-2 col-xs-6 lp-logo-container">
+                    <div class="lp-logo">
+                        <a href="./index.html">
+                        <img src="{% static  'logo/AfricaOneLogo-1.svg' %}" alt="" />
+                        </a>
+                    </div>
+                </div>
+                <div class="header-right-panel clearfix col-md-10 col-sm-10 col-xs-12">
+                    <!--<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
+                        <div class="container">
+                        <div class="navbar-header">
+                        	<a class="navbar-toggle">
+                        		<span class="icon-bar"></span>
+                        		<span class="icon-bar"></span>
+                        		<span class="icon-bar"></span>
+                        	</a>
+                        </div>
+                        <div id="slidemenu">
+                        	<img src="./logo/AfricaOneLogo-1.svg" alt="" />
+                        	<div class="lp-listing-adlisting">
+                        		<a href="./submit-listing/" class="lpl-button">Add Listing</a>
+                        		<a href="#" class="lpl-button md-trigger" data-modal="modal-3">Join Now</a>
+                        	</div>
+                        </div>
+                        </div>
+                        </div>-->
+                    <div class="col-xs-6 mobile-nav-icon">
+                        <a href="#menu" class="nav-icon">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        </a>
+                    </div>
+                    <div class="col-md-9 col-xs-12 lp-menu-container clearfix pull-right">
+                        <div class="pull-right">
+                            <div class="lp-joinus-icon">
+                                <div class="lp-join-now">
+                                    <span>
+                                        <!-- Contacts icon by Icons8 -->
+                                        <img class="icon icons8-contacts" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAADNElEQVRoge2ZLWhbURTHn3iig8IiIiomIgqrqJiomJgIrCKiomKig4iKioiKioiJiEJExURFRGEbRERMVERkENhE5BgTGUxEVERkUBERURFR8Zu45+5durzk3feRm7H8IRB455z3u9/3nOd5a6317wjYAcrAOdAEroAqcAhsuOabK8AHKsBX5qsP7LrmnSlgE+gasCMZhRpwDJwCDeBGnk+Bt8COa/Y/AjaAn0YDDgA/xNYH3j8YoUaY/VIlPQvwHdiKYO8De0AdGItvcxms86AKwL38rOe9bAoTacyzLBijglQE4jpBjHOJ8TFNNluItkAcJ4ixKzGGKaJZQ/QEopgwDgApYcUC0NtpIWEc5w3R227shQrkVqEhn4ThdYIYTyXGrzTZbCH04fYmQYznEqOfJpstRFUg3qUQ4zJNNluIA4H4nCDGtcQop8lmC1ESiElM/7zcCgD20+azAdE33lpMfx+4kBjttPlsQAYCETu/AIoSo5cmmy1E4vmNylcgwX0tsVDpLMAQqMbwr4mv88XuAx0BuYnhr6/wXVwnV8Aj4IcAvbDweyk+37LksxKqUgJQt/Cpi89VlmxWMnaeCZCLYJ8zplVxCYjRRZCbdObNd1lXOiFzt+WGieC6ohuTn2GTMxoBsOeCda5Qta2pATkGTlAFioL8HxnPR66ZQ2WcCQPCpbNKdzn6IhFcAPOow7ItozBGnRUVYHulG0JQDZkusNvSdqxSydTzPA9VOdTTaWGCBLSMKeh+wcsoNI0pBXARwa9m2N9LjOVWGlHnwCuCO5aGaROUT4/m+O8bdq0HndAFjsjyGwqq6n5GUHgGdTpfAttiUzeeNVBnS15+JbHVqolPAVUInxjPxqhS6sJbgm0jysCt8aIB6pvH5gzbU+COcE2Bs5COqhDUynRH/WUbpwE+6oONVh84jOC3I6PTkd4dy/86EbJJ1Ce6vvHe1qxOs2mIXgd3wEnsQPHfXzZGt0ecnIUgBR0ia8CFUAfoUFjsslDgCcHiK2XEaMOj04QpNgVzgg84X7LDs5MxzaMvfuCDtVPGQu2GAC0bJ3OrXTXdRm1EbmEo93ocd2TXWut/1W9KptrZf/2YyAAAAABJRU5ErkJggg==" alt="contacts">
+                                    </span>
+                                    <a class="md-trigger" data-modal="modal-3">Join Now</a>
+                                </div>
+                            </div>
+                            <div class="pull-right lp-add-listing-btn">
+                                <ul>
+                                    <li>
+                                        <a href="./submit-listing/index.html"><i class="fa fa-plus"></i>Add Listing</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pull-right padding-right-10">
+                            <div class="lp-menu menu">
+                                <div class="menu-main-container">
+                                    <ul id="menu-main" class="">
+                                        <li id="menu-item-113" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-17 current_page_item menu-item-113">
+                                            <a href="./index.html">Home</a>
+                                        </li>
+                                        <li id="menu-item-101" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-101">
+                                            <a href="#">Categories</a>
+                                            <ul  class="sub-menu">
+                                                <li id="menu-item-94" class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-94">
+                                                    <a href="./listing-category/restaurant/index.html">Restaurant</a>
+                                                </li>
+                                                <li id="menu-item-95" class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-95">
+                                                    <a href="./listing-category/shopping/index.html">Shopping</a>
+                                                </li>
+                                                <li id="menu-item-96" class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-96">
+                                                    <a href="./listing-category/hotels/index.html">Hotels</a>
+                                                </li>
+                                                <li id="menu-item-98" class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-98">
+                                                    <a href="./listing-category/real-estate/index.html">Real Estate</a>
+                                                </li>
+                                                <li id="menu-item-99" class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-99">
+                                                    <a href="./listing-category/services/index.html">Services</a>
+                                                </li>
+                                                <li id="menu-item-100" class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-100">
+                                                    <a href="./listing-category/automotive/index.html">Automotive</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li id="menu-item-114" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-114">
+                                            <a href="/about.html">About Us</a>
+                                        </li>
+                                        <li id="menu-item-115" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-115">
+                                            <a href="/contact.html">Contact</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ../menu-bar -->
+</header>

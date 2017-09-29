@@ -1,0 +1,36 @@
+<div class="siginupcontainer">
+    <h1 class="text-center">Sign Up</h1>
+    <form id="register" class="form-horizontal margin-top-30"  method="post">
+        <p class="status"></p>
+        <div class="form-group">
+            <label for="username">Username *</label>
+            <input type="text" class="form-control" id="username2" name="username" />
+        </div>
+        <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" class="form-control" id="email" name="email" />
+        </div>
+        <div class="form-group">
+                <p>Password will be e-mailed to you.</p>
+        </div>
+        <div class="form-group">
+            </div>
+        <div class="form-group">
+            <input type="submit" value="Register" class="lp-secondary-btn width-full btn-first-hover" />
+        </div>
+        <input type="hidden" id="security" name="security" value="6b052aa55d" />
+        <input type="hidden" name="_wp_http_referer" value="/" />
+    </form>
+
+    <div class="pop-form-bottom">
+        <div class="bottom-links">
+            <a class="signInClick" >Already have an account? Sign in</a>
+            <a class="forgetPasswordClick pull-right" >Forgot Password</a>
+        </div>
+        <p class="margin-top-15">Connect with your Social Network</p>
+
+        {% include 'sociallogin.html' %}
+
+    </div>
+    <a class="md-close"><i class="fa fa-close"></i></a>
+</div>

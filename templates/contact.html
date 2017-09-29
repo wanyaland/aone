@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block additional_css %}
+
+{% endblock additional_css %}
+
+{% block body %}
+    {% block header %}
+    <div class="pos-relative">
+        <div class="header-container lp-header-bg">
+            {% include 'header.html' %}
+        </div>
+    </div>
+    {% endblock header %}
+
+    {% block content %}
+
+
+    {% endblock content %}
+
+
+
+
+
+    {% block footer %}
+        {% include 'footer.html' %}
+    {% endblock footer %}
+
+{% endblock body%}

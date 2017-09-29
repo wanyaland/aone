@@ -1,0 +1,12 @@
+design.africaone.com and static file provided are not matching
+
+1. Do you want Blog functionality. ?
+    Do you want blog to be backend driven or user should be able to blog from frontend ?
+
+2. Product searching from MySQl or want some advance searching ? ElasticSearch ?
+
+3. Header on home page and Contact us page is different ?
+
+4. Login from social media ?
+    Sign up , password will be emailed ?
+    Text format or what ?

@@ -1,0 +1,9 @@
+1. Error when installing mysqlclient with django1.10
+    *mysql_config not found*
+
+    mysql_config is a different package and not part of standard mysql-server package
+    to install them run following commands
+
+    Resolution:
+    for mysql> sudo apt-get install libmysqlclient-dev
+    for mariaDB>sudo apt-get install libmariadbclient-dev
