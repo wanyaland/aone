@@ -6,7 +6,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
-from apps.home.views import HomeView, AboutView, ContactView
+from app.home.views import HomeView, AboutView, ContactView
 
 
 urlpatterns = [

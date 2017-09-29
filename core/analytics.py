@@ -9,7 +9,7 @@ need to add more implementation logic
 
 TODO#1. Provide a pre_save and post_save signal functionality
 """
-from apps.common.models import Analytics
+from app.common.models import Analytics
 
 
 class AnalyticsWrapper(object):

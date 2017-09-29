@@ -17,10 +17,10 @@ class MyActionManager(ActionManager):
 
 class BusinessManager(models.Manager):
 
-    def search_business(self,location):
+    def search_business(self, location):
         geolocator = Nominatim()
         place = geolocator.geocode(location)
-        qs = self.distance(place.latitude,place.longitude)
+        qs = self.distance(place.latitude, place.longitude)
         return qs
     '''
     def geosearch(self, query):
