@@ -7,3 +7,10 @@
     Resolution:
     for mysql> sudo apt-get install libmysqlclient-dev
     for mariaDB>sudo apt-get install libmariadbclient-dev
+
+2. Make sure you have set following environment variable if running outside DEV env
+    DB_NAME
+    DB_USER
+    DB_PASSWORD
+    DB_HOST
+    DB_PORT

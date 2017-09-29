@@ -10,3 +10,4 @@ design.africaone.com and static file provided are not matching
 4. Login from social media ?
     Sign up , password will be emailed ?
     Text format or what ?
+5. How and Who will add listing ? through Admin panel?
