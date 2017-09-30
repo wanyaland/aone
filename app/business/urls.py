@@ -7,6 +7,8 @@ from .views import ListingView, DetailView
 
 urlpatterns = [
     url(r'^', ListingView.as_view(), name='listing', kwargs={'sort': 'name'}),
+    url(r'listing/^', ListingView.as_view(), name='listing', kwargs={'sort': 'name'}),
+    url(r'listing/(?P<category_id>[-\w]+)/$', ListingView.as_view(), name="listing_category"),
     url(r'detail/(?P<slug>[-\w]+)/$', DetailView.as_view(), name="detail_slug"),
     url(r'detail/(?P<business_id>[-\d]+)/$', DetailView.as_view(), name="detail_id")
 

@@ -20,6 +20,9 @@ class Response(object):
         self.message = kwargs.get('message')
         self.template = template
 
+    def __call__(self, *args, **kwargs):
+        return self.write()
+
     def write(self):
         response_type = "html"
         if 'json' in self.content_type:

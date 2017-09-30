@@ -71,13 +71,13 @@ class Business(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
     slug = models.SlugField(max_length=100, null=False, blank=False)
 
-    country = models.ForeignKey(Country,null=True)
+    country = models.ForeignKey(Country, null=True)
     categories = models.ManyToManyField(Category)
-    address = models.TextField(blank=True,null=True)
-    city = models.CharField(max_length=50,null=True)
-    phone_number = models.TextField(blank=True,null=True)
+    address = models.TextField(blank=True, null=True)
+    city = models.CharField(max_length=50, null=True)
+    phone_number = models.TextField(blank=True, null=True)
     web_address = models.URLField(null=True)
-    photo = models.ImageField(null=True,upload_to='businesses/%Y/%m/%d')
+    photo = models.ImageField(null=True, upload_to='businesses/%Y/%m/%d')
     longitude = models.FloatField(null=True)
     latitude = models.FloatField(null=True)
     approved = models.BooleanField(default=False)
@@ -113,7 +113,7 @@ class Business(models.Model):
 
     def get_avg_rating(self):
         # get avg rating review for objects that were rated
-        avg_rating = Review.objects.filter(business=self,rating_score__range=(1,5)).aggregate(Avg('rating_score'))['rating_score__avg']
+        avg_rating = Review.objects.filter(business=self, rating_score__range=(1,5)).aggregate(Avg('rating_score'))['rating_score__avg']
         if avg_rating is None:
             return 0
         else:

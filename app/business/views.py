@@ -24,23 +24,32 @@ class ListingView(View):
         :param kwargs:
         :return:
         """
+
+        for request_key in request.GET:
+            kwargs[request_key] = request.GET[request_key]
         sort_by = kwargs.get('sort', 'name')
-        sort_direction = kwargs.get('direction', 'asc')=='desc' and '-' or ''
+        sort_direction = kwargs.get('direction', 'asc') == 'desc' and '-' or ''
         count = kwargs.get('count', 10)
         if count > 100:
             count = 100
         page = kwargs.get('page', 1)
-        listing_data = self.get_data(sort_direction, sort_by, count, page)
-        return Response(request, listing_data, template=self.template_name)
+        category_id = kwargs.get('category_id')
+        listing_data = self.get_data(sort_direction, sort_by, count, page, category_id=category_id)
+        response = Response(request, listing_data, template=self.template_name, **kwargs)()
+        return response
 
     @staticmethod
-    def get_data(sort_direction, sort_by, count, page):
+    def get_data(sort_direction, sort_by, count, page, category_id=None):
         select_extra = {}
-        fields = ['id', 'name', 'slug', 'country', 'category']
-        business_listing = Business.objects.filter(status=True)\
+        fields = ['id', 'name', 'slug', 'country', 'categories']
+        query_obj = Q(status=True)
+        if category_id:
+            query_obj &= Q(categories__id=category_id)
+
+        business_listing = list(Business.objects.filter(query_obj)\
             .extra(select=select_extra)\
             .order_by(sort_direction+sort_by)\
-            .value(*fields)
+            .values(*fields))
         pages = Paginator(business_listing, count)
         response = {'count': pages.count, 'data': [], 'total_pages': pages.num_pages}
         if pages.num_pages <= page:
@@ -70,11 +79,11 @@ class DetailView(View):
         query_slug_id = reduce(or_, [Q(slug=slug),  Q(id=id)])
         query_obj = reduce(and_, [query_slug_id, Q(status=True)])
         select_extra = {}
-        fields = ['id', 'name', 'slug', 'country', 'category']
+        fields = ['id', 'name', 'slug', 'country', 'categories']
 
-        business_listing = Business.objects.filter(query_obj)\
+        business_listing = list(Business.objects.filter(query_obj)\
             .extra(select=select_extra)\
-            .value(*fields)
+            .values_list(*fields))
         if len(business_listing):
             response['data'] = business_listing[0]
         return response
