@@ -8,29 +8,21 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
-#from geoposition.fields import GeopositionField
-from djangoratings.fields import RatingField
 from django.db.models import Avg
 from django.core.validators import MaxValueValidator,MinValueValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from datetime import datetime
-from django.dispatch import receiver
-from django.contrib.contenttypes.models import ContentType
-from datetime import timedelta
-from django.utils import timezone
-from django.db.models import F
 
-from django.conf import settings
 from core.managers import BusinessManager
-
-AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
+from core.utils import get_slug
+from core.config import CATEGORY_TYPES, USER_TYPES, BUSINESS, REVIEW_TAG_CHOICES, PHOTO_TAG, PHOTO_TYPE
 
 
 class Category(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=40)
     parent_category = models.ForeignKey("self", blank=True, null=True)
+    category_type = models.CharField(max_length=20, default=BUSINESS, choices=CATEGORY_TYPES)
     status = models.BooleanField(default=True)
     create_date = models.DateTimeField(auto_now_add=True)
     modify_date = models.DateTimeField(auto_now=True)
@@ -76,7 +68,9 @@ class Business(models.Model):
     popularity_rating = models.IntegerField(null=True,default=0,
                                             validators=[MaxValueValidator(10),MinValueValidator(0)])
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, null=False, blank=False)
+    slug = models.SlugField(max_length=100, null=False, blank=False)
+
     country = models.ForeignKey(Country,null=True)
     categories = models.ManyToManyField(Category)
     address = models.TextField(blank=True,null=True)
@@ -91,10 +85,10 @@ class Business(models.Model):
     email = models.EmailField(null=True)
     start_time = models.TimeField(null=True)
     end_time = models.TimeField(null=True)
-    features = models.ManyToManyField('Features',null=True)
+    features = models.ManyToManyField('Feature', null=True)
     description = models.TextField(null=True)
     price_range = models.IntegerField(null=True)
-    owner = models.ForeignKey('Customer',null=True)
+    owner = models.ForeignKey('Customer', null=True)
     business_hours = models.ManyToManyField(BusinessHour)
 
     status = models.BooleanField(default=True)
@@ -109,6 +103,11 @@ class Business(models.Model):
     class Meta:
         db_table = "Business"
 
+    def save(self, *args, **kwargs):
+        if self.name:
+            self.slug = get_slug(self.name)
+        return super(Business, self).save(*args, **kwargs)
+
     def get_no_reviews(self):
         return Review.objects.filter(business=self).count()
 
@@ -122,18 +121,10 @@ class Business(models.Model):
 
 
 class Customer(models.Model):
-    BUSINESS='B'
-    CUSTOMER='C'
-    MODERATOR='M'
-    CHOICES = {
-        (BUSINESS,'Business'),
-        (CUSTOMER,'Customer'),
-        (MODERATOR,'Moderator'),
-    }
     id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User, unique=True)
     photo = models.FileField(null=True, upload_to='avatars/%Y/%m/%d',blank=True)
-    user_type = models.CharField(choices=CHOICES, max_length=20,default=BUSINESS)
+    user_type = models.CharField(choices=USER_TYPES, max_length=20, default=BUSINESS)
     status = models.BooleanField(default=True)
     create_date = models.DateTimeField(auto_now_add=True, editable=False)
     modify_date = models.DateTimeField(auto_now=True, editable=False)
@@ -158,7 +149,7 @@ class Review(models.Model):
     id = models.AutoField(primary_key=True)
     customer = models.ForeignKey(Customer, null=True)
     business = models.ForeignKey(Business, null=True)
-    rating = RatingField(range=5, can_change_vote=True, allow_delete=True)
+    rating = models.IntegerField(null=True, validators=[MinValueValidator(0), MaxValueValidator(5)])
     review = models.TextField()
     status = models.BooleanField(default=True)
     create_date = models.DateTimeField(auto_now_add=True)
@@ -172,16 +163,11 @@ class Review(models.Model):
 
 
 class ReviewTag(models.Model):
-    CHOICES ={
-        ('C','COOL'),
-        ('H','HELPFUL'),
-        ('F','FUNNY'),
-    }
     id = models.AutoField(primary_key=True)
     review = models.ForeignKey(Review)
     user = models.ForeignKey(User,null=True,blank=True)
     ip_address = models.CharField(max_length=20)
-    tag = models.CharField(choices=CHOICES,max_length=20)
+    tag = models.CharField(choices=REVIEW_TAG_CHOICES, max_length=20)
     key = models.CharField(max_length=32,null=True)
     cookie = models.CharField(max_length=32,blank=True,null=True)
     status = models.BooleanField(default=True)
@@ -199,26 +185,13 @@ class ReviewTag(models.Model):
 
 
 class BusinessPhoto(models.Model):
-    BUSINESS_PHOTO = 'BP'
-    REVIEW_PHOTO = 'RP'
-    USER_PHOTO = 'UP'
-    TYPE = (
-        (BUSINESS_PHOTO, 'BusinessPhoto'),
-        (REVIEW_PHOTO, 'ReviewPhoto'),
-        (USER_PHOTO, 'UserPhoto')
-    )
-    TAG_HELPFUL = 'H'
-    TAG_INAPPROPRIATE = 'I'
-    TAG =(
-        (TAG_HELPFUL, 'Helpful'),
-        (TAG_INAPPROPRIATE, 'Inappropriate'),
-    )
+
     id = models.AutoField(primary_key=True)
     photo = models.ImageField(null=True, upload_to='businesses/%Y/%m/%d')
     review = models.ForeignKey(Review, null=True)
-    tag = models.CharField(max_length=20, choices=TAG, null=True)
+    tag = models.CharField(max_length=20, choices=PHOTO_TAG, null=True)
     business = models.ForeignKey(Business, null=True)
-    photo_type = models.CharField(null=True, choices=TYPE, max_length=20)
+    photo_type = models.CharField(null=True, choices=PHOTO_TYPE, max_length=20)
     caption = models.CharField(null=True, max_length=100)
     status = models.BooleanField(default=True)
     create_date = models.DateTimeField(auto_now_add=True)
@@ -242,25 +215,12 @@ class Feature(models.Model):
         db_table = "Feature"
 
 
-class EventCategory(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
-    status = models.BooleanField(default=True)
-    create_date = models.DateTimeField(auto_now_add=True)
-    modify_date = models.DateTimeField(auto_now=True)
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        db_table = "EventCategory"
-
-
 class Event(models.Model):
     id = models.AutoField(primary_key=True)
     photo = models.ImageField(null=True, blank=True, upload_to='events/%Y/%m/%d')
-    name = models.CharField(max_length=200,null=True)
-    categories= models.ManyToManyField(EventCategory)
+    name = models.CharField(max_length=200, null=True)
+    slug = models.SlugField(max_length=200, null=True)
+    categories= models.ManyToManyField(Category)
     event_date = models.DateTimeField(null=True)
     end_date = models.DateTimeField(null=True, blank=True)
     where = models.CharField(max_length=50,null=True)
@@ -280,6 +240,11 @@ class Event(models.Model):
 
     class Meta:
         db_table = "Event"
+
+    def save(self, *args, **kwargs):
+        if self.name:
+            self.slug = get_slug(self.name)
+        return super(Event, self).save(*args, **kwargs)
 
 
 class EventDiscussion(models.Model):

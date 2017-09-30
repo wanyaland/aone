@@ -1,8 +1,7 @@
 __author__ = 'Harold'
 
 from datetime import datetime
-from django.contrib.contenttypes.models import ContentType
-from actstream.managers import ActionManager,stream
+from actstream.managers import ActionManager, stream
 from django.db import models
 from geopy.geocoders import Nominatim
 
