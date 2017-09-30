@@ -52,6 +52,8 @@ class Response(object):
         :return: json response
         """
         content_type = 'application/json'
+        if isinstance(self.data, dict) and 'data' in self.data and 'count' not in self.data:
+            self.data['count'] = len(self.data['data'])
         return JsonResponse(self.data, content_type=content_type, status=self.status)
 
     def html_response(self):

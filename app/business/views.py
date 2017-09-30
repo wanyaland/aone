@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 
 from core.response import Response
+from core.utils import update_dict
 
 from app.business.models import Business
 
@@ -25,8 +26,7 @@ class ListingView(View):
         :return:
         """
 
-        for request_key in request.GET:
-            kwargs[request_key] = request.GET[request_key]
+        update_dict(kwargs, request.GET)
         sort_by = kwargs.get('sort', 'name')
         sort_direction = kwargs.get('direction', 'asc') == 'desc' and '-' or ''
         count = kwargs.get('count', 10)
@@ -64,6 +64,7 @@ class DetailView(View):
     template_name = "detail.html"
 
     def get(self, request, *args, **kwargs):
+        update_dict(kwargs, request.GET)
         slug = kwargs.get('slug')
         business_id = kwargs.get('business_id')
         business_listing = self.get_data(slug, business_id)
