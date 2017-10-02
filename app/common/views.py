@@ -7,7 +7,7 @@ from django.views import View
 
 from core.utils import update_dict
 
-from app.business.models import Category
+from app.business.models import Category, City
 from core.config import BUSINESS
 from core.response import Response
 from core.mixin import PatchRequestKwargs
@@ -45,3 +45,19 @@ class CategoryView(PatchRequestKwargs, View):
         query_obj = reduce(and_, query)
         fields = ['id', 'name', 'parent_category', 'slug']
         return list(Category.objects.filter(query_obj).values(*fields))
+
+
+class CityView(PatchRequestKwargs, View):
+    def get(self, request, *args, **kwargs):
+        city = kwargs.get('city')
+        data = self.get_data(city)
+        return Response(request, data, content_type='json')
+
+    @staticmethod
+    def get_data(city=None):
+        query = Q(status=True)
+        if city:
+            query &= Q(id=city)
+
+        return list(City.objects.filter().values('id', 'name', 'country__id', 'country__name'))
+

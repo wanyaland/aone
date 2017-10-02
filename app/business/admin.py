@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from core.admin import refresh_save
 
-from .models import Country, Category, FileUpload, Business, BusinessHour, \
+from .models import City, Country, Category, FileUpload, Business, BusinessHour, \
     BusinessPhoto, Feature, Customer, Review, ReviewTag, Event, EventDiscussion
 
 admin.autodiscover()
@@ -11,6 +11,12 @@ admin.autodiscover()
 @admin.register(Country)
 class CountryAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(City)
+class CityAdmin(admin.ModelAdmin):
+    list_display = ['name', 'country', 'status']
+    ordering = ['name', 'country']
 
 
 @admin.register(FileUpload)
@@ -31,6 +37,8 @@ class BusinessAdmin(admin.ModelAdmin):
     list_display = ['name', 'approved', 'popularity_rating', 'web_address', 'email', 'claimed']
     ordering = ['name']
     actions = [refresh_save]
+    filter_horizontal = ['categories', 'features']
+    list_filter = ['exclusive', 'approved', 'claimed']
     pass
 
 

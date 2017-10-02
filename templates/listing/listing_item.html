@@ -4,15 +4,16 @@
     <div class="lp-grid-box">
         <div class="lp-grid-box-thumb-container">
             <div class="lp-grid-box-thumb">
-                <!--<div class="show-img">-->
-                    <!--<a href='./../../listing/euro-collision/index.html'>-->
-                        <!--<img src='./../../uploads/2017/03/shpping-1-372x240.jpg'/>-->
-                    <!--</a></div>-->
+                <div class="show-img">
+                    <a href="{% url 'detail_slug' slug=listing.slug %}">
+                        <img src='{{MEDIA_URL}}{{listing.banner_photo}}'/>
+                    </a></div>
 
                 <div class="hide-img listingpro-list-thumb">
                     <a href="{% url 'detail_slug' slug=listing.slug %}">
-                        <img src='{{MEDIA_URL}}listing.banner_photo'/>
-                    </a></div>
+                        <img src='{{MEDIA_URL}}{{listing.banner_photo}}'/>
+                    </a>
+                </div>
             </div>
             <div class="lp-grid-box-quick">
                 <ul class="lp-post-quick-links">
@@ -47,11 +48,9 @@
                         <li>
                                 {% for cat in listing.categories %}
                                     <span class="cat-icon">
-                                        <img class="icon icons8-Food" src="{{MEDIA_URL}}{{cat.2}}" alt="{{cat.1}}">
+                                        <img onerror="this.style.display='none'" class="icon icons8-Food" src="{{MEDIA_URL}}{{cat.2}}" alt="{{cat.1}}">
                                     </span>
-                                    <a href="{% url 'listing_category' category_id=cat.0 %}">
-                                        {{cat.1}}
-                                    </a>
+                                    <a href="{% url 'listing_category' category_id=cat.0 %}"> {{cat.1}} </a>
 
                                 {% endfor %}
                         </li>
@@ -65,14 +64,14 @@
                     <div class="show">
                         <span class="cat-icon"><img class="icon icons8-mapMarkerGrey" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAC8UlEQVRoge1aS3HDMBA1BEMIhEAwhEAohEIIgx3tk8+FYAiGEAiBYAjpoZKyTmx9Ym2cQ9+MZ3qIpf2+/bhN849nEFFLQGeMOTMwArgwMDEwub8HtpYI6PaWdRFE1LK15IS+ZT/WEhEd9pZ/UQEAF2PMmYCO+v5IRK17DgBOxpiz885MoX2VAAYh0Eh9f8x+v++PbO2PNAARtZoyrwlxdda8bon52VnAVGKMTSCiVoTGWCPGnXfHoIy2Z2Q4aYSCVwbApea5T3C0+hdOClaT3jbGnGufHy7x7KRZB4joIELsUP2C4A1gqH74AwKbWfujcfiVgVsOqxBRy8zfDAwALu7dITdcnPdvDEybBZcAcMpNQgK6p4InHgCXnNAMlMz8VUOHpmnuYZWyKAGdqPKjqO4HACepYEoZQSz1wktQ7mlVCVlf/nqoRVZzLU0ybJxRbgyMW+UP8ALGWMTlhC+SUWr29SLmYZU8CYkeUyTDax4+52IMqKOIrx8RS+coWyqkz6cXRF5GCK0I9dZWhPr+WL1dCe16hAp9EcsJrZxEVkn2wDTM32u/EZU/ebE3TCzZA3nUpN+cOuKmxWuBgNHGU9SRetOjYJmotUU4zCq4X0rIiTIVgiUsmA2RnMlkfpj4lp4pJVzJfcUQCb+aJxJ+JeSoe2JgNMacc+YYUVzrd9rM/PW2Nr7QaEWQ3K85U88GOK2dl0pr/XiH87zq3B7Cy9qr1h2hg1Y0VtM0d69UpUWHQPNKy40ZfKHScH1Oe18NWhwviqn+gs5DTHnVqPit3vCYeaXCrla0QO/zhofcOm455y3bxZQANepKbjesChkSr7wvq7h63UhBroBK39UgjZchls5FiT+j23d93EkhWDYz8XdP8BhKBJPdwW4JvoZZiEX2umI/PH3s9/bUXvejQ+oRfP+o+bSoEMuH5H54dzzUhjCqijlc55OaBuRaiIBOfjfRmGNUIfMleGjPf9XYApEvNwaGj8+LNQiW+vzk/hT8Ak0IUQVkeTWPAAAAAElFTkSuQmCC"
                                                                         alt="mapMarkerGrey"></span>
-                        <a href="{{href2}}">
-                            {{listing.city}}
+                        <a href="{% url 'home_search_listing_city' city_id=listing.city__id %}">
+                            {{listing.city__name}}
                         </a></div>
                     <div class="hide">
                         <span class="cat-icon">
                             <img class="icon icons8-mapMarkerGrey" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAC8UlEQVRoge1aS3HDMBA1BEMIhEAwhEAohEIIgx3tk8+FYAiGEAiBYAjpoZKyTmx9Ym2cQ9+MZ3qIpf2+/bhN849nEFFLQGeMOTMwArgwMDEwub8HtpYI6PaWdRFE1LK15IS+ZT/WEhEd9pZ/UQEAF2PMmYCO+v5IRK17DgBOxpiz885MoX2VAAYh0Eh9f8x+v++PbO2PNAARtZoyrwlxdda8bon52VnAVGKMTSCiVoTGWCPGnXfHoIy2Z2Q4aYSCVwbApea5T3C0+hdOClaT3jbGnGufHy7x7KRZB4joIELsUP2C4A1gqH74AwKbWfujcfiVgVsOqxBRy8zfDAwALu7dITdcnPdvDEybBZcAcMpNQgK6p4InHgCXnNAMlMz8VUOHpmnuYZWyKAGdqPKjqO4HACepYEoZQSz1wktQ7mlVCVlf/nqoRVZzLU0ybJxRbgyMW+UP8ALGWMTlhC+SUWr29SLmYZU8CYkeUyTDax4+52IMqKOIrx8RS+coWyqkz6cXRF5GCK0I9dZWhPr+WL1dCe16hAp9EcsJrZxEVkn2wDTM32u/EZU/ebE3TCzZA3nUpN+cOuKmxWuBgNHGU9SRetOjYJmotUU4zCq4X0rIiTIVgiUsmA2RnMlkfpj4lp4pJVzJfcUQCb+aJxJ+JeSoe2JgNMacc+YYUVzrd9rM/PW2Nr7QaEWQ3K85U88GOK2dl0pr/XiH87zq3B7Cy9qr1h2hg1Y0VtM0d69UpUWHQPNKy40ZfKHScH1Oe18NWhwviqn+gs5DTHnVqPit3vCYeaXCrla0QO/zhofcOm455y3bxZQANepKbjesChkSr7wvq7h63UhBroBK39UgjZchls5FiT+j23d93EkhWDYz8XdP8BhKBJPdwW4JvoZZiEX2umI/PH3s9/bUXvejQ+oRfP+o+bSoEMuH5H54dzzUhjCqijlc55OaBuRaiIBOfjfRmGNUIfMleGjPf9XYApEvNwaGj8+LNQiW+vzk/hT8Ak0IUQVkeTWPAAAAAElFTkSuQmCC"
                                                              alt="mapMarkerGrey">													</span>
-                        <span class="text gaddress">{{listing.address}}</span>
+                        <span class="text gaddress">{{listing.city__name}}</span>
                     </div>
                 </div>
 

@@ -90,26 +90,30 @@ jQuery(document).ready(function($){
 				{
 					//jQuery('.lp-home-sear-location').val(location.city);
 					//jQuery(".chosen-select").val('').trigger('chosen:updated');
-					jQuery("#searchlocation").prop('disabled', true).trigger('chosen:updated');
-					jQuery('#searchlocation').find('#def_location').text(location.city);
-					jQuery('#searchlocation').find('#def_location').val(location.city);
-					jQuery('#cities').val(location.city);
-					jQuery(".select2-selection__rendered").attr("title",location.city).text(location.city);
-					jQuery("#searchlocation").prop('disabled', false).trigger('chosen:updated');
-					jQuery('.select2-selection__rendered').parent('.select2-selection').addClass('slide-right');
-					jQuery('.lp-location-search .ui-widget > i').fadeOut('slow');
+                                        if (location.city){
+                                            jQuery("#searchlocation").prop('disabled', true).trigger('chosen:updated');
+                                            jQuery('#searchlocation').find('#def_location').text(location.city);
+                                            jQuery('#searchlocation').find('#def_location').val(location.city);
+                                            jQuery('#cities').val(location.city);
+                                            jQuery(".select2-selection__rendered").attr("title",location.city).text(location.city);
+                                            }
+                                            jQuery("#searchlocation").prop('disabled', false).trigger('chosen:updated');
+                                            jQuery('.select2-selection__rendered').parent('.select2-selection').addClass('slide-right');
+                                            jQuery('.lp-location-search .ui-widget > i').fadeOut('slow');
 				});
 			}
 			else{
 				jQuery.get("https://ipapi.co/json", function(location) {
-					jQuery("#searchlocation").prop('disabled', true).trigger('chosen:updated');
-					jQuery('#searchlocation').find('#def_location').text(location.city);
-					jQuery('#searchlocation').find('#def_location').val(location.city);
-					jQuery('#cities').val(location.city);
-					jQuery(".select2-selection__rendered").attr("title",location.city).text(location.city);
-					jQuery("#searchlocation").prop('disabled', false).trigger('chosen:updated');
-					jQuery('.select2-selection__rendered').parent('.select2-selection').addClass('slide-right');
-					jQuery('.lp-location-search .ui-widget > i').fadeOut('slow');
+                                        if (location.city){
+                                            jQuery("#searchlocation").prop('disabled', true).trigger('chosen:updated');
+                                            jQuery('#searchlocation').find('#def_location').text(location.city);
+                                            jQuery('#searchlocation').find('#def_location').val(location.city);
+                                            jQuery('#cities').val(location.city);
+                                            jQuery(".select2-selection__rendered").attr("title",location.city).text(location.city);
+                                            }
+                                            jQuery("#searchlocation").prop('disabled', false).trigger('chosen:updated');
+                                            jQuery('.select2-selection__rendered').parent('.select2-selection').addClass('slide-right');
+                                            jQuery('.lp-location-search .ui-widget > i').fadeOut('slow');
 				}, "json");
 			}
 			
@@ -126,12 +130,14 @@ jQuery(document).ready(function($){
 					{
 						//jQuery('.lp-home-sear-location').val(location.city);
 						//jQuery(".chosen-select").val('').trigger('chosen:updated');
+                                                if (location.city){
 						jQuery('.chosen-single').addClass('remove-margin');
 						jQuery("#searchlocation").prop('disabled', true).trigger('chosen:updated');
 						jQuery('#searchlocation').find('#def_location').text(location.city);
 						jQuery('#searchlocation').find('#def_location').val(location.city);
 						jQuery('#cities').val(location.city);
 						jQuery(".select2-selection__rendered").attr("title",location.city).text(location.city);
+						}
 						jQuery("#searchlocation").prop('disabled', false).trigger('chosen:updated');
 						jQuery('.select2-selection__rendered').parent('.select2-selection').addClass('slide-right');
 						jQuery('.lp-location-search .ui-widget > i').fadeOut('slow');
@@ -139,16 +145,18 @@ jQuery(document).ready(function($){
 				}
 				else{
 					jQuery.get("https://ipapi.co/json", function(location) {
-						
+						if (location.city){
 						jQuery('.chosen-single').addClass('remove-margin');
 						jQuery("#searchlocation").prop('disabled', true).trigger('chosen:updated');
 						jQuery('#searchlocation').find('#def_location').text(location.city);
 						jQuery('#searchlocation').find('#def_location').val(location.city);
 						jQuery('#cities').val(location.city);
 						jQuery(".select2-selection__rendered").attr("title",location.city).text(location.city);
+						}
 						jQuery("#searchlocation").prop('disabled', false).trigger('chosen:updated');
 						jQuery('.select2-selection__rendered').parent('.select2-selection').addClass('slide-right');
 						jQuery('.lp-location-search .ui-widget > i').fadeOut('slow');
+
 						
 					}, "json");
 				}

@@ -326,17 +326,17 @@
                                                 </ul>
                                                 <div class="form-group">
                                                     <input type="hidden" class="form-control" name="post_title"
-                                                           value="Arizona Luxury Art Club">
+                                                           value="{{listing.name}}">
                                                     <input type="hidden" class="form-control" name="post_url"
-                                                           value="./listing/arizona-luxury-art-club/">
+                                                           value="{% url 'detail_slug' slug=listing.slug %}">
                                                     <input type="hidden" class="form-control"
-                                                           name="author_nicename" value="admin">
+                                                           name="author_nicename" value="{{listing.auther.name}}">
                                                     <input type="hidden" class="form-control" name="author_url"
                                                            value="./author/admin/">
                                                     <input type="hidden" class="form-control"
-                                                           name="author_email" value="africaoneinc@gmail.com">
+                                                           name="author_email" value="{{listing.auther.email}}">
                                                     <input type="hidden" class="form-control" name="post_id"
-                                                           value="15">
+                                                           value="{{listing.id}}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">Fill the details below to claim for
@@ -380,16 +380,16 @@
                                 <form class="form-horizontal" method="post" id="claimformmobile">
                                     <div class="form-group">
                                         <input type="hidden" class="form-control" name="post_title"
-                                               value="Arizona Luxury Art Club">
+                                               value="{{listing.name}}">
                                         <input type="hidden" class="form-control" name="post_url"
-                                               value="./listing/arizona-luxury-art-club/">
+                                               value="{% url 'detail_slug' slug=listing.slug %}">
                                         <input type="hidden" class="form-control" name="author_nicename"
-                                               value="admin">
+                                               value="{{listing.auther.name}}">
                                         <input type="hidden" class="form-control" name="author_url"
                                                value="./author/admin/">
                                         <input type="hidden" class="form-control" name="author_email"
-                                               value="africaoneinc@gmail.com">
-                                        <input type="hidden" class="form-control" name="post_id" value="15">
+                                               value="{{listing.auther.email}}">
+                                        <input type="hidden" class="form-control" name="post_id" value="{{listing.id}}">
                                     </div>
                                     <div class="form-group">
                                                 <textarea class="form-control textarea1" rows="5" name="message"

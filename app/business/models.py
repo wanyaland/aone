@@ -57,6 +57,21 @@ class Country(models.Model):
         db_table = "Country"
 
 
+class City(models.Model):
+    id = models.AutoField(primary_key=True)
+    country = models.ForeignKey(Country)
+    name = models.CharField(max_length=100)
+    status = models.BooleanField(default=True)
+    create_date = models.DateTimeField(auto_now_add=True)
+    modify_date = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return self.country.name+": "+self.name
+
+    class Meta:
+        db_table = "City"
+
+
 class BusinessHour(models.Model):
     id = models.AutoField(primary_key=True)
     day = models.CharField(max_length=10, choices=WEEKDAYS)
@@ -102,10 +117,9 @@ class Business(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False)
     slug = models.SlugField(max_length=500, null=True, blank=True)
 
-    country = models.ForeignKey(Country, null=True)
     categories = models.ManyToManyField(Category)
     address = models.TextField(blank=True, null=True)
-    city = models.CharField(max_length=100, null=True)
+    city = models.ForeignKey(City, null=True)
     phone_number = models.CharField(blank=True, null=True, max_length=100)
     web_address = models.URLField(null=True, help_text="website url")
     photo = models.ImageField(null=True, upload_to='businesses/%Y/%m/%d')
@@ -123,6 +137,7 @@ class Business(models.Model):
     owner = models.ForeignKey('Customer', null=True)
     business_hours = models.ManyToManyField(BusinessHour)
     video_url = models.URLField(blank=True, null=False)
+    exclusive = models.BooleanField(default=False)
 
     status = models.BooleanField(default=True)
     create_date = models.DateTimeField(auto_now_add=True)

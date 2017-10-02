@@ -36,20 +36,25 @@ class ListingView(PatchRequestKwargs, View):
             count = 100
         page = kwargs.get('page', 1)
         category_id = kwargs.get('category_id')
-        listing_data = self.get_data(sort_direction, sort_by, count, page, category_id=category_id)
+        city_id = kwargs.get('city_id')
+        listing_data = self.get_data(sort_direction, sort_by, count, page, category_id=category_id, city_id=city_id)
 
         listing_data['filters'] = kwargs
-        # pprint(listing_data)
         response = Response(request, listing_data, template=self.template_name, **kwargs)()
         return response
 
     @staticmethod
-    def get_data(sort_direction, sort_by, count, page, category_id=None):
+    def get_data(sort_direction='-', sort_by='name', count=10, page=1, category_id=None, city_id=None, exclusive=False):
         select_extra = {}
-        fields = ['id', 'name', 'slug', 'country', 'categories__id', 'categories__name', 'categories__icon']
+        fields = ['id', 'name', 'slug', 'banner_photo', 'city__id', 'city__name', 'categories__id', 'categories__name', 'categories__icon']
         query_obj = Q(status=True)
         if category_id:
             query_obj &= Q(categories__id=category_id)
+        if city_id:
+            query_obj &= Q(city__id=city_id)
+
+        if exclusive:
+            query_obj &= Q(exclusive=True)
 
         business_listing = list(Business.objects.filter(query_obj)
                                 .extra(select=select_extra)
@@ -93,7 +98,7 @@ class DetailView(PatchRequestKwargs, View):
         query_slug_id = reduce(or_, [Q(slug=slug),  Q(id=business_id)])
         query_obj = reduce(and_, [query_slug_id, Q(status=True)])
         select_extra = {}
-        fields = ['id', 'name', 'banner_photo', 'popularity_rating', 'slug', 'country', 'categories__id', 'categories__name', 'categories__icon', 'claimed',
+        fields = ['id', 'name', 'banner_photo', 'popularity_rating', 'slug', 'city__id', 'city__name', 'categories__id', 'categories__name', 'categories__icon', 'claimed',
                   'approved', 'web_address', 'phone_number', 'city', 'address', 'photo', 'longitude', 'latitude',
                   'email', 'start_time', 'end_time', 'description', 'price_min', 'price_max',
                   'business_hours__day', 'business_hours__opening_hours', 'business_hours__closing_hours']

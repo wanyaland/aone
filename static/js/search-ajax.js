@@ -126,8 +126,8 @@ jQuery(document).ready(function($) {
 	});
 	
 	var inputField = jQuery('.dropdown_fields');
-	var inputTagField = jQuery('#lp_s_tag');
-	var inputCatField = jQuery('#lp_s_cat');
+	var inputTagField = jQuery('#city_id');
+	var inputCatField = jQuery('#category_id');
 	var myDropDown = jQuery("#input-dropdown");
 	var myDropDown1 = jQuery("#input-dropdown ul li");
 	var myDropOption = jQuery('#input-dropdown > option');

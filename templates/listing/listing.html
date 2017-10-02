@@ -76,8 +76,11 @@
     </div>
 </section>
 {% endblock content %}
-
+{% block footer %}
+    {% include 'footer.html' %}
+{% endblock footer %}
 {% endblock body %}
+
 {% block additional_js_footer %}
     <script type='text/javascript' src='{% static "js/pagination.js" %}'></script>
 {% endblock additional_js_footer %}
