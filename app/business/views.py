@@ -65,7 +65,8 @@ class ListingView(PatchRequestKwargs, View):
             objects_list = pages.page(page).object_list
             for obj in objects_list:
                 for key, values in combine_keys.items():
-                    obj[key] = zip(*map(lambda ck: obj[ck], values))
+                    val = list(map(lambda ck: obj[ck], values))
+                    obj[key] = zip(*val)
             response['data'] = objects_list
         return response
 

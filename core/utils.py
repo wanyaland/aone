@@ -41,6 +41,8 @@ def remove_dups_by_key(result_set, by_key=None, identity_key='id'):
     for row in result_set:
         identity_value = row[identity_key]
         if identity_value not in identity_traversed:
+            for key in by_key:
+                row[key] = [row[key]]
             final_result_set.append(row)
             identity_traversed[identity_value] = len(final_result_set)-1
         else:
