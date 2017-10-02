@@ -4,6 +4,6 @@ env/
 
 db.sqlite3
 africa_one/settings.py
-
+media/
 **/.sass-cache
 **/.sass-cache/*

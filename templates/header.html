@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-md-2 col-xs-6 lp-logo-container">
                     <div class="lp-logo">
-                        <a href="./index.html">
+                        <a href="{% url 'home' %}">
                         <img src="{% static  'logo/AfricaOneLogo-1.svg' %}" alt="" />
                         </a>
                     </div>
@@ -55,7 +55,7 @@
                             <div class="pull-right lp-add-listing-btn">
                                 <ul>
                                     <li>
-                                        <a href="./submit-listing/index.html"><i class="fa fa-plus"></i>Add Listing</a>
+                                        <a href="/submit-listing/index.html"><i class="fa fa-plus"></i>Add Listing</a>
                                     </li>
                                 </ul>
                             </div>
@@ -65,36 +65,23 @@
                                 <div class="menu-main-container">
                                     <ul id="menu-main" class="">
                                         <li id="menu-item-113" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-17 current_page_item menu-item-113">
-                                            <a href="./index.html">Home</a>
+                                            <a href="{% url 'home' %}">Home</a>
                                         </li>
                                         <li id="menu-item-101" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-101">
                                             <a href="#">Categories</a>
                                             <ul  class="sub-menu">
-                                                <li id="menu-item-94" class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-94">
-                                                    <a href="./listing-category/restaurant/index.html">Restaurant</a>
-                                                </li>
-                                                <li id="menu-item-95" class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-95">
-                                                    <a href="./listing-category/shopping/index.html">Shopping</a>
-                                                </li>
-                                                <li id="menu-item-96" class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-96">
-                                                    <a href="./listing-category/hotels/index.html">Hotels</a>
-                                                </li>
-                                                <li id="menu-item-98" class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-98">
-                                                    <a href="./listing-category/real-estate/index.html">Real Estate</a>
-                                                </li>
-                                                <li id="menu-item-99" class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-99">
-                                                    <a href="./listing-category/services/index.html">Services</a>
-                                                </li>
-                                                <li id="menu-item-100" class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-100">
-                                                    <a href="./listing-category/automotive/index.html">Automotive</a>
-                                                </li>
+                                                {% for category in parent_categories %}
+                                                    <li id="menu-item-{{category.id}}" class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-{{category.id}}">
+                                                        <a href="{% url 'listing_slug_id' category_name=category.slug category_id=category.id %}">{{category.name}}</a>
+                                                    </li>
+                                                {% endfor %}
                                             </ul>
                                         </li>
                                         <li id="menu-item-114" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-114">
-                                            <a href="/about.html">About Us</a>
+                                            <a href="{% url 'about' %}">About Us</a>
                                         </li>
                                         <li id="menu-item-115" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-115">
-                                            <a href="/contact.html">Contact</a>
+                                            <a href="{% url 'contact' %}">Contact</a>
                                         </li>
                                     </ul>
                                 </div>
