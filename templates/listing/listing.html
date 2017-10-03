@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{search_cat_name}} &#8211; Africa One{% endblock title %}
+{% block additional_css %}
+
+    <style type="text/css">
+            img.wp-smiley,
+            img.emoji {
+                display: inline !important;
+                border: none !important;
+                box-shadow: none !important;
+                height: 1em !important;
+                width: 1em !important;
+                margin: 0 .07em !important;
+                vertical-align: -0.1em !important;
+                background: none !important;
+                padding: 0 !important;
+            }
+
+    </style>
+    <style type="text/css" title="dynamic-css" class="options-output">
+        .menu-item a{font-family:Quicksand;font-weight:normal;font-style:normal;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading .menu-item a,{opacity: 0;}.ie.wf-loading .menu-item a,{visibility: hidden;}
+    </style>
+
+{% endblock additional_css %}
+{% block additional_js %}
+<script type='text/javascript' src='{% static "js/approve-review.js"  %}'></script>
+<script type='text/javascript' src='{% static "plugins/listingpro-plugin/assets/js/main.js" %}'></script>
+<script type='text/javascript' src='{% static "plugins/listingpro-plugin/assets/js/child-term.js" %}'></script>
+
+{% endblock additional_js %}
+<!--<body class="archive tax-listing-category term-automotive term-14 wpb-js-composer js-comp-ver-5.2 vc_responsive" data-submitlink="./submit-listing/" data-sliderstyle="style1">-->
+{% block body %}
+
+
+<div id="page" class="clearfix" data-mtoken="" data-mstyle="" data-sitelogo="./../../logo/AfricaOneLogo-1.svg"
+     data-site-url="./" data-ipapi="ip_api">
+    {% block header %}
+    <div class="pos-relative">
+        <div class="header-container lp-header-bg">
+            {% include 'header.html' %}
+            {% include 'dynamic_invoice.html' %}
+            {% include 'signin_signup.html' %}
+            {% include 'pricing_plan.html' %}
+
+            <div class="md-overlay"></div>
+        </div>
+    </div>
+    {% endblock header %}
+</div>
+{% block content %}
+<section class="page-container clearfix section-fixed listing-with-map pos-relative taxonomy" id="listing-category">
+    {% include 'listing/listing_item_map.html' %}
+    <div class="all-list-map"></div>
+    <div class="pull-left post-with-map-container-right">
+        <div class="post-with-map-container pull-left">
+            {% include 'listing/filter.html' %}
+            <div class="content-grids-wraps">
+                <div class="clearfix lp-list-page-grid" id="content-grids">
+
+                    <div class="promoted-listings">
+                        <div class="md-overlay"></div>
+                    </div>
+                    {% for listing in data %}
+                        {% include 'listing/listing_item.html' %}
+                        {% include 'listing/listing_preview.html' %}
+                    {% endfor %}
+                    <div class="md-overlay"></div>
+                </div>
+            </div>
+
+            <div id="lp-pages-in-cats"></div>
+            <div class="lp-pagination pagination lp-filter-pagination-ajx"></div>
+        </div>
+        <input type="hidden" id="lp_current_query" value="">
+    </div>
+</section>
+{% endblock content %}
+{% block footer %}
+    {% include 'footer.html' %}
+{% endblock footer %}
+{% endblock body %}
+
+{% block additional_js_footer %}
+    <script type='text/javascript' src='{% static "js/pagination.js" %}'></script>
+{% endblock additional_js_footer %}

@@ -1,0 +1,81 @@
+<div class="margin-bottom-20 margin-top-30">
+    <div class="row listing-style-3">
+        <div class="col-md-12 search-row margin-top-subtract-35">
+            <form autocomplete="off" class="clearfix" method="post" enctype="multipart/form-data" id="searchform">
+                <div class="filter-top-section pos-relative row">
+                    <div class="lp-title col-md-10 col-sm-10">
+                        <h3>Results For <span class="font-bold term-name">{{filters.category}}</span><span class="font-bold"> Listings</span>
+                        </h3>
+                    </div>
+                    <div class="pull-right margin-right-0 col-md-2 col-sm-2 clearfix">
+                        <div class="listing-view-layout">
+                            <ul>
+                                <li><a class="grid active" href="#"><i class="fa fa-th-large"></i></a></li>
+                                <li><a class="list" href="#"><i class="fa fa-list-ul"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-inline lp-filter-inner">
+                    <a id="see_filter">See Filters</a>
+                    <div class="more-filter" id="more_filters">
+                        <div class="form-group">
+                            <div class="currency-signs search-filter-attr">
+                                <ul>
+                                    <li class="simptip-position-top simptip-movable" data-tooltip="Inexpensive"
+                                        id="one"><a href="#" data-price="inexpensive">$</a></li>
+                                    <li class="simptip-position-top simptip-movable" data-tooltip="Moderate" id="two"><a
+                                            href="#" data-price="moderate">$$</a></li>
+                                    <li class="simptip-position-top simptip-movable" data-tooltip="Pricey" id="three"><a
+                                            href="#" data-price="pricey">$$$</a></li>
+                                    <li class="simptip-position-top simptip-movable" data-tooltip="Ultra High End"
+                                        id="four"><a href="#" data-price="ultra_high_end">$$$$</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="search-filters form-group">
+                            <ul>
+                                <li id="listing_openTime"><a href="#" data-value="close"><i class="fa fa-clock-o"></i>Open
+                                    Now</a></li>
+                            </ul>
+                        </div>
+                        <div class="search-filters form-group">
+                            <ul class="search-filter-attr">
+
+                                <li id="listingRate"><a href="#" data-value='listing_rate'><i class="fa fa-star-o"></i>Highest
+                                    Rated</a></li>
+
+                                <li id="listingReviewed"><a href="#" data-value='listing_reviewed'><i
+                                        class="fa fa-file-text-o"></i>Most Reviewed</a></li>
+
+                            </ul>
+                        </div>
+
+                        <div class="form-group pull-right margin-right-0">
+                            <div class="input-group border-dropdown">
+                                <div class="input-group-addon lp-border"><i class="fa fa-list"></i></div>
+                                <select class="comboboxCategory chosen-select2 tag-select-four" name="searchcategory"
+                                        id="searchcategory">
+                                    <option value="">All Categories</option>
+                                    {% for cat in parent_categories %}
+                                        <option value="{{cat.id}}">{{cat.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="open-map-view"><i class="fa fa-map-o"></i></a>
+                </div>
+                <input type="hidden" name="lp_search_loc" id="lp_search_loc" value=""/>
+
+
+                <input type="submit" style="display:none;">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="LPtagsContainer"></div>
+        </div>
+    </div>
+</div>

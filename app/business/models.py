@@ -15,12 +15,14 @@ from django.dispatch import receiver
 
 from core.managers import BusinessManager
 from core.utils import get_slug
-from core.config import CATEGORY_TYPES, USER_TYPES, BUSINESS, REVIEW_TAG_CHOICES, PHOTO_TAG, PHOTO_TYPE
+from core.config import *
 
 
 class Category(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=40)
+    name = models.CharField(max_length=200)
+    icon = models.FileField(upload_to="categories/icon/", null=True, blank=True)
+    slug = models.CharField(max_length=500, null=True, blank=True)
     parent_category = models.ForeignKey("self", blank=True, null=True)
     category_type = models.CharField(max_length=20, default=BUSINESS, choices=CATEGORY_TYPES)
     status = models.BooleanField(default=True)
@@ -30,14 +32,20 @@ class Category(models.Model):
     def __unicode__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        slug_raw_value = (self.parent_category and (self.parent_category.name+'-> ') or '') + self.name
+        self.slug = get_slug(slug_raw_value, unique=False)
+        super(Category, self).save(*args, **kwargs)
+
     class Meta:
         db_table = "Category"
+        verbose_name_plural = "Categories"
 
 
 class Country(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    code = models.CharField(max_length=10, help_text="Country code ")
+    code = models.CharField(max_length=10, help_text="Country code", unique=True)
     status = models.BooleanField(default=True)
     create_date = models.DateTimeField(auto_now_add=True)
     modify_date = models.DateTimeField(auto_now=True)
@@ -49,11 +57,26 @@ class Country(models.Model):
         db_table = "Country"
 
 
+class City(models.Model):
+    id = models.AutoField(primary_key=True)
+    country = models.ForeignKey(Country)
+    name = models.CharField(max_length=100)
+    status = models.BooleanField(default=True)
+    create_date = models.DateTimeField(auto_now_add=True)
+    modify_date = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return self.country.name+": "+self.name
+
+    class Meta:
+        db_table = "City"
+
+
 class BusinessHour(models.Model):
     id = models.AutoField(primary_key=True)
-    day = models.IntegerField()
-    opening_hours = models.FloatField()
-    closing_hours = models.FloatField()
+    day = models.CharField(max_length=10, choices=WEEKDAYS)
+    opening_hours = models.TimeField()
+    closing_hours = models.TimeField()
     status = models.BooleanField(default=True)
     create_date = models.DateTimeField(auto_now_add=True)
     modify_date = models.DateTimeField(auto_now=True)
@@ -61,35 +84,60 @@ class BusinessHour(models.Model):
     class Meta:
         db_table = "BusinessHour"
 
+    def __unicode__(self):
+        return "{} :: Open:{},  Close: {}".format(self.day, self.opening_hours, self.closing_hours)
+
+
+class FileUpload(models.Model):
+    id = models.AutoField(primary_key=True)
+    file_name = models.CharField(max_length=1000, null=True, blank=True)
+    file_upload_type = models.CharField(max_length=200, null=False, blank=False,
+                                        choices=FILE_UPLOAD_PATH,
+                                        default=FILE_UPLOAD_PATH[0][0])
+    file_path = models.FileField()
+
+    def save(self, *args, **kwargs):
+        self.file_path.upload_to = self.file_upload_type
+        super(FileUpload, self).save(*args, **kwargs)
+
+    class Meta:
+        db_table = 'FileUpload'
+
+    def __unicode__(self):
+        return "{}: {}".format(self.file_name, self.file_upload_type)
+
 
 class Business(models.Model):
     id = models.AutoField(primary_key=True)
-    banner_photo=models.ImageField(null=True,upload_to='businesses/banner/%Y/%m/%d')
-    popularity_rating = models.IntegerField(null=True,default=0,
-                                            validators=[MaxValueValidator(10),MinValueValidator(0)])
+    banner_photo = models.ImageField(null=True, upload_to='businesses/banner/%Y/%m/%d')
+    popularity_rating = models.IntegerField(null=True, default=0,
+                                            validators=[MaxValueValidator(10),MinValueValidator(0)],
+                                            help_text="Rating, max 10 min 0")
 
-    name = models.CharField(max_length=100, null=False, blank=False)
-    slug = models.SlugField(max_length=100, null=False, blank=False)
+    name = models.CharField(max_length=200, null=False, blank=False)
+    slug = models.SlugField(max_length=500, null=True, blank=True)
 
-    country = models.ForeignKey(Country, null=True)
     categories = models.ManyToManyField(Category)
     address = models.TextField(blank=True, null=True)
-    city = models.CharField(max_length=50, null=True)
-    phone_number = models.TextField(blank=True, null=True)
-    web_address = models.URLField(null=True)
+    city = models.ForeignKey(City, null=True)
+    phone_number = models.CharField(blank=True, null=True, max_length=100)
+    web_address = models.URLField(null=True, help_text="website url")
     photo = models.ImageField(null=True, upload_to='businesses/%Y/%m/%d')
     longitude = models.FloatField(null=True)
     latitude = models.FloatField(null=True)
     approved = models.BooleanField(default=False)
     claimed = models.BooleanField(default=False)
     email = models.EmailField(null=True)
-    start_time = models.TimeField(null=True)
-    end_time = models.TimeField(null=True)
-    features = models.ManyToManyField('Feature', null=True)
+    start_time = models.TimeField(null=True, help_text="Listing start time")
+    end_time = models.TimeField(null=True, help_text="Listing end time")
+    features = models.ManyToManyField('Feature', null=True, help_text="Add features")
     description = models.TextField(null=True)
-    price_range = models.IntegerField(null=True)
+    price_min = models.IntegerField(null=True, help_text="min price")
+    price_max = models.IntegerField(null=True, help_text="max price")
     owner = models.ForeignKey('Customer', null=True)
     business_hours = models.ManyToManyField(BusinessHour)
+    video_url = models.URLField(blank=True, null=False)
+    exclusive = models.BooleanField(default=False)
 
     status = models.BooleanField(default=True)
     create_date = models.DateTimeField(auto_now_add=True)
@@ -123,7 +171,7 @@ class Business(models.Model):
 class Customer(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User, unique=True)
-    photo = models.FileField(null=True, upload_to='avatars/%Y/%m/%d',blank=True)
+    photo = models.FileField(null=True, upload_to='avatars/%Y/%m/%d', blank=True)
     user_type = models.CharField(choices=USER_TYPES, max_length=20, default=BUSINESS)
     status = models.BooleanField(default=True)
     create_date = models.DateTimeField(auto_now_add=True, editable=False)

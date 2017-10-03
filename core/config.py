@@ -2,7 +2,7 @@
 BUSINESS = 'B'
 EVENT = 'E'
 CATEGORY_TYPES = {
-        (BUSINESS, 'Event'),
+        (BUSINESS, 'Business'),
         (EVENT, 'Event')
 }
 
@@ -37,4 +37,35 @@ PHOTO_TAG_INAPPROPRIATE = 'I'
 PHOTO_TAG = (
     (PHOTO_TAG_HELPFUL, 'Helpful'),
     (PHOTO_TAG_INAPPROPRIATE, 'Inappropriate'),
+)
+
+# File upload path
+FILE_UPLOAD_PATH = (
+    ('businesses/banner/%Y/%m/%d', 'BUSINESS_BANNER'),
+    ('businesses/%Y/%m/%d', 'BUSINESS_PHOTO'),
+    ('avatars/%Y/%m/%d', 'AVATARS'),
+    ('news/%Y/%m/%d', 'NEWS'),
+    ('event/%Y/%m/%d', 'EVENT')
+)
+
+#  COST TYPES
+COST_TYPE = {
+    # cost_type: cost_type_icon
+    'Inexpensive': '$',
+    'Moderate': '$$',
+    'Pricey': '$$$',
+    'Ultra High End': '$$$$'
+}
+
+
+# WEEKDAYS
+WEEKDAYS = (
+    ('Monday', 'Monday'),
+    ('Tuesday', 'Tuesday'),
+    ('Wednesday', 'Wednesday'),
+    ('Thursday', 'Thursday'),
+    ('Friday', 'Friday'),
+    ('Saturday', 'Saturday'),
+    ('Sunday', 'Sunday'),
+
 )

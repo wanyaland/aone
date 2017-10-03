@@ -3,6 +3,7 @@ Some utility Response type
 """
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+from django.conf import settings
 from core.codes import MAP
 from core.constants import SUCCESS_OK
 
@@ -19,6 +20,7 @@ class Response(object):
         self.api_status = api_status
         self.message = kwargs.get('message')
         self.template = template
+        self.inject_categories = kwargs.get('inject_categories', True)
 
     def __call__(self, *args, **kwargs):
         return self.write()
@@ -28,6 +30,7 @@ class Response(object):
         if 'json' in self.content_type:
             response_type = "json"
 
+        self.fuse_setting()
         self.fuse_api_code()
         return getattr(self, response_type+"_response")()
 
@@ -57,6 +60,15 @@ class Response(object):
         return JsonResponse(self.data, content_type=content_type, status=self.status)
 
     def html_response(self):
+        if isinstance(self.data, dict) and 'parent_categories' not in self.data and self.inject_categories:
+            from app.common.views import CategoryView  # Avoid circular import
+            self.data['parent_categories'] = CategoryView.get_data(parent=True)
         if self.template:
             return render(self._request, self.template, self.data)
         return HttpResponse(self.data, status=self.status)
+
+    def fuse_setting(self):
+        setting_cons = ['GOOGLE_MAP_API_KEY']
+        self.data['SETTINGS'] = {}
+        for key in setting_cons:
+            self.data['SETTINGS'][key] = getattr(settings, key)

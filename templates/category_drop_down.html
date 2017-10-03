@@ -1,0 +1,10 @@
+<li id="menu-item-102" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-102">
+    <a href="#">Explore</a>
+    <ul class="sub-menu">
+        {% for cat in category_parent %}
+            <li id="menu-item-{{cat['id']}}" data-id={{cat['id']}} class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-{{cat['id']}}">
+                <a href="{% url 'listing_category' category_id=cat['id'] %}">{{cat['name']}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</li>
