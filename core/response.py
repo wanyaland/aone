@@ -15,7 +15,7 @@ class Response(object):
     def __init__(self, request, data, template=None, content_type=None, status=200, api_status=SUCCESS_OK, **kwargs):
         self._request = request
         self.data = data
-        self.content_type = content_type or request.META.get('CONTENT_TYPE', 'application/json')
+        self.content_type = content_type or request.META.get('CONTENT_TYPE', 'text/html')
         self.status = status
         self.api_status = api_status
         self.message = kwargs.get('message')

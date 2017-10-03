@@ -49,23 +49,24 @@ FILE_UPLOAD_PATH = (
 )
 
 #  COST TYPES
-COST_TYPE = {
+COST_TYPE = (
     # cost_type: cost_type_icon
-    'Inexpensive': '$',
-    'Moderate': '$$',
-    'Pricey': '$$$',
-    'Ultra High End': '$$$$'
-}
+    (25, 'Inexpensive', '$'),
+    (50, 'Moderate', '$$'),
+    (75, 'Pricey', '$$$'),
+    (100, 'Ultra High End', '$$$$')
+)
 
 
 # WEEKDAYS
-WEEKDAYS = (
-    ('Monday', 'Monday'),
-    ('Tuesday', 'Tuesday'),
-    ('Wednesday', 'Wednesday'),
-    ('Thursday', 'Thursday'),
-    ('Friday', 'Friday'),
-    ('Saturday', 'Saturday'),
-    ('Sunday', 'Sunday'),
-
-)
+WEEKDAYS_MAP = {
+    0: ('Monday', 'Monday'),
+    1: ('Tuesday', 'Tuesday'),
+    2: ('Wednesday', 'Wednesday'),
+    3: ('Thursday', 'Thursday'),
+    4: ('Friday', 'Friday'),
+    5: ('Saturday', 'Saturday'),
+    6: ('Sunday', 'Sunday'),
+}
+WEEKDAYS = WEEKDAYS_MAP.values()
+# PRICE_MIN_MAX

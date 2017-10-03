@@ -3,6 +3,8 @@ import time
 
 from django.utils.text import slugify
 
+from core.config import COST_TYPE, WEEKDAYS_MAP
+
 
 def get_slug(value, unique=True, allow_unicode=False):
     value = slugify(value, allow_unicode)
@@ -57,6 +59,33 @@ def remove_dups_by_key(result_set, by_key=None, identity_key='id'):
     return final_result_set
 
 
+def calculate_price_category(price_min, price_max):
+    """
+    :param price_min:
+    :param price_max:
+    :return:
+    """
+    default_cost_type = {'label': COST_TYPE[-1][1], 'icon': COST_TYPE[-1][2], 'reminder': ''}
+    for cost_map in COST_TYPE:
+        cost_cap = cost_map[0]
+        if price_max >= cost_cap:
+            return {'label': cost_map[1], 'icon': cost_map[2], 'reminder': '$$$$'[len(cost_map[2]):]}
+
+    return default_cost_type  # else it is Ultra high expensive
 
 
+def business_working_status(business_hours):
+    """
+
+    :param business_hours: [['Monday', starttime, endtime], ['Monday', starttime, endtime], ]
+    :return:
+    """
+    now = datetime.datetime.now()
+    current_day = now.weekday()
+    current_time = now.time()
+    working_status = {'status': False, 'label': 'Closed Now'}
+    for hour in business_hours:
+         if WEEKDAYS_MAP[current_day][0] == hour[0] and (hour[1] <= current_time <= hour[2]):
+            return {'status': True, 'label': 'Open Now', 'start_time': hour[1], 'end_time': hour[2]}
+    return working_status
 
