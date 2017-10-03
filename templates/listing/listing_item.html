@@ -42,8 +42,8 @@
                         <li class="middle">
 
                             <span class="element-price-range list-style-none"><span
-                            class="grayscale simptip-position-top simptip-movable" data-tooltip="{{listing.cost_type}}"
-                            title="{{listing.cost_type}}">{{listing.cost_type_icon}}</span>
+                            class="grayscale simptip-position-top simptip-movable" data-tooltip="{{listing.cost_type.label}}"
+                            title="{{listing.cost_type.label}}">{{listing.cost_type.icon}}</span>
                             </span></li>
                         <li>
                                 {% for cat in listing.categories %}
@@ -70,13 +70,13 @@
                     <div class="hide">
                         <span class="cat-icon">
                             <img class="icon icons8-mapMarkerGrey" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAC8UlEQVRoge1aS3HDMBA1BEMIhEAwhEAohEIIgx3tk8+FYAiGEAiBYAjpoZKyTmx9Ym2cQ9+MZ3qIpf2+/bhN849nEFFLQGeMOTMwArgwMDEwub8HtpYI6PaWdRFE1LK15IS+ZT/WEhEd9pZ/UQEAF2PMmYCO+v5IRK17DgBOxpiz885MoX2VAAYh0Eh9f8x+v++PbO2PNAARtZoyrwlxdda8bon52VnAVGKMTSCiVoTGWCPGnXfHoIy2Z2Q4aYSCVwbApea5T3C0+hdOClaT3jbGnGufHy7x7KRZB4joIELsUP2C4A1gqH74AwKbWfujcfiVgVsOqxBRy8zfDAwALu7dITdcnPdvDEybBZcAcMpNQgK6p4InHgCXnNAMlMz8VUOHpmnuYZWyKAGdqPKjqO4HACepYEoZQSz1wktQ7mlVCVlf/nqoRVZzLU0ybJxRbgyMW+UP8ALGWMTlhC+SUWr29SLmYZU8CYkeUyTDax4+52IMqKOIrx8RS+coWyqkz6cXRF5GCK0I9dZWhPr+WL1dCe16hAp9EcsJrZxEVkn2wDTM32u/EZU/ebE3TCzZA3nUpN+cOuKmxWuBgNHGU9SRetOjYJmotUU4zCq4X0rIiTIVgiUsmA2RnMlkfpj4lp4pJVzJfcUQCb+aJxJ+JeSoe2JgNMacc+YYUVzrd9rM/PW2Nr7QaEWQ3K85U88GOK2dl0pr/XiH87zq3B7Cy9qr1h2hg1Y0VtM0d69UpUWHQPNKy40ZfKHScH1Oe18NWhwviqn+gs5DTHnVqPit3vCYeaXCrla0QO/zhofcOm455y3bxZQANepKbjesChkSr7wvq7h63UhBroBK39UgjZchls5FiT+j23d93EkhWDYz8XdP8BhKBJPdwW4JvoZZiEX2umI/PH3s9/bUXvejQ+oRfP+o+bSoEMuH5H54dzzUhjCqijlc55OaBuRaiIBOfjfRmGNUIfMleGjPf9XYApEvNwaGj8+LNQiW+vzk/hT8Ak0IUQVkeTWPAAAAAElFTkSuQmCC"
-                                                             alt="mapMarkerGrey">													</span>
+                                                             alt="mapMarkerGrey"></span>
                         <span class="text gaddress">{{listing.city__name}}</span>
                     </div>
                 </div>
 
                 <div class="pull-right">
-                    <a href="#" class="status-btn"><span class="grid-opened">Open Now~</span>
+                    <a href="#" class="status-btn"><span class="grid-opened">{{listing.business_hours_show.label}}</span>
                     </a>
                 </div>
                 <div class="clearfix"></div>

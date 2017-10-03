@@ -54,12 +54,12 @@
                                                         </h4>
                                                         <ul>
                                                             <li>
-                                                                <span class="no-review">{{listing.num_revirew}} Review</span>
+                                                                <span class="no-review">{{listing.num_review}} Review</span>
                                                             </li>
                                                             <li class="middle">
                                                                 <span class="element-price-range list-style-none">
                                                                     <span class="grayscale simptip-position-top simptip-movable"
-                                                                          data-tooltip="{{listing.cost_type}}" title="{{listing.cost_type}}">{{listing.cost_type_icon}}</span>
+                                                                          data-tooltip="{{listing.cost_type.label}}" title="{{listing.cost_type.label}}">{{listing.cost_type.icon}}</span>
                                                                 </span>
                                                             </li>
                                                             <li>
@@ -87,7 +87,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="pull-right">
-                                                        <a href="#" class="status-btn"><span class="grid-opened">Open Now~</span></a>
+                                                        <a href="#" class="status-btn"><span class="grid-opened">{{listing.business_hours_show.label}}</span></a>
                                                     </div>
                                                     <div class="clearfix"></div>
                                                 </div>

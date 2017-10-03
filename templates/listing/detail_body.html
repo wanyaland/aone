@@ -126,8 +126,9 @@
                                     <li class="today-timing clearfix"><strong><img class="icon icons8-todayTime"
                                                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADCElEQVR4nO1awY0qMQxNCZRACZRAB0sHTAfQAXTC3iI/H1LC0gF0AB0wHfx/CSvwJCwzsWGQ8qRckLCdF9uxM3auoqKioqKiosIQIYQJM38x8wbADxGdAPy7XfG3H2beMPNXCGHybruLEEKYENESwEFutsc6ENHyo8jw3k/jSV8KNi7XhZk33vvpu/f3EAYb7xABYPXufXbgvZ8+4ep7ItoS0QLATMoAMCOiBRFtAez/Co3ReEPcUO7Uz8y8HmJsDKU1gHPOG4hoYbCl5wGgyRjXAmiU9bQZXWp6hhjVMYiIvi2ydrxVvkdBQnT7IkPkf3v8L0f8a8IhJjwZ8y0zz/vIGUqAc84x8zwREpeXJMZUtu+7+ShnMAHO/ZLQuR36yumFeEWpxF8pAVFGJxyYeT1E1p9IuT4RfQ+Vp0GAc84lEuPFpHROnH5bokiLgBDCROYDItoOlfdIiUx8TYlMLQKiLBkKul6QUHBWkKlGQJQnK8amVOat8LvMr5FotAmIZbP+jRDd/85YjftWm4CYpO9kqoRBwv33xUKdPgHOOUdER5EMy6tDmf21MqwRAfq2QvTmWjW3EQGyR9lrCD0JoZ3HjCGwIADATBzWSUOouqEpuc+ul9tbCagEVAJkiamSBC0gkyAUSnaza9ACVtegSSFkARNbTVg1AkTTpuKtVs2QNsyaIee6TYbZu1sBZDtMREc14RAdoUqJqYxEyd6oCU+9u6kqKIQ8IBS+VyaReBS1eX3tidR7pclNFZOM9IKduqKeALAzP/0rND+MaCDh+vYJWt4IUencVGnajs4HWtXMn0MmFC6vJCEzlNG+rD7R+Dw+FCm3f0uPkjMEwM5qQCKR8N6bhx6QcCGipZaeOG+Ym0NqtPQMNW6RyAm/FSOA1dAhKQCr1FTpNeZH05p776ep20Gsw3UMFpkxuZtx2ocjd0R0HGNDdm1IctNcGqsdYyN2hzjNtVUmoiWi7RhK76cRs3bzRGg8dHUAzUdtPIXoFbdjsKnpzzNuxmk/ftMVFRUVFRUVo8d/fHG1F7o+XcIAAAAASUVORK5CYII="
                                                                                    alt="todayTime">
-                                        Today</strong><a class="Opened">{{listing.business_hour_today.label}}
-                                        Now~</a><span>{{listing.business_hour_today.start_time}} - {{listing.business_hour_today.end_time}}</span></li>
+                                        Today</strong><a class="Opened">{{listing.business_hours_show.label}}</a>
+                                        <span>{{listing.business_hours_show.start_time}} - {{listing.business_hours_show.end_time}}</span>
+                                    </li>
                                 </ul>
                                 <a href="#" class="show-all-timings">Show all timings</a>
                                 <ul class="hidding-timings">
@@ -277,8 +278,8 @@
                                 <ul class="list-style-none post-price-row line-height-16">
                                     <li class="grayscale-dollar">
                                                 <span class="simptip-position-top simptip-movable"
-                                                      data-tooltip="Inexpensive" title="Inexpensive"><span
-                                                        class="active">$</span><span class="grayscale">$$$</span></span>
+                                                      data-tooltip="{{listing.cost_type.label}}" title="{{listing.cost_type.label}}"><span
+                                                        class="active">{{listing.cost_type.icon}}</span><span class="grayscale">{{listing.cost_type.reminder}}</span></span>
                                     </li>
                                     <li>
                                         <span class="post-rice">
