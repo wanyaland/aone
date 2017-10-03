@@ -3,7 +3,7 @@ env/
 .idea/
 
 db.sqlite3
-africa_one/settings.py
+africaone/settings.py
 media/
 **/.sass-cache
 **/.sass-cache/*
