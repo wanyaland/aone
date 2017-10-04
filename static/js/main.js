@@ -85,7 +85,7 @@ jQuery(document).ready(function($){
 	if (loc == 'yes') {
 		if( jQuery('.form-group').is('.lp-location-search') || jQuery('.form-group').is('.lp-location-inner-search') ){
 			if(apiType==="geo_ip_db"){
-				jQuery.getJSON('https://geoip-db.com/json/geoip.php?jsonp=?') 
+				jQuery.getJSON(window.ip_track_url || 'https://geoip-db.com/json/geoip.php?jsonp=?')
 				 .done (function(location)
 				{
 					//jQuery('.lp-home-sear-location').val(location.city);
@@ -103,7 +103,7 @@ jQuery(document).ready(function($){
 				});
 			}
 			else{
-				jQuery.get("https://ipapi.co/json", function(location) {
+				jQuery.get(window.ip_track_url, function(location) {
                                         if (location.city){
                                             jQuery("#searchlocation").prop('disabled', true).trigger('chosen:updated');
                                             jQuery('#searchlocation').find('#def_location').text(location.city);
@@ -125,7 +125,7 @@ jQuery(document).ready(function($){
 			jQuery(this).removeClass('fa-crosshairs');
 			if(jQuery('.form-group').is('.lp-location-search')){
 				if(apiType==="geo_ip_db"){
-					jQuery.getJSON('https://geoip-db.com/json/geoip.php?jsonp=?') 
+					jQuery.getJSON(window.ip_track_url || 'https://geoip-db.com/json/geoip.php?jsonp=?')
 					 .done (function(location)
 					{
 						//jQuery('.lp-home-sear-location').val(location.city);
@@ -144,7 +144,7 @@ jQuery(document).ready(function($){
 					});
 				}
 				else{
-					jQuery.get("https://ipapi.co/json", function(location) {
+					jQuery.get(window.ip_track_url, function(location) {
 						if (location.city){
 						jQuery('.chosen-single').addClass('remove-margin');
 						jQuery("#searchlocation").prop('disabled', true).trigger('chosen:updated');
@@ -2520,7 +2520,7 @@ jQuery(document).ready(function($){
 		
 		if(locType=="withip"){
 			if(apiType==="geo_ip_db"){
-				$.getJSON('https://geoip-db.com/json/geoip.php?jsonp=?') 
+				$.getJSON(window.ip_track_url || 'https://geoip-db.com/json/geoip.php?jsonp=?')
 				 .done (function(location)
 				 {
 					 var locc = location.city;
@@ -2533,7 +2533,7 @@ jQuery(document).ready(function($){
 				 });
 			}
 			else{
-				jQuery.get("https://ipapi.co/json", function(location) {
+				jQuery.get(window.ip_track_url, function(location) {
 					var locc = location.city;
 					 if(locc == null){
 						 

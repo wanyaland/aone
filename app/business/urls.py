@@ -3,7 +3,7 @@ AfricaOne Business URL Configuration
 """
 from django.conf.urls import url
 
-from .views import ListingView, DetailView
+from .views import ListingView, DetailView, SearchView
 
 urlpatterns = [
     url(r'^$', ListingView.as_view(), name='listing', kwargs={'sort': 'name'}),
@@ -14,5 +14,6 @@ urlpatterns = [
     url(r'detail/(?P<business_id>[-\d]+)/$', DetailView.as_view(), name="detail_id"),
     url(r'location/listing/$', ListingView.as_view(), name='home_search_listing_all'),
     url(r'location/(?P<city_id>[-\d]+)/$', ListingView.as_view(), name='home_search_listing_city'),
-    url(r'location/(?P<category_id>[-\d]+)/(?P<city_id>[-\d]+)/$', ListingView.as_view(), name='home_search_listing')
+    url(r'location/(?P<category_id>[-\d]+)/(?P<city_id>[-\d]+)/$', ListingView.as_view(), name='home_search_listing'),
+    url(r'search/$', SearchView.as_view(), name='search'),
 ]

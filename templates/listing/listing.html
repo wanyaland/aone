@@ -38,7 +38,7 @@
     {% block header %}
     <div class="pos-relative">
         <div class="header-container lp-header-bg">
-            {% include 'header.html' %}
+            {% include 'listing/header.html' %}
             {% include 'dynamic_invoice.html' %}
             {% include 'signin_signup.html' %}
             {% include 'pricing_plan.html' %}
@@ -61,10 +61,19 @@
                     <div class="promoted-listings">
                         <div class="md-overlay"></div>
                     </div>
-                    {% for listing in data %}
-                        {% include 'listing/listing_item.html' %}
-                        {% include 'listing/listing_preview.html' %}
-                    {% endfor %}
+                    <div id="no_result" style="display:none" class="text-center margin-top-80 margin-bottom-80">
+                        <h2>No Results</h2>
+                        <p>Sorry! There are no listings matching your search.</p>
+                        <p>Try changing your search filters or <a href="{% url 'listing_all' %}">Reset Filter</a>
+                        </p>
+                    </div>
+                    <div id="error_result" style="display:none" class="text-center margin-top-80 margin-bottom-80">
+                        <h2>Something went wrong:</h2>
+                        <p>Sorry! Something went wrong. Our geeks are working on it.</p>
+                        <p>Or Try changing your search filters or <a href="{% url 'listing_all' %}">Reset Filter</a>
+                        </p>
+                    </div>
+                    {% include 'listing/listing_body.html' %}
                     <div class="md-overlay"></div>
                 </div>
             </div>

@@ -1,11 +1,15 @@
 """
 Some utility Response type
 """
+from collections import namedtuple
+
 from django.http import HttpResponse, JsonResponse
+from django.template import loader
 from django.shortcuts import render
 from django.conf import settings
 from core.codes import MAP
 from core.constants import SUCCESS_OK
+from core.config import COST_TYPE_DICT
 
 
 class Response(object):
@@ -21,6 +25,7 @@ class Response(object):
         self.message = kwargs.get('message')
         self.template = template
         self.inject_categories = kwargs.get('inject_categories', True)
+        self.response_type = kwargs.get('response_type')
 
     def __call__(self, *args, **kwargs):
         return self.write()
@@ -55,6 +60,7 @@ class Response(object):
         :return: json response
         """
         content_type = 'application/json'
+        self.data.pop('SETTINGS', None)
         if isinstance(self.data, dict) and 'data' in self.data and 'count' not in self.data:
             self.data['count'] = len(self.data['data'])
         return JsonResponse(self.data, content_type=content_type, status=self.status)
@@ -64,6 +70,10 @@ class Response(object):
             from app.common.views import CategoryView  # Avoid circular import
             self.data['parent_categories'] = CategoryView.get_data(parent=True)
         if self.template:
+            if self.response_type == "ajax_html":
+                html_render = loader.render_to_string(self.template, context=self.data, request=self._request)
+                self.data['html'] = html_render
+                return self.json_response()
             return render(self._request, self.template, self.data)
         return HttpResponse(self.data, status=self.status)
 
@@ -72,3 +82,5 @@ class Response(object):
         self.data['SETTINGS'] = {}
         for key in setting_cons:
             self.data['SETTINGS'][key] = getattr(settings, key)
+        self.data['SETTINGS']['COST_TYPE'] = COST_TYPE_DICT
+

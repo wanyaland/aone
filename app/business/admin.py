@@ -74,6 +74,7 @@ class EventDiscussionAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
+    list_display = ['customer', 'business', 'rating']
     pass
 
 

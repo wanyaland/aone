@@ -51,12 +51,13 @@ FILE_UPLOAD_PATH = (
 #  COST TYPES
 COST_TYPE = (
     # cost_type: cost_type_icon
-    (25, 'Inexpensive', '$'),
-    (50, 'Moderate', '$$'),
-    (75, 'Pricey', '$$$'),
-    (100, 'Ultra High End', '$$$$')
+    (25, 'Inexpensive', '$', 'inexpensive'),
+    (50, 'Moderate', '$$', 'moderate'),
+    (75, 'Pricey', '$$$', 'pricey'),
+    (100, 'Ultra High End', '$$$$', 'ultra')
 )
 
+COST_TYPE_DICT = [{'price': i[0], 'label': i[1], 'icon':i[2], 'form_id': i[3]} for i in COST_TYPE]
 
 # WEEKDAYS
 WEEKDAYS_MAP = {

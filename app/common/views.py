@@ -28,7 +28,7 @@ class CategoryView(PatchRequestKwargs, View):
         return Response(request, response, content_type='json')()
 
     @staticmethod
-    def get_data(category=None, subcategory=None, category_name=None, parent=False):
+    def get_data(category=None, subcategory=None, category_name=None, parent=False, parent_category=None):
         query = [Q(status=True) & Q(category_type=BUSINESS)]
         if subcategory is not None:
             query.append(Q(id=subcategory) & Q(parent_category__isnull=False))
@@ -41,6 +41,9 @@ class CategoryView(PatchRequestKwargs, View):
             query.append(Q(name__icontains=category_name))
         elif parent:
             query.append(Q(parent_category__isnull=True))
+
+        if parent_category:
+            query.append(Q(parent_category__id=parent_category))
 
         query_obj = reduce(and_, query)
         fields = ['id', 'name', 'parent_category', 'slug']

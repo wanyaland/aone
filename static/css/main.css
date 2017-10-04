@@ -16274,7 +16274,7 @@ div.bottom-section a.reviewRes i{
     margin-left: 2px;
 }
 /*strt of new location*/
-form #cities {
+form #cities, form #searchlocation {
     padding-left: 80px;
     width: 100%;
     height: 46px;
