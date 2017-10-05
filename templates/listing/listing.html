@@ -34,7 +34,7 @@
 {% block body %}
 
 
-<div id="page" class="clearfix" data-mtoken="" data-mstyle="" data-sitelogo="./../../logo/AfricaOneLogo-1.svg"
+<div id="page" class="clearfix" data-mtoken="" data-mstyle="" data-sitelogo="{% static 'logo/AfricaOneLogo-1.svg' %}"
      data-site-url="./" data-ipapi="ip_api">
     {% block header %}
     <div class="pos-relative">
@@ -62,7 +62,11 @@
                     <div class="promoted-listings">
                         <div class="md-overlay"></div>
                     </div>
+                    {% if count %}
                     <div id="no_result" style="display:none" class="text-center margin-top-80 margin-bottom-80">
+                    {% else %}
+                    <div id="no_result" class="text-center margin-top-80 margin-bottom-80">
+                    {% endif %}
                         <h2>No Results</h2>
                         <p>Sorry! There are no listings matching your search.</p>
                         <p>Try changing your search filters or <a href="{% url 'listing_all' %}">Reset Filter</a>
@@ -86,11 +90,18 @@
     </div>
 </section>
 {% endblock content %}
+{% comment %}
 {% block footer %}
     {% include 'footer.html' %}
 {% endblock footer %}
+{% endcomment %}
 {% endblock body %}
 
 {% block additional_js_footer %}
     <script type='text/javascript' src='{% static "js/pagination.js" %}'></script>
+    <script>
+        jQuery(document).ready(function() {
+            findListings();
+        });
+    </script>
 {% endblock additional_js_footer %}

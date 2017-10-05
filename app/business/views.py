@@ -50,7 +50,7 @@ class ListingView(PatchRequestKwargs, View):
         if count > 100:
             count = 100
         page = kwargs.get('page', 1)
-        category_id = kwargs.get('category_id')
+        category_id = int(kwargs.get('category_id') or 0)
         city_id = kwargs.get('city_id')
 
         inexpensive = kwargs.get('inexpensive')
@@ -70,6 +70,10 @@ class ListingView(PatchRequestKwargs, View):
                                      open_time=open_time,
                                      average_rate=average_rate,
                                      most_reviewed=most_reviewed)
+
+        if category_id and len(listing_data['data']):
+            kwargs['category_name'] = listing_data['data'][0]['categories__name'][0]
+            kwargs['category_id'] = category_id
 
         listing_data['filters'] = kwargs
         response = Response(request, listing_data, template=self.template_name, **kwargs)()

@@ -4,7 +4,7 @@
             <form autocomplete="off" class="clearfix" method="post" enctype="multipart/form-data" id="searchform">
                 <div class="filter-top-section pos-relative row">
                     <div class="lp-title col-md-10 col-sm-10">
-                        <h3>Results For <span class="font-bold term-name">{{filters.category}}</span><span class="font-bold"> Listings</span>
+                        <h3>Results For <span class="font-bold term-name" id="search_label">{{filters.category_name}}</span><span class="font-bold"> Listings</span>
                         </h3>
                     </div>
                     <div class="pull-right margin-right-0 col-md-2 col-sm-2 clearfix">
@@ -52,9 +52,11 @@
                                 <div class="input-group-addon lp-border"><i class="fa fa-list"></i></div>
                                 <select class="comboboxCategory chosen-select2 tag-select-four" name="searchcategory"
                                         id="searchcategory">
-                                    <option value="">All Categories</option>
+                                    <option data-title="All" value="">All Categories</option>
                                     {% for cat in parent_categories %}
-                                        <option value="{{cat.id}}">{{cat.name}}</option>
+                                        {% with category_id=filters.category_id %}
+                                        <option data-title="{{cat.name}}" value="{{cat.id}}" {% if cat.id == category_id %}selected {% endif %} >{{cat.name}}</option>
+                                        {% endwith %}
                                     {% endfor %}
                                 </select>
                             </div>

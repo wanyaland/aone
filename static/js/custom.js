@@ -30,6 +30,7 @@ window.FilterListing = function(){
     skeyword = jQuery('input#lp_current_query').val();
 
     var category_id = jQuery("#searchcategory").val();
+    jQuery("#search_label").text(jQuery("#searchcategory option:selected").data("title")||'');
     var location_id = jQuery("#lp_search_loc").val();
     var search_tags = jQuery("#searchtags").val();
 
@@ -70,6 +71,7 @@ window.FilterListing = function(){
                 jQuery("#content-grids").append(jQuery(data.html));
                 jQuery("#no_result").hide();
                 jQuery("#error_result").hide();
+                setGoogleMapMarkers(data.data);
 
             }
             else{
@@ -87,4 +89,21 @@ window.FilterListing = function(){
             jQuery('#content-grids').removeClass('content-loading');
         }
     });
+}
+
+function findListings(){
+    var listings = jQuery("div[data-type=listing_items]");
+    var listing_obj = [];
+    var name, id, address, img_url, detail_url, longitude, latitude;
+    jQuery.each(listings, function(index, listing){
+        name = jQuery(listing).data('title');
+        id = jQuery(listing).data('postid');
+        address = jQuery(listing).data('address');
+        detail_url = jQuery(listing).data('posturl');
+        banner_photo = jQuery(listing).data('banner_photo');
+        latitude = jQuery(listing).data('latitude');
+        longitude = jQuery(listing).data('longitude');
+        listing_obj.push({name: name, id:id, address: address, detail_url:detail_url, banner_photo:banner_photo, latitude:latitude, longitude:longitude})
+    });
+    setGoogleMapMarkers(listing_obj);
 }
