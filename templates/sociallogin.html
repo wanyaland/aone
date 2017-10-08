@@ -6,7 +6,7 @@
         </a>
     </li>
     <li>
-        <a id="loginfacebook" class="facebook flaticon-facebook" href="./wp-login.php?loginFacebook=1" onclick="window.location = './wp-login.php?loginFacebook=1&redirect='+window.location.href; return false;">
+        <a id="loginfacebook" class="facebook flaticon-facebook" href="{% url 'social:begin' 'facebook' %}">
             <i class="fa fa-facebook"></i>
             <span>Facebook</span>
         </a>
