@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'location/listing/$', ListingView.as_view(), name='home_search_listing_all'),
     url(r'location/(?P<city_id>[-\d]+)/$', ListingView.as_view(), name='home_search_listing_city'),
     url(r'location/(?P<category_id>[-\d]+)/(?P<city_id>[-\d]+)/$', ListingView.as_view(), name='home_search_listing'),
+    url(r'signup/$',signup,name='signup'),
     url(r'login/$',auth_views.login,name='login'),
     url(r'logout/$',auth_views.logout,name='logout'),
     url(r'oauth/',include('social_django.urls',namespace='social')),

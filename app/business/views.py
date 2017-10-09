@@ -13,6 +13,9 @@ from core.mixin import PatchRequestKwargs
 
 from app.business.models import Business, BusinessHour, Review
 from app.common.views import CategoryView
+from django.contrib.auth import login,authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render,redirect
 
 
 BUSINESS_LISTING_FIELDS = ['id', 'name', 'banner_photo', 'popularity_rating', 'slug', 'city__id',
@@ -191,3 +194,17 @@ class SearchView(View):
     def get(self, request, *args, **kwargs):
         data = {}
         return Response(request, data, **kwargs)
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+          form.save()
+          username = form.cleaned_data.get('username')
+          password = form.cleaned_data.get('password')
+          user = authenticate(username=username,password=password)
+          login(request,user)
+          return redirect('home')
+        else:
+          form = UserCreationForm()
+    return render(request,'signup.html',{'form':form})
