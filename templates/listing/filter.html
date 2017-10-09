@@ -4,7 +4,7 @@
             <form autocomplete="off" class="clearfix" method="post" enctype="multipart/form-data" id="searchform">
                 <div class="filter-top-section pos-relative row">
                     <div class="lp-title col-md-10 col-sm-10">
-                        <h3>Results For <span class="font-bold term-name">{{filters.category}}</span><span class="font-bold"> Listings</span>
+                        <h3>Results For <span class="font-bold term-name" id="search_label">{{filters.category_name}}</span><span class="font-bold"> Listings</span>
                         </h3>
                     </div>
                     <div class="pull-right margin-right-0 col-md-2 col-sm-2 clearfix">
@@ -22,30 +22,26 @@
                         <div class="form-group">
                             <div class="currency-signs search-filter-attr">
                                 <ul>
-                                    <li class="simptip-position-top simptip-movable" data-tooltip="Inexpensive"
-                                        id="one"><a href="#" data-price="inexpensive">$</a></li>
-                                    <li class="simptip-position-top simptip-movable" data-tooltip="Moderate" id="two"><a
-                                            href="#" data-price="moderate">$$</a></li>
-                                    <li class="simptip-position-top simptip-movable" data-tooltip="Pricey" id="three"><a
-                                            href="#" data-price="pricey">$$$</a></li>
-                                    <li class="simptip-position-top simptip-movable" data-tooltip="Ultra High End"
-                                        id="four"><a href="#" data-price="ultra_high_end">$$$$</a></li>
+                                    {% for cost_type in SETTINGS.COST_TYPE %}
+                                        <li class="simptip-position-top simptip-movable" data-tooltip="{{cost_type.label}}"
+                                            id="{{cost_type.form_id}}"><a href="#" data-price="{{cost_type.form_id}}">{{cost_type.icon}}</a></li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
                         <div class="search-filters form-group">
                             <ul>
-                                <li id="listing_openTime"><a href="#" data-value="close"><i class="fa fa-clock-o"></i>Open
+                                <li id="listing_openTime"><a href="#" data-value="open"><i class="fa fa-clock-o"></i>Open
                                     Now</a></li>
                             </ul>
                         </div>
                         <div class="search-filters form-group">
                             <ul class="search-filter-attr">
 
-                                <li id="listingRate"><a href="#" data-value='listing_rate'><i class="fa fa-star-o"></i>Highest
+                                <li id="listingRate"><a href="#" data-value='rating'><i class="fa fa-star-o"></i>Highest
                                     Rated</a></li>
 
-                                <li id="listingReviewed"><a href="#" data-value='listing_reviewed'><i
+                                <li id="listingReviewed"><a href="#" data-value='reviewed'><i
                                         class="fa fa-file-text-o"></i>Most Reviewed</a></li>
 
                             </ul>
@@ -56,9 +52,11 @@
                                 <div class="input-group-addon lp-border"><i class="fa fa-list"></i></div>
                                 <select class="comboboxCategory chosen-select2 tag-select-four" name="searchcategory"
                                         id="searchcategory">
-                                    <option value="">All Categories</option>
+                                    <option data-title="All" value="">All Categories</option>
                                     {% for cat in parent_categories %}
-                                        <option value="{{cat.id}}">{{cat.name}}</option>
+                                        {% with category_id=filters.category_id %}
+                                        <option data-title="{{cat.name}}" value="{{cat.id}}" {% if cat.id == category_id %}selected {% endif %} >{{cat.name}}</option>
+                                        {% endwith %}
                                     {% endfor %}
                                 </select>
                             </div>

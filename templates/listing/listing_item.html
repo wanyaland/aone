@@ -1,6 +1,6 @@
 <div class="col-md-6 col-sm-12  lp-grid-box-contianer grid_view2 card1 lp-grid-box-contianer1"
-     data-title="Euro Collision" data-postid="{{listing.id}}" data-lattitue="listing.lattitue"
-     data-longitute="listing.lattitue" data-posturl="{% url 'detail_slug' slug=listing.slug %}">
+     data-title="{{listing.name}}" data-type="listing_items" data-banner_photo="{{MEDIA_URL}}{{listing.banner_photo}}" data-address="{{listing.address}}" data-postid="{{listing.id}}" data-latitude="{{listing.latitude}}"
+     data-longitude="{{listing.longitude}}" data-posturl="{% url 'detail_slug' slug=listing.slug %}">
     <div class="lp-grid-box">
         <div class="lp-grid-box-thumb-container">
             <div class="lp-grid-box-thumb">

@@ -10127,8 +10127,8 @@ img.loadinerSearch{
 	         transition: all .25s ease;
 }
 .form-group.lp-location-search .chosen-container.chosen-container-single .chosen-single {
-	background-color: transparent; 
-	border-radius: 0 5px 5px 0;
+    background-color: transparent;
+    border-radius: 0 5px 5px 0;
     float: left;
     height: 46px;
     line-height: 47px;
@@ -10137,7 +10137,7 @@ img.loadinerSearch{
     width: 100%;
 }
 .form-group.lp-location-search .lp-where {
-	background-color: transparent; 
+    background-color: transparent;
     border-radius: 0;
     color: #333333;
     font-weight: 600;
@@ -16274,7 +16274,7 @@ div.bottom-section a.reviewRes i{
     margin-left: 2px;
 }
 /*strt of new location*/
-form #cities {
+form #cities, form #searchlocation {
     padding-left: 80px;
     width: 100%;
     height: 46px;

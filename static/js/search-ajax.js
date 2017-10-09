@@ -399,507 +399,80 @@ jQuery(document).ready(function($) {
 
 
 
+
+
 jQuery(document).ready(function($){
 	
 
 	
 	jQuery("#searchcategory").change(function() {
-		jQuery('.tags-area').remove();
-		jQuery('.lp-filter-pagination-ajx').remove();
-		jQuery(".chosen-select").val('').trigger('chosen:updated');
-		jQuery("#searchtags").prop('disabled', true).trigger('chosen:updated');
-		listStyle = jQuery("#page").data('list-style');
-			jQuery.ajax({
-				type: 'POST',
-				dataType: 'json',
-				url: ajax_search_term_object.ajaxurl,
-				data: { 
-					'action': 'ajax_search_term', 
-					'term_id': jQuery("#searchcategory").val(), 
-					'list_style': listStyle 
-					},
-				success: function(data){
-					if(data){
-							jQuery(".search-row .form-inline").after( data.html );
-							jQuery(".lp-features-filter").css( 'opacity','1' );
-						
-					}
-				}
-			});
+	        FilterListing();
 	});
 
 
 	jQuery("#searchform select").change(function() {
-		var docHeight = jQuery( document ).height();
-		jQuery( "body" ).prepend( '<div id="full-overlay"></div>' );
-		jQuery('#full-overlay').css('height',docHeight+'px');
-		jQuery('#content-grids').html(' ');
-		jQuery('.lp-filter-pagination-ajx').remove();
-		jQuery('#content-grids').addClass('content-loading');
-		jQuery('.lp-filter-pagination').hide();
-		listStyle = jQuery("#page").data('list-style');
-		var inexpensive='';
-		moderate = '';
-		pricey = '';
-		ultra = '';
-		averageRate = '';
-		mostRewvied = '';
-		listing_openTime = '';
-		
-		inexpensive = jQuery('.currency-signs #one').find('.active').data('price');
-		moderate = jQuery('.currency-signs #two').find('.active').data('price');
-		pricey = jQuery('.currency-signs #three').find('.active').data('price');
-		ultra = jQuery('.currency-signs #four').find('.active').data('price');
-		
-		averageRate = jQuery('.search-filters li#listingRate').find('.active').data('value');	
-		mostRewvied = jQuery('.search-filters li#listingReviewed').find('.active').data('value');
-		listing_openTime = jQuery('.search-filters li#listing_openTime').find('.active').data('value');
-		
-		var tags_name = [];
-		tags_name = jQuery('.tags-area input[type=checkbox]:checked').map(function(){
-		  return jQuery(this).val();
-		}).get();
-		skeyword = jQuery('input#lp_current_query').val();
-			jQuery.ajax({
-				type: 'POST',
-				dataType: 'json',
-				url: ajax_search_term_object.ajaxurl,
-				data: { 
-					'action': 'ajax_search_tags', 
-					'tag_name': jQuery("#searchtags").val(), 
-					'cat_id': jQuery("#searchcategory").val(),
-					'loc_id': jQuery("#lp_search_loc").val(),
-					'inexpensive':inexpensive,
-					'moderate':moderate,
-					'pricey':pricey,
-					'ultra':ultra,
-					'averageRate':averageRate,
-					'mostRewvied':mostRewvied,
-					'listing_openTime':listing_openTime,
-					'tag_name':tags_name,
-					'list_style': listStyle,
-					'skeyword': skeyword
-					},
-				success: function(data){
-					jQuery('#full-overlay').remove();
-					if(data){
-						listing_update(data);
-						
-					}
-				}
-			});
+	        FilterListing();
 	});
 
 	jQuery(document).on('change','.tags-area input[type=checkbox]',function(e){
-		var docHeight = jQuery( document ).height();
-		jQuery( "body" ).prepend( '<div id="full-overlay"></div>' );
-		jQuery('#full-overlay').css('height',docHeight+'px');
-		var tags_name = [];
-		tags_name = jQuery('.tags-area input[type=checkbox]:checked').map(function(){
-		  return jQuery(this).val();
-		}).get();
-		jQuery('.lp-filter-pagination').hide();
-		
-		
-		jQuery('#content-grids').html(' ');
-		jQuery('.lp-filter-pagination-ajx').remove();
-		jQuery('#content-grids').addClass('content-loading');
-		listStyle = jQuery("#page").data('list-style');
-		var inexpensive='';
-		moderate = '';
-		pricey = '';
-		ultra = '';
-		averageRate = '';
-		mostRewvied = '';
-		listing_openTime = '';
-		
-		inexpensive = jQuery('.currency-signs #one').find('.active').data('price');
-		moderate = jQuery('.currency-signs #two').find('.active').data('price');
-		pricey = jQuery('.currency-signs #three').find('.active').data('price');
-		ultra = jQuery('.currency-signs #four').find('.active').data('price');
-		
-		averageRate = jQuery('.search-filters li#listingRate').find('.active').data('value');	
-		mostRewvied = jQuery('.search-filters li#listingReviewed').find('.active').data('value');
-		listing_openTime = jQuery('.search-filters li#listing_openTime').find('.active').data('value');
-		skeyword = jQuery('input#lp_current_query').val();
-			jQuery.ajax({
-				type: 'POST',
-				dataType: 'json',
-				url: ajax_search_term_object.ajaxurl,
-				data: { 
-					'action': 'ajax_search_tags', 
-					'tag_name': jQuery("#searchtags").val(), 
-					'cat_id': jQuery("#searchcategory").val(),
-					'loc_id': jQuery("#lp_search_loc").val(),
-					'inexpensive':inexpensive,
-					'moderate':moderate,
-					'pricey':pricey,
-					'ultra':ultra,
-					'averageRate':averageRate,
-					'mostRewvied':mostRewvied,
-					'listing_openTime':listing_openTime,					
-					'tag_name':tags_name,					
-					'list_style': listStyle, 
-					'skeyword': skeyword 
-					},
-				success: function(data){
-					jQuery('#full-overlay').remove();
-					if(data){
-						listing_update(data);
-						
-						
-					}
-				}
-			});
-			e.preventDefault();
+	        $(event.target).toggleClass('active');
+		FilterListing();
+		e.preventDefault();
 	});
 
 
 	
 	/* =========================================================== */
 	jQuery(".search-filter-attr li a").click(function(event) {
-		
-		var docHeight = jQuery( document ).height();
-		jQuery( "body" ).prepend( '<div id="full-overlay"></div>' );
-		jQuery('#full-overlay').css('height',docHeight+'px');
-		event.preventDefault();
-		jQuery(this).toggleClass('active');
-		jQuery('.lp-filter-pagination').hide();
-		jQuery('#content-grids').html(' ');
-		jQuery('.lp-filter-pagination-ajx').remove();
-		jQuery('#content-grids').addClass('content-loading');
-		var inexpensive='';
-		moderate = '';
-		pricey = '';
-		ultra = '';
-		averageRate = '';
-		mostRewvied = '';
-		listing_openTime = '';
-		
-		inexpensive = jQuery('.currency-signs #one').find('.active').data('price');
-		moderate = jQuery('.currency-signs #two').find('.active').data('price');
-		pricey = jQuery('.currency-signs #three').find('.active').data('price');
-		ultra = jQuery('.currency-signs #four').find('.active').data('price');
-		
-		averageRate = jQuery('.search-filters li#listingRate').find('.active').data('value');	
-		mostRewvied = jQuery('.search-filters li#listingReviewed').find('.active').data('value');
-		listing_openTime = jQuery('.search-filters li#listing_openTime').find('.active').data('value');
-		
-		var tags_name = [];
-		tags_name = jQuery('.tags-area input[type=checkbox]:checked').map(function(){
-		  return jQuery(this).val();
-		}).get();
-		skeyword = jQuery('input#lp_current_query').val();
-		
-		listStyle = jQuery("#page").data('list-style');
-			jQuery.ajax({
-				type: 'POST',
-				dataType: 'json',
-				url: ajax_search_term_object.ajaxurl,
-				data: { 
-					'action': 'ajax_search_tags', 
-					'inexpensive':inexpensive,
-					'moderate':moderate,
-					'pricey':pricey,
-					'ultra':ultra,
-					'averageRate':averageRate,
-					'mostRewvied':mostRewvied,
-					'listing_openTime':listing_openTime,
-					'tag_name':tags_name,
-					'cat_id': jQuery("#searchcategory").val(), 
-					'loc_id': jQuery("#lp_search_loc").val(),
-					'list_style': listStyle, 
-					'skeyword': skeyword, 
-					},
-				success: function(data) {
-					jQuery('#full-overlay').remove();
-					if(data){
-						listing_update(data);
-						
-							
-					}
-				  } 
-			});
+	        $(event.target).toggleClass('active');
+		FilterListing()
 	});
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/* =========================================================== */
 	jQuery(document).on('click', '.lp-filter-pagination-ajx ul li span.haspaglink', function(event){
-		jQuery('#lp-pages-in-cats').hide(200);
-		var $this = jQuery(this);
-		jQuery('.lp-filter-pagination-ajx ul li span').removeClass('active');
-		var docHeight = jQuery( document ).height();
-		jQuery('html, body').animate({scrollTop:0},500);
-		jQuery( "body" ).prepend( '<div id="full-overlay"></div>' );
-		jQuery('#full-overlay').css('height',docHeight+'px');
-		event.preventDefault();
-		jQuery(this).toggleClass('active');
-		
-		jQuery('#content-grids').html(' ');
-		jQuery('.lp-filter-pagination-ajx').remove();
-		jQuery('#content-grids').addClass('content-loading');
-		var inexpensive='';
-		moderate = '';
-		pricey = '';
-		ultra = '';
-		averageRate = '';
-		mostRewvied = '';
-		listing_openTime = '';
-		
-		inexpensive = jQuery('.currency-signs #one').find('.active').data('price');
-		moderate = jQuery('.currency-signs #two').find('.active').data('price');
-		pricey = jQuery('.currency-signs #three').find('.active').data('price');
-		ultra = jQuery('.currency-signs #four').find('.active').data('price');
-		
-		averageRate = jQuery('.search-filters li#listingRate').find('.active').data('value');	
-		mostRewvied = jQuery('.search-filters li#listingReviewed').find('.active').data('value');
-		listing_openTime = jQuery('.search-filters li#listing_openTime').find('.active').data('value');
-		
-		pageno = jQuery(this).data('pageurl');
-		skeywork = jQuery(this).data('skeyword');
-		
-		var tags_name = [];
-		tags_name = jQuery('.tags-area input[type=checkbox]:checked').map(function(){
-		  return jQuery(this).val();
-		}).get();
-
-		
-		listStyle = jQuery("#page").data('list-style');
-			jQuery.ajax({
-				type: 'POST',
-				dataType: 'json',
-				url: ajax_search_term_object.ajaxurl,
-				data: { 
-					'action': 'ajax_search_tags', 
-					'inexpensive':inexpensive,
-					'moderate':moderate,
-					'pricey':pricey,
-					'ultra':ultra,
-					'averageRate':averageRate,
-					'mostRewvied':mostRewvied,
-					'listing_openTime':listing_openTime,
-					'tag_name':tags_name,
-					'cat_id': jQuery("#searchcategory").val(), 
-					'loc_id': jQuery("#lp_search_loc").val(),
-					'list_style': listStyle, 
-					'pageno': pageno,
-					'skeywork': skeywork
-					},
-				success: function(data) {
-					$this.addClass('active');
-					jQuery('#full-overlay').remove();
-					if(data){
-						listing_update(data);
-							
-					}
-				  } 
-			});
+                $(event.target).toggleClass('active');
+		FilterListing()
 	});
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/* =======================Open now========================= */
 	jQuery(document).on('click','.search-filters li#listing_openTime a',function(event) {
-		
-		
-		var docHeight = jQuery( document ).height();
-		jQuery( "body" ).prepend( '<div id="full-overlay"></div>' );
-		jQuery('#full-overlay').css('height',docHeight+'px');
-		event.preventDefault();
-		jQuery('.lp-filter-pagination').hide();
-		jQuery('#content-grids').html(' ');
-		jQuery('.lp-filter-pagination-ajx').remove();
-		jQuery('#content-grids').addClass('content-loading');
-		var inexpensive='';
-		moderate = '';
-		pricey = '';
-		ultra = '';
-		averageRate = '';
-		mostRewvied = '';
-		var listing_openTime = '';
-		
-		inexpensive = jQuery('.currency-signs #one').find('.active').data('price');
-		moderate = jQuery('.currency-signs #two').find('.active').data('price');
-		pricey = jQuery('.currency-signs #three').find('.active').data('price');
-		ultra = jQuery('.currency-signs #four').find('.active').data('price');
-		
-		averageRate = jQuery('.search-filters li#listingRate').find('.active').data('value');	
-		mostRewvied = jQuery('.search-filters li#listingReviewed').find('.active').data('value');
-		
-		jQuery(this).toggleClass('active');
-		if(jQuery(this).hasClass("active")){
-			jQuery(this).attr('data-value', 'open');
-			listing_openTime = 'open';			
-		}
-		else{
-			jQuery(this).attr('data-value', 'close');
-			listing_openTime = 'close';			
-		}
-		//listing_openTime = jQuery(this).data('value');
-
-		var tags_name = [];
-		tags_name = jQuery('.tags-area input[type=checkbox]:checked').map(function(){
-		  return jQuery(this).val();
-		}).get();
-		
-		skeyword = jQuery('input#lp_current_query').val();
-		
-		listStyle = jQuery("#page").data('list-style');
-			jQuery.ajax({
-				type: 'POST',
-				dataType: 'json',
-				url: ajax_search_term_object.ajaxurl,
-				data: { 
-					'action': 'ajax_search_tags', 
-					'inexpensive':inexpensive,
-					'moderate':moderate,
-					'pricey':pricey,
-					'ultra':ultra,
-					'averageRate':averageRate,
-					'mostRewvied':mostRewvied,
-					'listing_openTime':listing_openTime,
-					'tag_name':tags_name,
-					'cat_id': jQuery("#searchcategory").val(), 
-					'loc_id': jQuery("#lp_search_loc").val(),
-					'list_style': listStyle, 
-					'skeyword': skeyword
-					},
-				success: function(data) {
-					jQuery('#full-overlay').remove();
-					if(data){
-						listing_update(data);
-						if(data.opentime!=''){
-							var timevalue = ''; 
-							timevalue = data.opentime;
-							/* if(timevalue=='open'){
-								jQuery('#content-grids .lp-grid-box-contianer .grid-closed:contains("Closed Now")') .closest( ".lp-grid-box-contianer" ).css('display','none');
-							}
-							if(timevalue=='close'){
-								jQuery('#content-grids .lp-grid-box-contianer .grid-closed:contains("Closed Now")') .closest( ".lp-grid-box-contianer" ).css('display','block');
-							} */
-							
-						}
-							
-					}
-				  } 
-			});
+            $(event.target).toggleClass('active');
+            FilterListing();
 	});
 	/* =====by zaheer on 13 march====== */
 	
 	jQuery(document).on('click', '.add-to-fav',function(e) {
 		e.preventDefault() 
-		$this = jQuery(this);
-		$this.find('i').addClass('fa-spin fa-spinner');
-		var val = jQuery(this).data('post-id');
-		var type = jQuery(this).data('post-type');
-			jQuery.ajax({
-				type: 'POST',
-				dataType: 'json',
-				url: ajax_search_term_object.ajaxurl,
-				data: { 
-					'action': 'listingpro_add_favorite', 
-					'post-id': val, 
-					'type': type,
-					},
-				success: function(data) {
-					if(data){
-						if(data.active == 'yes'){
-							$this.find('i').removeClass('fa-spin fa-spinner');
-							if(data.type == 'grids' || data.type == 'list'){
-							var successText = $this.data('success-text');
-							$this.find('span').text(successText);
-							//alert($this.find('i'));
-							$this.find('.fa').removeClass('fa-bookmark-o');
-							$this.find('.fa').addClass('fa-bookmark');
-							}else{
-								var successText =$this.data('success-text');
-								$this.find('span').text(successText);
-								$this.find('i').removeClass('fa-bookmark-o');
-								$this.find('i').addClass('fa-bookmark');
-							}				
-						}				
-					}
-				  } 
-			});
+                $(event.target).toggleClass('active');
+                FilterListing()
 	});
 	
 
 	
-	jQuery(".remove-fav").click(function(e) {
-			e.preventDefault() 
-			var val = jQuery(this).data('post-id');
-			jQuery(this).find('i').removeClass('fa-close');
-			jQuery(this).find('i').addClass('fa-spinner fa-spin');
-			$this = jQuery(this);
-				jQuery.ajax({
-					type: 'POST',
-					dataType: 'json',
-					url: ajax_search_term_object.ajaxurl,
-					data: { 
-						'action': 'listingpro_remove_favorite', 
-						'post-id': val, 
-						},
-					success: function(data) {
-						if(data){
-							if(data.remove == 'yes'){
-								$this .parent( ".lp-grid-box-contianer" ).fadeOut();
-							}
-						}
-					  }
-				});			
-			
-	});
+        jQuery(".remove-fav").click(function(e) {
+                        e.preventDefault()
+                        var val = jQuery(this).data('post-id');
+                        jQuery(this).find('i').removeClass('fa-close');
+                        jQuery(this).find('i').addClass('fa-spinner fa-spin');
+                        $this = jQuery(this);
+                                jQuery.ajax({
+                                        type: 'POST',
+                                        dataType: 'json',
+                                        url: ajax_search_term_object.ajaxurl,
+                                        data: {
+                                                'action': 'listingpro_remove_favorite',
+                                                'post-id': val,
+                                                },
+                                        success: function(data) {
+                                                if(data){
+                                                        if(data.remove == 'yes'){
+                                                                $this .parent( ".lp-grid-box-contianer" ).fadeOut();
+                                                        }
+                                                }
+                                          }
+                                });
+
+        });
 	
 
 
@@ -914,16 +487,16 @@ jQuery(document).ready(function($){
 				type: 'POST',
 				dataType: 'json',
 				url: ajax_search_term_object.ajaxurl,
-				data: { 
-					'action': 'ajax_listing_load', 
+				data: {
+					'action': 'ajax_listing_load',
 					},
 				success: function(data) {
 
-					  //alert(data); 
-						//jQuery('#content-grids').html(data); 	
-				jQuery.each(data, function(i,v) {  
-						jQuery('#content-grids').html(v); 
-					});						
+					  //alert(data);
+						//jQuery('#content-grids').html(data);
+				jQuery.each(data, function(i,v) {
+						jQuery('#content-grids').html(v);
+					});
 				  }
 			});
 	}
@@ -948,98 +521,98 @@ function decode_utf8(utf8String) {
     return unicodeString;
 }
 
-			function listing_update(data){
-				
-					var pars = decode_utf8(data.html);
-						jQuery('#content-grids').hide();
-						jQuery('#content-grids').html(pars); 
-						
-						//jQuery('#listing_found').html('<p>'+data.found+' '+data.foundtext+'</p>'); 	
-						jQuery('#content-grids').fadeIn('slow'); 					
-						jQuery('#content-grids').removeClass('content-loading');						
-						
-					var taxonomy = jQuery('section.taxonomy').attr('id');
-					
-						if(taxonomy == 'location'){
-							if(data.cat != ''){
-								var CatName = data.cat;
-								CatName = CatName.replace('&amp;', '&');
-								jQuery('.filter-top-section .lp-title span.term-name').html(CatName+' Listings <span style="font-weight:normal;"> In </span>');
-								jQuery('.filter-top-section .lp-title span.font-bold:last-child').text(data.city);
-								//window.history.pushState("Details", "Title", 'location/'+data.cat);	
-							}
-							
-						}else if(taxonomy == 'listing-category'){
-	
-							if(data.cat != ''){
-								var CatName = data.cat;
-								CatName = CatName.replace('&amp;', '&');
-								jQuery('.filter-top-section .lp-title span.term-name').text(CatName);
-								//window.history.pushState("Details", "Title", 'location/'+data.cat);	
-							}
-							
-						}else if(taxonomy == 'features'){
-							jQuery('.showbread').show();
-							jQuery('.fst-term').html(data.tags);
-							if(data.keyword != ''){
-								jQuery('.s-term').html(',&nbsp;keyword&nbsp;"'+data.keyword+'"');
-							}else{
-								jQuery('.s-term').html(' ');
-							}
-							if(data.city != ''){
-								if(data.cat != ''){									
-									jQuery('.sec-term').html('&amp;&nbsp;'+data.city);
-								}else{
-									jQuery('.sec-term').html(data.city);
-								}
-							}else{
-								jQuery('.sec-term').html(' ');
-							}
-							if(data.tags != ''){
-								jQuery('.tag-term').html(',&nbsp;tagged&nbsp;('+data.tags+')');
-							}
-							if(data.tags == null){
-								jQuery('.tag-term').html('');
-							}
-						}
-						
-						
-						else if(taxonomy == 'keyword'){
-							jQuery('.showbread').show();
-							jQuery('.fst-term').html(data.cat);
-							if(data.keyword != ''){
-								jQuery('.s-term').html(',&nbsp;keyword&nbsp;"'+data.keyword+'"');
-							}else{
-								jQuery('.s-term').html(' ');
-							}
-							if(data.city != ''){
-								if(data.cat != ''){									
-									jQuery('.sec-term').html('&amp;&nbsp;'+data.city);
-								}else{
-									jQuery('.sec-term').html(data.city);
-								}
-							}else{
-								jQuery('.sec-term').html(' ');
-							}
-							
-							if(data.tags != ''){
-								jQuery('.tag-term').html(',&nbsp;tagged&nbsp;('+data.tags+')');
-							}
-							if(data.tags == null){
-								jQuery('.tag-term').html('');
-							}
-						}else{
-							if(data.cat != ''){
-								var CatName = data.cat;
-								CatName = CatName.replace('&amp;', '&');
-								jQuery('.filter-top-section .lp-title span.term-name').text(CatName);
-								//window.history.pushState("Details", "Title", 'location/'+data.cat);	
-							}
-						}
-						
-					
-					jQuery( ".all-list-map" ).trigger('click');
-					//jQuery( ".qickpopup" ).trigger('click');
-					 
-					
-			}
+function listing_update(data){
+
+        var pars = decode_utf8(data.html);
+                jQuery('#content-grids').hide();
+                jQuery('#content-grids').html(pars);
+
+                //jQuery('#listing_found').html('<p>'+data.found+' '+data.foundtext+'</p>');
+                jQuery('#content-grids').fadeIn('slow');
+                jQuery('#content-grids').removeClass('content-loading');
+
+        var taxonomy = jQuery('section.taxonomy').attr('id');
+
+                if(taxonomy == 'location'){
+                        if(data.cat != ''){
+                                var CatName = data.cat;
+                                CatName = CatName.replace('&amp;', '&');
+                                jQuery('.filter-top-section .lp-title span.term-name').html(CatName+' Listings <span style="font-weight:normal;"> In </span>');
+                                jQuery('.filter-top-section .lp-title span.font-bold:last-child').text(data.city);
+                                //window.history.pushState("Details", "Title", 'location/'+data.cat);
+                        }
+
+                }else if(taxonomy == 'listing-category'){
+
+                        if(data.cat != ''){
+                                var CatName = data.cat;
+                                CatName = CatName.replace('&amp;', '&');
+                                jQuery('.filter-top-section .lp-title span.term-name').text(CatName);
+                                //window.history.pushState("Details", "Title", 'location/'+data.cat);
+                        }
+
+                }else if(taxonomy == 'features'){
+                        jQuery('.showbread').show();
+                        jQuery('.fst-term').html(data.tags);
+                        if(data.keyword != ''){
+                                jQuery('.s-term').html(',&nbsp;keyword&nbsp;"'+data.keyword+'"');
+                        }else{
+                                jQuery('.s-term').html(' ');
+                        }
+                        if(data.city != ''){
+                                if(data.cat != ''){
+                                        jQuery('.sec-term').html('&amp;&nbsp;'+data.city);
+                                }else{
+                                        jQuery('.sec-term').html(data.city);
+                                }
+                        }else{
+                                jQuery('.sec-term').html(' ');
+                        }
+                        if(data.tags != ''){
+                                jQuery('.tag-term').html(',&nbsp;tagged&nbsp;('+data.tags+')');
+                        }
+                        if(data.tags == null){
+                                jQuery('.tag-term').html('');
+                        }
+                }
+
+
+                else if(taxonomy == 'keyword'){
+                        jQuery('.showbread').show();
+                        jQuery('.fst-term').html(data.cat);
+                        if(data.keyword != ''){
+                                jQuery('.s-term').html(',&nbsp;keyword&nbsp;"'+data.keyword+'"');
+                        }else{
+                                jQuery('.s-term').html(' ');
+                        }
+                        if(data.city != ''){
+                                if(data.cat != ''){
+                                        jQuery('.sec-term').html('&amp;&nbsp;'+data.city);
+                                }else{
+                                        jQuery('.sec-term').html(data.city);
+                                }
+                        }else{
+                                jQuery('.sec-term').html(' ');
+                        }
+
+                        if(data.tags != ''){
+                                jQuery('.tag-term').html(',&nbsp;tagged&nbsp;('+data.tags+')');
+                        }
+                        if(data.tags == null){
+                                jQuery('.tag-term').html('');
+                        }
+                }else{
+                        if(data.cat != ''){
+                                var CatName = data.cat;
+                                CatName = CatName.replace('&amp;', '&');
+                                jQuery('.filter-top-section .lp-title span.term-name').text(CatName);
+                                //window.history.pushState("Details", "Title", 'location/'+data.cat);
+                        }
+                }
+
+
+        jQuery( ".all-list-map" ).trigger('click');
+        //jQuery( ".qickpopup" ).trigger('click');
+
+
+}

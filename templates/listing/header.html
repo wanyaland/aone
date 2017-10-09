@@ -1,8 +1,8 @@
+{% load static %}
 <header class="header-without-topbar header-fixed pos-relative lp-header-full-width">
 
-
     <div id="menu" class="small-screen">
-        <a href="./../../submit-listing/index.html" class="lpl-button">Add Listing</a>
+        <a href="/submit-listing/index.html" class="lpl-button">Add Listing</a>
         <a class="lpl-button md-trigger" data-modal="modal-3">Join Now</a>
     </div>
     <div class="lp-menu-bar  lp-menu-bar-color">
@@ -14,7 +14,8 @@
                             <img src="{% static 'logo/AfricaOneLogo-1.svg' %}" alt=""/> </a>
                     </div>
                 </div>
-                <div class="header-right-panel clearfix col-md-10 col-sm-10 col-xs-12">
+                {% include 'listing/search_body.html' %}
+                <div class="header-right-panel clearfix col-md-10 col-sm-10 col-xs-12" style="width:auto;">
 
                     <div class="col-xs-6 mobile-nav-icon">
 
@@ -39,44 +40,34 @@
                             <div class="pull-right lp-add-listing-btn">
                                 <ul>
                                     <li>
-                                        <a href="./../../submit-listing/index.html">
+                                        <a href="/submit-listing/index.html">
                                             <i class="fa fa-plus"></i>
                                             Add Listing </a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
+
                         <div class="pull-right padding-right-10">
                             <div class="lp-menu menu">
                                 <div class="menu-inner-container">
                                     <ul id="menu-inner" class="inner_menu">
+                                        {% comment %}
                                         <li id="menu-item-102"
                                             class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-102">
                                             <a href="#">Explore</a>
                                             <ul class="sub-menu">
-                                                <li id="menu-item-103"
-                                                    class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-103">
-                                                    <a href="./../restaurant/index.html">Restaurant</a></li>
-                                                <li id="menu-item-104"
-                                                    class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-104">
-                                                    <a href="./../shopping/index.html">Shopping</a></li>
-                                                <li id="menu-item-105"
-                                                    class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-105">
-                                                    <a href="./../hotels/index.html">Hotels</a></li>
-                                                <li id="menu-item-106"
-                                                    class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-106">
-                                                    <a href="./../real-estate/index.html">Real Estate</a></li>
-                                                <li id="menu-item-107"
-                                                    class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-107">
-                                                    <a href="./../services/index.html">Services</a></li>
-                                                <li id="menu-item-108"
-                                                    class="menu-item menu-item-type-taxonomy menu-item-object-listing-category current-menu-item menu-item-108">
-                                                    <a href="./index.html">Automotive</a></li>
+                                            {% for category in parent_categories %}
+                                                    <li id="menu-item-{{category.id}}" class="menu-item menu-item-type-taxonomy menu-item-object-listing-category menu-item-{{category.id}}">
+                                                        <a href="{% url 'listing_slug_id' category_name=category.slug category_id=category.id %}">{{category.name}}</a>
+                                                    </li>
+                                                {% endfor %}
                                             </ul>
                                         </li>
+                                        {% endcomment %}
                                         <li id="menu-item-116"
                                             class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-116">
-                                            <a href="./../../blog/index.html">Blog</a></li>
+                                            <a href="/blog">Blog</a></li>
                                     </ul>
                                 </div>
                             </div>

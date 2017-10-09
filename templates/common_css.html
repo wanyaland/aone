@@ -1,23 +1,36 @@
 {% load static %}
-<link rel='stylesheet' id='home-css'  href='{% static "css/home.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='nextend_fb_connect_stylesheet-css'  href='{% static "plugins/nextend-facebook-connect/buttons/facebook-btn.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='bootstrap-css'  href='{% static "lib/bootstrap/css/bootstrap.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='Magnific-Popup-css'  href='{% static "lib/Magnific-Popup-master/magnific-popup.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='popup-component-css'  href='{% static "lib/popup/css/component.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='Font-awesome-css'  href='{% static "lib/font-awesome/css/font-awesome.min.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='Mmenu-css'  href='{% static "lib/jquerym.menu/css/jquery.mmenu.all.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='MapBox-css'  href='{% static "css/mapbox.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='Chosen-css'  href='{% static "lib/chosen/chosen.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='icon8-css'  href='{% static "lib/icon8/styles.min.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='Color-css'  href='{% static "css/colors.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='custom-font-css'  href='{% static "css/font.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='Main-css'  href='{% static "css/main.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='Responsive-css'  href='{% static "css/responsive.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='select2-css'  href='{% static "css/select2.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='dynamiclocation-css'  href='{% static "css/city-autocomplete.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='lp-body-overlay-css'  href='{% static "css/common.loading.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='listingpro-css'  href='{% static "css/style.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='jquery-ui'  href='{% static "css/jquery-ui.css" %}' type='text/css' media='all' />
-<link rel='stylesheet' id='js_composer_front-css'  href='{% static "plugins/js_composer/assets/css/js_composer.min.css" %}' type='text/css' media='all' />
-<!--[if lte IE 9]><link rel="stylesheet" type="text/css" href='{% static "plugins/js_composer/assets/css/vc_lte_ie9.min.css" %}' media="screen"><![endif]-->
-<style type="text/css" title="dynamic-css" class="options-output">.menu-item a{font-family:Quicksand;font-weight:normal;font-style:normal;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading .menu-item a,{opacity: 0;}.ie.wf-loading .menu-item a,{visibility: hidden;}</style>
+<link rel='stylesheet' id='home-css' href='{% static "css/home.css" %}' type='text/css' media='all'/>
+<link rel='stylesheet' id='nextend_fb_connect_stylesheet-css'
+      href='{% static "plugins/nextend-facebook-connect/buttons/facebook-btn.css" %}' type='text/css' media='all'/>
+<link rel='stylesheet' id='bootstrap-css' href='{% static "lib/bootstrap/css/bootstrap.css" %}' type='text/css'
+      media='all'/>
+<link rel='stylesheet' id='Magnific-Popup-css' href='{% static "lib/Magnific-Popup-master/magnific-popup.css" %}'
+      type='text/css' media='all'/>
+<link rel='stylesheet' id='popup-component-css' href='{% static "lib/popup/css/component.css" %}' type='text/css'
+      media='all'/>
+<link rel='stylesheet' id='Font-awesome-css' href='{% static "lib/font-awesome/css/font-awesome.min.css" %}'
+      type='text/css' media='all'/>
+<link rel='stylesheet' id='Mmenu-css' href='{% static "lib/jquerym.menu/css/jquery.mmenu.all.css" %}' type='text/css'
+      media='all'/>
+<link rel='stylesheet' id='MapBox-css' href='{% static "css/mapbox.css" %}' type='text/css' media='all'/>
+<link rel='stylesheet' id='Chosen-css' href='{% static "lib/chosen/chosen.css" %}' type='text/css' media='all'/>
+<link rel='stylesheet' id='icon8-css' href='{% static "lib/icon8/styles.min.css" %}' type='text/css' media='all'/>
+<link rel='stylesheet' id='Color-css' href='{% static "css/colors.css" %}' type='text/css' media='all'/>
+<link rel='stylesheet' id='custom-font-css' href='{% static "css/font.css" %}' type='text/css' media='all'/>
+<link rel='stylesheet' id='Main-css' href='{% static "css/main.css" %}' type='text/css' media='all'/>
+<link rel='stylesheet' id='Responsive-css' href='{% static "css/responsive.css" %}' type='text/css' media='all'/>
+<link rel='stylesheet' id='select2-css' href='{% static "css/select2.css" %}' type='text/css' media='all'/>
+<link rel='stylesheet' id='dynamiclocation-css' href='{% static "css/city-autocomplete.css" %}' type='text/css'
+      media='all'/>
+<link rel='stylesheet' id='lp-body-overlay-css' href='{% static "css/common.loading.css" %}' type='text/css'
+      media='all'/>
+<link rel='stylesheet' id='listingpro-css' href='{% static "css/style.css" %}' type='text/css' media='all'/>
+<link rel='stylesheet' id='jquery-ui' href='{% static "css/jquery-ui.css" %}' type='text/css' media='all'/>
+<link rel='stylesheet' id='js_composer_front-css'
+      href='{% static "plugins/js_composer/assets/css/js_composer.min.css" %}' type='text/css' media='all'/>
+<!--[if lte IE 9]>
+<link rel="stylesheet" type="text/css" href='{% static "plugins/js_composer/assets/css/vc_lte_ie9.min.css" %}'
+      media="screen"><![endif]-->
+<style type="text/css" title="dynamic-css" class="options-output">
+    .menu-item a{font-family:Quicksand;font-weight:normal;font-style:normal;opacity: 1;visibility: visible;-webkit-transition: opacity 0.24s ease-in-out;-moz-transition: opacity 0.24s ease-in-out;transition: opacity 0.24s ease-in-out;}.wf-loading .menu-item a,{opacity: 0;}.ie.wf-loading .menu-item a,{visibility: hidden;}
+</style>

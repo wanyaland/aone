@@ -1,6 +1,6 @@
 <ul class="social-login list-style-none">
     <li>
-        <a id="logingoogle" class="google flaticon-googleplus" href="./wp-login.php?loginGoogle=1" onclick="window.location = './wp-login.php?loginGoogle=1&redirect='+window.location.href; return false;">
+        <a id="logingoogle" class="google flaticon-googleplus" href="{% url 'social:begin' 'google-oauth2' %}">
             <i class="fa fa-google-plus"></i>
             <span>Google</span>
         </a>
