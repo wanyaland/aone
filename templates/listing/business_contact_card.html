@@ -1,0 +1,47 @@
+{% load static %}
+<div class="widget-box business-contact">
+    <div class="contact-form quickform">
+        <div class="user_text">
+            <div class="author-img">
+                <img src="http://1.gravatar.com/avatar/7f4ed2cfa1bebed28585770e2da94bdc?s=94&#038;d=mm&#038;r=g"
+                     alt="">
+            </div>
+            <div class="author-social">
+                <div class="status">
+                    <span class="online"><a>admin</a></span>
+                </div>
+                <ul class="social-icons post-socials">
+                </ul>
+            </div>
+        </div>
+
+        <form class="form-horizontal" method="post" id="contactOwner">
+            <div class="form-group">
+                <input type="text" class="form-control" name="name7" id="name7"
+                       placeholder="Name:">
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" name="email7" id="email7"
+                       placeholder="Email:">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="phone" id="phone"
+                       placeholder="Phone">
+            </div>
+            <div class="form-group">
+                        <textarea class="form-control" rows="5" name="message7" id="message7"
+                                  placeholder="Message:"></textarea>
+            </div>
+            <div class="form-group">
+
+            </div>
+            <div class="form-group margin-bottom-0 pos-relative">
+                <input type="submit" value="Send" class="lp-review-btn btn-second-hover">
+                <input type="hidden" value="{{listing.id}}" name="post_id">
+                <input type="hidden" value="{{listing.email}}" name="author_email">
+                <input type="hidden" value="{{listing.author.id}}" name="author_id">
+                <i class="lp-search-icon fa fa-send"></i>
+            </div>
+        </form>
+    </div>
+</div>

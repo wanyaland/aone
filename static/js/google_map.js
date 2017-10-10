@@ -29,7 +29,7 @@ function setLocation(){
 }
 
 
-function setGoogleMapMarkers(listing_data){
+function setGoogleMapMarkers(listing_data, mapid){
     /***
 
     e.g.
@@ -57,8 +57,9 @@ function setGoogleMapMarkers(listing_data){
 
     cur_loc_info = {name: 'You are currently here', latitude:cur_loc.latitude, longitude: cur_loc.longitude};
     listing_data.splice(0, 0, cur_loc_info);
+    var mapid = mapid || 'map';
 
-    var map = new google.maps.Map(document.getElementById('map'), {
+    var map = new google.maps.Map(document.getElementById(mapid), {
         zoom: 10,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         //center:

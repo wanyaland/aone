@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{data.name}} &#8211; Africa One{% endblock title %}
+<!--<body class="listing-template-default single single-listing postid-15 wpb-js-composer js-comp-ver-5.2 vc_responsive" data-submitlink="./submit-listing/" data-sliderstyle="style1">-->
+
+{% block body %}
+
+<div id="page" class="clearfix" data-mtoken="" data-mstyle="" data-sitelogo="{% static 'logo/AfricaOneLogo-1.svg' %}"
+     data-site-url="/" data-ipapi="ip_api">
+
+    {% block header %}
+    <div class="pos-relative">
+        <div class="header-container lp-header-bg">
+            {% include 'header.html' %}
+            {% include 'dynamic_invoice.html' %}
+            {% include 'signin_signup.html' %}
+            {% include 'pricing_plan.html' %}
+
+            <div class="md-overlay"></div>
+        </div>
+    </div>
+    {% endblock header %}
+</div>
+{% block content %}
+    <section class="aliceblue listing-second-view">
+        <!--=======Galerry=====-->
+        {% block msg %}
+            <div style="margin-left:auto;margin-right:auto;width:600px;margin-top:150px;margin-bottom:150px;">
+                {{message}}
+            </div>
+        {% endblock %}
+
+    </section>
+{% endblock content %}
+{% block footer %}
+    {% include 'footer.html' %}
+{% endblock footer %}
+{% endblock body %}
+
+{% block additional_js_footer %}
+    <script type='text/javascript' src='{% static "js/pagination.js" %}'></script>
+{% endblock additional_js_footer %}

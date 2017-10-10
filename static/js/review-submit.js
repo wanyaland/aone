@@ -7,9 +7,10 @@
 		$this.find('.review_status').text('');
 		$this.find(':input[type=submit]').prop('disabled', true);
 		errorMSG = $this.find(":input[name='errormessage']").val();
-		$title = jQuery('#post_title').val();
-		$rating = jQuery('#review-rating').val();
-		$description = jQuery('#post_description').val();
+		$title = jQuery('#title').val();
+		$review_url = jQuery('#review_url').val();
+		$rating = jQuery('#rating').val();
+		$description = jQuery('#review').val();
 		var $umail = '';
 		$umail = $this.find(":input[type=email]").val();
 		if ($umail !== undefined){
@@ -29,7 +30,7 @@
 					
 					jQuery.ajax({
 						type: 'POST',
-						url: ajax_review_object.ajaxurl,
+						url: "/business/listing/review/",
 						data:fd,
 						contentType: false,
 						processData: false,
@@ -80,7 +81,7 @@
 			
 			jQuery.ajax({
 				type: 'POST',
-				url: ajax_review_object.ajaxurl,
+				url: $review_url,
 				data:fd,
 				contentType: false,
 				processData: false,
@@ -144,7 +145,7 @@
 				jQuery.ajax({
 					type: 'POST',
 					dataType: 'json',
-					url: ajax_review_object.ajaxurl,
+					url: $review_url,
 					data:{
 						action:'lp_reviews_interests',
 						interest : currentVal,

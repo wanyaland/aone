@@ -30,13 +30,15 @@
                     <div class="post-row-accordion">
                         <div id="accordion">
                             {% for question in listing.questions %}
-                            <h5>
-                                <span class="question-icon">Q</span>
-                                <span class="accordion-title">{{question.question}}</span>
-                            </h5>
-                            <div>
-                                <p>{{question.answer}}</p>
-                            </div><!-- accordion tab -->
+                                {% if question.question %}
+                                    <h5>
+                                        <span class="question-icon">Q</span>
+                                        <span class="accordion-title">{{question.question}}</span>
+                                    </h5>
+                                    <div>
+                                        <p>{{question.answer}}</p>
+                                    </div><!-- accordion tab -->
+                                {% endif %}
                             {% endfor %}
                         </div>
                     </div>
@@ -78,28 +80,30 @@
                         </div>
                         <div class="col-md-6 pull-right padding-right-0">
                             <div class="form-group submit-images">
-                                <label for="post_gallery submit-images">Select Images</label>
+                                <label for="attachment">Select Images</label>
                                 <a href="#" class="browse-imgs">Browse</a>
-                                <input type="file" id="filer_input2" name="post_gallery[]" multiple="multiple"/>
+                                <input type="file" id="attachment" name="attachment"/>
                             </div>
                         </div>
                         <div class="clearfix"></div>
+                        {% if not user.is_authenticated %}
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" placeholder="you@website.com" id="email" class="form-control"
+                                       name="email"/>
+                            </div>
+                        {% endif %}
                         <div class="form-group">
-                            <label for="u_mail">Email</label>
-                            <input type="email" placeholder="you@website.com" id="u_mail" class="form-control"
-                                   name="u_mail"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="post_title">Title</label>
+                            <label for="title">Title</label>
                             <input type="text" placeholder="Example: It was an awesome experience to be there"
-                                   id="post_title" class="form-control" name="post_title"/>
+                                   id="title" class="form-control" name="title"/>
                         </div>
                         <div class="form-group">
-                            <label for="post_description">Review</label>
+                            <label for="review">Review</label>
                             <textarea
                                     placeholder="Tip: A great review covers food, service, and ambiance. Got recommendations for your favorite dishes and drinks, or something everyone should try here? Include that too! And remember"
-                                    id="post_description" class="form-control" rows="8"
-                                    name="post_description"></textarea>
+                                    id="review" class="form-control" rows="8"
+                                    name="review"></textarea>
                             <p>Your review recommended to be at least 140 characters long</p>
                         </div>
                         <div class="form-group">
@@ -108,8 +112,9 @@
                             <input name="submit_review" type="submit" id="submit"
                                    class="lp-review-btn btn-second-hover" value="Signup &amp; Submit Review ">
 
-
-                            <input type="hidden" name="comment_post_ID" value="15" id="comment_post_ID">
+                            {% csrf_token %}
+                            <input type="hidden" name="listing_id" value="{{listing.id}}" id="listing_id">
+                            <input type="hidden" id="review_url" name="review_url" value="{% url 'review_url' %}">
                             <span class="review_status"></span>
                             <img class="loadinerSearch" width="100px" src="{% static 'images/ajax-load.gif' %}">
                         </p>
@@ -126,7 +131,7 @@
                                     <li class="today-timing clearfix"><strong><img class="icon icons8-todayTime"
                                                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADCElEQVR4nO1awY0qMQxNCZRACZRAB0sHTAfQAXTC3iI/H1LC0gF0AB0wHfx/CSvwJCwzsWGQ8qRckLCdF9uxM3auoqKioqKiosIQIYQJM38x8wbADxGdAPy7XfG3H2beMPNXCGHybruLEEKYENESwEFutsc6ENHyo8jw3k/jSV8KNi7XhZk33vvpu/f3EAYb7xABYPXufXbgvZ8+4ep7ItoS0QLATMoAMCOiBRFtAez/Co3ReEPcUO7Uz8y8HmJsDKU1gHPOG4hoYbCl5wGgyRjXAmiU9bQZXWp6hhjVMYiIvi2ydrxVvkdBQnT7IkPkf3v8L0f8a8IhJjwZ8y0zz/vIGUqAc84x8zwREpeXJMZUtu+7+ShnMAHO/ZLQuR36yumFeEWpxF8pAVFGJxyYeT1E1p9IuT4RfQ+Vp0GAc84lEuPFpHROnH5bokiLgBDCROYDItoOlfdIiUx8TYlMLQKiLBkKul6QUHBWkKlGQJQnK8amVOat8LvMr5FotAmIZbP+jRDd/85YjftWm4CYpO9kqoRBwv33xUKdPgHOOUdER5EMy6tDmf21MqwRAfq2QvTmWjW3EQGyR9lrCD0JoZ3HjCGwIADATBzWSUOouqEpuc+ul9tbCagEVAJkiamSBC0gkyAUSnaza9ACVtegSSFkARNbTVg1AkTTpuKtVs2QNsyaIee6TYbZu1sBZDtMREc14RAdoUqJqYxEyd6oCU+9u6kqKIQ8IBS+VyaReBS1eX3tidR7pclNFZOM9IKduqKeALAzP/0rND+MaCDh+vYJWt4IUencVGnajs4HWtXMn0MmFC6vJCEzlNG+rD7R+Dw+FCm3f0uPkjMEwM5qQCKR8N6bhx6QcCGipZaeOG+Ym0NqtPQMNW6RyAm/FSOA1dAhKQCr1FTpNeZH05p776ep20Gsw3UMFpkxuZtx2ocjd0R0HGNDdm1IctNcGqsdYyN2hzjNtVUmoiWi7RhK76cRs3bzRGg8dHUAzUdtPIXoFbdjsKnpzzNuxmk/ftMVFRUVFRUVo8d/fHG1F7o+XcIAAAAASUVORK5CYII="
                                                                                    alt="todayTime">
-                                        Today</strong><a class="Opened">{{listing.business_hours_show.label}}</a>
+                                        Today</strong><a class="{% if listing.business_hours_show.status %}Opened{% else %}closed{% endif %}">{{listing.business_hours_show.label}}!</a>
                                         <span>{{listing.business_hours_show.start_time}} - {{listing.business_hours_show.end_time}}</span>
                                     </li>
                                 </ul>
@@ -145,131 +150,7 @@
                     </div>
 
 
-                    <div class="widget-box map-area">
-                        <div class="widget-bg-color post-author-box lp-border-radius-5">
-                            <div class="widget-header margin-bottom-25 hideonmobile">
-                                <ul class="post-stat">
-                                    <li>
-                                        <a class="md-trigger parimary-link singlebigmaptrigger"
-                                           data-lat="{{listing.latitude}}" data-lan="{{listing.longitude}}"
-                                           data-modal="modal-4">
-                                            <!-- <span class="phone-icon">
-                                                Marker icon by Icons8
-                                                <img class="icon icons8-mapMarker" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAEy0lEQVRoQ91aQXbTShCszgpnQzjB93ABnBMgnwBnGXnx4QSEE8ScAHMCwsLOEucEUk4Q5wSTf4KEDbBK82YykkfG0vRISh7va5X3PJKmurqreloh/E8u6hvHeKHfMDABYQjGARFG5h3MWINwB8YNAatsqi76fHcvQJJzPcQ9TgFMiHAg2SAz7gCssI8P+ZEyf3e6OgNJzvUp7nHiAbhm4AyENe5xl0/V2uwwWegR9nAAxoiAtwBeOabusId5fqw+dkHSGkjyTR/gB7IydYCvIMzyY3Uj2ZBlkTEj4N8y9fYxbstOKyA2urAgTBpdM+EkP1a5BMD2muRcJ8SYG4Zcuo0LFmOeFw3EMaEdiEseYNI2isVGzTPpJ1YAXlsw+1Cxz4wCspVOl1mqkpiohdaOl9qwasCs86k6DK33f48DstAzIqtO1zxAEhu10MYcMwaMSbOP+VTNQvcUv4uBOIm9MinFjMM2eSzZlKuZLDbF5ECW+swoDANf81QZ+Xy0K2nxLjmQhb61bBBUSGJtLf3Ce9xbg9w4+x5WeIbPoZQ07BNDG1byqXohiZgISLLUEwK+mdrIUmU3VnclC23Y+lTn8DZlCO/yVBmVqr3GS22M9BUDR6G15iFSIEVafchTZTR/52VAEOGLM7gL59jWX0zuuw7gjf09sMHECQsDn/NUnYRYEQEpZZEwrjM+31+Y8S6fqrNdLy/Ahoq5KHoAIpkXAUkW2qjVqEmtyggyLvKpmgTSpvCLWok13QMRrqSeIgIyXmo2G8tSVbu+BNvAWgHOk9hG45O8N8pHJA+UrPFZkqyXrPnrgTiXvwX4e5a+DJ5xpKn1kNMNaVPKZURqNcn5oxR7qVoNkunJ5SpP1VGj1yx1RkDS1E956hYUD7mPFJre0Mg9pALfAPS8UX7P9SkxZiZleEDDOpf3VFDUPIpSy3P2Rk331hnDWxEwz1J1aSI2XurXDHsitK1/yBAlWeCzLgPycPC5DUmwdXDbzvCZYWZ3evF3Br1tajs2hQ7wAC9CvZk4tVxExb2Pc3kzkDDGaIcM9gzDdmoyD21MmgHRjLhIzwl4/yRt/EKviGDmY429XTsgLVrrUKO3sxfz0lhyZIgyxGJx6RUNTWGbzfv3eB20qFlsBaTUdiDPUzXuuumdjCy1JmDYJOG77hOpVtnsVb2i93N76ebM/2XTl8OYQEUBeeyiTwSOXwcuHogremtqgvO7NKqb3qrZ8XsD4ljpfaLShY0oQ6woS5WV2uPvU7HRGohlZTMc6KxgyUapRA1iZ9WqsOIrmHBkUyO3JwR8QgulauXsOzfhxj8M3GCAw1APtf2MyuSlQzA6pZbn9sGJSF2tFKNR6cinqeai5fePqLqxjZXjiOF2RW6JRqExbEg4OgOpFL7wu4ZNqZ+4cq1I6wLvrUYqrcsPXoPoH8l3jWSp7ZFAMksOMVH83gsjjhU7GQylmDcdiUrFEKDegGx5y04V21Ip8aEpBKIX1dp+ifc54I+xUNGG9KFS2+/tlRHLim1feG3HQt5RtegEQmMgSfR7dfamF1bGQgR7ACNGZutHMIlsA6Z3Rkol2wz17P+ZuI+ovUjtkzHigbHTEKdkotFnGzYepdj9jXjfzc2grffv8r0bYtso9nnfb8uVHmDpOaieAAAAAElFTkSuQmCC" alt="mapMarker">																	</span>
-                                            <span class="phone-number ">
-                                                View Large Map																	</span> -->
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="widget-content">
-                                <div class="widget-map pos-relative">
-                                    <div id="singlepostmap" class="singlemap"
-                                         data-pinicon="{% static 'images/pins/pin.png' %}"></div>
-                                    <div class="get-directions">
-                                        <a href="https://www.google.com/maps?daddr={{listing.longitude}},{{listing.latitude}}"
-                                           target="_blank">
-                                            <span class="phone-icon">
-                                                <i class="fa fa-map-o"></i>
-                                            </span>
-                                            <span class="phone-number">Get Directions																	</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- ../widget-box  -->
-                        <div class="listing-detail-infos margin-top-20 clearfix">
-                            <ul class="list-style-none list-st-img clearfix">
-                                <li>
-                                    <a>
-                                        <span class="cat-icon">
-                                            <img class="icon icons8-mapMarkerGrey"
-                                                                         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAC8UlEQVRoge1aS3HDMBA1BEMIhEAwhEAohEIIgx3tk8+FYAiGEAiBYAjpoZKyTmx9Ym2cQ9+MZ3qIpf2+/bhN849nEFFLQGeMOTMwArgwMDEwub8HtpYI6PaWdRFE1LK15IS+ZT/WEhEd9pZ/UQEAF2PMmYCO+v5IRK17DgBOxpiz885MoX2VAAYh0Eh9f8x+v++PbO2PNAARtZoyrwlxdda8bon52VnAVGKMTSCiVoTGWCPGnXfHoIy2Z2Q4aYSCVwbApea5T3C0+hdOClaT3jbGnGufHy7x7KRZB4joIELsUP2C4A1gqH74AwKbWfujcfiVgVsOqxBRy8zfDAwALu7dITdcnPdvDEybBZcAcMpNQgK6p4InHgCXnNAMlMz8VUOHpmnuYZWyKAGdqPKjqO4HACepYEoZQSz1wktQ7mlVCVlf/nqoRVZzLU0ybJxRbgyMW+UP8ALGWMTlhC+SUWr29SLmYZU8CYkeUyTDax4+52IMqKOIrx8RS+coWyqkz6cXRF5GCK0I9dZWhPr+WL1dCe16hAp9EcsJrZxEVkn2wDTM32u/EZU/ebE3TCzZA3nUpN+cOuKmxWuBgNHGU9SRetOjYJmotUU4zCq4X0rIiTIVgiUsmA2RnMlkfpj4lp4pJVzJfcUQCb+aJxJ+JeSoe2JgNMacc+YYUVzrd9rM/PW2Nr7QaEWQ3K85U88GOK2dl0pr/XiH87zq3B7Cy9qr1h2hg1Y0VtM0d69UpUWHQPNKy40ZfKHScH1Oe18NWhwviqn+gs5DTHnVqPit3vCYeaXCrla0QO/zhofcOm455y3bxZQANepKbjesChkSr7wvq7h63UhBroBK39UgjZchls5FiT+j23d93EkhWDYz8XdP8BhKBJPdwW4JvoZZiEX2umI/PH3s9/bUXvejQ+oRfP+o+bSoEMuH5H54dzzUhjCqijlc55OaBuRaiIBOfjfRmGNUIfMleGjPf9XYApEvNwaGj8+LNQiW+vzk/hT8Ak0IUQVkeTWPAAAAAElFTkSuQmCC"
-                                                                         alt="mapMarkerGrey">
-                                                                    <!-- <i class="fa fa-map-marker"></i> -->
-                                        </span>
-                                        <span>{{listing.city}} {{listing.address}}</span>
-                                    </a>
-                                </li>
-                                <li class="lp-listing-phone">
-                                    <a data-lpid="15" href="tel:{{listing.phone_number}}">
-                                        <span class="cat-icon">
-                                            <img class="icon icons8-phone"
-                                                                         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAEbElEQVRoQ81a4XnUMAy1vEC7QekEwASUCWgnoEzQY4FE9gLQCWgnoJ2AMgF0AtoJgAUivpdPyefzJU6cC5fcv/Z8iZ71JD3JJpP4MPO5iJTGmFfGmCcicsx8k/rNUt9R14uZ+VhEPhljLuPviegtMz8sZXDfe3eAKIhv8IKI/LXWMjN/ZuaNgoNnXjPznzWB2QLCzDAeIOCRR2vtJTP/bAwuiuInEb00xtw55y5WCaQDxFm868z8QkR+AQARXTDz3VrA1B5RA3+oJ26ttZs+6hRFwUSEBPCHiE7XQjGKYuLee38+tMsNxUTk2nu/GVp/iO+pKIrPRHSlMbFDp56shliCB0GxVWQxKssSnH+Ra1BAsVVkMQAR7KxzrrOmpGixJoqBWtjREw3cpxw+a6ZbBcUA5IGI3kxNpyHFnHOnORsx51oAqdPpPhmooecUr84FBum3yUBPU3ZU0/fvqXE2GxA8KIiT7FTaaDAR+e69P5vLsNzn1JkqoNet935H8fY9VL2B9H2cm75zDR1a30gUiMSaHjk8DzZgUW/UdgfK9oaI3ovIKK9EAjKbkkM7nPt9CyQyDP1GK9+7HlqW5VdjDDrIUcBzDctdv1XNg5rw4Jx7m4iNUGtBAWcV0lwjx6yPG6vjqqpQ6Y+I6CM6wx7ROGrdGAPmWtPV6oIuoA36DVCsc7d1MIF1q1DAnUKxKIo7InpnjElSLGqyEPDJuJpr97ue0ztFqaoK/fmJiDjvPfcZURRFne2MMVgPMIsMJXqlOzOf6SAiSR0UxaqqIDwxlFgMTLIHiaiTipfFwQw2U0G8JHcbdUjpeLSEZwaBRNRJzrOgpJVmAAO6YWR0kJgZBIIgj3b7xjn3IVUsAzAHi5lRQBRMu9upYhmvPRTNRgNRAy9F5IsWwQ+pyXxEs9GeAZUx1cmtSVlAJoBBAkBxbVIzwHcWTVUKV8aYpjmDVML6UZP/bCATwISpGbIHCaA1TusVRrB93SUGiDiXSSaNSUAmgoFBUABGRNhae6uHSHVHqkcYmDnXB0lBDcOfg96ZDCQXTIdxbeKDDLLW4gxma9c1ziCBQE18er2zF5ApYEAljZsjEbnXyX+ynxnjnb2BxGBEZOO9v04p3SmZacg7swCJwRhjkkVzHznf553ZgDRgqqoCjyFRkHaRPmeXKLF38J5ZgfRUdaTb/9LTbx1t7OPmhN4KC+FO7Zjzne3cec6Hhs9S1YzUiZa5rh3eezfn+4Jx7ePs1IoNjYIT0h5xszfVwlNoqIX/DkTjpq0dmM6od5Ipeih96xkmjsvrAeFBgCgYaK6Watp4YXaWNXmJTqFxqaE+wD0YkGaHoXI1RZ/o/wAOonAU3cqyRBuBduLZWvuqSe8HBxJ4Z6MXDxqMqDvXfbK9444MPNF6cxEggXeQpnH0V6ti/cAzdyLyYK19hKdU6uO2UnPRZwsEfrcokAAQusLLqqrgpYZyO/GulxrOu2i4CiBR/cFsANdI0GjhIgOmnc/wkl656pQ8/wC3pFkyvejV7AAAAABJRU5ErkJggg=="
-                                                                         alt="phone">
-                                                                    <!-- <i class="fa fa-mobile"></i> -->
-                                        </span>
-                                        <span>{{listing.phone_number}}</span>
-                                    </a>
-                                </li>
-                                <li class="lp-user-web">
-                                    <a data-lpid="15" href="{{listing.web_address}}" target="_blank">
-                                        <span class="cat-icon">
-                                            <img class="icon icons8-globe"
-                                                                             src="data:image/png;base64,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"
-                                                                             alt="globe">
-                                                                        <!-- <i class="fa fa-globe"></i> -->
-                                        </span>
-                                        <span>{{listing.web_address}}</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="widget-box widget-social">
-                                <div class="widget-content clearfix">
-                                    <ul class="list-style-none list-st-img">
-                                        <li class="lp-fb">
-                                            <a href="https://www.facebook.com/" class="padding-left-0"
-                                               target="_blank">
-                                                <!-- <i class="fa fa-facebook"></i> -->
-                                                <img class="icon icons8-fb"
-                                                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACcUlEQVRoge2a3bWqMBCFKYESLMESKMESLIES7GBW9h6eKcESKIESLIESvA8mOXCOQIKC8S5mrbwYycyXmSSTnywbESELqArJFmQH8v6h0pFsoVqTPI3Z+xegqo4grx80fLKQbEXkMAkB4Ox63/aCCFlIVR2De+LNIiIHkidjzAWqNw8FlE8/AFD6P6nWIpJvbHOQQFVGYUTk0PNEeBx+SIQsHMwgWkA21hPyQfuixHtG9ZZlWZaRPLkfUg2nMfFjBjhnUK2/zRtOjDEXG2LXzK4TXzE2fouPJrLz7pmdmxMUEcl/QOzo39QAsrBh0fjM4dGhV6jWAMrQtcvbvyWI7cHwrMHNSCmBSFUdXRiTbF2vi0huy4HkCUDpJ6AAuzYH6XmiCZnmkwSxiegdZBe6ViUJ4uZ7Y8wl9JskQVxYPVurRCQ3xlzG9j0BbW8IMrFWDbLZJ2W27YRAHnVksSTX2zq0RnW8qn8HiVUwF+9zq/tcDvgtIF2ontVBlnzrtrIk22A9KYL4gxDVOlhPkiARu9a0QSYygVE9KQ/2kF3rN4DMzlj97/cFcZGyyLqotneQJcoi66La3kGWKIusi2p7B1miLLIuqu0dZImyyLqotv8nkC40QXtZWWTdnPSuFe6bXPSsBuIuRVVvfhMTc5wZK2uB9K7Ur4PL0NfMnVC4AogNq2YQTS681roQXQPEHYzbJx2PE0r7YOCxK1vhuca7QezY6EB2QhbDBodPON7qmXeBiEhuD727yXHdhyHZGmMuf4gXyCsgIpILWQAo/RAgOwDl5KG3VNWx90FyhWQbFf4AzlCtB0+LPlPc1XUD4DzmhX+QRYQ6YahpGwAAAABJRU5ErkJggg=="
-                                                     alt="fb"> </a>
-                                        </li>
-                                        <li class="lp-tw">
-                                            <a href="https://twitter.com/" class="padding-left-0"
-                                               target="_blank">
-                                                <!-- <i class="fa fa-twitter"></i> -->
-                                                <img class="icon icons8-tw"
-                                                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAADSElEQVRoge1Zy5GDMAxNCZSQElJCSqCElEAJ6UDjJ3OmBEqghJRACZSQPSAbYf5gkj3kzexhJ9jW90mWL5cffvjhh7NBRAkzpwAyY8wTwIOY79+WazWI+c7MLzC/J/4aY8xzaQ8wl6OKU57fYG1BRMkpChAlsJa0wKJQCWsJ1hZaQWZ+UZ7f9HpmTntGsLYYHATmSn6sYysjRqqdAgCyqTMoz29ellYeEuGb0HNa0XZx66q3WhxNGSJKlBAVEV3XrAOQhYIH3qDhIudya4vYnpE932Aut66lPL95IiC6grnUYQXmqhde7gNmTvX/sLYeuG8DmDn1YXDAKOLVMvCQj55OEYlf7XZlyfcSi0zB5wWQ7VVC9qFRJdpwS7sPJYZDq+kNQhZZgiTtG8zNESUul45ujTFPMXAzaiCXF2OCBozzhrW0JmFVslZHFRnZcyHZgceqTSR55743xjwnDzymRDMZqgAea5hFiloRximsJQCZ9qgyzqH8UPvVS8Z2Ag4SfnZjIOuFXOAtx/l7iWJKkUX5vFc0na0AMd/F+tWoUmNtxA6sUkTYgHQF3nsgEV2lq30YY55rPbwEZ5i5g5MxSzLzK4YAMSBVfTlavCeCmO8Vmy9C1aT5SPHxLQzjQuOsln4rfKuzlG+qgkcrXjHh+qxFBtR5cqRJPAubSoMvdBvp92y4/FhNProoxuL+GPCtyZZWJ7gpVv8h2V2HsJlBxZXd/Xhlt3sGFFttv61OjmsiNX9bEJaFbYunbmMfzptD3rhcgpZFWvNv5IrzxqHu+dtUrJjq2CRHpnouTz5a7YU5m2i9nnScbsPXJ5irZ8BIV+R24zy/BQxWEvP9LKXQzddep+TlyOAhapsfzAKGM93YQDjti1Bbgilic9odiIgSAI8gxKIceKoSRJRIbqQym9Lj/EZalsPx2+sgWpq97t4M7SNLzcyviTeI3itSjCRXDz7xGHEQ853Va8isNWbiycip8efMPPjs2TxkpGp2mrcRxHw3xjyDHKtOYaaJUaif725xPRElE8K3U5qIRpoFgGzy1VVCDtYWfqgnU8aZHGsJ4kvNZ3vBasOunCGBUWKAtfVXhZ+DG4XqcSiADEBGzPd/KfQPPxzDHz/jPqGXuPfUAAAAAElFTkSuQmCC"
-                                                     alt="tw"> </a>
-                                        </li>
-                                        <li class="lp-li">
-                                            <a href="https://www.linkedin.com/company" class="padding-left-0"
-                                               target="_blank">
-                                                <!-- <i class="fa fa-linkedin"></i> -->
-                                                <img class="icon icons8-lnk"
-                                                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACvElEQVRoge2a3ZHqMAyFXQIlUAIlUAIlUEJKoAONz3GeKSElpARKoISUwH3A8sZsbJxhN87OjWb8Qhyiz5YV/cSYhAh5hHNC8gZyAPmoNAaSNzh3JXlK6fsdoG0PILuKimcHyZuI7LMQABpdfb8KIuRR2vZQvBI/LCKyJ3my1l7g3D1AAc3kDR7iOck5EZHdwjoXCZyTJIyI7Ec7UW6HlUTIo8JE1gKy152oqN8sCTvj3N0YYwzJk/6wVnNKifeoDwBnA+euf203VKy1F29iXaDKnQ1vk733ZHeQ3RrOUrAmcjDq0lK+eUT9bVhrL8uqHouI7L5AvFJTEwGcdSKARkT2IrL3v6/CywX9syD6hgfOr9ci+6woZSAZs4u2taIUgagjSIDsNZT5dW0zUrojkjKf3LUlpQhERHZqXhpEjkL7B8ih9ku0CMSYZ1g/UjwOpytGxSrFICokTwAaAI207aH2TqjMc7/50c+dK2178O67H2WgHZwTAOc5i1QKUpS1zZnrncS71HmYend9DPL2T2bMVUWttRfNPkVkF0xXg9gn9HW1ICVO4iVbzcIsDuLPQl9q/6PI4ZEDXxxElSuBUAnxnGaBOR2WBDEmmE0PcoBz93cJXaicJA5/FZDoIE+45cQ9mptPnpUaZyRkcyRP6qlGefdknWpcU1gFCBK5TZSuToivfCavLw+SyW1y94691zpAfug5G8gGsoFsIBvIBrKB/C8gAzg/BloDSBSH5Ro9OundmDv3k+dEINoUde4ekp2pps1UhXFidHPnfvKcaAG+ihTd28RlreLNqo+sKazIH2qIamHCf9LxLGporwPMl17WIv5sDCAHIY/RxddPOOqomBff5ggl12QzdgxD8qZlzUW1fRER2Ql5BNCM+zK+OZuuk6X6IWsZs/syAM5w7hp9WlRnDF6HPtdy+Ae9stlPJrGH/AAAAABJRU5ErkJggg=="
-                                                     alt="lnk"> </a>
-                                        </li>
-                                        <li class="lp-li">
-                                            <a href="http://www.google.com/#" class="padding-left-0"
-                                               target="_blank">
-                                                <!-- <i class="fa fa-linkedin"></i> -->
-                                                <img class="icon icons8-gp"
-                                                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAC/klEQVRoge1a7Y2DMAxlBEboCB2BETpCR7gRuoGFn/nNCB2BERiBETJC70eTnKEEEgqUSvckS6cqtH7EH8/JZVkABBRlWd4AtAwYa48PmGHgziJERKeQv68EqurMwP1DTsdYM0uIgEK9ecMiRFV1JqKciPLot7EiiCgHcCnL8qYJAbiMPsDMV09CpP6U43NgkTpIhohOigR9yMdo6N3phZln+QUkHFQeN1mW+eR+MGCOGk5jIKKcRTq/K36bvmg3HFiEXE77LQpWgQPDR5NIl7nt+XIz2QGcWMU8kU+HyVL8Ezka/okcDW8RIaKcgIJF6oh5pdmyRy0mQkABoAXQ2sHr4jusM5GOgIKAYmvZs4gIM/8wYAC0QweVZnN238b1gU+pRLTUJ6AY/dLnTOPJ7CF7konogWZmXbfnrqQTUck8ua6fL2Y9l4N+xRMZxv9UAgO49DTQxkgj8syPv0RmvgbXatIi3eqeD/BWaLFIHVo3IBI9rL2o2c2IqGRn4EFVdR5bp0LLpByo7UZEz8i+6Q17yfMMqrW9Jqn07kbEOnqyjvqq5Lp7WZY3FulYpAvt1mGIOChZ0lj7C7lAs4x1aFciGkvK7dDpWNuVSFmWt68kQkT5y4/OlN1DESGinKrqbPOlHv4ogPawRIjoNLz8sX/feeROZYrMHLnU52IlSm6rlHEld6zE2h1qe05NqIDdiajQiWp03C/JUQp4cyJ6WIqpSA56Z2Ia5PZE1NtNkR36BcQ0yT2ILOraWgUn3cYmIoWIl++JoeUa5abjriZi7Fsbnfpi5buGbZINA2aJgEyBJ+KSMhQ21qn+4RvzT+iLbamuYyvcO3DhC6DV11dBWTEi353dWYSshHdq2HDMpf4K6F0b6svQuQedfB8hZRhoQo1yC/QuQ100qRK7y+ngGlDHTo3/sHdKMhH/R4E9un0wYF5y2/4fSpQM/xSU5nMv/Tq+UJOxhJaOrmvBjQv+TMDl5MTZ2vPBMQV7LGuSCoq9yBmrUHvbc+YRqacI/AIRrXPVmdbPHQAAAABJRU5ErkJggg=="
-                                                     alt="gp"> </a>
-                                        </li>
-                                        <li class="lp-li">
-                                            <a href="http://www.youtube.com/#" class="padding-left-0"
-                                               target="_blank">
-                                                <!-- <i class="fa fa-linkedin"></i> -->
-                                                <img class="icon icons8-yt"
-                                                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACW0lEQVRoge1Z0XGDMAz1CIzACIyQETJCR+gI3UCHnv3dERiBETpCRmAE+mGbCGrATlNwen53+rCNiZ4lZElRqqCgoGANrPWNgZGIaj9HxjQMjAC+TlQtDaw1MTAy87ufa9v2g4GxbduPE1VLAxFVDIwMDH6OgZ6BkYDLiaqlQ7rXS7qVh3SvpVsRUc1Ax8DgpCOiatprrTmujQ+FdK+lW/mxFGmtrIgodXevgKKDJ0bAZU/xHIiQV0JGq1TFTyci3GsWrV6OyJoShciZ+O9EbNQypnF3SlBxMqYBcM2XiNafy3uEgV6s3wLr+RFx0ayTF+YsUwYujszAzO9ZEPk3IKIqVY5X0qYX3eQGAb8+ROzvd8z8lkxi5YP9rQwbEkvqM5qET8v9x+jC6PEu4UBEtQwKrDXFbKr8CQG4HqBnNHwBx5j3C4IQF1S/XFszd4wSzwqxk8uLfkH4QW/CgPlyIBLd5Ih58BGlnmaRjYOe4VEiy7m1sXv/VEEq5b5LW6Tda3xjmqyJsK3nex8VlZpXmvLuyJqIv93luk8iAVxDNX6WREJj72pb738pIjHRsBA5ksimYq9IJAuLkDHNVneRiCqZMyklGuIuOX0KEWZ+cy/qkojs1OGhNd9mFdm2lB+5XhIRcVrD2jMhIsIKwTrcjyeltb7J29vt6QF8se3e1yu/bXsBMUXWdLp7GebBcIc8MDDspvFKzU53ZK3pzKJKKZeLWZcfotxKYlaR3WWrVL2L1reHJK4M7pMPloxp/qh2TxX7Z9KzXH3R1ql3xZjmh+zvO799VFBQkC++ATCevFWIX5AfAAAAAElFTkSuQmCC"
-                                                     alt="yt"> </a>
-                                        </li>
-                                        <li class="lp-li">
-                                            <a href="http://www.instagram.com/#" class="padding-left-0"
-                                               target="_blank">
-                                                <!-- <i class="fa fa-linkedin"></i> -->
-                                                <img class="icon icons8-insta"
-                                                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAD80lEQVRogc1Z4bGzIBCkhJTwSkgJrwRLSAmWwIzD+tMSXgmWYAmWYAmW4PfjuzMLYkTFJDfDTDSiLNzeLYcxK1ZV1S+ABkAPYAQwfaiNAPq6rv8AFGvjXZhz7g6g/eDAt1pf1/XPFogHzX4PoKmq6tc5d0+eicxW1/UPgMI5ZwEMBKiMdgBQ6kN1Xf9Za29vHnOSibvHwQhqXYl0P/yQCX8nAJPnLQA6+aP54Pg8k8ltI4GmtdbeaGUGY4wxAAq98U3uJFFqjfCdMcYoZ5xzD+7wNathjDG6EhyhZJUmAJMxxkgAmAC0RqLT13GDB7x2n7xpnJdnMza/2VKACFdmINEOR03yjpUAoqpglOsWQJOSl3RczNvQtTxgOYBYa28yeHXTpAy9mtSMF0lXyZ4ViMR0BjCwIrDW3gTofSVD9zF+yuyHYEYAHdMgCxBWA/LR5IAhE7AtObbHcA4IJaQRQKm+bK29RXgyKD+qqvoN3jNPhnPOZgOCfcp35FWIzPJqPwbEkiOxbXNk5wsLXQVZIZUTXcgT4UgZ8Kk5CiYZyIul1IGUBEJJOab4esCtXt1SthH/88J63/NA8Myk88eJK9sbHrJgAlr6Ri98eVwJpAMwqX+TO4xHNl8Cxts+iAtOUFWbGwgNuqdBeG52xMB66Xlv4AnLCoT8ugkG0IXPHgDT8oSou8bC8WkgJPeL4OOn5T+RvJV3F3ydFYgOXLmAjPLfU7H+dX8FkAF4yv3w+iIgizCcA8gIPGV1eH3WdozjNBCN7/fY9RmjfcYQu84NxMshRP7DoZfe7ZGbcskiIuYAohm8kY9ppFkQ8gAQDSRW3m35W1mB0HIzIYezkYtWYyT+dWvvPQ1E/vMyLkuUI9ErkChl+M5YIMkChNxpoOc1MXZ7IpiA0L4sGjt2s0uAyP8Dz2DgYuOaamULNmDsUiqDVque2YDwBkhdzFp7C0qcrXPuoe4m//8IH3gHOhcSJFJ5bnYpEHlm3q+zQg3OV141bwMmk6P9Xmq3rECMWRSZvRkUF+nYfeR3B6AMyjmlgkg5l8kOxBgv3k8A+j1ZPlIPa1KCxSVA5PkCfuWkgxQeQo5QmYgBJAWIy4FQPy4opDSvHvY1QKh/QcW5kCM9pIh9VDW/AuIdqOBLjxmMWapi2rdMi50ehdbTqja3hVtiymnDHEZVEpwt8VxlMV1GvGxZfcb008QZ+oMACs41dN9XyeRec1bdOFX9VJuFKeWwuerpHWmxO4lPtkirsF/VRoh203GRpBkXRTz4eeCrjqrVwqr/6nlKAKZ3ztlY2fKdpgdH8I8ktpOpyOk9h5rvbrs0nZFo9fdhfujsDwA659xjbRX+AV4kc6WFDlpSAAAAAElFTkSuQmCC"
-                                                     alt="insta"> </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div><!-- ../widget-box  -->
-                        </div>
-                    </div>
+                    {% include 'listing/detail_item_map.html' %}
                     <div class="widget-box listing-price">
 
                         <div class="price-area">
@@ -406,52 +287,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="widget-box business-contact">
-                        <div class="contact-form quickform">
-                            <div class="user_text">
-                                <div class="author-img">
-                                    <img src="http://1.gravatar.com/avatar/7f4ed2cfa1bebed28585770e2da94bdc?s=94&#038;d=mm&#038;r=g"
-                                         alt="">
-                                </div>
-                                <div class="author-social">
-                                    <div class="status">
-                                        <span class="online"><a>admin</a></span>
-                                    </div>
-                                    <ul class="social-icons post-socials">
-                                    </ul>
-                                </div>
-                            </div>
+                    {% include 'listing/business_contact_card.html' %}
 
-                            <form class="form-horizontal" method="post" id="contactOwner">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="name7" id="name7"
-                                           placeholder="Name:">
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control" name="email7" id="email7"
-                                           placeholder="Email:">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="phone" id="phone"
-                                           placeholder="Phone">
-                                </div>
-                                <div class="form-group">
-                                            <textarea class="form-control" rows="5" name="message7" id="message7"
-                                                      placeholder="Message:"></textarea>
-                                </div>
-                                <div class="form-group">
-
-                                </div>
-                                <div class="form-group margin-bottom-0 pos-relative">
-                                    <input type="submit" value="Send" class="lp-review-btn btn-second-hover">
-                                    <input type="hidden" value="{{listing.id}}" name="post_id">
-                                    <input type="hidden" value="{{listing.email}}" name="author_email">
-                                    <input type="hidden" value="{{listing.author.id}}" name="author_id">
-                                    <i class="lp-search-icon fa fa-send"></i>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

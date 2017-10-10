@@ -1,11 +1,18 @@
 from django.contrib import admin
 
-from core.admin import refresh_save
+from core.admin import refresh_save, duplicate
 
 from .models import City, Country, Category, FileUpload, Business, BusinessHour, \
-    BusinessPhoto, Feature, Customer, Review, ReviewTag, Event, EventDiscussion
+    BusinessPhoto, Feature, Customer, Review, ReviewTag, Event, EventDiscussion, ListingFaq
 
 admin.autodiscover()
+
+
+@admin.register(ListingFaq)
+class ListingFaqAdmin(admin.ModelAdmin):
+    list_display = ['question']
+    actions = [refresh_save, duplicate]
+    pass
 
 
 @admin.register(Country)
@@ -36,7 +43,7 @@ class CategoryAdmin(admin.ModelAdmin):
 class BusinessAdmin(admin.ModelAdmin):
     list_display = ['name', 'approved', 'popularity_rating', 'web_address', 'email', 'claimed']
     ordering = ['name']
-    actions = [refresh_save]
+    actions = [refresh_save, duplicate]
     filter_horizontal = ['categories', 'features']
     list_filter = ['exclusive', 'approved', 'claimed']
     pass
@@ -59,6 +66,7 @@ class FeatureAdmin(admin.ModelAdmin):
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
+    list_display = ['user', 'user_type', "status"]
     pass
 
 
