@@ -1,6 +1,7 @@
 <div class="siginincontainer">
     <h1 class="text-center">Sign in</h1>
-    <form id="login" class="form-horizontal margin-top-30"  method="post">
+    {% csrf_token %}
+    <form id="login" class="form-horizontal margin-top-30"  method="post" action="{% url 'login' %}">
         <p class="status"></p>
         <div class="form-group">
             <label for="username">Username or Email Address *</label>

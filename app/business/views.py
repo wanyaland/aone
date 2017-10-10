@@ -14,10 +14,15 @@ from core.response import Response
 from core.utils import update_dict, remove_dups_by_key, business_working_status, calculate_price_category
 from core.mixin import PatchRequestKwargs
 
+from app.business.models import Business, BusinessHour, Review
 from app.common.views import CategoryView
 
 from .models import Business, BusinessHour, Review, ListingFaq
 from .forms import ReviewForm
+
+from django.contrib.auth import login,authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render,redirect
 
 
 BUSINESS_LISTING_FIELDS = ['id', 'name', 'banner_photo', 'popularity_rating', 'slug', 'city__id',
@@ -115,7 +120,7 @@ class ListingView(PatchRequestKwargs, View):
             .extra(select=select_extra)\
             .order_by(sort_direction+sort_by)\
             .values(*BUSINESS_LISTING_FIELDS)
-        pprint(listing.query)
+
         business_listing = list(listing)
         unique_listing_, unique_listing_id = remove_dups_by_key(business_listing, by_key=COMBINE_KEYS['categories']+COMBINE_KEYS['business_hours']+COMBINE_KEYS['features'])
 
@@ -171,7 +176,7 @@ class DetailView(PatchRequestKwargs, View):
         slug = kwargs.get('slug')
         business_id = kwargs.get('business_id')
         business_listing = self.get_data(slug, business_id)
-        pprint(business_listing)
+
         if not business_listing:
             self.template_name = "404.html"
         return Response(request, business_listing, template=self.template_name, **kwargs)()
@@ -238,3 +243,19 @@ class ListingReview(View):
         else:
             data = {"error": "one or more fiels is not correct"}
             return Response(request, data, content_type="json", **kwargs)()
+
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+          form.save()
+          username = form.cleaned_data.get('username')
+          password = form.cleaned_data.get('password')
+          user = authenticate(username=username,password=password)
+          login(request,user)
+          return redirect('home')
+        else:
+          form = UserCreationForm()
+    return render(request,'signup.html',{'form':form})
