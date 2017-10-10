@@ -1,0 +1,20 @@
+<div class="post-row faq-section padding-top-10 clearfix">
+    <!-- <div class="post-row-header clearfix margin-bottom-15">
+        <h3>Quick questions</h3>
+    </div> -->
+    <div class="post-row-accordion">
+        <div id="accordion">
+            {% for question in listing.questions %}
+                {% if question.question %}
+                    <h5>
+                        <span class="question-icon">Q</span>
+                        <span class="accordion-title">{{question.question}}</span>
+                    </h5>
+                    <div>
+                        <p>{{question.answer}}</p>
+                    </div><!-- accordion tab -->
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

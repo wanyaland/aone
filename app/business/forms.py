@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Review, Customer, Business
+from .models import Review, Customer, Business, ReviewTag
 from core.utils import random_unique_string
 
 
@@ -52,3 +52,30 @@ class ReviewForm(forms.ModelForm):
                 return Customer.objects.creare(user=user)
             else:
                 raise Exception("No Email found")
+
+
+class ReviewTagForm(forms.ModelForm):
+    def __init__(self, request, *args, **kwargs):
+        super(ReviewTagForm, self).__init__(*args, **kwargs)
+        self._request = request
+
+    class Meta:
+        model = ReviewTag
+        fields = ['review', 'tag']
+
+    def review_validate(self):
+        review_id = self.cleaned_data['review']
+        review = Review.objects.filter(status=True, id=review_id)
+        if review.exists():
+            return review[0]
+        else:
+            raise Exception("no business found to review with this id")
+
+    def clean(self):
+        cleaned_data = super(ReviewTagForm, self).clean()
+        # cleaned_data['review'] = self.review_validate()
+        cleaned_data['user'] = self._request.user
+        cleaned_data['cookie'] = self._request.META.get('HTTP_COOKIE')
+        cleaned_data['ip_address'] = self._request.META.get('HTTP_X_FORWARDED_FOR') or self._request.META.get('REMOTE_ADDR')
+        cleaned_data['user_agent'] = self._request.META.get('HTTP_USER_AGENT')
+        return cleaned_data

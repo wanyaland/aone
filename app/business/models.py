@@ -234,20 +234,18 @@ class Review(models.Model):
 class ReviewTag(models.Model):
     id = models.AutoField(primary_key=True)
     review = models.ForeignKey(Review)
-    user = models.ForeignKey(User,null=True,blank=True)
+    user = models.ForeignKey(User, null=True, blank=True)
     ip_address = models.CharField(max_length=20)
     tag = models.CharField(choices=REVIEW_TAG_CHOICES, max_length=20)
-    key = models.CharField(max_length=32,null=True)
-    cookie = models.CharField(max_length=32,blank=True,null=True)
+    key = models.CharField(max_length=32, null=True)
+    cookie = models.CharField(max_length=32, blank=True, null=True)
+    #user_agent = models.CharField(max_length=500, null=True, blank=True)
     status = models.BooleanField(default=True)
     create_date = models.DateTimeField(auto_now_add=True)
     modify_date = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        if self.user:
-            return "%s tagged %s" %(self.user,self.tag)
-        else:
-            return "%s tagged %s" %(self.ip_address,self.tag)
+        return "%s tagged %s" %(self.tag, self.review)
 
     class Meta:
         db_table = "ReviewTag"

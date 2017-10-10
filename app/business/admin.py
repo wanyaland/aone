@@ -88,6 +88,8 @@ class ReviewAdmin(admin.ModelAdmin):
 
 @admin.register(ReviewTag)
 class ReviewTagAdmin(admin.ModelAdmin):
+    list_display = ['review', 'user', 'tag', 'ip_address', 'status', 'modify_date']
+    list_filter = ['tag', 'status']
     pass
 
 

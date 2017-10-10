@@ -1,0 +1,96 @@
+{% load custom_tags %}
+{% if listing.review_count %}
+<div id="submitreview">
+    <h3 class="comment-reply-title">{{listing.review_count}} Reviews for {{listing.name}}</h3>
+    <div class="reviews-section">
+        {% for review in listing.reviews %}
+            <article class="review-post">
+            <figure>
+                <div class="review-thumbnail">
+                    <img onerror="this.style.display='none'" src="{{MEDIA_URL}}{{review.customer.photo}}" alt="user profile">
+                </div>
+                <figcaption>
+                    <h4>{{review.customer.user.last_name}} {{review.customer.user.first_name}}</h4>
+                    <!--<p><i class="fa fa-star"></i> {{review.auth.review_count}} Reviews</p>-->
+                    <!--
+                    <a href="#" class="report"><i class="fa fa-flag" aria-hidden="true"></i></a>
+                    -->
+                </figcaption>
+            </figure>
+            <section class="details">
+                <div class="top-section">
+                    <h3>{{review.title}}</h3>
+                    <time>{{review.modify_date}}</time>
+                    <div class="review-count">
+                        <div class="rating">
+                            {% for stars in 0|range:review.rating %}<i class="fa fa-star lp-star-good"></i>{% endfor %}
+                            {% for stars in review.rating|range:5 %}<i class="fa fa-star-o"></i>{% endfor %}
+
+                        </div>
+                        <span class="label label-default"> </span>
+                        <span class="rate lp-rate-good">{{review.rating}}<sup>/ 5</sup></span></div>
+                </div>
+                <div class="content-section">
+                    <p></p>
+                    <p>{{review.review}}</p>
+                    <p></p>
+                    <div class="images-gal-section">
+                        <div class="row">
+                            <div class="img-col review-img-slider slick-initialized slick-slider">
+                                <div aria-live="polite" class="slick-list draggable">
+                                    <div class="slick-track" role="listbox" style="opacity: 1; width: 416px; left: 0px;">
+                                        <a class="galImgFull slick-slide slick-current slick-active"
+                                            href="{{MEDIA_URL}}{{review.attachment}}"
+                                            data-slick-index="0" aria-hidden="false" tabindex="-1" role="option"
+                                            aria-describedby="slick-slide10" style="width: 208px;">
+                                            <img onerror="this.style.display='none'" width="184" height="135"
+                                                src="{{MEDIA_URL}}{{review.attachment}}"
+                                                class="attachment-listingpro-review-gallery-thumb size-listingpro-review-gallery-thumb"
+                                                alt=" attachment "></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-section">
+                        <form action="#">
+                            <span>Was this review ...?</span>
+
+                            <ul>
+                                <li>
+                                    <a data-url="{% url 'review_tag' %}" class="instresting reviewRes" href="#" data-reacted="You already reacted"
+                                       data-restype="Interesting" data-tag="INTERESTING" data-id="{{review.id}}" data-score="{{review.INTERESTING}}">
+                                        <i class="fa fa-thumbs-o-up"></i>Interesting<span
+                                            class="interests-score">{{review.INTERESTING}}</span>
+                                        <span class="lp_state"></span>
+                                    </a>
+
+                                </li>
+                                <li>
+                                    <a data-url="{% url 'review_tag' %}"  class="lol reviewRes" href="#" data-reacted="You already reacted"
+                                       data-restype="Lol" data-tag="LOL" data-id="{{review.id}}" data-score="{{review.LOL}}">
+                                        <i class="fa fa-smile-o"></i>Lol<span class="interests-score">{{review.LOL}}</span>
+                                        <span class="lp_state"></span>
+                                    </a>
+
+                                </li>
+                                <li>
+                                    <a data-url="{% url 'review_tag' %}" class="love reviewRes" href="#" data-reacted="You already reacted"
+                                       data-restype="Love" data-tag="LOVE" data-id="{{review.id}}" data-score="{{review.LOVE.score}}">
+                                        <i class="fa fa-heart-o"></i>Love<span class="interests-score">{{review.LOVE}}</span>
+                                        <span class="lp_state"></span>
+                                    </a>
+
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- moin here ends-->
+        </article>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

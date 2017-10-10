@@ -17,8 +17,8 @@ from core.mixin import PatchRequestKwargs
 from app.business.models import Business, BusinessHour, Review
 from app.common.views import CategoryView
 
-from .models import Business, BusinessHour, Review, ListingFaq
-from .forms import ReviewForm
+from .models import Business, BusinessHour, Review, ListingFaq, ReviewTag
+from .forms import ReviewForm, ReviewTagForm
 
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.forms import UserCreationForm
@@ -209,6 +209,23 @@ class DetailView(PatchRequestKwargs, View):
                     obj[key] = zip(*val)
 
             listing = business_listing[0]
+
+            # review_fields = ["rating", 'customer__photo' 'customer__user__first_name', 'customer__user__last_name', 'attachment', 'title', 'review', 'modify_date']
+            listing_review = list(Review.objects.filter(business__id=listing['id'], status=True))
+
+            total_rating = [int(review.rating) for review in listing_review]
+
+            if len(total_rating):
+                listing['avg_rating'] = sum(total_rating)/float(len(total_rating))
+            listing['review_count'] = len(total_rating)
+
+            for review in listing_review:
+                review_tags = list(ReviewTag.objects.filter(review=review).values("tag").annotate(count=Count("tag")))
+                for tag in review_tags:
+                    setattr(review, str(tag['tag']), tag['count'])
+
+            listing['reviews'] = listing_review
+
             listing['questions'] = list(ListingFaq.objects.filter(business__id=listing['id'], status=True).values('question', 'answer'))
             response['data'] = listing
             response['data']['business_hours_show'] = business_working_status(response['data']['business_hours'])
@@ -237,13 +254,14 @@ class ListingReview(View):
             review_obj = form.save(commit=True)
             review_obj.business = form_data['business']
             review_obj.customer = form_data['customer']
-            review_obj.save()
-            # redirect_url = reverse("detail_id", kwargs={'business_id': review_obj.business.id})
-            return Response(request, {}, content_type="json", **kwargs)()
-        else:
-            data = {"error": "one or more fiels is not correct"}
-            return Response(request, data, content_type="json", **kwargs)()
+            review_obj.attachment = request.FILES.get('attachment')
 
+            review_obj.save()
+            data = {'status': True, 'message': 'Review Successfully posted. '}
+            return Response(request, data, content_type="json", **kwargs)()
+        else:
+            data = {"status": False, "error": "one or more fields are not correct", 'message': "one or more fields are not correct"}
+            return Response(request, data, content_type="json", **kwargs)()
 
 
 def signup(request):
@@ -259,3 +277,22 @@ def signup(request):
         else:
           form = UserCreationForm()
     return render(request,'signup.html',{'form':form})
+
+
+class ReviewTagView(View):
+    def get(self, request, *args, **kwargs):
+        form = ReviewTagForm(request, request.GET)
+        if form.is_valid():
+            form_data = form.cleaned_data
+            review_obj = form.save(commit=True)
+            review_obj.review = form_data['review']
+            review_obj.user = form_data['user']
+            review_obj.save()
+            count = list(ReviewTag.objects.filter(status=True, review=review_obj.review, tag=form_data['tag']).values("id"))
+            # redirect_url = reverse("detail_id", kwargs={'business_id': review_obj.business.id})
+            data = {'status': True, 'count': len(count), 'message': 'Thanks for reacting'}
+            return Response(request, data, content_type="json", **kwargs)()
+        else:
+            print(form.errors)
+            data = {"error": "one or more fiels is not correct", "message": "unsuccessful reaction"}
+            return Response(request, data, content_type="json", **kwargs)()

@@ -90,7 +90,13 @@
                             </ul>
                             <div class="padding-top-30">
                                 <span class="rating-section">
-                                    <span class="no-review">Be the first one to rate!</span></span>
+                                    {% if not listing.review_count %}
+                                        <span class="no-review">Be the first one to rate!</span>
+                                    {% else %}
+                                        <span class="rate lp-rate-good">{{listing.avg_rating}}<sup>/ 5</sup></span>
+                                        <span><small>{{listing.review_count}}</small><br> Ratings</span>
+                                    {% endif %}
+                                </span>
                                 <a href="#reply-title" class="secondary-btn" id="clicktoreview">
                                     <i class="fa fa-star"></i>
                                     Submit Review </a>

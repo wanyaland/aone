@@ -18,9 +18,9 @@ USER_TYPES = {
 
 # TAGS
 REVIEW_TAG_CHOICES = {
-        ('C', 'COOL'),
-        ('H', 'HELPFUL'),
-        ('F', 'FUNNY'),
+        ('LOVE', 'LOVE'),
+        ('LOL', 'LOL'),
+        ('INTERESTING', 'INTERESTING'),
     }
 
 # PHOTOS
