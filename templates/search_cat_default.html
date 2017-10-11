@@ -1,0 +1,18 @@
+<div id="input-dropdown">
+    <ul>
+        {% for cat in parent_categories %}
+            <li class="lp-wrap-cats" data-key_type="cats" data-catsid="{{cat.id}}">
+                <img onerror="this.style.display='none'" class="d-icon" src="{{MEDIA_URL}}{{cat.icon}}" />
+                <span class="lp-s-cat">{{cat.name}}</span>
+            </li>
+        {% endfor %}
+    </ul>
+    <div style="display:none" id="def-cats">
+        {% for cat in parent_categories %}
+            <li class="lp-wrap-cats" data-key_type="cats" data-catsid="{{cat.id}}">
+                <img onerror="this.style.display='none'" class="d-icon" src="{{cat.icon}}" />
+                <span class="lp-s-cat">{{cat.name}}</span>
+            </li>
+        {% endfor %}
+    </div>
+</div>

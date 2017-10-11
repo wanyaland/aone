@@ -5,6 +5,7 @@ from operator import or_, and_
 from pprint import pprint
 
 from django.shortcuts import redirect
+from django.utils.http import urlencode
 from django.core.urlresolvers import reverse
 from django.views import View
 from django.core.paginator import Paginator
@@ -17,7 +18,7 @@ from core.mixin import PatchRequestKwargs
 from app.business.models import Business, BusinessHour, Review
 from app.common.views import CategoryView
 
-from .models import Business, BusinessHour, Review, ListingFaq, ReviewTag
+from .models import Business, BusinessHour, Review, ListingFaq, ReviewTag, Category, Feature
 from .forms import ReviewForm, ReviewTagForm
 
 from django.contrib.auth import login,authenticate
@@ -65,6 +66,7 @@ class ListingView(PatchRequestKwargs, View):
         category_id = int(kwargs.get('category_id') or 0)
         city_id = kwargs.get('city_id')
         feature_id = kwargs.get('feature_id')
+        title_query = kwargs.get('query')
 
         inexpensive = kwargs.get('inexpensive')
         moderate = kwargs.get('moderate')
@@ -83,7 +85,8 @@ class ListingView(PatchRequestKwargs, View):
                                      open_time=open_time,
                                      average_rate=average_rate,
                                      most_reviewed=most_reviewed,
-                                     feature_id=feature_id)
+                                     feature_id=feature_id,
+                                     title_query=title_query)
 
         kwargs['category_id'] = category_id
 
@@ -96,7 +99,7 @@ class ListingView(PatchRequestKwargs, View):
 
     @staticmethod
     def get_data(sort_direction='-', sort_by='name', count=10, page=1, category_id=None, city_id=None, feature_id=None,
-                 exclusive=False, cost_type=None, open_time=False, average_rate=False, most_reviewed=False):
+                 exclusive=False, cost_type=None, open_time=False, average_rate=False, most_reviewed=False, title_query=None):
         select_extra = {}
 
         cost_type = cost_type or []
@@ -115,6 +118,9 @@ class ListingView(PatchRequestKwargs, View):
 
         if exclusive:
             query_obj &= Q(exclusive=True)
+
+        if title_query:
+            query_obj &= Q(name__icontains=title_query)
 
         listing = Business.objects.filter(query_obj)\
             .extra(select=select_extra)\
@@ -198,7 +204,7 @@ class DetailView(PatchRequestKwargs, View):
         listing_ = Business.objects.filter(query_obj)\
             .extra(select=select_extra)\
             .values(*BUSINESS_LISTING_FIELDS)
-        print(listing_.query)
+
         business_listing_ = list(listing_)
 
         if len(business_listing_):
@@ -238,9 +244,46 @@ class SearchView(View):
     search view
     Accepts only one query parameter named query
     """
+    drop_down_template = """<li class="lp-wrap-{key}" data-key_type="{data_key}" data-{data_key}id="{id}">
+                                <!--<a href="#" ><img onerror="this.style.display='none'" class="d-icon" src="" /> -->
+                                <span class="lp-s-{key}">{name}</span>
+                            </li>"""
+
     def get(self, request, *args, **kwargs):
-        data = {}
-        return Response(request, data, **kwargs)
+        search_query = request.GET.get('query', '')
+        if len(search_query) < 3:
+            data = {'message': "Please put some more efforts", "status": False, "suggestions": {}}
+        else:
+
+            data = self.get_data(search_query)
+            for key in data['suggestions']:
+                for index, row in enumerate(data['suggestions'][key]):
+                    query_kwargs = {'status': '1'}
+                    if key == "tags":
+                        query_kwargs['feature_id'] = row['id']
+                    elif key == "cats":
+                        query_kwargs['feature_id'] = row['id']
+                    elif key == "titles":
+                        query_kwargs['listing_id'] = row['id']
+
+                    url = reverse("listing_all")+"?"+urlencode(query_kwargs)
+                    data['suggestions'][key][index] = self.drop_down_template.format(data_key=key, key=key, id=row['id'], name=row['name'], url=url)
+
+        return Response(request, data, content_type="json", **kwargs)()
+
+    @staticmethod
+    def get_data(search_query):
+        data = {"status": True, "suggestions": {}}
+        categories = list(Category.objects.filter(status=True, name__icontains=search_query).values("id", "name"))
+
+        business = list(Business.objects.filter(name__icontains=search_query, status=True).values("id", "name"))
+
+        features = list(Feature.objects.filter(status=True, name__icontains=search_query).values("id", "name"))
+
+        data['suggestions']['tags'] = features
+        data['suggestions']['cats'] = categories
+        data['suggestions']['titles'] = business
+        return data
 
 
 class ListingReview(View):
@@ -293,6 +336,5 @@ class ReviewTagView(View):
             data = {'status': True, 'count': len(count), 'message': 'Thanks for reacting'}
             return Response(request, data, content_type="json", **kwargs)()
         else:
-            print(form.errors)
             data = {"error": "one or more fiels is not correct", "message": "unsuccessful reaction"}
             return Response(request, data, content_type="json", **kwargs)()
