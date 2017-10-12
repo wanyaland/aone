@@ -35,6 +35,8 @@ class ContactView(PatchRequestKwargs, View):
     template_name = "contact.html"
 
     def get(self, request, *args, **kwargs):
+        if kwargs.get('contact') == '1':
+            kwargs['message'] = 'We have received your request. We contact you shortly.'
         return Response(request, {}, template=self.template_name, **kwargs)()
 
     def post(self, request, *args, **kwargs):

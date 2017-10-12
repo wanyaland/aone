@@ -65,6 +65,7 @@ class ListingView(PatchRequestKwargs, View):
         page = kwargs.get('page', 1)
         category_id = int(kwargs.get('category_id') or 0)
         city_id = kwargs.get('city_id')
+        cities = kwargs.get('cities')  ## cities text
         feature_id = kwargs.get('feature_id')
         title_query = kwargs.get('query')
 
@@ -86,7 +87,8 @@ class ListingView(PatchRequestKwargs, View):
                                      average_rate=average_rate,
                                      most_reviewed=most_reviewed,
                                      feature_id=feature_id,
-                                     title_query=title_query)
+                                     title_query=title_query,
+                                     cities=cities)
 
         kwargs['category_id'] = category_id
 
@@ -99,7 +101,8 @@ class ListingView(PatchRequestKwargs, View):
 
     @staticmethod
     def get_data(sort_direction='-', sort_by='name', count=10, page=1, category_id=None, city_id=None, feature_id=None,
-                 exclusive=False, cost_type=None, open_time=False, average_rate=False, most_reviewed=False, title_query=None):
+                 exclusive=False, cost_type=None, open_time=False, average_rate=False, most_reviewed=False, title_query=None,
+                 cities=None):
         select_extra = {}
 
         cost_type = cost_type or []
@@ -112,6 +115,9 @@ class ListingView(PatchRequestKwargs, View):
             child_categories = CategoryView.get_data(parent_category=category_id)
         if city_id:
             query_obj &= Q(city__id=city_id)
+
+        if cities:
+            query_obj &= Q(city__name__icontains=str(cities))
 
         if feature_id:
             query_obj &= Q(features__id=feature_id)

@@ -18,12 +18,14 @@
             <div class="input-group-addon lp-border lp-where">Where</div>
             <div data-option="no" class="ui-widget border-dropdown">
                 <i class="fa fa-crosshairs"></i>
-                <select class="chosen-select chosen-select5" name="searchlocation" id="searchlocation">
+                <input autocomplete="off" id="cities" name="cities" class="form-control" data-country="" value=""
+                       placeholder="Your City...">
+                <!--<select class="chosen-select chosen-select5" name="searchlocation" id="searchlocation">
                     <option id="def_location" value="">Your City...</option>
                     {% for city in cities %}
                         <option  value="{{city.id}}">{{city.name}}</option>
                     {% endfor %}
-                </select>
+                </select> -->
             </div>
         </div>
         <div class="form-group pull-right">

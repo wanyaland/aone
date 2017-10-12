@@ -1,5 +1,10 @@
 {% load static %}
-<header class="header-without-topbar header-fixed pos-relative lp-header-full-width">
+<style>
+.lp-menu-bar{
+    background-color: #00578f !important;
+}
+</style>
+<header class="header-without-topbar header-normal pos-relative lp-header-full-width">
 
     <div id="menu" class="small-screen">
         <a href="/submit-listing/index.html" class="lpl-button">Add Listing</a>
@@ -86,7 +91,7 @@
                                         {% endcomment %}
                                         <li id="menu-item-116"
                                             class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-116">
-                                            <a href="/blog">Blog</a></li>
+                                            <a href="{% url 'blog' %}">Blog</a></li>
                                     </ul>
                                 </div>
                             </div>

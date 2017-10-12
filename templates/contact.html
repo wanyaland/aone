@@ -1,30 +1,121 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block additional_css %}
-
 {% endblock additional_css %}
-
 {% block body %}
-    {% block header %}
-    <div class="pos-relative">
-        <div class="header-container lp-header-bg">
-            {% include 'header.html' %}
+{% block header %}
+<div class="pos-relative">
+    <div class="header-container lp-header-bg">
+        {% include 'listing/header.html' %}
+        {% include 'dynamic_invoice.html' %}
+        {% include 'signin_signup.html' %}
+        {% include 'pricing_plan.html' %}
+        <div class="page-heading listing-page">
+            <div class="page-heading-inner-container text-center">
+                <h1>Contact</h1>
+                <ul class="breadcrumbs">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><span>Contact</span></li>
+                </ul>
+            </div>
+            <div class="page-header-overlay"></div>
         </div>
     </div>
-    {% endblock header %}
+</div>
+{% endblock header %}
+{% block content %}
+<section class="clearfix">
+    <div class="contact-left">
+        <div id="cpmap" class="contactmap" data-pinicon = "{% static 'images/pin.png' %}">
+        </div>
+    </div>
+    <div  class="padding-top-60 padding-bottom-70 contact-right">
+        <h3 class="lp-border-bottom padding-bottom-20 margin-bottom-20">Address</h3>
+        <div class="address-box mr-bottom-30">
+            <p>
+                <i class="fa fa-map-marker"></i>
+                <span> Your Address at Lutaco Tower 007A Nguyen Van Troi</span>
+            </p>
+            <p>
+                <i class="fa fa-phone"></i>
+                <span>+008 1234 6789</span>
+            </p>
+            <p>
+                <i class="fa fa-envelope"></i>
+                <span>xyz@example.com</span>
+            </p>
+            <ul class="social-icons post-socials contact-social">
+                <li>
+                    <a href="#">
+                        <!-- Facebook icon by Icons8 -->
+                        <img class="icon icons8-fb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACcUlEQVRoge2a3bWqMBCFKYESLMESKMESLIES7GBW9h6eKcESKIESLIESvA8mOXCOQIKC8S5mrbwYycyXmSSTnywbESELqArJFmQH8v6h0pFsoVqTPI3Z+xegqo4grx80fLKQbEXkMAkB4Ox63/aCCFlIVR2De+LNIiIHkidjzAWqNw8FlE8/AFD6P6nWIpJvbHOQQFVGYUTk0PNEeBx+SIQsHMwgWkA21hPyQfuixHtG9ZZlWZaRPLkfUg2nMfFjBjhnUK2/zRtOjDEXG2LXzK4TXzE2fouPJrLz7pmdmxMUEcl/QOzo39QAsrBh0fjM4dGhV6jWAMrQtcvbvyWI7cHwrMHNSCmBSFUdXRiTbF2vi0huy4HkCUDpJ6AAuzYH6XmiCZnmkwSxiegdZBe6ViUJ4uZ7Y8wl9JskQVxYPVurRCQ3xlzG9j0BbW8IMrFWDbLZJ2W27YRAHnVksSTX2zq0RnW8qn8HiVUwF+9zq/tcDvgtIF2ontVBlnzrtrIk22A9KYL4gxDVOlhPkiARu9a0QSYygVE9KQ/2kF3rN4DMzlj97/cFcZGyyLqotneQJcoi66La3kGWKIusi2p7B1miLLIuqu0dZImyyLqotv8nkC40QXtZWWTdnPSuFe6bXPSsBuIuRVVvfhMTc5wZK2uB9K7Ur4PL0NfMnVC4AogNq2YQTS681roQXQPEHYzbJx2PE0r7YOCxK1vhuca7QezY6EB2QhbDBodPON7qmXeBiEhuD727yXHdhyHZGmMuf4gXyCsgIpILWQAo/RAgOwDl5KG3VNWx90FyhWQbFf4AzlCtB0+LPlPc1XUD4DzmhX+QRYQ6YahpGwAAAABJRU5ErkJggg==" alt="fb">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <!-- Google Plus icon by Icons8 -->
+                        <img class="icon icons8-gp" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAC/klEQVRoge1a7Y2DMAxlBEboCB2BETpCR7gRuoGFn/nNCB2BERiBETJC70eTnKEEEgqUSvckS6cqtH7EH8/JZVkABBRlWd4AtAwYa48PmGHgziJERKeQv68EqurMwP1DTsdYM0uIgEK9ecMiRFV1JqKciPLot7EiiCgHcCnL8qYJAbiMPsDMV09CpP6U43NgkTpIhohOigR9yMdo6N3phZln+QUkHFQeN1mW+eR+MGCOGk5jIKKcRTq/K36bvmg3HFiEXE77LQpWgQPDR5NIl7nt+XIz2QGcWMU8kU+HyVL8Ezka/okcDW8RIaKcgIJF6oh5pdmyRy0mQkABoAXQ2sHr4jusM5GOgIKAYmvZs4gIM/8wYAC0QweVZnN238b1gU+pRLTUJ6AY/dLnTOPJ7CF7konogWZmXbfnrqQTUck8ua6fL2Y9l4N+xRMZxv9UAgO49DTQxkgj8syPv0RmvgbXatIi3eqeD/BWaLFIHVo3IBI9rL2o2c2IqGRn4EFVdR5bp0LLpByo7UZEz8i+6Q17yfMMqrW9Jqn07kbEOnqyjvqq5Lp7WZY3FulYpAvt1mGIOChZ0lj7C7lAs4x1aFciGkvK7dDpWNuVSFmWt68kQkT5y4/OlN1DESGinKrqbPOlHv4ogPawRIjoNLz8sX/feeROZYrMHLnU52IlSm6rlHEld6zE2h1qe05NqIDdiajQiWp03C/JUQp4cyJ6WIqpSA56Z2Ia5PZE1NtNkR36BcQ0yT2ILOraWgUn3cYmIoWIl++JoeUa5abjriZi7Fsbnfpi5buGbZINA2aJgEyBJ+KSMhQ21qn+4RvzT+iLbamuYyvcO3DhC6DV11dBWTEi353dWYSshHdq2HDMpf4K6F0b6svQuQedfB8hZRhoQo1yC/QuQ100qRK7y+ngGlDHTo3/sHdKMhH/R4E9un0wYF5y2/4fSpQM/xSU5nMv/Tq+UJOxhJaOrmvBjQv+TMDl5MTZ2vPBMQV7LGuSCoq9yBmrUHvbc+YRqacI/AIRrXPVmdbPHQAAAABJRU5ErkJggg==" alt="gp">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <!-- LinkedIn icon by Icons8 -->
+                        <img class="icon icons8-tw" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAADSElEQVRoge1Zy5GDMAxNCZSQElJCSqCElEAJ6UDjJ3OmBEqghJRACZSQPSAbYf5gkj3kzexhJ9jW90mWL5cffvjhh7NBRAkzpwAyY8wTwIOY79+WazWI+c7MLzC/J/4aY8xzaQ8wl6OKU57fYG1BRMkpChAlsJa0wKJQCWsJ1hZaQWZ+UZ7f9HpmTntGsLYYHATmSn6sYysjRqqdAgCyqTMoz29ellYeEuGb0HNa0XZx66q3WhxNGSJKlBAVEV3XrAOQhYIH3qDhIudya4vYnpE932Aut66lPL95IiC6grnUYQXmqhde7gNmTvX/sLYeuG8DmDn1YXDAKOLVMvCQj55OEYlf7XZlyfcSi0zB5wWQ7VVC9qFRJdpwS7sPJYZDq+kNQhZZgiTtG8zNESUul45ujTFPMXAzaiCXF2OCBozzhrW0JmFVslZHFRnZcyHZgceqTSR55743xjwnDzymRDMZqgAea5hFiloRximsJQCZ9qgyzqH8UPvVS8Z2Ag4SfnZjIOuFXOAtx/l7iWJKkUX5vFc0na0AMd/F+tWoUmNtxA6sUkTYgHQF3nsgEV2lq30YY55rPbwEZ5i5g5MxSzLzK4YAMSBVfTlavCeCmO8Vmy9C1aT5SPHxLQzjQuOsln4rfKuzlG+qgkcrXjHh+qxFBtR5cqRJPAubSoMvdBvp92y4/FhNProoxuL+GPCtyZZWJ7gpVv8h2V2HsJlBxZXd/Xhlt3sGFFttv61OjmsiNX9bEJaFbYunbmMfzptD3rhcgpZFWvNv5IrzxqHu+dtUrJjq2CRHpnouTz5a7YU5m2i9nnScbsPXJ5irZ8BIV+R24zy/BQxWEvP9LKXQzddep+TlyOAhapsfzAKGM93YQDjti1Bbgilic9odiIgSAI8gxKIceKoSRJRIbqQym9Lj/EZalsPx2+sgWpq97t4M7SNLzcyviTeI3itSjCRXDz7xGHEQ853Va8isNWbiycip8efMPPjs2TxkpGp2mrcRxHw3xjyDHKtOYaaJUaif725xPRElE8K3U5qIRpoFgGzy1VVCDtYWfqgnU8aZHGsJ4kvNZ3vBasOunCGBUWKAtfVXhZ+DG4XqcSiADEBGzPd/KfQPPxzDHz/jPqGXuPfUAAAAAElFTkSuQmCC" alt="tw">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <!-- Instagram icon by Icons8 -->
+                        <img class="icon icons8-insta" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAD80lEQVRogc1Z4bGzIBCkhJTwSkgJrwRLSAmWwIzD+tMSXgmWYAmWYAmW4PfjuzMLYkTFJDfDTDSiLNzeLYcxK1ZV1S+ABkAPYAQwfaiNAPq6rv8AFGvjXZhz7g6g/eDAt1pf1/XPFogHzX4PoKmq6tc5d0+eicxW1/UPgMI5ZwEMBKiMdgBQ6kN1Xf9Za29vHnOSibvHwQhqXYl0P/yQCX8nAJPnLQA6+aP54Pg8k8ltI4GmtdbeaGUGY4wxAAq98U3uJFFqjfCdMcYoZ5xzD+7wNathjDG6EhyhZJUmAJMxxkgAmAC0RqLT13GDB7x2n7xpnJdnMza/2VKACFdmINEOR03yjpUAoqpglOsWQJOSl3RczNvQtTxgOYBYa28yeHXTpAy9mtSMF0lXyZ4ViMR0BjCwIrDW3gTofSVD9zF+yuyHYEYAHdMgCxBWA/LR5IAhE7AtObbHcA4IJaQRQKm+bK29RXgyKD+qqvoN3jNPhnPOZgOCfcp35FWIzPJqPwbEkiOxbXNk5wsLXQVZIZUTXcgT4UgZ8Kk5CiYZyIul1IGUBEJJOab4esCtXt1SthH/88J63/NA8Myk88eJK9sbHrJgAlr6Ri98eVwJpAMwqX+TO4xHNl8Cxts+iAtOUFWbGwgNuqdBeG52xMB66Xlv4AnLCoT8ugkG0IXPHgDT8oSou8bC8WkgJPeL4OOn5T+RvJV3F3ydFYgOXLmAjPLfU7H+dX8FkAF4yv3w+iIgizCcA8gIPGV1eH3WdozjNBCN7/fY9RmjfcYQu84NxMshRP7DoZfe7ZGbcskiIuYAohm8kY9ppFkQ8gAQDSRW3m35W1mB0HIzIYezkYtWYyT+dWvvPQ1E/vMyLkuUI9ErkChl+M5YIMkChNxpoOc1MXZ7IpiA0L4sGjt2s0uAyP8Dz2DgYuOaamULNmDsUiqDVque2YDwBkhdzFp7C0qcrXPuoe4m//8IH3gHOhcSJFJ5bnYpEHlm3q+zQg3OV141bwMmk6P9Xmq3rECMWRSZvRkUF+nYfeR3B6AMyjmlgkg5l8kOxBgv3k8A+j1ZPlIPa1KCxSVA5PkCfuWkgxQeQo5QmYgBJAWIy4FQPy4opDSvHvY1QKh/QcW5kCM9pIh9VDW/AuIdqOBLjxmMWapi2rdMi50ehdbTqja3hVtiymnDHEZVEpwt8VxlMV1GvGxZfcb008QZ+oMACs41dN9XyeRec1bdOFX9VJuFKeWwuerpHWmxO4lPtkirsF/VRoh203GRpBkXRTz4eeCrjqrVwqr/6nlKAKZ3ztlY2fKdpgdH8I8ktpOpyOk9h5rvbrs0nZFo9fdhfujsDwA659xjbRX+AV4kc6WFDlpSAAAAAElFTkSuQmCC" alt="insta">
+                    </a>
+                </li>
+            </ul>
+            <!-- ../social-icons-->
+        </div>
+        <h3 class="margin-top-60 margin-bottom-30 lp-border-bottom padding-bottom-20">Contact us</h3>
+        <h6 class="text-success">{{message}}</h6>
+        <form class="form-horizontal pos-relative" id="contactMSG" name="contactMSG" method="post" novalidate="novalidate" action="{% url 'contact_request' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <input class="form-control nameform" id="name" name="name" placeholder="Name:" type="text" value="" required="" maxlength="200">
+                </div>
+                <div class="col-sm-6">
+                    <input class="form-control" id="email" name="email" placeholder="Email:" type="email" required="" maxlength="400">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <input class="form-control" id="subject" name="subject" placeholder="Subject:" type="text" maxlength="500">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <textarea class="form-control" rows="5" id="message" name="message" placeholder="Message:"></textarea>
+                </div>
+            </div>
+            <div class="form-group mr-bottom-20">
+                <div class="col-sm-12">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <input type="submit" id="contactMSG" name="contactMSG" value="Send Message" class="lp-review-btn btn-second-hover">
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<script>
 
-    {% block content %}
-
-
-    {% endblock content %}
-
-
-
-
-
-    {% block footer %}
-        {% include 'footer.html' %}
-    {% endblock footer %}
-
+    jQuery(document).ready(function() {
+        var lat = 51.516576;
+        var long = -0.137508;
+        setGoogleMapMarkers([{name: 'AfricaOne', latitude:lat, longitude:long}], 'cpmap', 16);
+    });
+</script>
+{% endblock content %}
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}
 {% endblock body%}
