@@ -71,9 +71,11 @@ class ContactRequestView(View):
 
     def post(self, request, *args, **kwargs):
         form = ContactRequestForm(request.POST)
+        url = request.META.get('HTTP_REFERER') or reverse('contact')
+        url = url.split('?')[0]
         if form.is_valid():
             form.save()
-            return redirect(reverse('contact')+"?contact=1")
+            msg = "We have received your request. We contact you shortly."
         else:
             msg = str(form.errors)
-            return render(request, 'message.html', context={'message': msg})
+        return redirect(url + "?message="+msg)

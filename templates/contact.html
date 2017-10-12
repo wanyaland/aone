@@ -73,37 +73,8 @@
             <!-- ../social-icons-->
         </div>
         <h3 class="margin-top-60 margin-bottom-30 lp-border-bottom padding-bottom-20">Contact us</h3>
-        <h6 class="text-success">{{message}}</h6>
-        <form class="form-horizontal pos-relative" id="contactMSG" name="contactMSG" method="post" novalidate="novalidate" action="{% url 'contact_request' %}">
-            {% csrf_token %}
-            <div class="form-group">
-                <div class="col-sm-6">
-                    <input class="form-control nameform" id="name" name="name" placeholder="Name:" type="text" value="" required="" maxlength="200">
-                </div>
-                <div class="col-sm-6">
-                    <input class="form-control" id="email" name="email" placeholder="Email:" type="email" required="" maxlength="400">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-12">
-                    <input class="form-control" id="subject" name="subject" placeholder="Subject:" type="text" maxlength="500">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-12">
-                    <textarea class="form-control" rows="5" id="message" name="message" placeholder="Message:"></textarea>
-                </div>
-            </div>
-            <div class="form-group mr-bottom-20">
-                <div class="col-sm-12">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-12">
-                    <input type="submit" id="contactMSG" name="contactMSG" value="Send Message" class="lp-review-btn btn-second-hover">
-                </div>
-            </div>
-        </form>
+        <h6 class="text-success">{{message|safe}}</h6>
+        {% include 'contact_form.html' %}
     </div>
 </section>
 <script>

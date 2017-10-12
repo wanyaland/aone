@@ -188,6 +188,7 @@ class DetailView(PatchRequestKwargs, View):
         slug = kwargs.get('slug')
         business_id = kwargs.get('business_id')
         business_listing = self.get_data(slug, business_id)
+        business_listing['message'] = kwargs.get('message', '') + business_listing.get('message', '')
 
         if not business_listing:
             self.template_name = "404.html"
