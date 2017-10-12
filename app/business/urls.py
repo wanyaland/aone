@@ -3,7 +3,7 @@ AfricaOne Business URL Configuration
 """
 from django.conf.urls import url,include
 
-from .views import ListingView, DetailView, SearchView
+from .views import ListingView, DetailView, SearchView,signup
 
 from django.contrib.auth import views as auth_views
 
