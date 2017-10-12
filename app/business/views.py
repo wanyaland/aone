@@ -1,8 +1,12 @@
+from copy import deepcopy
 from functools import reduce
 from operator import or_, and_
 
 from pprint import pprint
 
+from django.shortcuts import redirect
+from django.utils.http import urlencode
+from django.core.urlresolvers import reverse
 from django.views import View
 from django.core.paginator import Paginator
 from django.db.models import Q, Sum, Avg, F, Count
@@ -13,21 +17,27 @@ from core.mixin import PatchRequestKwargs
 
 from app.business.models import Business, BusinessHour, Review
 from app.common.views import CategoryView
+
+from .models import Business, BusinessHour, Review, ListingFaq, ReviewTag, Category, Feature
+from .forms import ReviewForm, ReviewTagForm
+
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render,redirect
 
 
 BUSINESS_LISTING_FIELDS = ['id', 'name', 'banner_photo', 'popularity_rating', 'slug', 'city__id',
-                          'city__name', 'categories__id', 'categories__name', 'categories__icon',
-                          'claimed', 'approved', 'web_address', 'phone_number', 'city', 'address', 'photo',
-                          'longitude', 'latitude', 'email', 'start_time', 'end_time', 'description',
-                          'price_min', 'price_max',
-                          'business_hours__day', 'business_hours__opening_hours', 'business_hours__closing_hours']
+                           'city__name', 'categories__id', 'categories__name', 'categories__icon',
+                           'claimed', 'approved', 'web_address', 'phone_number', 'city', 'address', 'photo',
+                           'longitude', 'latitude', 'email', 'start_time', 'end_time', 'description',
+                           'price_min', 'price_max',
+                           'business_hours__day', 'business_hours__opening_hours', 'business_hours__closing_hours',
+                           'features__id', 'features__name']
 
 COMBINE_KEYS = {'categories': ['categories__id', 'categories__name', 'categories__icon'],
                 'business_hours': ['business_hours__day', 'business_hours__opening_hours',
-                                   'business_hours__closing_hours']}
+                                   'business_hours__closing_hours'],
+                'features': ['features__id', 'features__name']}
 
 
 class ListingView(PatchRequestKwargs, View):
@@ -55,6 +65,9 @@ class ListingView(PatchRequestKwargs, View):
         page = kwargs.get('page', 1)
         category_id = int(kwargs.get('category_id') or 0)
         city_id = kwargs.get('city_id')
+        cities = kwargs.get('cities')  ## cities text
+        feature_id = kwargs.get('feature_id')
+        title_query = kwargs.get('query')
 
         inexpensive = kwargs.get('inexpensive')
         moderate = kwargs.get('moderate')
@@ -72,39 +85,56 @@ class ListingView(PatchRequestKwargs, View):
                                      cost_type=cost_type,
                                      open_time=open_time,
                                      average_rate=average_rate,
-                                     most_reviewed=most_reviewed)
+                                     most_reviewed=most_reviewed,
+                                     feature_id=feature_id,
+                                     title_query=title_query,
+                                     cities=cities)
+
+        kwargs['category_id'] = category_id
 
         if category_id and len(listing_data['data']):
             kwargs['category_name'] = listing_data['data'][0]['categories__name'][0]
-            kwargs['category_id'] = category_id
 
         listing_data['filters'] = kwargs
         response = Response(request, listing_data, template=self.template_name, **kwargs)()
         return response
 
     @staticmethod
-    def get_data(sort_direction='-', sort_by='name', count=10, page=1, category_id=None, city_id=None,
-                 exclusive=False, cost_type=None, open_time=False, average_rate=False, most_reviewed=False):
+    def get_data(sort_direction='-', sort_by='name', count=10, page=1, category_id=None, city_id=None, feature_id=None,
+                 exclusive=False, cost_type=None, open_time=False, average_rate=False, most_reviewed=False, title_query=None,
+                 cities=None):
         select_extra = {}
 
         cost_type = cost_type or []
         child_categories = []
         query_obj = Q(status=True)
+        #query_obj &= Q(features__status=True) & Q(categories__status=True) & Q(city__status=True)
+
         if category_id:
             query_obj &= Q(categories__id=category_id)
             child_categories = CategoryView.get_data(parent_category=category_id)
         if city_id:
             query_obj &= Q(city__id=city_id)
 
+        if cities:
+            query_obj &= Q(city__name__icontains=str(cities))
+
+        if feature_id:
+            query_obj &= Q(features__id=feature_id)
+
         if exclusive:
             query_obj &= Q(exclusive=True)
 
-        business_listing = list(Business.objects.filter(query_obj)
-                                .extra(select=select_extra)
-                                .order_by(sort_direction+sort_by)
-                                .values(*BUSINESS_LISTING_FIELDS))
+        if title_query:
+            query_obj &= Q(name__icontains=title_query)
 
-        unique_listing_, unique_listing_id = remove_dups_by_key(business_listing, by_key=COMBINE_KEYS['categories']+COMBINE_KEYS['business_hours'])
+        listing = Business.objects.filter(query_obj)\
+            .extra(select=select_extra)\
+            .order_by(sort_direction+sort_by)\
+            .values(*BUSINESS_LISTING_FIELDS)
+
+        business_listing = list(listing)
+        unique_listing_, unique_listing_id = remove_dups_by_key(business_listing, by_key=COMBINE_KEYS['categories']+COMBINE_KEYS['business_hours']+COMBINE_KEYS['features'])
 
         ## get average rating
         averaged_review_ = list(Review.objects.filter(business__id__in=[1, 2], status=True).values("business__id").annotate(
@@ -158,6 +188,10 @@ class DetailView(PatchRequestKwargs, View):
         slug = kwargs.get('slug')
         business_id = kwargs.get('business_id')
         business_listing = self.get_data(slug, business_id)
+        business_listing['message'] = kwargs.get('message', '') + business_listing.get('message', '')
+
+        if not business_listing:
+            self.template_name = "404.html"
         return Response(request, business_listing, template=self.template_name, **kwargs)()
 
     @staticmethod
@@ -168,19 +202,45 @@ class DetailView(PatchRequestKwargs, View):
             return response
 
         query_slug_id = reduce(or_, [Q(slug=slug),  Q(id=business_id)])
-        query_obj = reduce(and_, [query_slug_id, Q(status=True)])
+        query_obj = Q(status=True)
+        #query_obj &= Q(features__status=True) & Q(categories__status=True) & Q(city__status=True)
+
+        query_obj = reduce(and_, [query_slug_id, query_obj])
         select_extra = {}
-        business_listing_ = list(Business.objects.filter(query_obj)
-                                .extra(select=select_extra)
-                                .values(*BUSINESS_LISTING_FIELDS))
+
+        listing_ = Business.objects.filter(query_obj)\
+            .extra(select=select_extra)\
+            .values(*BUSINESS_LISTING_FIELDS)
+
+        business_listing_ = list(listing_)
+
         if len(business_listing_):
-            business_listing, unique_listing_id = remove_dups_by_key(business_listing_, by_key=COMBINE_KEYS['categories']+COMBINE_KEYS['business_hours'])
+            business_listing, unique_listing_id = remove_dups_by_key(business_listing_, by_key=COMBINE_KEYS['categories']+COMBINE_KEYS['business_hours']+COMBINE_KEYS['features'])
             for obj in business_listing:
                 for key, values in COMBINE_KEYS.items():
                     val = list(map(lambda ck: obj[ck], values))
                     obj[key] = zip(*val)
 
-            response['data'] = business_listing[0]
+            listing = business_listing[0]
+
+            # review_fields = ["rating", 'customer__photo' 'customer__user__first_name', 'customer__user__last_name', 'attachment', 'title', 'review', 'modify_date']
+            listing_review = list(Review.objects.filter(business__id=listing['id'], status=True))
+
+            total_rating = [int(review.rating) for review in listing_review]
+
+            if len(total_rating):
+                listing['avg_rating'] = sum(total_rating)/float(len(total_rating))
+            listing['review_count'] = len(total_rating)
+
+            for review in listing_review:
+                review_tags = list(ReviewTag.objects.filter(review=review).values("tag").annotate(count=Count("tag")))
+                for tag in review_tags:
+                    setattr(review, str(tag['tag']), tag['count'])
+
+            listing['reviews'] = listing_review
+
+            listing['questions'] = list(ListingFaq.objects.filter(business__id=listing['id'], status=True).values('question', 'answer'))
+            response['data'] = listing
             response['data']['business_hours_show'] = business_working_status(response['data']['business_hours'])
             response['data']['cost_type'] = calculate_price_category(response['data']['price_min'], response['data']['price_max'])
         return response
@@ -191,9 +251,68 @@ class SearchView(View):
     search view
     Accepts only one query parameter named query
     """
+    drop_down_template = """<li class="lp-wrap-{key}" data-key_type="{data_key}" data-{data_key}id="{id}">
+                                <!--<a href="#" ><img onerror="this.style.display='none'" class="d-icon" src="" /> -->
+                                <span class="lp-s-{key}">{name}</span>
+                            </li>"""
+
     def get(self, request, *args, **kwargs):
-        data = {}
-        return Response(request, data, **kwargs)
+        search_query = request.GET.get('query', '')
+        if len(search_query) < 3:
+            data = {'message': "Please put some more efforts", "status": False, "suggestions": {}}
+        else:
+
+            data = self.get_data(search_query)
+            for key in data['suggestions']:
+                for index, row in enumerate(data['suggestions'][key]):
+                    query_kwargs = {'status': '1'}
+                    if key == "tags":
+                        query_kwargs['feature_id'] = row['id']
+                    elif key == "cats":
+                        query_kwargs['feature_id'] = row['id']
+                    elif key == "titles":
+                        query_kwargs['listing_id'] = row['id']
+
+                    url = reverse("listing_all")+"?"+urlencode(query_kwargs)
+                    data['suggestions'][key][index] = self.drop_down_template.format(data_key=key, key=key, id=row['id'], name=row['name'], url=url)
+
+        return Response(request, data, content_type="json", **kwargs)()
+
+    @staticmethod
+    def get_data(search_query):
+        data = {"status": True, "suggestions": {}}
+        categories = list(Category.objects.filter(status=True, name__icontains=search_query).values("id", "name"))
+
+        business = list(Business.objects.filter(name__icontains=search_query, status=True).values("id", "name"))
+
+        features = list(Feature.objects.filter(status=True, name__icontains=search_query).values("id", "name"))
+
+        data['suggestions']['tags'] = features
+        data['suggestions']['cats'] = categories
+        data['suggestions']['titles'] = business
+        return data
+
+
+class ListingReview(View):
+    """
+    Save listing review
+    """
+    def post(self, request, *args, **kwargs):
+        form = ReviewForm(request, request.POST)
+        if form.is_valid():
+            form_data = form.cleaned_data
+            review_obj = form.save(commit=True)
+            review_obj.business = form_data['business']
+            review_obj.customer = form_data['customer']
+            review_obj.attachment = request.FILES.get('attachment')
+
+            review_obj.save()
+            data = {'status': True, 'message': 'Review Successfully posted. '}
+            return Response(request, data, content_type="json", **kwargs)()
+        else:
+            data = {"status": False, "error": "one or more fields are not correct", 'message': "one or more fields are not correct"}
+            return Response(request, data, content_type="json", **kwargs)()
+
 
 def signup(request):
     if request.method == 'POST':
@@ -208,3 +327,21 @@ def signup(request):
         else:
           form = UserCreationForm()
     return render(request,'signup.html',{'form':form})
+
+
+class ReviewTagView(View):
+    def get(self, request, *args, **kwargs):
+        form = ReviewTagForm(request, request.GET)
+        if form.is_valid():
+            form_data = form.cleaned_data
+            review_obj = form.save(commit=True)
+            review_obj.review = form_data['review']
+            review_obj.user = form_data['user']
+            review_obj.save()
+            count = list(ReviewTag.objects.filter(status=True, review=review_obj.review, tag=form_data['tag']).values("id"))
+            # redirect_url = reverse("detail_id", kwargs={'business_id': review_obj.business.id})
+            data = {'status': True, 'count': len(count), 'message': 'Thanks for reacting'}
+            return Response(request, data, content_type="json", **kwargs)()
+        else:
+            data = {"error": "one or more fiels is not correct", "message": "unsuccessful reaction"}
+            return Response(request, data, content_type="json", **kwargs)()

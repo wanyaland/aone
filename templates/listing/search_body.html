@@ -6,7 +6,7 @@
             <div class="input-group-addon lp-border">What</div>
             <div class="pos-relative">
                 <div class="what-placeholder pos-relative" data-holder="">
-                    <input autocomplete="off" type="text"
+                    <input data-search_url="{% url 'search' %}" autocomplete="off" type="text"
                            class="lp-suggested-search js-typeahead-input lp-search-input form-control ui-autocomplete-input dropdown_fields"
                            name="select" id="select" placeholder="Ex: food, service, barber, hotel" value=""
                            data-prev-value="0" data-noresult="More results for">
@@ -14,24 +14,7 @@
                     <img class="loadinerSearch" width="100px" src="{% static 'images/search-load.gif' %}">
                 </div>
 
-                <div id="input-dropdown">
-                    <ul>
-                        {% for cat in parent_categories %}
-                            <li class="lp-wrap-cats" data-catid="{{cat.id}}">
-                                <img onerror="this.style.display='none'" class="d-icon" src="{{MEDIA_URL}}{{cat.icon}}" />
-                                <span class="lp-s-cat">{{cat.name}}</span>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    <div style="display:none" id="def-cats">
-                        {% for cat in parent_categories %}
-                            <li class="lp-wrap-cats" data-catid="{{cat.id}}">
-                                <img onerror="this.style.display='none'" class="d-icon" src="{{cat.icon}}" />
-                                <span class="lp-s-cat">{{cat.name}}</span>
-                            </li>
-                        {% endfor %}
-                    </div>
-                </div>
+                {% include 'search_cat_default.html' %}
 
             </div>
 
@@ -40,7 +23,7 @@
         <div class="input-group width-49-percent ">
             <div class="input-group-addon lp-border">Where</div>
             <div class="ui-widget border-dropdown">
-                <input autocomplete="off" id="searchlocation" name="searchlocation" class="form-control" data-country="" value=""
+                <input autocomplete="off" id="cities" name="cities" class="form-control" data-country="" value=""
                        placeholder="Your City...">
             </div>
 
@@ -52,10 +35,7 @@
             <img src="{% static 'images/ellipsis.gif' %}" class="searchloading loader-inner-header">
         </div>
 
-        <input type="hidden" name="city_id" id="city_id">
-        <input type="hidden" name="category_id" id="category_id">
-        <input type="hidden" name="s" value="home">
-        <input type="hidden" name="post_type" value="listing">
+        {% include "search_meta.html" %}
 
     </form>
 

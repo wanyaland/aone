@@ -4,7 +4,14 @@
             <form autocomplete="off" class="clearfix" method="post" enctype="multipart/form-data" id="searchform">
                 <div class="filter-top-section pos-relative row">
                     <div class="lp-title col-md-10 col-sm-10">
-                        <h3>Results For <span class="font-bold term-name" id="search_label">{{filters.category_name}}</span><span class="font-bold"> Listings</span>
+                        <h3>Results For
+                            <span class="font-bold term-name" id="search_label">
+                                {% if filters.category_name%}{{filters.category_name}}{% else %} {{filters.select}} {% endif %}</span>
+                            <span class="font-bold"> Listings</span>
+                            {% if filters.cities %}
+                                In
+                                <span class="font-bold"> {{filters.cities}}</span>
+                            {% endif %}
                         </h3>
                     </div>
                     <div class="pull-right margin-right-0 col-md-2 col-sm-2 clearfix">

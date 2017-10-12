@@ -1,9 +1,10 @@
 from operator import and_, or_
 from functools import reduce
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.views import View
+from django.core.urlresolvers import reverse
 
 from core.utils import update_dict
 
@@ -12,6 +13,7 @@ from core.config import BUSINESS
 from core.response import Response
 from core.mixin import PatchRequestKwargs
 
+from .forms import ContactRequestForm
 
 class CategoryView(PatchRequestKwargs, View):
     """
@@ -64,3 +66,16 @@ class CityView(PatchRequestKwargs, View):
 
         return list(City.objects.filter().values('id', 'name', 'country__id', 'country__name'))
 
+
+class ContactRequestView(View):
+
+    def post(self, request, *args, **kwargs):
+        form = ContactRequestForm(request.POST)
+        url = request.META.get('HTTP_REFERER') or reverse('contact')
+        url = url.split('?')[0]
+        if form.is_valid():
+            form.save()
+            msg = "We have received your request. We contact you shortly."
+        else:
+            msg = str(form.errors)
+        return redirect(url + "?message="+msg)

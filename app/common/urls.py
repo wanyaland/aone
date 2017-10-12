@@ -3,7 +3,7 @@ AfricaOne Business URL Configuration
 """
 from django.conf.urls import url
 
-from .views import CategoryView
+from .views import CategoryView, ContactRequestView
 
 urlpatterns = [
     url(r'category/$', CategoryView.as_view(), name='category'),
@@ -14,5 +14,7 @@ urlpatterns = [
 
     url(r'category/search/$', CategoryView.as_view(), name="category_search"),
     url(r'category/search/(?P<category_name>[-\w]+)/$', CategoryView.as_view(), name="category_search_kwargs"),
+
+    url(r'contact/request/$', ContactRequestView.as_view(), name="contact_request"),
 
 ]

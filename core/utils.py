@@ -4,7 +4,7 @@ import time
 from django.utils.text import slugify
 
 from core.config import COST_TYPE, WEEKDAYS_MAP
-
+import time
 
 def get_slug(value, unique=True, allow_unicode=False):
     value = slugify(value, allow_unicode)
@@ -52,7 +52,7 @@ def remove_dups_by_key(result_set, by_key=None, identity_key='id'):
             obj = final_result_set[result_set_index]
             for key in by_key:
                 if isinstance(obj[key], list):
-                    if row[key] not in obj[key] :
+                    if row[key] not in obj[key]: # or key.split("_")[0] in ("faq", "categories", 'question'):
                         obj[key].append(row[key])
                 else:
                     obj[key] = list(set([obj[key], row[key]]))
@@ -90,4 +90,7 @@ def business_working_status(business_hours):
     return working_status
 
 
+def random_unique_string(prefix="GAP"):
+    cur_time = str(time.time()).split(".")
+    return "{}{}{}".format(prefix, cur_time[0], cur_time[1])
 

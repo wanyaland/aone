@@ -38,7 +38,10 @@
                     </h4>
                     <ul>
                         <li>
-                            <span class="no-review">{{listing.num_review}} Review</span></li>
+                            <span class="rate lp-rate-good">{{listing.avg_rating}}</span>
+                        </li>
+                        <li>
+                            <span class="no-review">{{listing.review_count}} Review</span></li>
                         <li class="middle">
 
                             <span class="element-price-range list-style-none"><span
@@ -55,7 +58,16 @@
                                 {% endfor %}
                         </li>
                     </ul>
-                    <p><span class="icon"><i class="fa fa-tags"></i></span>{{listing.feature}}</p></div>
+                    {% if listing.features  %}
+                        <p><span class="icon"><i class="fa fa-tags"></i></span>
+                            {% for feature in listing.features %}
+                                {% if  feature.0 %}
+                                    <a href="{% url 'listing_feature' feature_id=feature.0 %}">{{feature.1}}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                </div>
                 <div class="lp-grid-box-right pull-right">
                 </div>
             </div>
@@ -76,7 +88,7 @@
                 </div>
 
                 <div class="pull-right">
-                    <a href="#" class="status-btn"><span class="grid-opened">{{listing.business_hours_show.label}}</span>
+                    <a href="#" class="status-btn"><span class="grid-{% if listing.business_hours.status %}opened{% else %}closed{% endif %}">{{listing.business_hours_show.label}}</span>
                     </a>
                 </div>
                 <div class="clearfix"></div>

@@ -29,7 +29,7 @@ function setLocation(){
 }
 
 
-function setGoogleMapMarkers(listing_data){
+function setGoogleMapMarkers(listing_data, mapid, zoom){
     /***
 
     e.g.
@@ -50,6 +50,7 @@ function setGoogleMapMarkers(listing_data){
         return false;
     }
 
+    zoom = zoom || 10;
     var infowindow = new google.maps.InfoWindow();
 
     var cur_loc = getLocation().loc;
@@ -57,9 +58,10 @@ function setGoogleMapMarkers(listing_data){
 
     cur_loc_info = {name: 'You are currently here', latitude:cur_loc.latitude, longitude: cur_loc.longitude};
     listing_data.splice(0, 0, cur_loc_info);
+    var mapid = mapid || 'map';
 
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 10,
+    var map = new google.maps.Map(document.getElementById(mapid), {
+        zoom: zoom,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         //center:
         panControl: true,
@@ -67,17 +69,20 @@ function setGoogleMapMarkers(listing_data){
         zoomControlOptions: {
               position: google.maps.ControlPosition.LEFT_TOP
         },
-        mapTypeControl: true,
-        scaleControl: true,
+
         streetViewControl: true,
         streetViewControlOptions: {
               position: google.maps.ControlPosition.LEFT_TOP
         },
         overviewMapControl: true,
-        rotateControl: true
+        rotateControl: true,
+
+        scrollwheel: false,
+        navigationControl: false,
+        mapTypeControl: false,
+        scaleControl: false,
+        draggable: false,
     });
-
-
     var marker, i;
     all_markers = []
     for (i = 0; i < listing_data.length; i++) {
@@ -98,14 +103,14 @@ function setGoogleMapMarkers(listing_data){
       }
       marker.marker_html = marker_html;
       google.maps.event.addListener(infowindow, "closeclick", function(){
-        map.setZoom(10);
+        map.setZoom(zoom);
       });
 
       google.maps.event.addListener(marker, 'click', (function(marker, i) {
         return function() {
           infowindow.setContent(marker.marker_html);
           infowindow.open(map, marker);
-          map.setZoom(11);
+          map.setZoom(zoom+1);
           map.setCenter(marker.getPosition());
         }
       })(marker, i));

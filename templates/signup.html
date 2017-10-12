@@ -1,6 +1,7 @@
 <div class="siginupcontainer">
     <h1 class="text-center">Sign Up</h1>
     <form id="register" class="form-horizontal margin-top-30"  method="post">
+        {% csrf_token %}
         <p class="status"></p>
         <div class="form-group">
             <label for="username">Username *</label>

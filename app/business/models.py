@@ -18,6 +18,22 @@ from core.utils import get_slug
 from core.config import *
 
 
+class ListingFaq(models.Model):
+    id = models.AutoField(primary_key=True)
+    question = models.CharField(max_length=1024, null=False, blank=False)
+    answer = models.TextField(null=False, blank=False)
+
+    status = models.BooleanField(default=True)
+    create_date = models.DateTimeField(auto_now_add=True)
+    modify_date = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = "ListingFaq"
+
+    def __unicode__(self):
+        return self.question
+
+
 class Category(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
@@ -123,21 +139,23 @@ class Business(models.Model):
     phone_number = models.CharField(blank=True, null=True, max_length=100)
     web_address = models.URLField(null=True, help_text="website url")
     photo = models.ImageField(null=True, upload_to='businesses/%Y/%m/%d')
-    longitude = models.FloatField(null=True)
-    latitude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True, blank=True)
+    latitude = models.FloatField(null=True, blank=True)
     approved = models.BooleanField(default=False)
     claimed = models.BooleanField(default=False)
     email = models.EmailField(null=True)
-    start_time = models.TimeField(null=True, help_text="Listing start time")
-    end_time = models.TimeField(null=True, help_text="Listing end time")
-    features = models.ManyToManyField('Feature', null=True, help_text="Add features")
-    description = models.TextField(null=True)
+    start_time = models.TimeField(null=True, help_text="Listing start time", blank=True)
+    end_time = models.TimeField(null=True, help_text="Listing end time", blank=True)
+    features = models.ManyToManyField('Feature', help_text="Add features", blank=True)
+    description = models.TextField(null=True, blank=True)
     price_min = models.IntegerField(null=True, help_text="min price")
     price_max = models.IntegerField(null=True, help_text="max price")
     owner = models.ForeignKey('Customer', null=True)
     business_hours = models.ManyToManyField(BusinessHour)
     video_url = models.URLField(blank=True, null=False)
     exclusive = models.BooleanField(default=False)
+
+    faq = models.ManyToManyField(ListingFaq, blank=True)
 
     status = models.BooleanField(default=True)
     create_date = models.DateTimeField(auto_now_add=True)
@@ -152,7 +170,8 @@ class Business(models.Model):
         db_table = "Business"
 
     def save(self, *args, **kwargs):
-        if self.name:
+        old_slug = self.slug
+        if (not kwargs.get('refresh')) and (not old_slug):
             self.slug = get_slug(self.name)
         return super(Business, self).save(*args, **kwargs)
 
@@ -181,7 +200,7 @@ class Customer(models.Model):
         db_table = "Customer"
 
     @receiver(post_save,sender=User)
-    def create_user_customer(sender,instance,created,**kwargs):
+    def create_user_customer(sender, instance,created,**kwargs):
         if created:
             Customer.objects.create(user=instance)
 
@@ -197,7 +216,9 @@ class Review(models.Model):
     id = models.AutoField(primary_key=True)
     customer = models.ForeignKey(Customer, null=True)
     business = models.ForeignKey(Business, null=True)
+    attachment = models.FileField(upload_to="review_attachment", null=True, blank=True)
     rating = models.IntegerField(null=True, validators=[MinValueValidator(0), MaxValueValidator(5)])
+    title = models.CharField(max_length=500, null=False, blank=False)
     review = models.TextField()
     status = models.BooleanField(default=True)
     create_date = models.DateTimeField(auto_now_add=True)
@@ -213,20 +234,18 @@ class Review(models.Model):
 class ReviewTag(models.Model):
     id = models.AutoField(primary_key=True)
     review = models.ForeignKey(Review)
-    user = models.ForeignKey(User,null=True,blank=True)
+    user = models.ForeignKey(User, null=True, blank=True)
     ip_address = models.CharField(max_length=20)
     tag = models.CharField(choices=REVIEW_TAG_CHOICES, max_length=20)
-    key = models.CharField(max_length=32,null=True)
-    cookie = models.CharField(max_length=32,blank=True,null=True)
+    key = models.CharField(max_length=32, null=True)
+    cookie = models.CharField(max_length=32, blank=True, null=True)
+    #user_agent = models.CharField(max_length=500, null=True, blank=True)
     status = models.BooleanField(default=True)
     create_date = models.DateTimeField(auto_now_add=True)
     modify_date = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        if self.user:
-            return "%s tagged %s" %(self.user,self.tag)
-        else:
-            return "%s tagged %s" %(self.ip_address,self.tag)
+        return "%s tagged %s" %(self.tag, self.review)
 
     class Meta:
         db_table = "ReviewTag"
@@ -363,4 +382,3 @@ class Analytics(models.Model):
 
     class Meta:
         db_table = "Analytics"
-

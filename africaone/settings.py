@@ -102,10 +102,11 @@ WSGI_APPLICATION = 'africaone.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'africaone',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
+        'HOST': os.environ['DB_HOST'],
+        'PORT': os.environ['DB_PORT']
     }
 }
 
@@ -173,4 +174,10 @@ LOGIN_REDIRECT_URL = 'home'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 GOOGLE_MAP_API_KEY = 'AIzaSyDQIbsz2wFeL42Dp9KaL4o4cJKJu4r8Tvg'
+IP_TRACK_URL = "https://ipinfo.io/json"
+
+DEFAULT_USER = {
+    'first_name': ''
+}

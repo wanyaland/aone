@@ -5,28 +5,11 @@
             <div class="input-group-addon lp-border">What</div>
             <div class="pos-relative">
                 <div class="what-placeholder pos-relative" data-holder="">
-                    <input autocomplete="off" type="text" class="lp-suggested-search js-typeahead-input lp-search-input form-control ui-autocomplete-input dropdown_fields" name="select" id="select" placeholder="Ex: food, service, barber, hotel" data-prev-value='0' data-noresult = "More results for">
+                    <input data-search_url="{% url 'search' %}" autocomplete="off" type="text" class="lp-suggested-search js-typeahead-input lp-search-input form-control ui-autocomplete-input dropdown_fields" name="select" id="select" placeholder="Ex: food, service, barber, hotel" data-prev-value='0' data-noresult = "More results for">
                     <i class="cross-search-q fa fa-times-circle" aria-hidden="true"></i>
                     <img class='loadinerSearch' width="100px" src="{% static 'images/search-load.gif' %}"/>
                 </div>
-                <div id="input-dropdown">
-                    <ul>
-                        {% for cat in parent_categories %}
-                            <li class="lp-wrap-cats" data-catid="{{cat.id}}">
-                                <img onerror="this.style.display='none'" class="d-icon" src="{{MEDIA_URL}}{{cat.icon}}" />
-                                <span class="lp-s-cat">{{cat.name}}</span>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    <div style="display:none" id="def-cats">
-                        {% for cat in parent_categories %}
-                            <li class="lp-wrap-cats" data-catid="{{cat.id}}">
-                                <img onerror="this.style.display='none'" class="d-icon" src="{{cat.icon}}" />
-                                <span class="lp-s-cat">{{cat.name}}</span>
-                            </li>
-                        {% endfor %}
-                    </div>
-                </div>
+                {% include 'search_cat_default.html' %}
             </div>
         </div>
 
@@ -35,12 +18,14 @@
             <div class="input-group-addon lp-border lp-where">Where</div>
             <div data-option="no" class="ui-widget border-dropdown">
                 <i class="fa fa-crosshairs"></i>
-                <select class="chosen-select chosen-select5" name="searchlocation" id="searchlocation">
+                <input autocomplete="off" id="cities" name="cities" class="form-control" data-country="" value=""
+                       placeholder="Your City...">
+                <!--<select class="chosen-select chosen-select5" name="searchlocation" id="searchlocation">
                     <option id="def_location" value="">Your City...</option>
                     {% for city in cities %}
                         <option  value="{{city.id}}">{{city.name}}</option>
                     {% endfor %}
-                </select>
+                </select> -->
             </div>
         </div>
         <div class="form-group pull-right">
@@ -53,8 +38,5 @@
                 -->
             </div>
         </div>
-        <input type="hidden" name="city_id" id="city_id">
-        <input type="hidden" name="category_id" id="category_id">
-        <input type="hidden" name="s" value="home">
-        <input type="hidden" name="post_type" value="listing">
+        {% include "search_meta.html" %}
     </form>

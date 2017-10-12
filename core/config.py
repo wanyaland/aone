@@ -18,9 +18,9 @@ USER_TYPES = {
 
 # TAGS
 REVIEW_TAG_CHOICES = {
-        ('C', 'COOL'),
-        ('H', 'HELPFUL'),
-        ('F', 'FUNNY'),
+        ('LOVE', 'LOVE'),
+        ('LOL', 'LOL'),
+        ('INTERESTING', 'INTERESTING'),
     }
 
 # PHOTOS
@@ -71,3 +71,12 @@ WEEKDAYS_MAP = {
 }
 WEEKDAYS = WEEKDAYS_MAP.values()
 # PRICE_MIN_MAX
+
+CONTACTUS_REVIEW_STATUS = (
+    ('OPEN', 'OPEN'),
+    ('REVIEWED', 'REVIEWED'),
+    ('PROCESSING', 'PROCESSING'),
+    ('RESOLVED', 'RESOLVED'),
+    ('CLOSED', 'CLOSED'),
+)
+
