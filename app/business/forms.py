@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import Review, Customer, Business, ReviewTag
 from core.utils import random_unique_string
+from django.contrib.auth.forms import UserCreationForm 
 
 
 class ReviewForm(forms.ModelForm):
@@ -79,3 +80,8 @@ class ReviewTagForm(forms.ModelForm):
         cleaned_data['ip_address'] = self._request.META.get('HTTP_X_FORWARDED_FOR') or self._request.META.get('REMOTE_ADDR')
         cleaned_data['user_agent'] = self._request.META.get('HTTP_USER_AGENT')
         return cleaned_data
+
+class SignUpForm(UserCreationForm):
+    class Meta:
+       model = User
+       fields = ('username','email')

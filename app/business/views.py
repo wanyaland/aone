@@ -19,11 +19,18 @@ from app.business.models import Business, BusinessHour, Review
 from app.common.views import CategoryView
 
 from .models import Business, BusinessHour, Review, ListingFaq, ReviewTag, Category, Feature
-from .forms import ReviewForm, ReviewTagForm
+from .forms import ReviewForm, ReviewTagForm,SignUpForm
+
 
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render,redirect
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+from django.template.loader import render_to_string
+from app.tokens import account_activation_token
+
 
 
 BUSINESS_LISTING_FIELDS = ['id', 'name', 'banner_photo', 'popularity_rating', 'slug', 'city__id',
@@ -226,6 +233,7 @@ class DetailView(PatchRequestKwargs, View):
             # review_fields = ["rating", 'customer__photo' 'customer__user__first_name', 'customer__user__last_name', 'attachment', 'title', 'review', 'modify_date']
             listing_review = list(Review.objects.filter(business__id=listing['id'], status=True))
 
+
             total_rating = [int(review.rating) for review in listing_review]
 
             if len(total_rating):
@@ -270,7 +278,8 @@ class SearchView(View):
                         query_kwargs['feature_id'] = row['id']
                     elif key == "cats":
                         query_kwargs['feature_id'] = row['id']
-                    elif key == "titles":
+                    
+elif key == "titles":
                         query_kwargs['listing_id'] = row['id']
 
                     url = reverse("listing_all")+"?"+urlencode(query_kwargs)
@@ -316,18 +325,44 @@ class ListingReview(View):
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
-          form.save()
-          username = form.cleaned_data.get('username')
-          password = form.cleaned_data.get('password')
-          user = authenticate(username=username,password=password)
-          login(request,user)
-          return redirect('home')
+          user = form.save(commit=False)
+          user.is_active = False
+          user.save()
+          current_site = get_current_site(request)
+          subject = 'Activate Africa One Account'
+          message = render_to_string('account_activation_email',
+          {
+            'user':user,
+            'domain':current_site,
+            'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+            'token':account_activation_token.make_token(user),
+          })
+          user.email_user(subject,message)
+          return redirect('account_activation_sent')
         else:
-          form = UserCreationForm()
+          form = SignUpForm()
     return render(request,'signup.html',{'form':form})
 
+def account_activation_sent(request):
+    return render(request,'account_activation_sent.html')
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.customer.email_confirmed = True
+        user.save()
+        login(request, user)
+        return redirect('home')
+    else:
+        return render(request, 'account_activation_invalid.html')
 
 class ReviewTagView(View):
     def get(self, request, *args, **kwargs):
