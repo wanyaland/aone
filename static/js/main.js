@@ -1859,8 +1859,8 @@ jQuery(document).ready(function() {
 
         // variables
         var LPtitle = jQuery(this).closest('.lp-grid-box-contianer').data("title");
-        var LPlattitue = jQuery(this).closest('.lp-grid-box-contianer').data("lattitue");
-        var LPlongitute = jQuery(this).closest('.lp-grid-box-contianer').data("longitute");
+        var LPlattitue = jQuery(this).closest('.lp-grid-box-contianer').data("latitude");
+        var LPlongitute = jQuery(this).closest('.lp-grid-box-contianer').data("longitude");
         var LPpostID = jQuery(this).closest('.lp-grid-box-contianer').data("postid");
 
         if (jQuery('#modal-1' + LPpostID).is('.md-show')) {
@@ -1871,45 +1871,9 @@ jQuery(document).ready(function() {
             });
             jQuery('#modal-1' + LPpostID).addClass('md-show');
         }
+        setGoogleMapMarkers([{name: LPtitle , latitude: LPlattitue, longitude: LPlongitute}], 'quickmap'+LPpostID);
 
 
-        var markers = false;
-        $mtoken = jQuery('#page').data("mtoken");
-        $siteURL = jQuery('#page').data("site-url");
-        $lat = LPlattitue;
-        $lan = LPlongitute;
-
-        if ($mtoken != '') {
-
-            L.mapbox.accessToken = $mtoken;
-            map = L.mapbox.map('quickmap' + LPpostID, 'mapbox.streets');
-        } else {
-            var map = new L.Map('quickmap' + LPpostID, {
-                center: new L.LatLng($lat, $lan),
-                zoom: 14
-            });
-            var googleLayer = new L.Google('ROADMAP');
-            map.addLayer(googleLayer);
-        }
-
-        map.setView([$lat, $lan], 14);
-
-        markers = new L.MarkerClusterGroup();
-
-        var markerLocation = new L.LatLng($lat, $lan); // London
-
-        var CustomHtmlIcon = L.HtmlIcon.extend({
-            options: {
-                html: "<div class='lpmap-icon-shape pin '><div class='lpmap-icon-contianer'><img src='" + $siteURL + "wp-content/themes/listingpro/assets/images/pins/lp-logo.png'  /></div></div>",
-            }
-        });
-
-        var customHtmlIcon = new CustomHtmlIcon();
-
-        var marker = new L.Marker(markerLocation, {
-            icon: customHtmlIcon
-        }).bindPopup('').addTo(map);
-        markers.addLayer(marker);
 
     });
 
