@@ -3,7 +3,8 @@ AfricaOne Business URL Configuration
 """
 from django.conf.urls import url,include
 
-from .views import ListingView, DetailView, SearchView, ListingReview, signup, ReviewTagView
+from .views import ListingView, DetailView, SearchView, \
+    ListingReview, signup, ReviewTagView, BusinessBookmarkView
 
 from django.contrib.auth import views as auth_views
 
@@ -25,8 +26,7 @@ urlpatterns = [
     url(r'logout/$',auth_views.logout,name='logout'),
     url(r'oauth/',include('social_django.urls',namespace='social')),
     url(r'search/$', SearchView.as_view(), name='search'),
-
-
+    url(r'bookmark/$', BusinessBookmarkView.as_view(), name='bookmark'),
 
     # business admin, fake or not valid view
     url(r'user/admin/(?P<user_id>[-\d]+)/$', SearchView.as_view(), name='business_admin_dashboard'),

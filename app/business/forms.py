@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Review, Customer, Business, ReviewTag
+from django.core.exceptions import ValidationError
+from .models import Review, Customer, Business, ReviewTag, BusinessBookmark
 from core.utils import random_unique_string
 
 
@@ -79,3 +80,35 @@ class ReviewTagForm(forms.ModelForm):
         cleaned_data['ip_address'] = self._request.META.get('HTTP_X_FORWARDED_FOR') or self._request.META.get('REMOTE_ADDR')
         cleaned_data['user_agent'] = self._request.META.get('HTTP_USER_AGENT')
         return cleaned_data
+
+
+class BusinessBookmarkForm(forms.ModelForm):
+    action = forms.CharField(max_length=10, required=True)
+    bookmark_id = forms.IntegerField(required=False)
+
+    def __init__(self, request, *args, **kwargs):
+        super(BusinessBookmarkForm, self).__init__(*args, **kwargs)
+        self._request = request
+
+    class Meta:
+        model = BusinessBookmark
+        fields = ["business"]
+
+    def clean(self):
+        cleaned_data = super(BusinessBookmarkForm, self).clean()
+        cleaned_data['customer'] = self.user_validate()
+        return cleaned_data
+
+    def user_validate(self):
+        if self._request.user.is_authenticated():
+            """
+            use logged in user instance
+            """
+            user = self._request.user
+            customer = Customer.objects.filter(user=user)
+            if customer.exists():
+                return customer[0]
+            else:
+                raise ValidationError("You are not registered or active user with us")
+        else:
+            raise ValidationError("Please login first to bookmark")
