@@ -24,6 +24,7 @@ from .forms import ReviewForm, ReviewTagForm
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render,redirect
+from django.contrib.auth.models import User
 
 
 BUSINESS_LISTING_FIELDS = ['id', 'name', 'banner_photo', 'popularity_rating', 'slug', 'city__id',
