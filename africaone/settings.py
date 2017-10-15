@@ -181,3 +181,5 @@ IP_TRACK_URL = "https://ipinfo.io/json"
 DEFAULT_USER = {
     'first_name': ''
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

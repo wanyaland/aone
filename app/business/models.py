@@ -195,6 +195,8 @@ class Customer(models.Model):
     status = models.BooleanField(default=True)
     create_date = models.DateTimeField(auto_now_add=True, editable=False)
     modify_date = models.DateTimeField(auto_now=True, editable=False)
+    email_confirmed = models.BooleanField(default=False)
+
 
     class Meta:
         db_table = "Customer"
@@ -203,6 +205,7 @@ class Customer(models.Model):
     def create_user_customer(sender, instance,created,**kwargs):
         if created:
             Customer.objects.create(user=instance)
+        instance.customer.save()
 
     @receiver(post_save,sender=User)
     def save_user_customer(sender,instance,**kwargs):
