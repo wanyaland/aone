@@ -18,8 +18,9 @@ from core.mixin import PatchRequestKwargs
 from app.business.models import Business, BusinessHour, Review
 from app.common.views import CategoryView
 
-from .models import Business, BusinessHour, Review, ListingFaq, ReviewTag, Category, Feature
-from .forms import ReviewForm, ReviewTagForm,SignUpForm
+
+from .models import Business, BusinessHour, Review, ListingFaq, ReviewTag, Category, Feature, BusinessBookmark
+from .forms import ReviewForm, ReviewTagForm, BusinessBookmarkForm
 
 
 from django.contrib.auth import login,authenticate
@@ -178,7 +179,7 @@ class ListingView(PatchRequestKwargs, View):
         pages = Paginator(result_set, count)
         response = {'count': pages.count, 'data': [], 'total_pages': pages.num_pages, 'child_categories': child_categories}
 
-        if pages.num_pages <= page:
+        if page <= pages.num_pages:
             objects_list = pages.page(page).object_list
             response['data'] = objects_list
             response['show_header_search'] = True
@@ -194,7 +195,7 @@ class DetailView(PatchRequestKwargs, View):
     def get(self, request, *args, **kwargs):
         slug = kwargs.get('slug')
         business_id = kwargs.get('business_id')
-        business_listing = self.get_data(slug, business_id)
+        business_listing = self.get_data(request, slug, business_id)
         business_listing['message'] = kwargs.get('message', '') + business_listing.get('message', '')
 
         if not business_listing:
@@ -202,7 +203,7 @@ class DetailView(PatchRequestKwargs, View):
         return Response(request, business_listing, template=self.template_name, **kwargs)()
 
     @staticmethod
-    def get_data(slug=None, business_id=None):
+    def get_data(request, slug=None, business_id=None):
         response = {}
 
         if not (slug or business_id):
@@ -229,6 +230,12 @@ class DetailView(PatchRequestKwargs, View):
                     obj[key] = zip(*val)
 
             listing = business_listing[0]
+
+            listing['bookmark'] = None
+            bookmark = BusinessBookmark.objects.filter(status=True, business__id=listing['id'], customer__user=request.user).values_list("id", flat=True)
+
+            if len(bookmark):
+                listing['bookmark'] = bookmark[0]
 
             # review_fields = ["rating", 'customer__photo' 'customer__user__first_name', 'customer__user__last_name', 'attachment', 'title', 'review', 'modify_date']
             listing_review = list(Review.objects.filter(business__id=listing['id'], status=True))
@@ -380,3 +387,31 @@ class ReviewTagView(View):
         else:
             data = {"error": "one or more fiels is not correct", "message": "unsuccessful reaction"}
             return Response(request, data, content_type="json", **kwargs)()
+
+
+class BusinessBookmarkView(View):
+    """
+    Bookmark a business listing
+    """
+
+    def get(self, request, *args, **kwargs):
+        form = BusinessBookmarkForm(request, request.GET)
+        data = {'active': False, 'bookmark_id': None}
+        if form.is_valid():
+            form_data = form.cleaned_data
+            if form_data.get('action') == "add":
+                data['active'] = True
+                bookmark = BusinessBookmark(business=form_data['business'], customer=form_data['customer'])
+                bookmark.save()
+                data['bookmark_id'] = bookmark.id
+            elif form_data.get('action') == "remove":
+                data['bookmark_id'] = None
+                bookmark_id = form_data.get("bookmark_id")
+                if bookmark_id:
+                    bks = BusinessBookmark.objects.filter(id=bookmark_id)
+                    if len(bks):
+                        for bk in bks:
+                            bk.status = False
+                            bk.save()
+        return Response(request, data, content_type="json", **kwargs)()
+

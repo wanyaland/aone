@@ -1,3 +1,8 @@
+.lp-h4, .post-meta-left-box{
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
 .recentcomments a{
     display:inline !important;
     padding:0 !important;

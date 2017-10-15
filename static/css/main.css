@@ -977,6 +977,11 @@ input.default{
 .lp-logo-container{
     cursor: pointer;
 }
+
+.cursor{
+    cursor: pointer;
+}
+
 .lp-menu-bar .lp-logo-container{
     padding-bottom: 5px;
     padding-top: 5px;
