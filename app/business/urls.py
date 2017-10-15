@@ -3,13 +3,9 @@ AfricaOne Business URL Configuration
 """
 from django.conf.urls import url,include
 
-<<<<<<< HEAD
-from .views import ListingView, DetailView, SearchView, ListingReview, signup, ReviewTagView,account_activation_sent,activate
-
-=======
 from .views import ListingView, DetailView, SearchView, \
-    ListingReview, signup, ReviewTagView, BusinessBookmarkView
->>>>>>> b4ff09bcdf7cfcdfd1d5489932a68cd05a82f6e5
+    ListingReview, signup, ReviewTagView, BusinessBookmarkView,account_activation_sent,activate
+
 
 from django.contrib.auth import views as auth_views
 

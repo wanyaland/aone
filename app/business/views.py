@@ -20,7 +20,7 @@ from app.common.views import CategoryView
 
 
 from .models import Business, BusinessHour, Review, ListingFaq, ReviewTag, Category, Feature, BusinessBookmark
-from .forms import ReviewForm, ReviewTagForm, BusinessBookmarkForm
+from .forms import ReviewForm, ReviewTagForm, BusinessBookmarkForm,SignUpForm
 
 
 from django.contrib.auth import login,authenticate
@@ -286,7 +286,7 @@ class SearchView(View):
                     elif key == "cats":
                         query_kwargs['feature_id'] = row['id']
                     
-elif key == "titles":
+                    elif key == "titles":
                         query_kwargs['listing_id'] = row['id']
 
                     url = reverse("listing_all")+"?"+urlencode(query_kwargs)
