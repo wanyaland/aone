@@ -88,6 +88,21 @@ class City(models.Model):
         db_table = "City"
 
 
+class BusinessBookmark(models.Model):
+    id = models.AutoField(primary_key=True)
+    business = models.ForeignKey('Business')
+    customer = models.ForeignKey('Customer')
+    status = models.BooleanField(default=True)
+    create_date = models.DateTimeField(auto_now_add=True)
+    modify_date = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = "BusinessBookmark"
+
+    def __unicode__(self):
+        return "{} {}".format(self.customer, self.business)
+
+
 class BusinessHour(models.Model):
     id = models.AutoField(primary_key=True)
     day = models.CharField(max_length=10, choices=WEEKDAYS)

@@ -50,7 +50,10 @@
     {% endblock header %}
 </div>
 {% block content %}
-<section class="page-container clearfix section-fixed listing-with-map pos-relative taxonomy" id="listing-category">
+<section
+        class="page-container clearfix section-fixed listing-with-map pos-relative taxonomy"
+        style="padding-top:0px !important"
+        id="listing-category">
     {% include 'listing/listing_item_map.html' %}
     <div class="all-list-map"></div>
     <div class="pull-left post-with-map-container-right">
@@ -102,6 +105,8 @@
     <script>
         jQuery(document).ready(function() {
             findListings();
+            //setTimeout(function(){
+            //   jQuery("section#listing-category").css("padding-top", "0px")}, 3000);
         });
     </script>
 {% endblock additional_js_footer %}

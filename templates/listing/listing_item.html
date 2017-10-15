@@ -1,5 +1,6 @@
 <div class="col-md-6 col-sm-12  lp-grid-box-contianer grid_view2 card1 lp-grid-box-contianer1"
-     data-title="{{listing.name}}" data-type="listing_items" data-banner_photo="{{MEDIA_URL}}{{listing.banner_photo}}" data-address="{{listing.address}}" data-postid="{{listing.id}}" data-latitude="{{listing.latitude}}"
+     data-title="{{listing.name}}" data-type="listing_items" data-banner_photo="{{MEDIA_URL}}{{listing.banner_photo}}"
+     data-address="{{listing.address}}" data-postid="{{listing.id}}" data-latitude="{{listing.latitude}}"
      data-longitude="{{listing.longitude}}" data-posturl="{% url 'detail_slug' slug=listing.slug %}">
     <div class="lp-grid-box">
         <div class="lp-grid-box-thumb-container">
@@ -17,14 +18,27 @@
             </div>
             <div class="lp-grid-box-quick">
                 <ul class="lp-post-quick-links">
-                    <li>
-                        <a href="#" data-post-type="grids" data-post-id="25"
-                           data-success-text="Saved" class="status-btn add-to-fav lp-add-to-fav">
-                            <i class="fa fa-bookmark-o"></i> <span>Save</span>
+                    <li id="fav-container">
+                        <a class="email-address add-to-fav cursor" {% if listing.bookmark %}data-bookmark-id={{listing.bookmark}}{% endif %}
+                           data-post-id="{{listing.id}}" data-post-url="{% url 'bookmark' %}"
+                           data-post-type="detail" data-post-id="{{listing.id}}">
+                            {% if listing.bookmark %}
+                                <i class="fa fa-bookmark"></i>
+                                <span class="email-icon">Saved</span>
+                            {% else %}
+                                <i class="fa fa-bookmark-o"></i>
+                                <span class="email-icon">Save</span>
+                            {% endif %}
                         </a>
                     </li>
+                    <!--<li>-->
+                        <!--<a href="#" data-post-type="grids" data-post-id="25"-->
+                           <!--data-success-text="Saved" class="status-btn add-to-fav lp-add-to-fav">-->
+                            <!--<i class="fa fa-bookmark-o"></i> <span>Save</span>-->
+                        <!--</a>-->
+                    <!--</li>-->
                     <li>
-                        <a class="icon-quick-eye md-trigger qickpopup" data-modal="modal-125"><i
+                        <a class="icon-quick-eye md-trigger qickpopup" data-modal="modal-{{listing.id}}"><i
                                 class="fa fa-eye"></i> Preview</a>
                     </li>
                 </ul>
@@ -88,7 +102,8 @@
                 </div>
 
                 <div class="pull-right">
-                    <a href="#" class="status-btn"><span class="grid-{% if listing.business_hours.status %}opened{% else %}closed{% endif %}">{{listing.business_hours_show.label}}</span>
+                    <a href="#" class="status-btn">
+                        <span class="grid-{% if listing.business_hours.status %}opened{% else %}closed{% endif %}">{{listing.business_hours_show.label}}</span>
                     </a>
                 </div>
                 <div class="clearfix"></div>

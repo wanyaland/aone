@@ -439,10 +439,60 @@ jQuery(document).ready(function($) {
     });
     /* =====by zaheer on 13 march====== */
 
-    jQuery(document).on('click', '.add-to-fav', function(e) {
+    jQuery(document).on('click', '.add-to-fav',function(e) {
         e.preventDefault()
-        $(event.target).toggleClass('active');
-        FilterListing()
+        $this = jQuery(this);
+        $this.find('i').addClass('fa-spin fa-spinner');
+        var val = jQuery(this).data('post-id');
+        var type = jQuery(this).data('post-type');
+        var ajax_url = jQuery(this).data('post-url');
+        var bookmark_id = jQuery(this).data('bookmark-id');
+        var action = bookmark_id && 'remove' || 'add';
+        jQuery.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: ajax_url,
+            data: {
+                'action': 'listingpro_add_favorite',
+                'business': val,
+                'action': action,
+                'bookmark_id': bookmark_id
+                },
+            complete: function(){
+                $this.find('i').removeClass('fa-spin fa-spinner');
+            },
+            success: function(data) {
+                if(data){
+                    if(data.active){
+                        $this.data("bookmark-id", data.bookmark_id);
+                        if(data.type == 'grids' || data.type == 'list'){
+                            var successText = $this.data('success-text');
+                            $this.find('span').text("Saved");
+                            //alert($this.find('i'));
+                            $this.find('.fa').removeClass('fa-bookmark-o');
+                            $this.find('.fa').addClass('fa-bookmark');
+                        }else{
+                            var successText =$this.data('success-text');
+                            $this.find('span').text("Saved");
+                            $this.find('i').removeClass('fa-bookmark-o');
+                            $this.find('i').addClass('fa-bookmark');
+                        }
+                    }
+                    else{
+                        $this.data("bookmark-id", null);
+                        $this.find('span').text("Save");
+                        if(data.type == 'grids' || data.type == 'list'){
+                            $this.find('.fa').addClass('fa-bookmark-o');
+                            $this.find('.fa').removeClass('fa-bookmark');
+                        }else{
+                            $this.find('i').addClass('fa-bookmark-o');
+                            $this.find('i').removeClass('fa-bookmark');
+                        }
+
+                    }
+                }
+              }
+        });
     });
 
 
@@ -450,25 +500,31 @@ jQuery(document).ready(function($) {
     jQuery(".remove-fav").click(function(e) {
         e.preventDefault()
         var val = jQuery(this).data('post-id');
+        var bookmark_id = jQuery(this).data('bookmark-id');
+        if (!bookmark_id){
+            return false;
+        }
         jQuery(this).find('i').removeClass('fa-close');
         jQuery(this).find('i').addClass('fa-spinner fa-spin');
         $this = jQuery(this);
-        jQuery.ajax({
-            type: 'POST',
-            dataType: 'json',
-            url: ajax_search_term_object.ajaxurl,
-            data: {
-                'action': 'listingpro_remove_favorite',
-                'post-id': val,
-            },
-            success: function(data) {
-                if (data) {
-                    if (data.remove == 'yes') {
-                        $this.parent(".lp-grid-box-contianer").fadeOut();
+            jQuery.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: ajax_search_term_object.ajaxurl,
+                data: {
+                    'action': 'listingpro_remove_favorite',
+                    'business': val,
+                    'bookmark_id': bookmark_id,
+                    'action': "remove"
+                    },
+                success: function(data) {
+                    if(data){
+                        if(data.remove == 'yes'){
+                            $this .parent( ".lp-grid-box-contianer" ).fadeOut();
+                        }
                     }
-                }
-            }
-        });
+                  }
+            });
 
     });
 

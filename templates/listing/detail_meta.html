@@ -24,10 +24,16 @@
                         <div class="post-meta-right-box text-right clearfix margin-top-20">
                             <ul class="post-stat">
                                 <li id="fav-container">
-                                    <a class="email-address add-to-fav" data-post-type="detail" href=""
-                                       data-post-id="{{listing.id}}" data-success-text="Saved">
-                                        <i class="fa fa-bookmark-o"></i>
-                                        <span class="email-icon">Save</span>
+                                    <a class="email-address add-to-fav cursor" {% if listing.bookmark %}data-bookmark-id={{listing.bookmark}}{% endif %}
+                                       data-post-id="{{listing.id}}" data-post-url="{% url 'bookmark' %}"
+                                       data-post-type="detail" data-post-id="{{listing.id}}">
+                                        {% if listing.bookmark %}
+                                            <i class="fa fa-bookmark"></i>
+                                            <span class="email-icon">Saved</span>
+                                        {% else %}
+                                            <i class="fa fa-bookmark-o"></i>
+                                            <span class="email-icon">Save</span>
+                                        {% endif %}
                                     </a>
                                 </li>
                                 <li class="reviews sbutton">

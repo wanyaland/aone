@@ -182,4 +182,8 @@ DEFAULT_USER = {
     'first_name': ''
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'postmaster@mg.africaone.com'
+EMAIL_HOST_PASSWORD = '389507d6c1cec3922e059fd604e2cb24'
+EMAIL_USE_TLS = True

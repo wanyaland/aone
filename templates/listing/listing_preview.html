@@ -1,14 +1,14 @@
-<div class="md-modal md-effect-3" id="modal-{{listing.id}}">
+<div class="md-modal md-effect-3" data-preview="1" id="modal-1{{listing.id}}">
     <div class="container">
         <div class="md-content">
             <div class="row popup-inner-left-padding">
                 <div class="col-md-6 lp-insert-data">
                     <div class="lp-grid-box-thumb">
-                        {% for img in listing.business_photo %}
+                        {% comment %}{% for img in listing.business_photo %} {% endcomment %}
                             <div class="slide">
-                                <img src="{{img.path}}" alt="{{img.path}}"/>
+                                <img src="{{MEDIA_URL}}{{listing.banner_photo}}" alt="{{MEDIA_URL}}{{listing.banner_photo}}"/>
                             </div>
-                        {% endfor %}
+                        {% comment %}{% endfor %}{% endcomment %}
                     </div>
                     <div class="lp-grid-desc-container lp-border clearfix">
                         <div class="lp-grid-box-description">
@@ -25,13 +25,17 @@
                                         <span class="element-price-range list-style-none">
                                             <span class="grayscale simptip-position-top simptip-movable"
                                                   data-tooltip="{{listing.cost_type.}}"
-                                                  title="{{listing.cost_type}}">{{listing.cost_type_icon}}</span>
+                                                  title="{{listing.cost_type}}">{{listing.cost_type.icon}}</span>
                                         </span></li>
                                     <li>
-                                        <span class="cat-icon"><img class="icon icons8-Food" src="data:image/png;base64,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" alt="cat-icon"></span>
-                                        <a href="{% url 'detail_slug' slug=listing.slug %}">
-                                            {{listing.categories_name}}
-                                        </a></li>
+                                        {% for cat in listing.categories %}
+                                            <span class="cat-icon">
+                                                <img onerror="this.style.display='none'" class="icon icons8-Food" src="{{MEDIA_URL}}{{cat.2}}" alt="{{cat.1}}">
+                                            </span>
+                                            <a href="{% url 'listing_category' category_id=cat.0 %}"> {{cat.1}} </a>
+
+                                        {% endfor %}
+                                    </li>
                                     <li>
                                         <a href="tel:{{listing.phone}}">{{listing.phone}}</a>
                                     </li>
@@ -52,14 +56,17 @@
                             </div>
 
                             <div class="pull-right">
-                                <a href="#" class="status-btn"><span class="grid-opened">{{listing.open_now_text}}</span></a>
+                                <a href="#" class="status-btn">
+                                    <span class="grid-{% if listing.business_hours.status %}opened{% else %}closed{% endif %}">{{listing.business_hours_show.label}}</span>
+                                </a>
                             </div>
+
                             <div class="clearfix"></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div id="quickmap25" class="quickmap"></div>
+                    <div id="quickmap{{listing.id}}" class="quickmap"></div>
                     <a class="md-close widget-map-click"><i class="fa fa-close"></i></a>
                 </div>
             </div>
