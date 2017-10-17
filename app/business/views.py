@@ -342,7 +342,7 @@ def signup(request):
           user.save()
           current_site = get_current_site(request)
           subject = 'Activate Africa One Account'
-          message = render_to_string('account_activation_email',
+          message = render_to_string('account_activation_email.html',
           {
             'user':user,
             'domain':current_site,

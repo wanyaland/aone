@@ -83,10 +83,10 @@ class ReviewTagForm(forms.ModelForm):
         return cleaned_data
 
 
-class SignUpForm(UserCreationForm):
+class SignUpForm(forms.ModelForm):
     class Meta:
        model = User
-       fields = ('username','email')
+       fields = ['username','email']
 
 
 class BusinessBookmarkForm(forms.ModelForm):

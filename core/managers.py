@@ -3,7 +3,7 @@ __author__ = 'Harold'
 from datetime import datetime
 from actstream.managers import ActionManager, stream
 from django.db import models
-from geopy.geocoders import Nominatim
+
 
 
 class MyActionManager(ActionManager):
@@ -16,12 +16,12 @@ class MyActionManager(ActionManager):
 
 class BusinessManager(models.Manager):
 
+    '''
     def search_business(self, location):
         geolocator = Nominatim()
         place = geolocator.geocode(location)
         qs = self.distance(place.latitude, place.longitude)
         return qs
-    '''
     def geosearch(self, query):
         """
         Returns a queryset sorted by geographic proximity to the query.
